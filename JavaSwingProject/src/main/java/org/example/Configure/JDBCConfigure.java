@@ -1,4 +1,4 @@
-package Configure;
+package org.example.Configure;
 
 import java.io.FileInputStream;
 import java.sql.Connection;
@@ -22,6 +22,7 @@ public class JDBCConfigure {
             connection = DriverManager.getConnection(url,username,password);
             if (connection != null){
                 System.out.println("Kết nối Database  Thành Công !!!");
+
             }
             else {
                 System.out.println("Kết nối Database Không Thành Công !! Mời Kiểm Tra Lại");
