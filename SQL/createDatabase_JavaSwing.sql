@@ -1,4 +1,4 @@
-DROP DATABASE `JavaSwing_Database`;
+DROP DATABASE IF EXISTS `JavaSwing_Database`;
 CREATE DATABASE IF NOT EXISTS `JavaSwing_Database`;
 USE `JavaSwing_Database`;
 
