@@ -16,8 +16,8 @@ public class JDBCConfigure {
             String username= properties.getProperty("user");
             String password= properties.getProperty("password");
             String url = properties.getProperty("url");
-            String driver = properties.getProperty("driver");
-            Class.forName(driver);
+//            String driver = properties.getProperty("driver");
+//            Class.forName(driver);
 
             connection = DriverManager.getConnection(url,username,password);
             if (connection != null){
