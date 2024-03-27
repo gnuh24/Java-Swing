@@ -1,12 +1,8 @@
 package org.example;
 
-import org.example.Configure.JDBCConfigure;
-import org.example.DTO.NhaCungCapDTO;
+import org.example.Others.CloundinaryServices;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
@@ -28,6 +24,10 @@ public class Main {
 //
 //
 //        JDBCConfigure.closeConnection();
+
+
+//        CloundinaryServices.deleteImage("https://res.cloudinary.com/djhoea2bo/image/upload/v1711510440/JavaSwingProject/mpdswdudevrgxw4wdbjf.png");
+        System.err.println(CloundinaryServices.createImage("C:\\Users\\Tuan Hung\\Desktop\\File\\Meme\\22c12220f8e7d892668c7d434f19c3ac.jpg"));
 
 
 

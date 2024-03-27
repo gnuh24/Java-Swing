@@ -1,4 +1,4 @@
-package org.example.DTO;
+package org.example.DTO.NghiepVuNhapKho;
 
 import lombok.*;
 
@@ -16,7 +16,10 @@ public class NhaCungCapDTO {
     private String tenNCC;
 
     @NonNull
-    private List<String> stringList;
+    private String email;
+
+    @NonNull
+    private String soDienThoai;
 
     public NhaCungCapDTO(){}
 
