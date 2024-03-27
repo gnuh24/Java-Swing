@@ -27,7 +27,7 @@ public class Main {
 
 
 //        CloundinaryServices.deleteImage("https://res.cloudinary.com/djhoea2bo/image/upload/v1711510440/JavaSwingProject/mpdswdudevrgxw4wdbjf.png");
-        System.err.println(CloundinaryServices.createImage("C:\\Users\\Tuan Hung\\Desktop\\File\\Meme\\22c12220f8e7d892668c7d434f19c3ac.jpg"));
+        System.err.println(CloundinaryServices.createImage("https://bizweb.dktcdn.net/thumb/grande/100/418/981/products/z5110618614923-52e4d1424866fa4df975d3865c3948a1-1706367542850.jpg?v=1706367546653"));
 
 
 

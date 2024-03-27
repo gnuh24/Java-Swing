@@ -37,37 +37,48 @@ INSERT INTO `LoaiSanPham` (`TenLoaiSanPham`, `MaKhoHang`) VALUES
 
 
 /* Dữ liệu mẫu cho bảng SanPham */
-INSERT INTO `SanPham` (`TenSanPham`, 											`XuatXu`, 		`Gia`, 		`SoLuongConLai`, 	`TrangThai`, `SoLuot`, `MaLoaiSanPham`, `MaKhoHang`, `AnhMinhHoa`) VALUES
-						('Lego Ninjago 9447 Lasha"s bite cycle', 				'Đan Mạch', 	864000, 		10, 				true, 		10, 		1, 				1,		""	),
-						('SP 2', 												'Trung Quoc', 	50000, 			30, 				true,		 5, 		1, 				1,		""	),
-						('SP 3', 												'Han Quoc', 	150000, 		20, 				true, 		15, 		1, 				1,		""	);
+INSERT INTO `SanPham` 	(`TenSanPham`, 																															`XuatXu`, 		`Gia`, 		`SoLuongConLai`, 	`TrangThai`,  `MaLoaiSanPham`, `MaKhoHang`, 	`AnhMinhHoa`) VALUES
+						("Lego Ninjago 9447 Lasha's bite cycle", 																								'Đan Mạch', 	864000, 		10, 				true, 		 		1, 				1,		"JavaSwingProject/ah0yyd3vpybxaox0lak1"	),
+						("Lego Ninjago 9446 Destiny's Bounty", 																									'Đan Mạch', 	7125000, 		2, 					true,		 		1, 				1,		"JavaSwingProject/jhzqkrkxoog3ldndv2zn"	),
+						("Lego Ninjago 70668 Legacy Jay's Stome Fighter", 																						'Đan Mạch', 	1480000, 		20, 				true, 		 		1, 				1,		"JavaSwingProject/t3mbom8qupxduicsybwh"	),
+                        
+						("Hàng loại 1 - Mô Hình DragonBall Songoku vô cực 3 đầu thay thế cao 52cm nặng 4kg - Figure DragonBall - Có Hộp carton", 				'Nhật Bản', 	739000, 		10, 				true, 		 		2, 				1,		"JavaSwingProject/ceiimkgst4z0rvugf5mj"	),
+						("Mô Hình Anime Bleach Ichigo Kurosaki cao Cao 18cm - ngang 10cm - nặng 150gram - Figure Anime Bleach - có hộp màu", 					'Nhật Bản', 	89000, 		    200, 				true,		 		2, 				1,		"JavaSwingProject/nrhhxtlimpax5muuyu7c"	),
+						("Mô Hình Naruto dáng đứng siêu ngầu - Cao 30cm - ngang 12cm - nặng 1kg5 - Figure Naruto - Có hộp màu", 								'Nhật Bản', 	238000, 		20, 				true, 		 		2, 				1,		"JavaSwingProject/iesufe0ip1rrmc45m8jr"	);
+
 
 /* Dữ liệu mẫu cho bảng NhaCungCap */
-INSERT INTO `NhaCungCap` (`TenNCC`, `SoDienThoai`, `Email`, `MaKhoHang`) VALUES
-('NCC 1', '0123456789', 'ncc1@example.com', 1),
-('NCC 2', '0123456789', 'ncc2@example.com', 2),
-('NCC 3', '0123456789', 'ncc3@example.com', 3);
+INSERT INTO `NhaCungCap` (`TenNCC`, 						`SoDienThoai`, `Email`,					 `MaKhoHang`) VALUES
+							('Công ty TNHH Thị Trường Sỉ', 	'0123456789', 'tts@gmail.com', 					1),
+							('Ngôi Nhà Đồ Chơi', 			'0123456789', 'ngoNhaDoChoi@gmail.com', 		1);
 
 /* Dữ liệu mẫu cho bảng PhieuNhapKho */
-INSERT INTO `PhieuNhapKho` (`NgayNhapKho`, `TongGiaTri`, `MaNCC`, `MaNguoiNhap`, `MaKhoHang`) VALUES
-('2024-01-15 08:00:00', 500000, 1, 1, 1),
-('2024-01-16 09:00:00', 750000, 2, 2, 2),
-('2024-01-17 10:00:00', 1000000, 3, 3, 3);
+INSERT INTO `PhieuNhapKho` (`NgayNhapKho`, 					`TongGiaTri`, 	`MaNCC`,  `MaKhoHang`) VALUES
+							('2024-01-15 08:00:00', 		2840700000, 	1, 			 1),
+							('2024-01-16 09:00:00', 		165600000, 		1, 			 1),
+							('2024-01-17 10:00:00', 		7140000, 		2, 			 1);
 
 /* Dữ liệu mẫu cho bảng CTPNK */
-INSERT INTO `CTPNK` (`DonGiaNhap`, `SoLuong`, `ThanhTien`, `MaPhieu`, `MaSP`) VALUES
-(100000, 5, 500000, 1, 1),
-(50000, 10, 500000, 2, 2),
-(150000, 5, 750000, 3, 3);
+INSERT INTO `CTPNK` (`DonGiaNhap`, `SoLuong`, 	`ThanhTien`, 	`MaPhieu`, 		`MaSanPham`) VALUES
+					(864000, 		300, 		259200000, 			1, 				1),
+					(7125000, 		300, 		2137500000, 		1, 				2),
+					(1480000, 		300, 		444000000, 			1, 				3),
+                    
+                    (739000, 		200, 		147800000, 			2, 				4),
+					(89000, 		200, 		17800000, 			2, 				5),
+                    
+					(238000, 		30, 		7140000, 			3, 				6);
 
 /* Dữ liệu mẫu cho bảng PhieuXuatKho */
-INSERT INTO `PhieuXuatKho` (`NgayXuatKho`, `TongGiaTri`, `MaNguoiLap`, `MaKhoHang`) VALUES
-('2024-01-15 08:00:00', 500000, 1, 1),
-('2024-01-16 09:00:00', 750000, 2, 2),
-('2024-01-17 10:00:00', 1000000, 3, 3);
+INSERT INTO `PhieuXuatKho` (`NgayXuatKho`, 				`TongGiaTri`, 	 	`MaKhoHang`) VALUES
+							('2024-02-15 08:00:00', 		2787810000, 			1),
+							('2024-02-16 09:00:00', 		750000, 		 		1);
 
 /* Dữ liệu mẫu cho bảng CTPXK */
-INSERT INTO `CTPXK` (`SoLuong`, `ThanhTien`, `DonGia`, `MaPhieu`, `MaSP`) VALUES
-(5, 500000, 100000, 1, 1),
-(10, 500000, 50000, 2, 2),
-(5, 750000, 150000, 3, 3);
+INSERT INTO `CTPXK` (`DonGia`, `SoLuong`,	 `ThanhTien`,  		`MaPhieu`, `MaSanPham`) VALUES
+					(864000, 		290, 		250560000, 				1, 		1),
+					(7125000, 		298,		2123250000, 			1, 		2),
+					(1480000, 		280, 		414000000, 				1, 		3),
+                    
+                    (739000, 		190, 		14041000, 				2, 		4),
+					(238000, 		10	, 		2380000, 				2, 		6);

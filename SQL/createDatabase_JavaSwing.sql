@@ -40,8 +40,8 @@ CREATE TABLE IF NOT EXISTS `NguoiDung` (
 
 DROP TABLE IF EXISTS `LoaiSanPham`;
 CREATE TABLE IF NOT EXISTS `LoaiSanPham` (
-    `MaLoaiSanPham` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `TenLoaiSanPham` NVARCHAR(255) NOT NULL UNIQUE,
+    `MaLoaiSanPham` 	INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `TenLoaiSanPham` 	NVARCHAR(255) NOT NULL UNIQUE,
 	`MaKhoHang` 		INT UNSIGNED 			NOT NULL,
 	FOREIGN KEY (`MaKhoHang`) REFERENCES `KhoHang`(`MaKhoHang`)
 
@@ -49,19 +49,18 @@ CREATE TABLE IF NOT EXISTS `LoaiSanPham` (
 
 DROP TABLE IF EXISTS `SanPham`;
 CREATE TABLE IF NOT EXISTS `SanPham` (
-    `MaSanPham` 				INT  UNSIGNED 			PRIMARY KEY AUTO_INCREMENT,
-    `TenSanPham` 			NVARCHAR(255) 			NOT NULL 	UNIQUE,
+    `MaSanPham` 		INT  UNSIGNED 			PRIMARY KEY AUTO_INCREMENT,
+    `TenSanPham` 		NVARCHAR(255) 			NOT NULL 	UNIQUE,
     `XuatXu` 			NVARCHAR(255) 			NOT NULL,
     `Gia` 				INT UNSIGNED 			NOT NULL,
     `SoLuongConLai`	 	INT UNSIGNED 			NOT NULL 	DEFAULT 0,
 	`TrangThai` 		BOOLEAN 				NOT NULL    DEFAULT true,	
-	`SoLuot` 			NVARCHAR(255) 			NOT NULL,
     `AnhMinhHoa` 		LONGTEXT,
     `MaLoaiSanPham` 	INT UNSIGNED 			NOT NULL,
 	`MaKhoHang` 		INT UNSIGNED 			NOT NULL,
 
-    FOREIGN KEY (`MaLoaiSanPHam`) REFERENCES `LoaiSanPham`(`MaLoaiSanPham`),
-	FOREIGN KEY (`MaKhoHang`) REFERENCES `KhoHang`(`MaKhoHang`)
+    FOREIGN KEY (`MaLoaiSanPHam`) 	REFERENCES `LoaiSanPham`(`MaLoaiSanPham`),
+	FOREIGN KEY (`MaKhoHang`) 		REFERENCES `KhoHang`(`MaKhoHang`)
 
 );
 
@@ -83,11 +82,9 @@ CREATE TABLE IF NOT EXISTS  `PhieuNhapKho` (
     `NgayNhapKho` 		DATETIME 				NOT NULL,
     `TongGiaTri` 		INT UNSIGNED 			NOT NULL,
     `MaNCC`				INT UNSIGNED,
-    `MaNguoiNhap` 		INT UNSIGNED,
 	`MaKhoHang` 		INT UNSIGNED 			NOT NULL,
 
     FOREIGN KEY (`MaNCC`) 		REFERENCES `NhaCungCap`(`MaNCC`),
-	FOREIGN KEY (`MaNguoiNhap`) 	REFERENCES `TaiKhoan`(`MaTaiKhoan`),
 	FOREIGN KEY (`MaKhoHang`) REFERENCES `KhoHang`(`MaKhoHang`)
 );
 
@@ -111,10 +108,8 @@ CREATE TABLE IF NOT EXISTS `PhieuXuatKho`(
 	`MaPhieu`  					INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `NgayXuatKho` 				DATETIME NOT NULL, 
     `TongGiaTri` 				INT UNSIGNED NOT NULL,
-    `MaNguoiLap` 				INT UNSIGNED NOT NULL,
-	`MaKhoHang` 		INT UNSIGNED 			NOT NULL,
+	`MaKhoHang` 				INT UNSIGNED 			NOT NULL,
 
-	FOREIGN KEY (`MaNguoiLap`) REFERENCES `TaiKhoan`(`MaTaiKhoan`),
 	FOREIGN KEY (`MaKhoHang`) REFERENCES `KhoHang`(`MaKhoHang`)
 
 );

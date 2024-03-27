@@ -5,14 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="003b6990-b30a-4767-b559-0655e60cd464" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/DTO/NghiepVuNhapKho/ChiTietPhieuNhapKhoDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/DTO/NghiepVuNhapKho/PhieuNhapKhoDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Others/CloundinaryServices.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Configure/JDBCConfigure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Others/JDBCConfigure.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Configure/mysql.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Others/mysql.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DTO/NhaCungCapDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/DTO/NghiepVuNhapKho/NhaCungCapDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SQL/createDatabase_JavaSwing.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../SQL/createDatabase_JavaSwing.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SQL/insertData_JavaSwing.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../SQL/insertData_JavaSwing.sql" afterDir="false" />
