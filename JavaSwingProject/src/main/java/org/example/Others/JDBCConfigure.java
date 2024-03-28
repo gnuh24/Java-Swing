@@ -12,7 +12,7 @@ public class JDBCConfigure {
     public static Connection getConnection() {
         try{
             Properties properties = new Properties();
-            properties.load(new FileInputStream("C:\\Users\\Tuan Hung\\Desktop\\Learning\\Exercise\\SGU Java Swing - Ms Loan\\Java-Swing\\JavaSwingProject\\src\\main\\java\\org\\example\\Configure\\mysql.properties"));
+            properties.load(new FileInputStream("C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaSwingNew\\JavaSwingProject\\src\\main\\java\\org\\example\\Others\\mysql.properties"));
             String username= properties.getProperty("user");
             String password= properties.getProperty("password");
             String url = properties.getProperty("url");
