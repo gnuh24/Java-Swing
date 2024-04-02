@@ -17,14 +17,14 @@ public class SanPhamBUS {
     private ArrayList<SanPhamDTO> danhSachSanPham= new ArrayList<>();
 
     public SanPhamBUS() {
+        
         danhSachSanPham=DAOsp.selectAll();
     }
     
     public ArrayList<SanPhamDTO> getAll(){
+        
         return this.danhSachSanPham;
     }
-    
-    
     
     
     
