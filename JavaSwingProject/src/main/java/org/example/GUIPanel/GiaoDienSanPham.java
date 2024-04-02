@@ -8,11 +8,14 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import org.example.BUS.SanPhamBUS;
+import org.example.DTO.SanPhamDTO;
 import org.example.GUIDialog.SanPhamDialog;
 import org.example.GUIThanhPhan.ButtonCustom;
 
@@ -22,7 +25,10 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
 
     private  JTable thongTin;
     private  DefaultTableModel model;
-
+    private SanPhamBUS SPBUS= new SanPhamBUS();
+    private ArrayList<SanPhamDTO> listSP= SPBUS.getAll();
+    
+    
     public GiaoDienSanPham()  {
         this.setSize(1200,800);// 1980, 1050
         this.setLayout(new BorderLayout(0,0));    
@@ -102,37 +108,18 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
         timKiem.setPreferredSize(new Dimension(900, 40));
         timKiemLocSP.add(locSP); timKiemLocSP.add(timKiem);
         // PanelDuoi Table
-        String[] colum = new String[]{"STT", "Hình Ảnh", "Mã SP", "Tên sản phẩm", "Số lượng", "Thương hiệu", "Trọng lượng", "Xuất xứ", "Giá"};
-        Object data[][] = {{"1","", "MaSP1", "Rượu Soju","12","Hàn Quốc","550ml","Hàn Quốc","70000"},
-                {"2","", "MaSP2", "Rượu Vodka","12","Ba Lan","300ml","Mỹ","95500"},
-                {"3","", "MaSP3", "Rượu Gin","7","Mỹ","550ml","Mỹ","12000",""},
-                {"4","", "MaSP4", "Rượu Rum","2","Caribbean","300ml","Hàn Quốc","245000"},
-                {"5","", "MaSP5", "Rượu Tequila","5","Mexico","650ml","Việt Nam","240000"},
-                {"6","", "MaSP6", "Rượu Whisky","9","Scotland","550ml","Việt Nam","150000"},
-                {"7","", "MaSP7", "Rượu Whisky","9","Scotland","550ml","Việt Nam","150000"},
-                {"8","", "MaSP8", "Rượu Whisky","9","Scotland","550ml","Trung Quốc","150000"},
-                {"9","", "MaSP9", "Rượu Whisky","9","Scotland","550ml","Mỹ","150000"},
-                {"10","", "MaSP10", "Rượu Whisky","9","Scotland","550ml","Hàn Quốc","150000"},
-                {"11","", "MaSP10", "Rượu Whisky","9","Scotland","550ml","Trung Quốc","150000"},
-                {"12","", "MaSP10", "Rượu Whisky","9","Scotland","550ml","Hàn Quốc","150000"},
-                {"13","", "MaSP10", "Rượu Whisky","9","Scotland","550ml","Hàn Quốc","150000"},
-                {"14","", "MaSP10", "Rượu Whisky","9","Scotland","550ml","Nhật Bản","150000"},
-                {"15","", "MaSP10", "Rượu Whisky","9","Scotland","550ml","Mỹ","150000"},
-                {"16","", "MaSP10", "Rượu Whisky","9","Scotland","550ml","Nhật Bản","150000"},
-                {"17","", "MaSP11", "Rượu Vang","13","VULTUS","550ml","Nhật Bản","194000"}
-        };
-         model = new DefaultTableModel(data, colum);
+        String[] colum = new String[]{"STT", "Hình Ảnh", "Mã SP", "Tên sản phẩm", "Xuất xứ",  "Số lượng", "Giá"};
+        model = new DefaultTableModel();
+        model.setColumnIdentifiers(colum);
         thongTin = new JTable(model);
+        loadDuLieuTuDatabase(listSP);
         chinhSuaGiaoDienTable();
+
         JScrollPane dulieuSP = new JScrollPane(thongTin);
 
         
         panelDuoi.add(timKiemLocSP,BorderLayout.NORTH);
         panelDuoi.add(dulieuSP,BorderLayout.CENTER);
-
-        // đưa vào giao diện chính của sản phẩm
-
-        
         
         //// mục sự kiện chính cho giao diện
         themSP.addActionListener(this);
@@ -178,7 +165,15 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
 
        }
     }
-
+    
+    public void loadDuLieuTuDatabase(ArrayList<SanPhamDTO> listSP){
+        int dem=1;
+        for(SanPhamDTO sanPham: listSP){
+            Object dong[]={dem,sanPham.getAnhMinhhoa(),sanPham.getMaSanPham(),sanPham.getTenSanPham(),sanPham.getXuatXu(), sanPham.getSoLuongConLai(), sanPham.getGiaSanPham()};
+            model.addRow(dong);
+            dem+=1;
+        }
+    }
     
     @Override
     public void actionPerformed(ActionEvent ae) {
