@@ -96,13 +96,13 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
         tenSP= new InputFormCustom("Tên Sản Phẩm:");
         soLuong= new InputFormCustom("Số Lượng:");
         xuatXu= new ComboBoxFormCustom("Xuất Xứ:",xuatxu);
-        thuongHieu= new InputFormCustom("Thương Hiệu:");
-        trongLuong= new InputFormCustom("Trọng Lượng:");
+        //thuongHieu= new InputFormCustom("Thương Hiệu:");
+        //trongLuong= new InputFormCustom("Trọng Lượng:");
         tenLoai= new ComboBoxFormCustom("Loại:",loai);
         giaSP= new InputFormCustom("Giá Sản Phẩm:");
         thongTinSP.add(maSP); thongTinSP.add(tenSP); thongTinSP.add(tenLoai); 
         thongTinSP.add(soLuong); thongTinSP.add(giaSP);thongTinSP.add(xuatXu); 
-        thongTinSP.add(thuongHieu); thongTinSP.add(trongLuong);
+        //thongTinSP.add(thuongHieu); thongTinSP.add(trongLuong);
         noiDungGiua.add(thongTinSP,BorderLayout.CENTER);
         
         // Phần dưới
@@ -155,10 +155,10 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
         maSP.getTxtForm().setText((thongTin.getValueAt(dong, 2)).toString());
         tenSP.getTxtForm().setText((thongTin.getValueAt(dong, 3)).toString());
         soLuong.getTxtForm().setText((thongTin.getValueAt(dong, 4)).toString());
-        thuongHieu.getTxtForm().setText((thongTin.getValueAt(dong, 5)).toString());
-        trongLuong.getTxtForm().setText((thongTin.getValueAt(dong, 6)).toString());
-        xuatXu.getList().setSelectedItem(thongTin.getValueAt(dong, 7).toString());   
-        giaSP.getTxtForm().setText((thongTin.getValueAt(dong, 8)).toString());
+        //thuongHieu.getTxtForm().setText((thongTin.getValueAt(dong, 5)).toString());
+        //trongLuong.getTxtForm().setText((thongTin.getValueAt(dong, 6)).toString());
+        xuatXu.getList().setSelectedItem(thongTin.getValueAt(dong,5).toString());   
+        giaSP.getTxtForm().setText((thongTin.getValueAt(dong, 6)).toString());
         //tenLoai.getTxtForm().setText((thongTin.getValueAt(dong, 2)).toString());
         
         
