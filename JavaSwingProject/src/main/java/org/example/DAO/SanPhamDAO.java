@@ -53,7 +53,31 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO>{
 
     @Override
     public ArrayList<SanPhamDTO> selectAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ArrayList<SanPhamDTO> list= new ArrayList<>();
+        try {
+
+            Connection con= JDBCUtil.getJDBCConnection();
+            String sql="Select * From sanpham";
+            PreparedStatement pst=con.prepareStatement(sql);
+            ResultSet kq=pst.executeQuery(sql);
+            while( kq.next()){
+                int maSP=kq.getInt("MaSanPham");
+                String tenSP=kq.getString("TenSanPham");
+                String xuatXu=kq.getString("XuatXu");
+                int gia=kq.getInt("Gia");
+                int soLuong=kq.getInt("SoLuongConLai");
+                int trangThai=kq.getInt("TrangThai");
+                String maLoaiSP=String.valueOf(kq.getInt("MaLoaiSanPham"));
+                String hinhAnh=kq.getString("AnhMinhHoa");
+                int maKho=kq.getInt("MaKhoHang");
+                SanPhamDTO sp= new SanPhamDTO(maSP, tenSP, xuatXu, gia, soLuong, trangThai, hinhAnh, maSP, maKho);
+                list.add(sp);
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
 
     @Override
