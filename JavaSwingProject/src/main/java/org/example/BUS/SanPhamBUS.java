@@ -13,7 +13,20 @@ import org.example.DTO.SanPhamDTO;
  * @author Admin
  */
 public class SanPhamBUS {
-    private SanPhamDAO truyXuatSQL;
-    private ArrayList<SanPhamDTO> danhSachSanPham;
+    private SanPhamDAO DAOsp= new SanPhamDAO();
+    private ArrayList<SanPhamDTO> danhSachSanPham= new ArrayList<>();
+
+    public SanPhamBUS() {
+        danhSachSanPham=DAOsp.selectAll();
+    }
+    
+    public ArrayList<SanPhamDTO> getAll(){
+        return this.danhSachSanPham;
+    }
+    
+    
+    
+    
+    
     
 }
