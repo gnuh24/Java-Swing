@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `TaiKhoan` (
 
 DROP TABLE IF EXISTS `NguoiDung`;
 CREATE TABLE IF NOT EXISTS `NguoiDung` (
-    `MaNguoiDung`  		INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `MaNguoiDung`  		INT UNSIGNED PRIMARY KEY,
     `HoTen` 			NVARCHAR(255) 			NOT NULL,
     `NgaySinh`			DATE 					NOT NULL,
     `GioiTinh`  		ENUM('Male', 'Female')  NOT NULL,
