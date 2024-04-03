@@ -12,17 +12,16 @@ public class JDBCConfigure {
     public static Connection getConnection() {
         try{
             Properties properties = new Properties();
-            properties.load(new FileInputStream("C:\\Users\\Tuan Hung\\Desktop\\Learning\\Exercise\\SGU Java Swing - Ms Loan\\Java-Swing\\JavaSwingProject\\src\\main\\java\\org\\example\\Configure\\mysql.properties"));
+            properties.load(new FileInputStream("C:\\Users\\Tuan Hung\\Desktop\\Learning\\Exercise\\SGU Java Swing - Ms Loan\\Java-Swing\\JavaSwingProject\\src\\main\\java\\org\\example\\Others\\mysql.properties"));
             String username= properties.getProperty("user");
             String password= properties.getProperty("password");
             String url = properties.getProperty("url");
-//            String driver = properties.getProperty("driver");
-//            Class.forName(driver);
+            String driver = properties.getProperty("driver");
+            Class.forName(driver);
 
             connection = DriverManager.getConnection(url,username,password);
             if (connection != null){
                 System.out.println("Kết nối Database  Thành Công !!!");
-
             }
             else {
                 System.out.println("Kết nối Database Không Thành Công !! Mời Kiểm Tra Lại");
