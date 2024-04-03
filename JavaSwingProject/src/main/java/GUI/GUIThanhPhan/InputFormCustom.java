@@ -1,16 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package org.example.GUI.GUIThanhPhan;
+
+package GUI.GUIThanhPhan;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.EmptyBorder;
-/**
- *
- * @author Admin
- */
+
+
 public class InputFormCustom extends JPanel{
     public JLabel tieuDe;
     public JTextField txtForm;

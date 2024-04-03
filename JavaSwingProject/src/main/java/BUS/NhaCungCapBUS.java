@@ -1,4 +1,4 @@
-package org.example.BUS;
+package BUS;
 
 public class NhaCungCapBUS {
 }

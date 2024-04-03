@@ -1,19 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package org.example.GUI.GUIPanel;
+package GUI.GUIPanel;
+import GUI.GUIThanhPhan.ButtonCustom;
 import javax.swing.*;
 
-import org.example.GUI.GUIThanhPhan.ButtonCustom;
 
 import java.awt.*;
 import lombok.*;
 @Data
-/**
- *
- * @author Admin
- */
+
 public class MenuTaskBar extends JPanel{
 
     private ButtonCustom btn_TrangChu, btn_sanPham, btn_loaiSP;
@@ -31,7 +24,7 @@ public class MenuTaskBar extends JPanel{
         JLabel hoTen= new JLabel("Tên Đăng Nhập");
         hoTen.setVerticalAlignment(JLabel.CENTER);
         hoTen.setHorizontalAlignment(JLabel.CENTER);
-        hoTen.setIcon(new ImageIcon("iconUser64.png"));
+        hoTen.setIcon(new ImageIcon("C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHung\\JavaHung\\src\\main\\java\\Resources\\iconUser64.png"));
         JPanel bar1= new JPanel();
         bar1.setBackground(Color.BLACK);//new Color(204,214,219));
         bar1.setPreferredSize(new Dimension(1,0));
@@ -52,15 +45,15 @@ public class MenuTaskBar extends JPanel{
         // Chuyển thành giao diện sản phẩm
         JPanel dieuHuong= new JPanel(new GridLayout(9,1,0,0));// giữa, khoảng cách chiều ngang là 0, khoảng cách dọc là 5
         dieuHuong.setBackground(Color.WHITE);
-        btn_TrangChu= new ButtonCustom("Trang chủ","trangchu.png");
-        btn_sanPham= new ButtonCustom("Sản phẩm","sanpham.png");
-        btn_loaiSP= new ButtonCustom("Loại Sản phẩm","sanpham.png");
-        btn_PhieuNhap= new ButtonCustom("Phiếu nhập","phieunhap.png");
-        btn_PhieuXuat= new ButtonCustom("Phiếu xuất","phieuxuat.png");
-        btn_TaiKhoan= new ButtonCustom("Tài khoản","taikhoan.png");
-        btn_ThongKe= new ButtonCustom("Thống kê","thongke.png");
-        btn_DoiThongTin= new ButtonCustom("Đổi thông tin","thongtin.png");
-        btn_DangXuat= new ButtonCustom("Đăng xuất","dangxuat.png");
+        btn_TrangChu= new ButtonCustom("Trang chủ","C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHung\\JavaHung\\src\\main\\java\\Resources\\trangchu.png");
+        btn_sanPham= new ButtonCustom("Sản phẩm","C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHung\\JavaHung\\src\\main\\java\\Resources\\sanpham.png");
+        btn_loaiSP= new ButtonCustom("Loại Sản phẩm","C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHung\\JavaHung\\src\\main\\java\\Resources\\sanpham.png");
+        btn_PhieuNhap= new ButtonCustom("Phiếu nhập","C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHung\\JavaHung\\src\\main\\java\\Resources\\phieunhap.png");
+        btn_PhieuXuat= new ButtonCustom("Phiếu xuất","C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHung\\JavaHung\\src\\main\\java\\Resources\\phieuxuat.png");
+        btn_TaiKhoan= new ButtonCustom("Tài khoản","C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHung\\JavaHung\\src\\main\\java\\Resources\\taikhoan.png");
+        btn_ThongKe= new ButtonCustom("Thống kê","C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHung\\JavaHung\\src\\main\\java\\Resources\\thongke.png");
+        btn_DoiThongTin= new ButtonCustom("Đổi thông tin","C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHung\\JavaHung\\src\\main\\java\\Resources\\thongtin.png");
+        btn_DangXuat= new ButtonCustom("Đăng xuất","C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHung\\JavaHung\\src\\main\\java\\Resources\\dangxuat.png");
         dieuHuong.add(btn_TrangChu); dieuHuong.add(btn_sanPham); dieuHuong.add(btn_loaiSP);
         dieuHuong.add(btn_PhieuNhap); dieuHuong.add(btn_PhieuXuat); dieuHuong.add(btn_TaiKhoan);
         dieuHuong.add(btn_ThongKe);  dieuHuong.add(btn_DoiThongTin); dieuHuong.add(btn_DangXuat);

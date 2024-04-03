@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package DAO;
 
 import DTO.ThongTinSanPham.SanPhamDTO;
@@ -15,10 +12,6 @@ import java.util.logging.Logger;
 
 
 
-/**
- *
- * @author Admin
- */
 public class SanPhamDAO implements DAOInterface<SanPhamDTO>{
     
     public int check=0;

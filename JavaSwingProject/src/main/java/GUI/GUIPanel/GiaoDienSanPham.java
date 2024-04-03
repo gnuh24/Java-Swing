@@ -1,5 +1,9 @@
+package GUI.GUIPanel;
 
-package org.example.GUI.GUIPanel;
+import BUS.SanPhamBUS;
+import DTO.ThongTinSanPham.SanPhamDTO;
+import GUI.GUIDialog.SanPhamDialog;
+import GUI.GUIThanhPhan.ButtonCustom;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,10 +18,6 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import org.example.BUS.SanPhamBUS;
-import org.example.DTO.ThongTinSanPham.SanPhamDTO;
-import org.example.GUI.GUIDialog.SanPhamDialog;
-import org.example.GUI.GUIThanhPhan.ButtonCustom;
 
 
 

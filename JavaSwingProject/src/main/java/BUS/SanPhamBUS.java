@@ -1,9 +1,10 @@
 package BUS;
 
+import DAO.SanPhamDAO;
 import java.util.ArrayList;
 
 import DTO.ThongTinSanPham.SanPhamDTO;
-import org.example.DAO.SanPhamDAO;
+
 
 public class SanPhamBUS {
     private final SanPhamDAO sanPhamDAO= new SanPhamDAO();

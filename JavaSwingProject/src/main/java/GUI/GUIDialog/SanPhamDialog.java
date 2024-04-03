@@ -1,9 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package org.example.GUI.GUIDialog;
+
+package GUI.GUIDialog;
+
+import GUI.GUIThanhPhan.ComboBoxFormCustom;
+import GUI.GUIThanhPhan.InputFormCustom;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,12 +16,8 @@ import javax.imageio.ImageIO;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-import org.example.GUI.GUIThanhPhan.ComboBoxFormCustom;
-import org.example.GUI.GUIThanhPhan.InputFormCustom;
-/**
- *
- * @author Admin
- */
+
+
 public class SanPhamDialog extends  JDialog implements ActionListener{
     public String tieuDe,type;
     public int dong;

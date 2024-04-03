@@ -1,9 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package org.example.GUI;
+
+package GUI;
+import GUI.GUIPanel.GiaoDienLoaiSanPham;
+import GUI.GUIPanel.GiaoDienSanPham;
+import GUI.GUIPanel.MenuTaskBar;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,10 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import org.example.GUI.GUIPanel.GiaoDienLoaiSanPham;
-import org.example.GUI.GUIPanel.GiaoDienSanPham;
-import org.example.GUI.GUIPanel.MenuTaskBar;
-import org.example.GUI.GUIThanhPhan.ButtonCustom;
+
 /**
  *
  * @author Admin

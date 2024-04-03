@@ -1,5 +1,5 @@
 
-package org.example.GUI.GUIThanhPhan;
+package GUI.GUIThanhPhan;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.EmptyBorder;

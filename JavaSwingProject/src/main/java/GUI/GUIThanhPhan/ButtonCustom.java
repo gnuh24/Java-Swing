@@ -1,17 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package org.example.GUI.GUIThanhPhan;
+
+package GUI.GUIThanhPhan;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-/**
- *
- * @author Admin
- */
+
+
 public class ButtonCustom extends JButton{
     public ButtonCustom(String text, String icon,String color) {
         init(text,icon,color);

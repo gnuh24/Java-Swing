@@ -1,19 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package org.example.GUI.GUIDialog;
+package GUI.GUIDialog;
+import GUI.GUIThanhPhan.ButtonCustom;
+import GUI.GUIThanhPhan.InputFormCustom;
 import javax.swing.*;
 
-import org.example.GUI.GUIThanhPhan.ButtonCustom;
-import org.example.GUI.GUIThanhPhan.InputFormCustom;
+
 
 import java.awt.*;
 import java.awt.event.*;
-/**
- *
- * @author Admin
- */
+
 public class LoaiSPDialog extends  JDialog implements ActionListener{
     public String tieuDe,type; // type để set cho nút thêm hoặc xóa
     public InputFormCustom maLoaiSP, tenLoaiSP, maKho;

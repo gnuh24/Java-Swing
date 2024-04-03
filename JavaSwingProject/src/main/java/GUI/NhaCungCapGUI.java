@@ -1,4 +1,4 @@
-package org.example.GUI;
+package GUI;
 
 public class NhaCungCapGUI {
 }
