@@ -7,9 +7,6 @@ import java.util.Map;
 
 
 public class CloundinaryServices {
-
-
-
     private static final String folder = "JavaSwingProject";
 
     private static final String urlImage = "http://res.cloudinary.com/djhoea2bo/image/upload/v1711511636/";
