@@ -35,10 +35,10 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO>{
                 int gia=kq.getInt("Gia");
                 int soLuong=kq.getInt("SoLuongConLai");
                 boolean trangThai= kq.getBoolean("TrangThai");
-                String maLoaiSP=String.valueOf(kq.getInt("MaLoaiSanPham"));
+                int maLoaiSP=kq.getInt("MaLoaiSanPham");
                 String hinhAnh=kq.getString("AnhMinhHoa");
                 int maKho=kq.getInt("MaKhoHang");
-                SanPhamDTO sp= new SanPhamDTO(maSP, tenSP, xuatXu, gia, soLuong, trangThai, hinhAnh, maSP, maKho);
+                SanPhamDTO sp= new SanPhamDTO(maSP, tenSP, xuatXu, gia, soLuong, trangThai, hinhAnh, maLoaiSP, maKho);
                 list.add(sp);
                 
             }
@@ -65,10 +65,10 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO>{
                 int gia=kq.getInt("Gia");
                 int soLuong=kq.getInt("SoLuongConLai");
                 boolean trangThai= kq.getBoolean("TrangThai");
-                String maLoaiSP=String.valueOf(kq.getInt("MaLoaiSanPham"));
+                int maLoaiSP=(kq.getInt("MaLoaiSanPham");
                 String hinhAnh=kq.getString("AnhMinhHoa");
                 int maKho=kq.getInt("MaKhoHang");
-                sanPham= new SanPhamDTO(maSP, tenSP, xuatXu, gia, soLuong, trangThai, hinhAnh, maSP, maKho);
+                sanPham= new SanPhamDTO(maSP, tenSP, xuatXu, gia, soLuong, trangThai, hinhAnh, maLoaiSP, maKho);
             }
             JDBCConfigure.closeConnection();
         } catch (SQLException ex) {
