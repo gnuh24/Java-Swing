@@ -11,7 +11,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-
 public class SanPhamDAO implements DAOInterface<SanPhamDTO>{
     
     public int check=0;
