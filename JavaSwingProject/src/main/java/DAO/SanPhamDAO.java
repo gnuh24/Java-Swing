@@ -43,6 +43,7 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO>{
                 list.add(sp);
                 
             }
+            JDBCConfigure.closeConnection();
         } catch (SQLException ex) {
             Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -51,36 +52,101 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO>{
 
     @Override
     public SanPhamDTO getById(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        SanPhamDTO sanPham=null;
+        try {
+            Connection con= JDBCConfigure.getConnection();
+            String sql="Select * From sanpham Where MaSanPham=?";
+            PreparedStatement pst= con.prepareStatement(sql);
+            pst.setString(0, String.valueOf(id));
+            ResultSet kq=pst.executeQuery();    
+            while(kq.next()){
+                int maSP=kq.getInt("MaSanPham");
+                String tenSP=kq.getString("TenSanPham");
+                String xuatXu=kq.getString("XuatXu");
+                int gia=kq.getInt("Gia");
+                int soLuong=kq.getInt("SoLuongConLai");
+                boolean trangThai= kq.getBoolean("TrangThai");
+                String maLoaiSP=String.valueOf(kq.getInt("MaLoaiSanPham"));
+                String hinhAnh=kq.getString("AnhMinhHoa");
+                int maKho=kq.getInt("MaKhoHang");
+                sanPham= new SanPhamDTO(maSP, tenSP, xuatXu, gia, soLuong, trangThai, hinhAnh, maSP, maKho);
+            }
+            JDBCConfigure.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return sanPham;
     }
-
     @Override
     public boolean create(Integer maKhoHang, SanPhamDTO sanPhamDTO) {
-//        try {
-//            Connection ketNoi= JDBCConfigure.getConnection();
-//
-//            String sql="";
-//
-//            System.out.println(ketNoi);
-//            PreparedStatement pst= ketNoi.prepareStatement(sql);
-//
-//
-//            return check;
-//        } catch (SQLException ex) {
-//            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return check;
-        return true;
+        Connection con= JDBCConfigure.getConnection();
+        try {
+
+
+            String sql="Insert Into sanpham (MaSanPham, TenSanPham, XuatXu, Gia, SoLuongConLai, TrangThai, AnhMinhHoa, MaLoaiSanPham, MaKhoHang)"
+                        +" Values (?, ?, ?, ?, ?, 1, ?, ?, ?)";
+            PreparedStatement pst= con.prepareStatement(sql);
+            
+            pst.setString(0, String.valueOf(sanPhamDTO.getMaSanPham()));
+            pst.setString(1, String.valueOf(sanPhamDTO.getTenSanPham()));
+            pst.setString(2, sanPhamDTO.getXuatXu());
+            pst.setString(3, String.valueOf(sanPhamDTO.getGiaSanPham()));
+            pst.setString(4, String.valueOf(sanPhamDTO.getSoLuongConLai()));
+            pst.setString(5, String.valueOf(sanPhamDTO.getAnhMinhhoa()));
+            pst.setString(6, String.valueOf(sanPhamDTO.getMaLoaiSanPham()));
+            pst.setString(7, String.valueOf(sanPhamDTO.getMaKhoHang())); 
+            check=pst.executeUpdate(sql);
+            
+            JDBCConfigure.closeConnection();
+            
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 
     @Override
     public boolean update(SanPhamDTO sanPhamDTO) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Connection con = JDBCConfigure.getConnection();
+        try {
 
+            String sql="Update sanpham Set, MaSanPham=?, TenSanPham=?, XuatXu=?, Gia=?, SoLuongConLai=?, TrangThai=1, MaLoaiSanPham=?, AnhMinhHoa=?, MaKhoHang=? Where MaSanPham=?";
+            PreparedStatement pst= con.prepareStatement(sql);
+            pst.setString(0, String.valueOf(sanPhamDTO.getMaSanPham()));
+            pst.setString(1, sanPhamDTO.getTenSanPham());
+            pst.setString(2, sanPhamDTO.getXuatXu());
+            pst.setString(3, String.valueOf(sanPhamDTO.getGiaSanPham()));
+            pst.setString(4, String.valueOf(sanPhamDTO.getSoLuongConLai()));
+            pst.setString(5, String.valueOf(sanPhamDTO.getMaLoaiSanPham()));
+            pst.setString(6, sanPhamDTO.getAnhMinhhoa());
+            pst.setString(7, String.valueOf(sanPhamDTO.getMaKhoHang()));
+            pst.setString(8, String.valueOf(sanPhamDTO.getMaSanPham()));
+            check=pst.executeUpdate(sql);
+            
+            JDBCConfigure.closeConnection();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 
     @Override
     public boolean delete(SanPhamDTO sanPhamDTO) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Connection con=JDBCConfigure.getConnection();
+        try {
+
+            String sql="Delete from sanpham Where MaSanPham=?";
+            PreparedStatement pst=con.prepareStatement(sql);
+            pst.setString(0, String.valueOf(sanPhamDTO.getMaSanPham()));
+            check=pst.executeUpdate(sql);
+            JDBCConfigure.closeConnection();
+            return true;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 }
