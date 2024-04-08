@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
+
 public class SanPhamDAO implements DAOInterface<SanPhamDTO>{
     
     public int check=0;
@@ -27,7 +28,7 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO>{
             Connection con= JDBCConfigure.getConnection();
             String sql="Select * From sanpham";
             PreparedStatement pst=con.prepareStatement(sql);
-            ResultSet kq=pst.executeQuery(sql);
+            ResultSet kq=pst.executeQuery();
             while( kq.next()){
                 int maSP=kq.getInt("MaSanPham");
                 String tenSP=kq.getString("TenSanPham");
@@ -65,10 +66,10 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO>{
                 int gia=kq.getInt("Gia");
                 int soLuong=kq.getInt("SoLuongConLai");
                 boolean trangThai= kq.getBoolean("TrangThai");
-                int maLoaiSP=(kq.getInt("MaLoaiSanPham");
+                String maLoaiSP=String.valueOf(kq.getInt("MaLoaiSanPham"));
                 String hinhAnh=kq.getString("AnhMinhHoa");
                 int maKho=kq.getInt("MaKhoHang");
-                sanPham= new SanPhamDTO(maSP, tenSP, xuatXu, gia, soLuong, trangThai, hinhAnh, maLoaiSP, maKho);
+                sanPham= new SanPhamDTO(maSP, tenSP, xuatXu, gia, soLuong, trangThai, hinhAnh, maSP, maKho);
             }
             JDBCConfigure.closeConnection();
         } catch (SQLException ex) {
@@ -82,19 +83,20 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO>{
         try {
 
 
-            String sql="Insert Into sanpham (MaSanPham, TenSanPham, XuatXu, Gia, SoLuongConLai, TrangThai, AnhMinhHoa, MaLoaiSanPham, MaKhoHang)"
-                        +" Values (?, ?, ?, ?, ?, 1, ?, ?, ?)";
+        String sql = "INSERT INTO sanpham (MaSanPham, TenSanPham, XuatXu, Gia, SoLuongConLai, TrangThai, AnhMinhHoa, MaLoaiSanPham, MaKhoHang)"
+                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pst= con.prepareStatement(sql);
             
-            pst.setString(0, String.valueOf(sanPhamDTO.getMaSanPham()));
-            pst.setString(1, String.valueOf(sanPhamDTO.getTenSanPham()));
-            pst.setString(2, sanPhamDTO.getXuatXu());
-            pst.setString(3, String.valueOf(sanPhamDTO.getGiaSanPham()));
-            pst.setString(4, String.valueOf(sanPhamDTO.getSoLuongConLai()));
-            pst.setString(5, String.valueOf(sanPhamDTO.getAnhMinhhoa()));
-            pst.setString(6, String.valueOf(sanPhamDTO.getMaLoaiSanPham()));
-            pst.setString(7, String.valueOf(sanPhamDTO.getMaKhoHang())); 
-            check=pst.executeUpdate(sql);
+            pst.setInt(1, sanPhamDTO.getMaSanPham());
+            pst.setString(2, sanPhamDTO.getTenSanPham());
+            pst.setString(3, sanPhamDTO.getXuatXu());
+            pst.setInt(4, sanPhamDTO.getGiaSanPham());
+            pst.setInt(5, sanPhamDTO.getSoLuongConLai());
+            pst.setBoolean(6, true);
+            pst.setString(7, sanPhamDTO.getAnhMinhhoa());
+            pst.setInt(8, sanPhamDTO.getMaLoaiSanPham());
+            pst.setInt(9, sanPhamDTO.getMaKhoHang()); 
+            check=pst.executeUpdate();
             
             JDBCConfigure.closeConnection();
             
@@ -112,16 +114,16 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO>{
 
             String sql="Update sanpham Set, MaSanPham=?, TenSanPham=?, XuatXu=?, Gia=?, SoLuongConLai=?, TrangThai=1, MaLoaiSanPham=?, AnhMinhHoa=?, MaKhoHang=? Where MaSanPham=?";
             PreparedStatement pst= con.prepareStatement(sql);
-            pst.setString(0, String.valueOf(sanPhamDTO.getMaSanPham()));
-            pst.setString(1, sanPhamDTO.getTenSanPham());
-            pst.setString(2, sanPhamDTO.getXuatXu());
-            pst.setString(3, String.valueOf(sanPhamDTO.getGiaSanPham()));
-            pst.setString(4, String.valueOf(sanPhamDTO.getSoLuongConLai()));
-            pst.setString(5, String.valueOf(sanPhamDTO.getMaLoaiSanPham()));
-            pst.setString(6, sanPhamDTO.getAnhMinhhoa());
-            pst.setString(7, String.valueOf(sanPhamDTO.getMaKhoHang()));
-            pst.setString(8, String.valueOf(sanPhamDTO.getMaSanPham()));
-            check=pst.executeUpdate(sql);
+            pst.setString(1, String.valueOf(sanPhamDTO.getMaSanPham()));
+            pst.setString(2, sanPhamDTO.getTenSanPham());
+            pst.setString(3, sanPhamDTO.getXuatXu());
+            pst.setString(4, String.valueOf(sanPhamDTO.getGiaSanPham()));
+            pst.setString(5, String.valueOf(sanPhamDTO.getSoLuongConLai()));
+            pst.setString(6, String.valueOf(sanPhamDTO.getMaLoaiSanPham()));
+            pst.setString(7, sanPhamDTO.getAnhMinhhoa());
+            pst.setString(8, String.valueOf(sanPhamDTO.getMaKhoHang()));
+            pst.setString(9, String.valueOf(sanPhamDTO.getMaSanPham()));
+            check=pst.executeUpdate();
             
             JDBCConfigure.closeConnection();
             return true;
@@ -136,10 +138,10 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO>{
         Connection con=JDBCConfigure.getConnection();
         try {
 
-            String sql="Delete from sanpham Where MaSanPham=?";
+            String sql="DELETE FROM sanpham WHERE MaSanPham=?";
             PreparedStatement pst=con.prepareStatement(sql);
-            pst.setString(0, String.valueOf(sanPhamDTO.getMaSanPham()));
-            check=pst.executeUpdate(sql);
+            pst.setInt(1, sanPhamDTO.getMaSanPham());
+            check=pst.executeUpdate();
             JDBCConfigure.closeConnection();
             return true;
             
