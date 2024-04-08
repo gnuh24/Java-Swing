@@ -1,6 +1,9 @@
 
 package GUI.GUIDialog;
 
+import BUS.LoaiSanPhamBUS;
+import BUS.SanPhamBUS;
+import DTO.ThongTinSanPham.SanPhamDTO;
 import GUI.GUIThanhPhan.ComboBoxFormCustom;
 import GUI.GUIThanhPhan.InputFormCustom;
 import javax.swing.*;
@@ -20,22 +23,27 @@ import javax.swing.border.EmptyBorder;
 
 public class SanPhamDialog extends  JDialog implements ActionListener{
     public String tieuDe,type;
-    public int dong;
-    public JTable thongTin;
     public InputFormCustom maSP ,tenSP, soLuong, thuongHieu, trongLuong, giaSP;
     public ComboBoxFormCustom xuatXu,tenLoai;
     private JLabel hinhAnh;
+    private SanPhamDTO SPDuocChon;
+    
+    
+    private LoaiSanPhamBUS LoaiSPBUS= new LoaiSanPhamBUS();
+    private SanPhamBUS SanPhamBUS= new SanPhamBUS();
+    
+    
     public SanPhamDialog(String title,String type) {
         this.tieuDe=title;
         this.type=type;
         this.init();
     }
-    public SanPhamDialog(String title,String type, JTable thongtin, int dong) {
+    public SanPhamDialog(String title,String type, SanPhamDTO sanPhamDuocChon) {
         this.tieuDe=title;
         this.type=type;
-        this.thongTin=thongtin;
-        this.dong=dong;
+        this.SPDuocChon=sanPhamDuocChon;
         this.init();
+
     }
     
     public void init(){
@@ -86,15 +94,14 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
         // phải là các input cho sản phẩm
         JPanel thongTinSP=new JPanel(new FlowLayout(FlowLayout.CENTER,10,10));//GridLayout(3,4,10,5)
         thongTinSP.setPreferredSize(new Dimension(650,600));
-        String xuatxu[]= {"Việt Nam","Nhật Bản","Hàn Quốc","Trung Quốc","Mỹ","Singapore"};
-        String loai[]={"Loại A","Loại B","Loại C","Loại D","Loại E"};
+        String xuatxu[]= {"Tất Cả","Đan Mạch", "Nhật Bản"};
         maSP= new InputFormCustom("Mã Sản Phẩm:");
         tenSP= new InputFormCustom("Tên Sản Phẩm:");
         soLuong= new InputFormCustom("Số Lượng:");
         xuatXu= new ComboBoxFormCustom("Xuất Xứ:",xuatxu);
         //thuongHieu= new InputFormCustom("Thương Hiệu:");
         //trongLuong= new InputFormCustom("Trọng Lượng:");
-        tenLoai= new ComboBoxFormCustom("Loại:",loai);
+        tenLoai= new ComboBoxFormCustom("Loại:",LoaiSPBUS.tenLoaiSanPham());
         giaSP= new InputFormCustom("Giá Sản Phẩm:");
         thongTinSP.add(maSP); thongTinSP.add(tenSP); thongTinSP.add(tenLoai); 
         thongTinSP.add(soLuong); thongTinSP.add(giaSP);thongTinSP.add(xuatXu); 
@@ -116,6 +123,7 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
             themSP.setBackground(Color.decode("#66FF33"));
             noiDungDuoi.add(themSP);
             huySP= new JButton("Hủy Bỏ");
+            themSP.addActionListener(this);
             themSP.setForeground(Color.white);
         }
         else {
@@ -148,23 +156,21 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
 
     }
     public void themDuLieu(){
-        maSP.getTxtForm().setText((thongTin.getValueAt(dong, 2)).toString());
-        tenSP.getTxtForm().setText((thongTin.getValueAt(dong, 3)).toString());
-        soLuong.getTxtForm().setText((thongTin.getValueAt(dong, 4)).toString());
-        //thuongHieu.getTxtForm().setText((thongTin.getValueAt(dong, 5)).toString());
-        //trongLuong.getTxtForm().setText((thongTin.getValueAt(dong, 6)).toString());
-        xuatXu.getList().setSelectedItem(thongTin.getValueAt(dong,5).toString());   
-        giaSP.getTxtForm().setText((thongTin.getValueAt(dong, 6)).toString());
-        //tenLoai.getTxtForm().setText((thongTin.getValueAt(dong, 2)).toString());
-        
+        this.maSP.getTxtForm().setText(this.SPDuocChon.getMaSanPham().toString());
+        this.tenSP.getTxtForm().setText(this.SPDuocChon.getTenSanPham());
+        this.tenLoai.getList().setSelectedIndex(this.SPDuocChon.getMaLoaiSanPham());
+        this.soLuong.getTxtForm().setText(this.SPDuocChon.getSoLuongConLai().toString());
+        this.giaSP.getTxtForm().setText(this.SPDuocChon.getGiaSanPham().toString());
+        this.xuatXu.getList().setSelectedIndex(this.SPDuocChon.getMaLoaiSanPham());
         
     }
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        if (ae.getActionCommand().equals("Hủy Bỏ") || ae.getActionCommand().equals("Thoát"))
+        String lenh=ae.getActionCommand();
+        if (lenh.equals("Hủy Bỏ") || lenh.equals("Thoát"))
             this.dispose();
-        if( ae.getActionCommand().equals("Hình ảnh")){
+        if( lenh.equals("Hình ảnh")){
             JFileChooser fileChooser = new JFileChooser();
                 fileChooser.setDialogTitle("Choose an Image");
                 int userSelection = fileChooser.showOpenDialog(SanPhamDialog.this);
@@ -174,6 +180,26 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
                     Image scaleImage = icon.getImage().getScaledInstance(hinhAnh.getWidth()-10, hinhAnh.getHeight()-10,Image.SCALE_SMOOTH);
                     hinhAnh.setIcon(new ImageIcon(scaleImage));
                 }
-            }
         }
+        
+        if(lenh.equals("Thêm SP Mới")){
+            int maSP=Integer.parseInt(this.maSP.txtForm.getText());
+            String tenSP=this.tenSP.txtForm.getText();
+            String xuatXu=this.xuatXu.list.getSelectedItem().toString();
+            int giaSP=Integer.parseInt(this.giaSP.txtForm.getText());
+            int soLuong=Integer.parseInt(this.soLuong.txtForm.getText());
+            String anhMinhHoa=this.hinhAnh.getText();
+            int maLoai=tenLoai.list.getSelectedIndex();
+            int maKho=1;
+            SanPhamDTO spMoi=new SanPhamDTO(maSP, tenSP, xuatXu, giaSP, soLuong, true, anhMinhHoa, maLoai, maKho);
+            if(SanPhamBUS.create(spMoi)){
+                JOptionPane.showMessageDialog(this, "Thêm Sản Phẩm Mới Thành Công ^^","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+            }
+            else JOptionPane.showMessageDialog(this, "Lỗi, vui lòng kiểm tra lại!","Thông báo",JOptionPane.ERROR_MESSAGE);
+            // ktra dữ liệu
+            // thêm sản phẩm
+        }
+        
     }
+}
