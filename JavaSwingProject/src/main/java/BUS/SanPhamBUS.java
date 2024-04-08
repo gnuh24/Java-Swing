@@ -9,7 +9,8 @@ import DTO.ThongTinSanPham.SanPhamDTO;
 public class SanPhamBUS {
     private final SanPhamDAO sanPhamDAO= new SanPhamDAO();
     private ArrayList<SanPhamDTO> danhSachSanPham= new ArrayList<>();
-
+    private LoaiSanPhamBUS loaiSPBUS= new LoaiSanPhamBUS();
+    
     public SanPhamBUS() {
         danhSachSanPham=sanPhamDAO.getAll(0);
     }
@@ -65,14 +66,14 @@ public class SanPhamBUS {
         return false;
     }
     
-    // đang tìm kiếm với mã sản phẩm và tên
+    // đang tìm kiếm với tên và loại sản phẩm
     // các loại tìm kiếm khác sau này có nhu cầu thì mở rộng sau
     public ArrayList<SanPhamDTO> search(String txt){
         txt=txt.toLowerCase();
         ArrayList<SanPhamDTO> kq= new ArrayList<>();
         for(SanPhamDTO sp: this.danhSachSanPham){
-            if( sp.getMaSanPham().equals(txt) ||
-                sp.getTenSanPham().toLowerCase().contains(txt))
+            if( sp.getTenSanPham().toLowerCase().contains(txt) || 
+                loaiSPBUS.tenLoaiSanPham()[sp.getMaLoaiSanPham()].toLowerCase().equals(txt))
                     kq.add(sp);
         }
         return kq;
