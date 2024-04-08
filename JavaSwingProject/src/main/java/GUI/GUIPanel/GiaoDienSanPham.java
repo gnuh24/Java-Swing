@@ -1,18 +1,26 @@
 package GUI.GUIPanel;
 
+import BUS.LoaiSanPhamBUS;
 import BUS.SanPhamBUS;
 import DTO.ThongTinSanPham.SanPhamDTO;
 import GUI.GUIDialog.SanPhamDialog;
 import GUI.GUIThanhPhan.ButtonCustom;
+import Others.CloundinaryServices;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -26,8 +34,9 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
     private  JTable thongTin;
     private  DefaultTableModel model;
     private SanPhamBUS SPBUS= new SanPhamBUS();
+    private LoaiSanPhamBUS LoaiSPBUS= new LoaiSanPhamBUS();
     private ArrayList<SanPhamDTO> listSP= SPBUS.getAll();
-    
+    private JComboBox<String> locSP;
     
     public GiaoDienSanPham()  {
         this.setSize(1200,800);// 1980, 1050
@@ -53,9 +62,9 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
         JPanel chucNangPhai= new JPanel(new FlowLayout(FlowLayout.RIGHT,20,20));
         chucNangPhai.setBackground(Color.WHITE);
         JButton themSP,xoaSP,excelSP;
-        xoaSP = new ButtonCustom("Xóa Sản Phẩm", "iconDelete24.png");
-        themSP= new ButtonCustom("Thêm Sản Phẩm", "iconAdd24.png");
-        excelSP= new ButtonCustom("Xuất File Excel", "iconExcel24.png");
+        xoaSP = new ButtonCustom("Xóa Sản Phẩm", "C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHung\\JavaHung\\src\\main\\java\\Resources\\iconDelete24.png");
+        themSP= new ButtonCustom("Thêm Sản Phẩm", "C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHung\\JavaHung\\src\\main\\java\\Resources\\iconAdd24.png");
+        excelSP= new ButtonCustom("Xuất File Excel", "C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHung\\JavaHung\\src\\main\\java\\Resources\\iconExcel24.png");
         xoaSP.setHorizontalTextPosition(SwingConstants.CENTER); 
         xoaSP.setVerticalTextPosition(SwingConstants.BOTTOM);
         themSP.setHorizontalTextPosition(SwingConstants.CENTER); 
@@ -71,8 +80,7 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
         // PanelDuoi
         JPanel panelDuoi= new JPanel(new BorderLayout(0,10));
         //PanelDuoi TimKiem
-        String loc[]={"Tất cả","Lọc A","Lọc B","Lọc C","Lọc D"};
-        JComboBox<String> locSP= new JComboBox<>(loc);
+        locSP= new JComboBox<>(LoaiSPBUS.tenLoaiSanPham());
         locSP.setBackground(Color.WHITE);
         JPanel timKiemLocSP= new JPanel(new FlowLayout(FlowLayout.LEFT,20,10));
         locSP.setPreferredSize(new Dimension(150,40));
@@ -108,12 +116,15 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
         timKiem.setPreferredSize(new Dimension(900, 40));
         timKiemLocSP.add(locSP); timKiemLocSP.add(timKiem);
         // PanelDuoi Table
-        String[] colum = new String[]{"STT", "Hình Ảnh", "Mã SP", "Tên sản phẩm", "Xuất xứ",  "Số lượng", "Giá"};
+        String[] colum = new String[]{"STT", "Hình Ảnh", "Mã Sản Phẩm", "Tên sản phẩm","Loại Sản Phẩm", "Xuất xứ",  "Số lượng", "Giá"};
         model = new DefaultTableModel();
         model.setColumnIdentifiers(colum);
         thongTin = new JTable(model);
+        thongTin.setPreferredScrollableViewportSize(thongTin.getPreferredSize());
         loadDuLieuTuDatabase(listSP);
+        //loadHinhAnhSanPham();
         chinhSuaGiaoDienTable();
+
 
         JScrollPane dulieuSP = new JScrollPane(thongTin);
 
@@ -122,18 +133,30 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
         panelDuoi.add(dulieuSP,BorderLayout.CENTER);
         
         //// mục sự kiện chính cho giao diện
+        // nút thêm sp
         themSP.addActionListener(this);
+        // double click xem thông tin
         thongTin.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 JTable target = (JTable) e.getSource();
-                if (e.getClickCount() == 2) 
-                    new SanPhamDialog("Chi Tiết Sản Phẩm","ChiTiet",thongTin,thongTin.getSelectedRow());
-                
+                if (e.getClickCount() == 2)
+                    new SanPhamDialog("Chi Tiết Sản Phẩm","ChiTiet",listSP.get(thongTin.getSelectedRow()));
+
             }
         });
+        // nút xóa sản phẩm
         xoaSP.addActionListener(this);
-
+        // lọc loại sản phẩm và tìm kiếm
+        locSP.addActionListener(this);
+        timKiem.addKeyListener(new KeyAdapter(){
+            public void keyReleased(KeyEvent e){
+                listSP=SPBUS.search(timKiem.getText());
+                loadDuLieuTuDatabase(listSP);
+            }
+        });
+        
+        
         this.add(panelTren,BorderLayout.NORTH);
         this.add(panelDuoi,BorderLayout.CENTER);
     }
@@ -154,39 +177,65 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
         
         
        for(int i=0; i < thongTin.getColumnCount();i++){
-            if( i==0)
-               thongTin.getColumnModel().getColumn(i).setPreferredWidth(20);
-            else if( i==3)
-               thongTin.getColumnModel().getColumn(3).setPreferredWidth(300);
-            else thongTin.getColumnModel().getColumn(i).setPreferredWidth(100);
+            if( i==3)
+               thongTin.getColumnModel().getColumn(3).setPreferredWidth(350);
+            else thongTin.getColumnModel().getColumn(i).setPreferredWidth(150);
+            
             if( i!=3)
                 thongTin.getColumnModel().getColumn(i).setCellRenderer(centerRenderer );
-           
-
-       }
+        }
+            thongTin.getColumnModel().getColumn(0).setPreferredWidth(60);
     }
     
     public void loadDuLieuTuDatabase(ArrayList<SanPhamDTO> listSP){
+        model.setRowCount(0);
         int dem=1;
         for(SanPhamDTO sanPham: listSP){
-            Object dong[]={dem,sanPham.getAnhMinhhoa(),sanPham.getMaSanPham(),sanPham.getTenSanPham(),sanPham.getXuatXu(), sanPham.getSoLuongConLai(), sanPham.getGiaSanPham()};
+            Object dong[]={dem,sanPham.getAnhMinhhoa(),sanPham.getMaSanPham(),sanPham.getTenSanPham(),LoaiSPBUS.tenLoaiSanPham()[sanPham.getMaLoaiSanPham()],sanPham.getXuatXu(), sanPham.getSoLuongConLai(), sanPham.getGiaSanPham()};
             model.addRow(dong);
             dem+=1;
         }
     }
+    public void loadHinhAnhSanPham() {
+        //String linkUrl = CloundinaryServices.getUrlImage(this.listSP.get(1).getAnhMinhhoa());
+        try {
+            URL imageUrl = new URL("https://gcs.tripi.vn/public-tripi/tripi-feed/img/474072Vhp/tong-hop-100-hinh-anh-buon-co-don-cuc-dep_042037723.jpg");
+            Icon imageIcon = new ImageIcon(imageUrl);
+            
+            thongTin.setValueAt(imageIcon, 1, 1); // Set hình ảnh vào cột "Hình Ảnh" của JTable
+        } catch (MalformedURLException ex) {
+            System.out.println("Lỗi Link Ảnh Sản Phẩm");
+        }
+}
+    
+    public void reloadData() {
+    listSP = SPBUS.getAll();
+    loadDuLieuTuDatabase(listSP);
+}
+    
     
     @Override
     public void actionPerformed(ActionEvent ae) {
         String lenh=ae.getActionCommand();
         SanPhamDialog a= null;
-        if(lenh.equals("Thêm Sản Phẩm"))
+        if(lenh.equals("comboBoxChanged")){
+            System.out.println("Loại lọc: "+ locSP.getSelectedItem().toString());
+            if (locSP.getSelectedItem().toString().equals("Tất cả"))
+                listSP=SPBUS.getAll();
+            else listSP=SPBUS.search(locSP.getSelectedItem().toString());
+            loadDuLieuTuDatabase(listSP);
+        }else if(lenh.equals("Thêm Sản Phẩm")){
             a=new SanPhamDialog("Thêm Sản Phẩm Mới","Add");
+            reloadData();
+        }
+
         else if(lenh.equals("Xóa Sản Phẩm") && thongTin.getSelectedRow()!=-1){
             int luaChon=JOptionPane.showConfirmDialog(this,"Chắc chắn xóa sản phẩm ?","Xóa Sản Phẩm",JOptionPane.YES_NO_OPTION);
             if( luaChon==0)
             {
-                model.removeRow(thongTin.getSelectedRow());
-                JOptionPane.showMessageDialog(this, "Sản phâm đã xóa");
+                SPBUS.delete(listSP.get(thongTin.getSelectedRow()));
+                JOptionPane.showMessageDialog(this, "Sản phẩm đã xóa");
+                loadDuLieuTuDatabase(SPBUS.getAll());
             }
         }else {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm cần xóa");
@@ -194,14 +243,9 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
     }
     
     public static void main(String[] args) {
-        //try {
-         //   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
             new GiaoDienSanPham();
             
-       //}catch(Exception e){
-         //   e.printStackTrace();
-        //}
-        
     }
 
 
