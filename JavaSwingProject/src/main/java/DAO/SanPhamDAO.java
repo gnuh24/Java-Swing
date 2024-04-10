@@ -112,7 +112,7 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO>{
         Connection con = JDBCConfigure.getConnection();
         try {
 
-            String sql="Update sanpham Set, MaSanPham=?, TenSanPham=?, XuatXu=?, Gia=?, SoLuongConLai=?, TrangThai=1, MaLoaiSanPham=?, AnhMinhHoa=?, MaKhoHang=? Where MaSanPham=?";
+            String sql="Update sanpham Set MaSanPham=?, TenSanPham=?, XuatXu=?, Gia=?, SoLuongConLai=?, TrangThai=1, MaLoaiSanPham=?, AnhMinhHoa=?, MaKhoHang=? Where MaSanPham=?";
             PreparedStatement pst= con.prepareStatement(sql);
             pst.setString(1, String.valueOf(sanPhamDTO.getMaSanPham()));
             pst.setString(2, sanPhamDTO.getTenSanPham());
