@@ -8,6 +8,7 @@ import GUI.GUIPanel.GiaoDienLoaiSanPham;
 import GUI.GUIPanel.GiaoDienSanPham;
 import GUI.GUIThanhPhan.ComboBoxFormCustom;
 import GUI.GUIThanhPhan.InputFormCustom;
+import Others.CloundinaryServices;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,6 +16,8 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -77,7 +80,7 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
          hinhAnh= new JLabel();
         JButton nutHinhAnh= new JButton("Hình ảnh");
         hinhAnh.setBorder(new EmptyBorder(10,10,10,10));
-        hinhAnh.setPreferredSize(new Dimension(400,350));
+        hinhAnh.setPreferredSize(new Dimension(350,350));
         hinhAnh.setBorder(BorderFactory.createCompoundBorder(
                 new EmptyBorder(10, 10, 10, 10), // Đặt khoảng cách
                 BorderFactory.createLineBorder(Color.BLACK) // Đặt màu viền
@@ -160,6 +163,15 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
 
     }
     public void themDuLieu(){
+        URL img=null;
+        try {
+            img = new URL(CloundinaryServices.getUrlImage(this.SPDuocChon.getAnhMinhhoa()));
+        } catch (MalformedURLException ex) {
+            System.out.println("Lỗi ko load được ảnh từ SanPhamDialog");
+        }
+        ImageIcon pic= new ImageIcon(img);
+        Image scaleImage = pic.getImage().getScaledInstance(320, 320,Image.SCALE_SMOOTH);
+        this.hinhAnh.setIcon(new ImageIcon(scaleImage));
         this.maSP.getTxtForm().setText(this.SPDuocChon.getMaSanPham().toString());
         this.tenSP.getTxtForm().setText(this.SPDuocChon.getTenSanPham());
         this.tenLoai.getList().setSelectedIndex(this.SPDuocChon.getMaLoaiSanPham());
@@ -183,7 +195,7 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
                 if (userSelection == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
                     ImageIcon icon = new ImageIcon(selectedFile+"");
-                    Image scaleImage = icon.getImage().getScaledInstance(hinhAnh.getWidth()-10, hinhAnh.getHeight()-10,Image.SCALE_SMOOTH);
+                    Image scaleImage = icon.getImage().getScaledInstance(320, 320,Image.SCALE_SMOOTH);
                     hinhAnh.setIcon(new ImageIcon(scaleImage));
                 }
                 break;
