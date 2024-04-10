@@ -117,7 +117,13 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
         timKiem.setPreferredSize(new Dimension(900, 40));
         timKiemLocSP.add(locSP); timKiemLocSP.add(timKiem);
         // PanelDuoi Table
+        String[] colum = new String[]{"STT", "Hình Ảnh", "Mã Sản Phẩm", "Tên sản phẩm","Loại Sản Phẩm", "Xuất xứ",  "Số lượng", "Giá"};
+        model = new DefaultTableModel();
+        model.setColumnIdentifiers(colum);
+        thongTin = new JTable(model);
+        thongTin.setPreferredScrollableViewportSize(thongTin.getPreferredSize());
         loadDuLieuTuDatabase(listSP);
+//        loadHinhAnhSanPham();
         chinhSuaGiaoDienTable();
 
 
@@ -191,11 +197,7 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
     }
     
     public void loadDuLieuTuDatabase(ArrayList<SanPhamDTO> listSP){
-        String[] colum = new String[]{"STT", "Hình Ảnh", "Mã Sản Phẩm", "Tên sản phẩm","Loại Sản Phẩm", "Xuất xứ",  "Số lượng", "Giá"};
-        model = new DefaultTableModel();
-        model.setColumnIdentifiers(colum);
-        thongTin = new JTable(model);
-        thongTin.setPreferredScrollableViewportSize(thongTin.getPreferredSize());
+        model.setRowCount(0);
         int dem=1;
         for(SanPhamDTO sanPham: listSP){
             Object dong[]={dem,sanPham.getAnhMinhhoa(),sanPham.getMaSanPham(),sanPham.getTenSanPham(),LoaiSPBUS.tenLoaiSanPham()[sanPham.getMaLoaiSanPham()],sanPham.getXuatXu(), sanPham.getSoLuongConLai(), sanPham.getGiaSanPham()};
