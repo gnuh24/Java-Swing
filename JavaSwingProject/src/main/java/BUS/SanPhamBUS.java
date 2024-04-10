@@ -17,6 +17,7 @@ public class SanPhamBUS {
     
     public ArrayList<SanPhamDTO> getAll(){
         
+        danhSachSanPham=sanPhamDAO.getAll(0);
         return this.danhSachSanPham;
     }
     // hàm hỗ trợ lấy ra index trong danh sách sản phẩm dành cho việc update thông tin sản phẩm
