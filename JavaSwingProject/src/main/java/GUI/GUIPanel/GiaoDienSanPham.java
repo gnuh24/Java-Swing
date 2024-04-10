@@ -26,6 +26,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 
 
@@ -116,13 +117,7 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
         timKiem.setPreferredSize(new Dimension(900, 40));
         timKiemLocSP.add(locSP); timKiemLocSP.add(timKiem);
         // PanelDuoi Table
-        String[] colum = new String[]{"STT", "Hình Ảnh", "Mã Sản Phẩm", "Tên sản phẩm","Loại Sản Phẩm", "Xuất xứ",  "Số lượng", "Giá"};
-        model = new DefaultTableModel();
-        model.setColumnIdentifiers(colum);
-        thongTin = new JTable(model);
-        thongTin.setPreferredScrollableViewportSize(thongTin.getPreferredSize());
         loadDuLieuTuDatabase(listSP);
-        //loadHinhAnhSanPham();
         chinhSuaGiaoDienTable();
 
 
@@ -141,8 +136,12 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
             public void mouseClicked(MouseEvent e) {
                 JTable target = (JTable) e.getSource();
                 if (e.getClickCount() == 2)
-                    new SanPhamDialog("Chi Tiết Sản Phẩm","ChiTiet",listSP.get(thongTin.getSelectedRow()));
+                {
+                    SanPhamDialog spDia=new SanPhamDialog("Chi Tiết Sản Phẩm","ChiTiet",listSP.get(thongTin.getSelectedRow()));
+                    loadDuLieuTuDatabase(new SanPhamBUS().getAll());
+                }
 
+                    
             }
         });
         // nút xóa sản phẩm
@@ -164,9 +163,13 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
                 // Căn giữa tiêu đề của các cột
         //DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) thongTin.getTableHeader().getDefaultRenderer();
         //headerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        
         thongTin.setShowGrid(false);        thongTin.setShowHorizontalLines(true);
+        
         thongTin.setDefaultEditor(Object.class, null);
+        
         thongTin.setRowHeight(50);
+       
         thongTin.getTableHeader().setReorderingAllowed(false);
         thongTin.getTableHeader().setPreferredSize(new Dimension(0,50));
         thongTin.getTableHeader().setFont(new Font("Arial",Font.BOLD,15));
@@ -188,7 +191,11 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
     }
     
     public void loadDuLieuTuDatabase(ArrayList<SanPhamDTO> listSP){
-        model.setRowCount(0);
+        String[] colum = new String[]{"STT", "Hình Ảnh", "Mã Sản Phẩm", "Tên sản phẩm","Loại Sản Phẩm", "Xuất xứ",  "Số lượng", "Giá"};
+        model = new DefaultTableModel();
+        model.setColumnIdentifiers(colum);
+        thongTin = new JTable(model);
+        thongTin.setPreferredScrollableViewportSize(thongTin.getPreferredSize());
         int dem=1;
         for(SanPhamDTO sanPham: listSP){
             Object dong[]={dem,sanPham.getAnhMinhhoa(),sanPham.getMaSanPham(),sanPham.getTenSanPham(),LoaiSPBUS.tenLoaiSanPham()[sanPham.getMaLoaiSanPham()],sanPham.getXuatXu(), sanPham.getSoLuongConLai(), sanPham.getGiaSanPham()};
@@ -196,37 +203,46 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
             dem+=1;
         }
     }
-    public void loadHinhAnhSanPham() {
-        //String linkUrl = CloundinaryServices.getUrlImage(this.listSP.get(1).getAnhMinhhoa());
+            //
+    
+   
+public void loadHinhAnhSanPham() {
+    // Example URLs for demonstration7
+    String[] imageURLs = {
+        "https://gcs.tripi.vn/public-tripi/tripi-feed/img/474072Vhp/tong-hop-100-hinh-anh-buon-co-don-cuc-dep_042037723.jpg",
+        "https://gcs.tripi.vn/public-tripi/tripi-feed/img/474072Vhp/tong-hop-100-hinh-anh-buon-co-don-cuc-dep_042037723.jpg"
+    };
+
+    for (int i = 0; i < imageURLs.length; i++) {
         try {
-            URL imageUrl = new URL("https://gcs.tripi.vn/public-tripi/tripi-feed/img/474072Vhp/tong-hop-100-hinh-anh-buon-co-don-cuc-dep_042037723.jpg");
-            Icon imageIcon = new ImageIcon(imageUrl);
-            
-            thongTin.setValueAt(imageIcon, 1, 1); // Set hình ảnh vào cột "Hình Ảnh" của JTable
+            URL imageUrl = new URL(imageURLs[i]);
+            ImageIcon imageIcon = new ImageIcon(imageUrl);
+
+            // Set image into "Hình Ảnh" column of JTable
+            thongTin.setValueAt(imageIcon, i, 1); // Set image into "Hình Ảnh" column of JTable
         } catch (MalformedURLException ex) {
-            System.out.println("Lỗi Link Ảnh Sản Phẩm");
+            System.out.println("Error loading image: " + ex.getMessage());
         }
+    }
 }
     
     public void reloadData() {
-    listSP = SPBUS.getAll();
-    loadDuLieuTuDatabase(listSP);
 }
     
     
     @Override
     public void actionPerformed(ActionEvent ae) {
         String lenh=ae.getActionCommand();
-        SanPhamDialog a= null;
+        SanPhamDialog ab= null;
         if(lenh.equals("comboBoxChanged")){
-            System.out.println("Loại lọc: "+ locSP.getSelectedItem().toString());
             if (locSP.getSelectedItem().toString().equals("Tất cả"))
                 listSP=SPBUS.getAll();
             else listSP=SPBUS.search(locSP.getSelectedItem().toString());
             loadDuLieuTuDatabase(listSP);
         }else if(lenh.equals("Thêm Sản Phẩm")){
-            a=new SanPhamDialog("Thêm Sản Phẩm Mới","Add");
-            reloadData();
+            ab=new SanPhamDialog(this,"Thêm SP mới","Add");
+            listSP=SPBUS.getAll();
+            loadDuLieuTuDatabase(listSP);
         }
 
         else if(lenh.equals("Xóa Sản Phẩm") && thongTin.getSelectedRow()!=-1){
