@@ -135,7 +135,7 @@ public class ChiTietPhieuXuatKho{
             frame.setVisible(true);
       }
       public String toCurrency(int a) {
-            DecimalFormat numberFormat = new DecimalFormat("###,### đ");
+            DecimalFormat numberFormat = new DecimalFormat("###,### VNĐ");
             return  numberFormat.format(a);
       }
       public void setThongTinMain(int maPhieuXuat) {
@@ -160,7 +160,7 @@ public class ChiTietPhieuXuatKho{
             for(int i = 0; i < chiTietPhieuXuatKhoList.size(); i++) {
                   model_ds_ctpxk.addRow(new Object[]{
                         model_ds_ctpxk.getRowCount()+1,
-                        chiTietPhieuXuatKhoList.get(i).getMaPhieu(),
+                        chiTietPhieuXuatKhoList.get(i).getMaSanPham(),
                         sanPhamBUS.getById(chiTietPhieuXuatKhoList.get(i).getMaSanPham()).getTenSanPham(),
                         toCurrency(chiTietPhieuXuatKhoList.get(i).getDonGia()),
                         chiTietPhieuXuatKhoList.get(i).getSoLuong(),
