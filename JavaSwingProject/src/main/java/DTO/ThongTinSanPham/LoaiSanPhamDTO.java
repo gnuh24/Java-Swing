@@ -23,5 +23,12 @@ public class LoaiSanPhamDTO {
 
     private Integer   maKhoHang;
 
+    public LoaiSanPhamDTO(String tenLoaiSanPham, Integer maKhoHang) {
+        this.tenLoaiSanPham = tenLoaiSanPham;
+        this.maKhoHang = maKhoHang;
+    }
+
+    
+    
 
 }
