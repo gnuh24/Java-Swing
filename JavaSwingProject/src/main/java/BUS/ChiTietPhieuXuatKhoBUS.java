@@ -21,4 +21,7 @@ public class ChiTietPhieuXuatKhoBUS {
     public boolean delete(ChiTietPhieuXuatKhoDTO ChiTietPhieuXuatKhoDTO) {
         return ChiTietPhieuXuatKhoDAO.delete(ChiTietPhieuXuatKhoDTO);
     }
+    public boolean updateNgayTaoPhieu() {
+        return true;
+    }
 }
