@@ -30,7 +30,6 @@ public class CloundinaryServices {
 
 
     public static String createImage(String imageUrl){
-
         try {
             /*****************
              *  Tải lên ảnh và lưu vào thư mục JavaSwingProject trên Cloudinary

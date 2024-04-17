@@ -7,7 +7,8 @@
     <list default="true" id="003b6990-b30a-4767-b559-0655e60cd464" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/DAO/NhaCungCapDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/NhaCungCapDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SQL/createDatabase_JavaSwing.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../SQL/createDatabase_JavaSwing.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Others/CloundinaryServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Others/CloundinaryServices.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Others/mysql.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Others/mysql.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
