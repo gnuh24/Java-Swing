@@ -102,12 +102,17 @@ public class XuatHangUI extends JPanel implements ActionListener{
                               table_ds_san_pham.getColumnModel().getColumn(1).setPreferredWidth(225);
                               table_ds_san_pham.getColumnModel().getColumn(2).setPreferredWidth(20);
                               table_ds_san_pham.getColumnModel().getColumn(3).setPreferredWidth(80);
+                              table_ds_san_pham.setRowHeight(40);
                               //? Set vị trí cho nội dung (căn giữa cho nội dung)
                               DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
                               centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
                               table_ds_san_pham.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
                               table_ds_san_pham.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
                               table_ds_san_pham.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+                              JTableHeader header_san_pham = table_ds_san_pham.getTableHeader();
+                              // Set the preferred size of the header
+                              header_san_pham.setPreferredSize(new Dimension(header_san_pham.getWidth(), 35));
+                              table_ds_san_pham.setRowHeight(40);
                               table_ds_san_pham.getTableHeader().setReorderingAllowed(false);
                               ds_san_pham = new JScrollPane(table_ds_san_pham);
                               ds_san_pham.setPreferredSize(new Dimension(550, 600));
@@ -192,8 +197,12 @@ public class XuatHangUI extends JPanel implements ActionListener{
                               table_ds_xuat_hang.getColumnModel().getColumn(3).setPreferredWidth(20);
                               table_ds_xuat_hang.getColumnModel().getColumn(4).setPreferredWidth(70);
                               //? Set vị trí cho nội dung (căn giữa cho nội dung)
-
+                                
+                              JTableHeader header_xuat_hang = table_ds_xuat_hang.getTableHeader();
+                              // Set the preferred size of the header
+                              header_xuat_hang.setPreferredSize(new Dimension(header_xuat_hang.getWidth(), 35));
                               table_ds_xuat_hang.getTableHeader().setReorderingAllowed(false);
+                              table_ds_xuat_hang.setRowHeight(40);
                               ds_xuat_hang = new JScrollPane(table_ds_xuat_hang);
                               ds_xuat_hang.setPreferredSize(new Dimension(550, 550));
 
