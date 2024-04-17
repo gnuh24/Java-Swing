@@ -1,15 +1,17 @@
 package GUI.GUIPanel;
 
 
+import BUS.ChiTietPhieuXuatKhoBUS;
 import BUS.PhieuXuatKhoBUS;
 import DTO.NghiepVuXuatKho.PhieuXuatKhoDTO;
 
-import com.google.protobuf.Timestamp;
+
+import java.time.LocalDateTime;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.text.DecimalFormat;
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -17,7 +19,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 public class PhieuXuatUI extends JPanel implements ActionListener{
-      PhieuXuatKhoBUS XuatHang_BUS = new PhieuXuatKhoBUS();
+      PhieuXuatKhoBUS phieuXuatKhoBUS = new PhieuXuatKhoBUS();
+      ChiTietPhieuXuatKhoBUS chiTietPhieuXuatKhoBUS = new ChiTietPhieuXuatKhoBUS();
       JPanel top;
             JPanel chucNangPanel;
                   JButton xoa_btn;
@@ -60,7 +63,7 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
 
             bot = new JPanel();
                   
-                  String columns_ds_xuat_hang[] = {"Mã phiếu xuất", "Mã kho hàng", "Tên kho hàng", "Ngày xuất kho","Tổng giá trị"};
+                  String columns_ds_xuat_hang[] = {"Mã phiếu xuất", "Mã kho hàng", "Ngày xuất kho","Tổng giá trị"};
                   String data_ds_xuat_hang[][] = {};
                   model_ds_xuat_hang = new DefaultTableModel(data_ds_xuat_hang, columns_ds_xuat_hang){
                         @Override
@@ -68,11 +71,11 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
                               // Đặt kiểu dữ liệu cho từng cột
                               if (columnIndex == 0) {
                                     return Integer.class; // Kiểu dữ liệu cho cột 0 là Integer
-                              } else if (columnIndex == 1 || columnIndex == 2) {
+                              } else if (columnIndex == 1 ) {
                                     return String.class; // Kiểu dữ liệu cho cột 1 và 2 là String
+                              } else if (columnIndex == 2) {
+                                    return LocalDateTime.class; // Giả sử kiểu dữ liệu cho cột 3 là Date
                               } else if (columnIndex == 3) {
-                                    return Timestamp.class; // Giả sử kiểu dữ liệu cho cột 3 là Date
-                              } else if (columnIndex == 4) {
                                     return Integer.class; // Kiểu dữ liệu cho cột 4 là Double
                               } else {
                                     return Object.class; // Hoặc có thể trả về kiểu Object làm mặc định
@@ -84,14 +87,14 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
                   table_ds_xuat_hang.getColumnModel().getColumn(1).setPreferredWidth(100);
                   table_ds_xuat_hang.getColumnModel().getColumn(2).setPreferredWidth(200);
                   table_ds_xuat_hang.getColumnModel().getColumn(3).setPreferredWidth(200);
-                  table_ds_xuat_hang.getColumnModel().getColumn(4).setPreferredWidth(200);
                   //? Set vị trí cho nội dung (căn giữa cho nội dung)
                   DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
                   centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
                   table_ds_xuat_hang.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
                   table_ds_xuat_hang.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+                  table_ds_xuat_hang.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
                   table_ds_xuat_hang.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
-                  table_ds_xuat_hang.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+                  table_ds_xuat_hang.setRowHeight(40);
                   showDanhSachPhieuXuatHang();
                   ds_xuat_hang = new JScrollPane(table_ds_xuat_hang);
                   ds_xuat_hang.setPreferredSize(new Dimension(900, 600));
@@ -105,6 +108,7 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
             setPreferredSize(new Dimension(1300,800));
             setLayout(new FlowLayout());
             setVisible(true);
+            showDanhSachPhieuXuatHang();
       }
       public JButton customButtonOption(JButton button, String linkIMG) {
             BoxLayout boxlayout = new BoxLayout(button, BoxLayout.Y_AXIS);
@@ -125,7 +129,7 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
 
             return button;
       }
-      public String toCurrency(Double a) {
+      public String toCurrency(long a) {
             DecimalFormat numberFormat = new DecimalFormat("###,###.## đ");
             return  numberFormat.format(a);
       }
@@ -142,30 +146,49 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
             }
       }
       public void showDanhSachPhieuXuatHang() {
-//            XuatHangBUS XuatHang_BUS = new XuatHangBUS();
-//            List<PhieuXuatKhoDTO> XuatHangList = XuatHang_BUS.getDanhSachPhieuXuatHang();
-//            for (PhieuXuatKhoDTO XuatHang : XuatHangList) {
-//                  model_ds_xuat_hang.addRow(new Object[]{
-//                              XuatHang.getMaPhieu(),
-//                              XuatHang.getMaKhoHang(),
-//                              XuatHang.getTenKhoHang(),
-//                              XuatHang.getNgayXuatKho(),
-//                              toCurrency(XuatHang.getTongGiaTri())
-//                  });
-//            }
+           PhieuXuatKhoBUS phieuXuatKhoBUS = new PhieuXuatKhoBUS();
+           ArrayList<PhieuXuatKhoDTO> phieuXuatKhoList = phieuXuatKhoBUS.getAll(4);
+           //? Xóa bảng danh sách sản phẩm xuất hàng
+           for (int i = model_ds_xuat_hang.getRowCount() - 1; i >= 0; i--) {
+                 model_ds_xuat_hang.removeRow(i);
+           }
+           for (PhieuXuatKhoDTO phieuXuatKho : phieuXuatKhoList) {
+                 model_ds_xuat_hang.addRow(new Object[]{
+                             phieuXuatKho.getMaPhieu(),
+                             phieuXuatKho.getMaKhoHang(),
+                             String.valueOf(phieuXuatKho.getNgayXuatKho()).replace("T"," "),
+                             toCurrency(phieuXuatKho.getTongGiaTri())
+                 });
+           }
       }
       public void xoaChiTietPhieuXuatHang() {
-            System.out.println("Xoa btn");
+            int selectedRow = table_ds_xuat_hang.getSelectedRow();
+            //? kiểm tra xem có dòng nào đang được chọn không
+            if(selectedRow != -1) {
+                  int maPhieuXuat = (Integer) table_ds_xuat_hang.getValueAt(selectedRow, 0);
+                  PhieuXuatKhoDTO temp = phieuXuatKhoBUS.getById(maPhieuXuat);
+                  phieuXuatKhoBUS.delete(temp);
+                  showDanhSachPhieuXuatHang();
+            } else {
+                  JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 phiếu xuất hàng!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
+            }
       }
       public void suaChiTietPhieuXuatHang() {
-            System.out.println("Sua btn");
+            int selectedRow = table_ds_xuat_hang.getSelectedRow();
+            //? kiểm tra xem có dòng nào đang được chọn không
+            if(selectedRow != -1) {
+                  int maPhieuXuat = (Integer) table_ds_xuat_hang.getValueAt(selectedRow, 0);
+                  new SuaChiTietPhieuXuatKho(maPhieuXuat);
+            } else {
+                  JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 phiếu xuất hàng!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
+            }
       }
       public void xemChiTietPhieuXuatHang() {
             int selectedRow = table_ds_xuat_hang.getSelectedRow();
             //? kiểm tra xem có dòng nào đang được chọn không
             if(selectedRow != -1) {
                   int maPhieuXuat = (Integer) table_ds_xuat_hang.getValueAt(selectedRow, 0);
-                  new ChiTietPhieuXuat(maPhieuXuat);
+                  new ChiTietPhieuXuatKho(maPhieuXuat);
             } else {
                   JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 phiếu xuất hàng!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
             }

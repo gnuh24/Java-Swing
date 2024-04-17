@@ -38,7 +38,7 @@ public class ChiTietPhieuXuatKho{
       public ChiTietPhieuXuatKho(int maPhieuXuat) {
 
             header = new JPanel();
-            header_lb = new JLabel("CHI TIẾT PHIẾU XUẤT");
+                  header_lb = new JLabel("CHI TIẾT PHIẾU XUẤT");
                   header_lb.setForeground(Color.WHITE);
                   header_lb.setFont(new Font("Arial", Font.BOLD, 20));
             header.setBackground(Color.BLACK);
@@ -105,6 +105,8 @@ public class ChiTietPhieuXuatKho{
                         table_ds_ctpxk.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
                         table_ds_ctpxk.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
                         table_ds_ctpxk.getTableHeader().setReorderingAllowed(false);
+                        table_ds_ctpxk.setRowHeight(40);
+                        table_ds_ctpxk.setEnabled(false);
                         ds_ctpxk = new JScrollPane(table_ds_ctpxk);
                         ds_ctpxk.setPreferredSize(new Dimension(730,300));
                         ds_ctpxk.setBackground(Color.WHITE);

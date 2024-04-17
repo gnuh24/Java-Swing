@@ -6,6 +6,8 @@ import Others.JDBCConfigure;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class PhieuXuatKhoDAO implements DAOInterface<PhieuXuatKhoDTO>{
@@ -24,8 +26,10 @@ public class PhieuXuatKhoDAO implements DAOInterface<PhieuXuatKhoDTO>{
                         phieuXuatKhoObject.setMaPhieu(resultSet.getInt("MaPhieu"));
                         
                         //? Định dạng Localdatetime
-
-                        phieuXuatKhoObject.setNgayXuatKho(resultSet.getString("NgayXuatKho"));
+                        String dateString = resultSet.getString("NgayXuatKho");
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                        LocalDateTime parsedDateTime = LocalDateTime.parse(dateString, formatter);
+                        phieuXuatKhoObject.setNgayXuatKho(parsedDateTime);
                         phieuXuatKhoObject.setTongGiaTri(resultSet.getLong("TongGiaTri"));
                         phieuXuatKhoObject.setMaKhoHang(resultSet.getInt("MaKhoHang"));
 
@@ -40,22 +44,25 @@ public class PhieuXuatKhoDAO implements DAOInterface<PhieuXuatKhoDTO>{
 
       @Override
       public PhieuXuatKhoDTO getById(Integer id) {
-            PhieuXuatKhoDTO phieuXuatHang = new PhieuXuatKhoDTO();
+            PhieuXuatKhoDTO phieuXuatKho = new PhieuXuatKhoDTO();
            try {
                  Statement statement = JDBCConfigure.getConnection().createStatement();
-                 ResultSet phieuXuatHangRow = statement.executeQuery(
+                 ResultSet phieuXuatKhoRow = statement.executeQuery(
                      "select * from phieuxuatkho where phieuxuatkho.MaPhieu = " + id);
-                 while(phieuXuatHangRow.next()) {
-                       phieuXuatHang.setMaPhieu(phieuXuatHangRow.getInt("MaPhieu"));
-                       phieuXuatHang.setMaKhoHang(phieuXuatHangRow.getInt("MaKhoHang"));
-                       phieuXuatHang.setNgayXuatKho(phieuXuatHangRow.getString("NgayXuatKho"));
-                       phieuXuatHang.setTongGiaTri(phieuXuatHangRow.getInt("TongGiaTri"));
+                 while(phieuXuatKhoRow.next()) {
+                       phieuXuatKho.setMaPhieu(phieuXuatKhoRow.getInt("MaPhieu"));
+                       phieuXuatKho.setMaKhoHang(phieuXuatKhoRow.getInt("MaKhoHang"));
+                       String dateString = phieuXuatKhoRow.getString("NgayXuatKho");
+                       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                       LocalDateTime parsedDateTime = LocalDateTime.parse(dateString, formatter);
+                       phieuXuatKho.setNgayXuatKho(parsedDateTime);
+                       phieuXuatKho.setTongGiaTri(phieuXuatKhoRow.getInt("TongGiaTri"));
                  }
                  JDBCConfigure.closeConnection();
            } catch (SQLException e) {
                  e.printStackTrace(); // hoặc xử lý ngoại lệ theo cách phù hợp
            }
-            return phieuXuatHang;
+            return phieuXuatKho;
       }
       @Override
       public boolean create(Integer maKhoHang, PhieuXuatKhoDTO phieuXuatKhoDTO) {
@@ -126,7 +133,21 @@ public class PhieuXuatKhoDAO implements DAOInterface<PhieuXuatKhoDTO>{
       // }
       @Override
       public boolean update(PhieuXuatKhoDTO phieuXuatKhoDTO) {
-            return true;
+            try{
+                  //? UPDATE `phieuxuatkho` SET `NgayXuatKho` = now(), `TongGiaTri` = '15000000' WHERE `phieuxuatkho`.`MaPhieu` = 33;
+                  Statement state = JDBCConfigure.getConnection().createStatement();
+                  int capNhatPhieuXuatHang = state.executeUpdate("UPDATE `phieuxuatkho` SET `TongGiaTri` = '"+phieuXuatKhoDTO.getTongGiaTri()+"', `NgayXuatKho` = now()  WHERE `phieuxuatkho`.`MaPhieu` = " + phieuXuatKhoDTO.getMaPhieu());
+                  if(capNhatPhieuXuatHang != 1) {
+                        System.out.println("Cap nhat phieu xuat hàng that bai !");
+                        return false;
+                  } else {
+                        JDBCConfigure.closeConnection();
+                        return true;
+                  }
+            }catch(SQLException e) {
+                  System.err.println(e.getMessage());
+                  return false;
+            }
       }
 
       @Override
@@ -146,28 +167,6 @@ public class PhieuXuatKhoDAO implements DAOInterface<PhieuXuatKhoDTO>{
                   return false;
             }
       }
-
-      public ArrayList<ChiTietPhieuXuatKhoDTO> getChiTietSanPhamPhieuXuatHang(int maPhieuXuat) {
-//             List<SanPhamDTO> chiTietSanPhamPhieuXuatHangList = new ArrayList<>();
-//
-//             try {
-//                   SanPhamDTO sanPhamDTO = new SanPhamDTO();
-//                   Statement statement = JDBCConfigure.getConnection().createStatement();
-//                   ResultSet chiTietSanPhamPhieuXuatHangRow = statement.executeQuery("select * from phieuxuatkho, sanpham, ctpxk, khohang where phieuxuatkho.MaKhoHang = khohang.MaKhoHang and ctpxk.MaPhieu = phieuxuatkho.MaPhieu and ctpxk.MaSanPham = sanpham.MaSanPham and phieuxuatkho.MaPhieu = " + maPhieuXuat);
-//                   while(chiTietSanPhamPhieuXuatHangRow.next()) {
-//                         sanPhamDTO.setMaSanPham(chiTietSanPhamPhieuXuatHangRow.getInt("MaSanPham"));
-//                         sanPhamDTO.setTenSanPham(chiTietSanPhamPhieuXuatHangRow.getString("TenSanPham"));
-//                         sanPhamDTO.setGiaSanPham(chiTietSanPhamPhieuXuatHangRow.getInt("DonGia"));
-//                         sanPhamDTO.setSoLuongConLai(chiTietSanPhamPhieuXuatHangRow.getInt("SoLuong"));
-//                         sanPhamDTO.setThanhTien(chiTietSanPhamPhieuXuatHangRow.getDouble("ThanhTien"));
-//                   }
-//             } catch (SQLException e) {
-//                   e.printStackTrace(); // hoặc xử lý ngoại lệ theo cách phù hợp
-//             }
-//
-//             return chiTietSanPhamPhieuXuatHangList;
-             return null;
-       }
        public int maPhieuXuatKhoTiepTheo() {
             try {
                   Statement statement = JDBCConfigure.getConnection().createStatement();
