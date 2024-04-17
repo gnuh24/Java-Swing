@@ -6,8 +6,10 @@ import DTO.ThongTinSanPham.*;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.text.DecimalFormat;
+import java.text.*;
 import java.util.ArrayList;
+import java.time.*;
+import java.time.format.*;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -29,8 +31,8 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
             //? Main left
             JPanel main_left;
                   JPanel tim_kiem;
+                        JLabel tim_kiem_lb;
                         JTextField tim_kiem_tf;
-                        JButton tim_kiem_refesh;
                   DefaultTableModel model_ds_san_pham;
                   JTable table_ds_san_pham;
                   JScrollPane ds_san_pham;
@@ -49,6 +51,10 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
                               JPanel nguoi_tao_phieu_pn;
                                     JLabel nguoi_tao_phieu;
                                     JTextField nguoi_tao_phieu_tf;
+
+                              JPanel ngay_tao_phieu_pn;
+                                    JLabel ngay_tao_phieu;
+                                    JTextField ngay_tao_phieu_tf;
 
                         DefaultTableModel model_ds_xuat_hang;
                         JTable table_ds_xuat_hang;
@@ -83,12 +89,17 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
                               tim_kiem.setPreferredSize(new Dimension(550, 70));
                               tim_kiem.setBorder(new CompoundBorder(new TitledBorder("Tìm Kiếm"), new EmptyBorder(4, 4, 4, 4)));
                               tim_kiem.setBackground(Color.WHITE);
+                                    tim_kiem_lb = new JLabel("Tìm theo tên : ");
                                     tim_kiem_tf = new JTextField(30);
                                     tim_kiem_tf.setPreferredSize(new Dimension(100, 35));
-                                    tim_kiem_refesh = new JButton("Làm mới");
-                                    tim_kiem_refesh.addActionListener(this);
+                                    tim_kiem_tf.addKeyListener(new KeyAdapter(){
+                                          public void keyReleased(KeyEvent e){
+                                              ArrayList<SanPhamDTO> listSanPham=phieuXuatKhoBUS.search(tim_kiem_tf.getText());
+                                              showDanhSachSanPham(listSanPham);
+                                          }
+                                    });
+                              tim_kiem.add(tim_kiem_lb);
                               tim_kiem.add(tim_kiem_tf);
-                              tim_kiem.add(customButtonMain(tim_kiem_refesh,100,35));
 
                               String columns_ds_san_pham[] = {"Mã máy", "Tên máy", "Số lượng", "Đơn giá"};
                               String data_ds_san_pham[][] = {};
@@ -116,13 +127,22 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
                               table_ds_san_pham.getColumnModel().getColumn(3).setPreferredWidth(80);
                               table_ds_san_pham.setRowHeight(40);
                                 
+                              //? Set vị trí cho nội dung (căn giữa cho nội dung)
+                              DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+                              centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+                              table_ds_san_pham.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+                              table_ds_san_pham.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+                              table_ds_san_pham.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+                              table_ds_san_pham.setRowHeight(40);
+                              table_ds_san_pham.getTableHeader().setReorderingAllowed(false);
+
                               JTableHeader header_san_pham = table_ds_san_pham.getTableHeader();
                               // Set the preferred size of the header
                               header_san_pham.setPreferredSize(new Dimension(header_san_pham.getWidth(), 35));
                               ds_san_pham = new JScrollPane(table_ds_san_pham);
                               ds_san_pham.setPreferredSize(new Dimension(550, 500));
                               ds_san_pham.setBackground(Color.WHITE);
-                              showDanhSachSanPham();
+                              showDanhSachSanPham(sanPhamBUS.getAll());
 
                               them_sp = new JPanel();
                               them_sp.setBackground(Color.WHITE);
@@ -173,8 +193,18 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
                                     nguoi_tao_phieu_pn.setPreferredSize(new Dimension(550,50));
                                     nguoi_tao_phieu_pn.add(nguoi_tao_phieu);
                                     nguoi_tao_phieu_pn.add(nguoi_tao_phieu_tf);
+
+                                    ngay_tao_phieu_pn = new JPanel();
+                                          ngay_tao_phieu = new JLabel("Ngày tạo phiếu : ");
+                                          ngay_tao_phieu_tf = new JTextField(30);
+                                          nguoi_tao_phieu_tf.setPreferredSize(new Dimension(50, 50));
+                                    ngay_tao_phieu_pn.setPreferredSize(new Dimension(550,50));
+                                    ngay_tao_phieu_pn.add(ngay_tao_phieu);
+                                    ngay_tao_phieu_pn.add(ngay_tao_phieu_tf);
+                                    capNhatNgayXuatKho(maPhieuXuat);
                               thong_tin.add(ma_phieu_xuat_pn);
                               thong_tin.add(nguoi_tao_phieu_pn);
+                              thong_tin.add(ngay_tao_phieu_pn);
 
                               String columns_xuat_hang[] = {"STT", "Mã SP", "Tên SP","Số lượng", "Đơn giá"};
                               String data_xuat_hang[][] = {};
@@ -208,7 +238,7 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
                               table_ds_xuat_hang.getTableHeader().setReorderingAllowed(false);
                               table_ds_xuat_hang.setRowHeight(40);
                               ds_xuat_hang = new JScrollPane(table_ds_xuat_hang);
-                              ds_xuat_hang.setPreferredSize(new Dimension(550, 450));
+                              ds_xuat_hang.setPreferredSize(new Dimension(550, 410));
 
                               chuc_nang_pn = new JPanel();
                               chuc_nang_pn.setPreferredSize(new Dimension(550,40));
@@ -272,7 +302,7 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
             return button;
       }
       public String toCurrency(double a) {
-            DecimalFormat numberFormat = new DecimalFormat("###,### đ");
+            DecimalFormat numberFormat = new DecimalFormat("###,### VNĐ");
             return  numberFormat.format(a);
       }
       public Double currencyBack(String a) {
@@ -343,27 +373,31 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
                   System.out.println("Bam 1 nut nao do");
             }
       }
-      public void showDanhSachSanPham() {
-            for (SanPhamDTO sanPham : sanPhamBUS.getAll()) {
+      public void showDanhSachSanPham(ArrayList<SanPhamDTO> dsSanPham) {
+            int i = 1;
+            int rowCount = model_ds_san_pham.getRowCount();
+            //? Xóa tất cả các dòng
+            for (int j = rowCount - 1; j >= 0; j--) {
+                model_ds_san_pham.removeRow(j);
+            }
+            //? Thêm các dòng
+            for (SanPhamDTO sanPham : dsSanPham) {
                   model_ds_san_pham.addRow(new Object[]{
-                              sanPham.getMaSanPham(),
+                              i,
                               sanPham.getTenSanPham(),
                               sanPham.getSoLuongConLai(),
                               toCurrency(sanPham.getGiaSanPham())
                   });
+                  i++;
             }
-            //? Set vị trí cho nội dung (căn giữa cho nội dung)
-            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-            centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-            table_ds_san_pham.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-            table_ds_san_pham.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
-            table_ds_san_pham.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
-            table_ds_san_pham.setRowHeight(40);
-            table_ds_san_pham.getTableHeader().setReorderingAllowed(false);
       }
       
       public void capNhatMaPhieuXuat(int maPhieuXuat) {
             ma_phieu_xuat_tf.setText(String.valueOf(maPhieuXuat));
+      }
+      public void capNhatNgayXuatKho(int maPhieuXuat) {
+            PhieuXuatKhoDTO phieuXuat = phieuXuatKhoBUS.getById(maPhieuXuat);
+            ngay_tao_phieu_tf.setText(String.valueOf(phieuXuat.getNgayXuatKho()).replace("T"," "));
       }
       public void themSanPhamPhieuXuatKho() {
             //? Check number
@@ -473,6 +507,19 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
             PhieuXuatKhoDTO phieuXuatKho = new PhieuXuatKhoDTO();
             phieuXuatKho.setTongGiaTri(tongGiaTri);
             phieuXuatKho.setMaPhieu(Integer.parseInt(ma_phieu_xuat_tf.getText()));
+            String ngayTaoPhieu = ngay_tao_phieu_tf.getText().replace(" ","T");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+            
+            // Phân tích chuỗi thành LocalDateTime
+            LocalDateTime localDateTime = LocalDateTime.parse(ngayTaoPhieu, formatter);
+            LocalDateTime localDateTimeNow = LocalDateTime.now();
+
+            if(localDateTime.isBefore(localDateTimeNow)) {
+                  phieuXuatKho.setNgayXuatKho(localDateTime);
+            } else if(localDateTime.isAfter(localDateTimeNow) || localDateTime.isEqual(localDateTimeNow)){
+                  JOptionPane.showMessageDialog(null, "Thời gian không hợp lệ !","Thông báo", JOptionPane.ERROR_MESSAGE);
+                  return;
+            }
             phieuXuatKhoBUS.update(phieuXuatKho);  //? Update phiếu xuất kho
             //? DELETE CTPXK
             for(ChiTietPhieuXuatKhoDTO chiTietPhieuXuatKho : listFirst){
@@ -494,7 +541,7 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
             //? cập nhật danh sách sản phẩm
             for (int i = model_ds_san_pham.getRowCount() - 1; i >= 0; i--) 
                   model_ds_san_pham.removeRow(i);
-            showDanhSachSanPham();
+            showDanhSachSanPham(sanPhamBUS.getAll());
             
             //?cập nhật thành tiền
             thanh_tien_total.setText("0 đ");
