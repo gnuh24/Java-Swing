@@ -39,6 +39,10 @@ public class SanPhamBUS {
     }
     
     public boolean create(SanPhamDTO spMoi){
+        for( int i=0; i < this.danhSachSanPham.size();i++)
+            if(this.danhSachSanPham.get(i).getTenSanPham().equals(spMoi.getTenSanPham()))
+                return false;
+        
         if( sanPhamDAO.create(0,spMoi))
         {
             this.danhSachSanPham.add(spMoi);
