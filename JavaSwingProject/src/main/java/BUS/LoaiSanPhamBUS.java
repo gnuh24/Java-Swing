@@ -28,6 +28,15 @@ public class LoaiSanPhamBUS {
         return listLoaiSP;
     }
     
+    public int getIndexByMaLoaiSP(int MaLoaiSP){
+        for( int i=0; i < this.listLoaiSP.size();i++){
+            if(this.listLoaiSP.get(i).getMaLoaiSanPham()==MaLoaiSP)
+                return i;
+        }
+        return -1;
+    }
+    
+    
     public String[] tenLoaiSanPham(){
         String list[]= new String[listLoaiSP.size()+1];
         list[0]="Tất cả";
@@ -35,5 +44,42 @@ public class LoaiSanPhamBUS {
             list[i+1]=listLoaiSP.get(i).getTenLoaiSanPham();
         }
         return list;
+    }
+    
+    public boolean create(Integer maKhoHang, LoaiSanPhamDTO loaiSP){
+        if(loaiSPDAO.create(maKhoHang, loaiSP)){
+            listLoaiSP.add(loaiSP);
+            return true;
+        }
+        return false;
+    }
+    // 7h-11h30 1h30-5h30, 7h-11h
+    public boolean update(LoaiSanPhamDTO loaiSP){
+        if(loaiSPDAO.update(loaiSP)){
+            listLoaiSP.set(getIndexByMaLoaiSP(loaiSP.getMaLoaiSanPham()), loaiSP);
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean delete(LoaiSanPhamDTO loaiSP){
+        if(loaiSPDAO.delete(loaiSP)){
+            listLoaiSP.remove(loaiSP);
+            return true;
+        }
+        return false;
+    }
+    
+    
+    
+    public ArrayList<LoaiSanPhamDTO> search(String txt){
+        txt=txt.toLowerCase();
+        ArrayList<LoaiSanPhamDTO> kq= new ArrayList<>();
+        for(LoaiSanPhamDTO loaiSP: this.listLoaiSP){
+            System.out.println("a");
+            if ( loaiSP.getTenLoaiSanPham().toLowerCase().contains(txt) || String.valueOf(loaiSP.getMaLoaiSanPham()).contains(txt))
+                kq.add(loaiSP);
+        }
+        return kq;
     }
 }
