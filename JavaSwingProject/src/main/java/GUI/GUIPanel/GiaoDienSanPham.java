@@ -16,6 +16,10 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -27,8 +31,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
-
-
+import org.apache.poi.ss.*;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.xssf.*;
+import org.apache.poi.xssf.usermodel.*;
 
 public class GiaoDienSanPham extends JPanel implements ActionListener{
 
@@ -143,6 +149,7 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
                 if (e.getClickCount() == 2)
                 {
                     SanPhamDialog spDia=new SanPhamDialog("Chi Tiết Sản Phẩm","ChiTiet",listSP.get(thongTin.getSelectedRow()));
+                    System.out.println(listSP.get(thongTin.getSelectedRow()).getAnhMinhhoa());
                     loadDuLieuTuDatabase(new SanPhamBUS().getAll());
                     chinhSuaGiaoDienTable();
                 }
@@ -151,6 +158,7 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
         // nút xóa sản phẩm
         xoaSP.addActionListener(this);
         // lọc loại sản phẩm và tìm kiếm
+        excelSP.addActionListener(this);
         locSP.addActionListener(this);
         timKiem.addKeyListener(new KeyAdapter(){
             public void keyReleased(KeyEvent e){
@@ -206,6 +214,7 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
         dtm.setColumnIdentifiers(colum);
         thongTin.setModel(dtm);
         thongTin.getColumnModel().getColumn(1).setPreferredWidth(150);
+        thongTin.setDefaultEditor(Object.class, null);
         int dem=1;
         for(SanPhamDTO sanPham: listSP){
             try {
@@ -222,6 +231,62 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
         }
     }
           
+    public void xuatFileExcelSanPham(){
+        XSSFWorkbook workbook=new XSSFWorkbook();
+        // tạo sheet cho excel
+        XSSFSheet sheet=workbook.createSheet("DanhSachSanPham");
+        // khởi tạo dòng và ô
+        XSSFRow row=null; 
+        XSSFCell cell=null;
+        row=sheet.createRow(2); // xuống 2 dòng trong excel
+        // tạo các ô tiêu đề bắt đầu từ dòng row theo cột 0
+        String[] colum = new String[]{"STT","Mã Sản Phẩm", "Tên sản phẩm","Loại Sản Phẩm", "Xuất xứ",  "Số lượng", "Giá"};
+        for ( int i=0; i < colum.length;i++){
+            cell=row.createCell(i,CellType.STRING);
+            cell.setCellValue(colum[i]);
+                  
+        }
+        
+
+       for( int i=0; i < this.listSP.size();i++){
+            // bắt đầu từ dòng 3 vì dòng 2 là tiêu đề
+            row=sheet.createRow(3+i);
+            cell=row.createCell(0,CellType.NUMERIC);
+            cell.setCellValue(i+1);
+            
+            cell=row.createCell(1,CellType.NUMERIC);
+            cell.setCellValue(listSP.get(i).getMaSanPham());
+            
+            cell=row.createCell(2,CellType.STRING);
+            cell.setCellValue(listSP.get(i).getTenSanPham());
+            
+            cell=row.createCell(3,CellType.STRING);
+            cell.setCellValue(LoaiSPBUS.tenLoaiSanPham()[listSP.get(i).getMaLoaiSanPham()]);
+            
+            cell=row.createCell(4,CellType.STRING);
+            cell.setCellValue(listSP.get(i).getXuatXu());
+            
+            cell=row.createCell(5,CellType.NUMERIC);
+            cell.setCellValue(listSP.get(i).getSoLuongConLai());
+            
+            cell=row.createCell(6,CellType.NUMERIC);
+            cell.setCellValue(listSP.get(i).getGiaSanPham());
+       }
+       File f= new File("danhSachSanPham.xlsx");
+       try {
+           FileOutputStream file= new FileOutputStream(f);
+           workbook.write(file);
+           file.close();
+           
+       }catch (FileNotFoundException e){
+           System.out.println("Lỗi ko tìm dc file");
+       } catch (IOException ex) {
+           System.out.println("Lỗi IO");
+        }
+        JOptionPane.showMessageDialog(this, "Tạo file thành công");
+    }
+    
+    
     @Override
     public void actionPerformed(ActionEvent ae) {
         String lenh=ae.getActionCommand();
@@ -237,6 +302,9 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
             listSP=SPBUS.getAll();
             loadDuLieuTuDatabase(listSP);
             chinhSuaGiaoDienTable();
+        }
+        else if(lenh.equals("Xuất File Excel")){
+            xuatFileExcelSanPham();
         }
 
         else if(lenh.equals("Xóa Sản Phẩm") && thongTin.getSelectedRow()!=-1){
