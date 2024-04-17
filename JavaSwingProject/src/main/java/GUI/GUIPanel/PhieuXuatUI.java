@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 public class PhieuXuatUI extends JPanel implements ActionListener{
+      int maKhoHang = 0;
       PhieuXuatKhoBUS phieuXuatKhoBUS = new PhieuXuatKhoBUS();
       ChiTietPhieuXuatKhoBUS chiTietPhieuXuatKhoBUS = new ChiTietPhieuXuatKhoBUS();
       JPanel top;
@@ -28,13 +29,14 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
                   JButton chi_tiet_btn;
                   JButton xuatExcel_btn;
             JPanel timKiemPanel;
-                  JTextField tim_kiem_tf;
-                  JButton tim_kiem_refesh;
+                  JLabel tim_kiem;
+                  JComboBox tim_kiem_cb;
       JPanel bot;
             DefaultTableModel model_ds_xuat_hang;
             JTable table_ds_xuat_hang;
             JScrollPane ds_xuat_hang;
-      public PhieuXuatUI() {
+      public PhieuXuatUI(int maKhoHang) {
+            this.maKhoHang = maKhoHang;
             top = new JPanel();
                   chucNangPanel = new JPanel();
                         xoa_btn = new JButton("Xóa");
@@ -50,13 +52,21 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
 
 
                   timKiemPanel = new JPanel();
-                        tim_kiem_tf = new JTextField(30);
-                        tim_kiem_tf.setPreferredSize(new Dimension(30,35));
-                        tim_kiem_refesh = new JButton("Làm mới");
-                        tim_kiem_refesh.addActionListener(this);//!  Chú ý
+                        tim_kiem = new JLabel("Tổng giá trị : ");
+                        String price[] = {"tất cả","dưới 5,000,000 VNĐ", "5,000,000 VNĐ - 10,000,000 VNĐ", "10,000,000 VNĐ - 20,000,000 VNĐ","20,000,000 VNĐ - 40,000,000 VNĐ", "lớn hơn 40,000,000 VNĐ"};
+ 
+                        tim_kiem_cb = new JComboBox(price);
+                          tim_kiem_cb.addItemListener(new ItemListener() {
+                              public void itemStateChanged(ItemEvent e) {
+                                  if (e.getStateChange() == ItemEvent.SELECTED) {
+                                    ArrayList<PhieuXuatKhoDTO> listPhieuXuatKho=phieuXuatKhoBUS.search(tim_kiem_cb.getSelectedIndex());
+                                    showDanhSachPhieuXuatHang(listPhieuXuatKho);
+                                  }
+                              }
+                          });
                   timKiemPanel.setBorder(new CompoundBorder(new TitledBorder("Tìm Kiếm"), new EmptyBorder(4, 4, 4, 4)));
-                  timKiemPanel.add(tim_kiem_tf);
-                  timKiemPanel.add(tim_kiem_refesh);
+                  timKiemPanel.add(tim_kiem);
+                  timKiemPanel.add(tim_kiem_cb);
             top.setPreferredSize(new Dimension(1200,100));
             top.add(chucNangPanel);
             top.add(timKiemPanel);
@@ -91,7 +101,7 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
                   table_ds_xuat_hang.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
                   table_ds_xuat_hang.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
                   table_ds_xuat_hang.setRowHeight(40);
-                  showDanhSachPhieuXuatHang();
+                  showDanhSachPhieuXuatHang(phieuXuatKhoBUS.getAll(maKhoHang));
                   ds_xuat_hang = new JScrollPane(table_ds_xuat_hang);
                   ds_xuat_hang.setPreferredSize(new Dimension(900, 600));
                   ds_xuat_hang.setBackground(Color.WHITE);
@@ -104,7 +114,7 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
             setPreferredSize(new Dimension(1300,800));
             setLayout(new FlowLayout());
             setVisible(true);
-            showDanhSachPhieuXuatHang();
+            showDanhSachPhieuXuatHang(phieuXuatKhoBUS.getAll(maKhoHang));
       }
       public JButton customButtonOption(JButton button, String linkIMG) {
             BoxLayout boxlayout = new BoxLayout(button, BoxLayout.Y_AXIS);
@@ -137,18 +147,14 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
                   suaChiTietPhieuXuatHang();
             } else if(e.getSource() == chi_tiet_btn) {
                   xemChiTietPhieuXuatHang();
-            } else if(e.getSource() == tim_kiem_refesh){
-
-            }
+            } 
       }
-      public void showDanhSachPhieuXuatHang() {
-           PhieuXuatKhoBUS phieuXuatKhoBUS = new PhieuXuatKhoBUS();
-           ArrayList<PhieuXuatKhoDTO> phieuXuatKhoList = phieuXuatKhoBUS.getAll(4);
+      public void showDanhSachPhieuXuatHang(ArrayList<PhieuXuatKhoDTO> dsPhieuXuatKho) {
            //? Xóa bảng danh sách sản phẩm xuất hàng
            for (int i = model_ds_xuat_hang.getRowCount() - 1; i >= 0; i--) {
                  model_ds_xuat_hang.removeRow(i);
            }
-           for (PhieuXuatKhoDTO phieuXuatKho : phieuXuatKhoList) {
+           for (PhieuXuatKhoDTO phieuXuatKho : dsPhieuXuatKho) {
                  model_ds_xuat_hang.addRow(new Object[]{
                              phieuXuatKho.getMaPhieu(),
                              String.valueOf(phieuXuatKho.getNgayXuatKho()).replace("T"," "),
@@ -163,7 +169,7 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
                   int maPhieuXuat = (Integer) table_ds_xuat_hang.getValueAt(selectedRow, 0);
                   PhieuXuatKhoDTO temp = phieuXuatKhoBUS.getById(maPhieuXuat);
                   phieuXuatKhoBUS.delete(temp);
-                  showDanhSachPhieuXuatHang();
+                  showDanhSachPhieuXuatHang(phieuXuatKhoBUS.getAll(maKhoHang));
             } else {
                   JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 phiếu xuất hàng!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
             }
