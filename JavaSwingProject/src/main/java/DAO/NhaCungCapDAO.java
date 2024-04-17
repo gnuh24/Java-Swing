@@ -3,10 +3,7 @@ package DAO;
 import DTO.NghiepVuNhapKho.NhaCungCapDTO;
 import Others.JDBCConfigure;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +33,6 @@ public class NhaCungCapDAO implements DAOInterface<NhaCungCapDTO>{
                 danhSachNhaCungCap.add(nhaCungCapDTO);
 
             }
-
         }
         catch (SQLException e){
             System.err.println("Lỗi truy vấn !!");
@@ -88,6 +84,24 @@ public class NhaCungCapDAO implements DAOInterface<NhaCungCapDTO>{
 
     @Override
     public boolean create(Integer maKhoHang, NhaCungCapDTO nhaCungCapDTO) {
+
+        String createNhaCungCapQuery =
+            "INSERT INTO `NhaCungCap` (`TenNCC`, `SoDienThoai`, `Email`, `MaKhoHang`) VALUES" +
+                                     "(?       ,    ?          ,    ?  ,        ?   )";
+
+        try {
+            PreparedStatement preparedStatement = JDBCConfigure.getConnection().prepareStatement(createNhaCungCapQuery);
+            preparedStatement.setString(1, nhaCungCapDTO.getTenNCC());
+            preparedStatement.setString(2, nhaCungCapDTO.getSoDienThoai());
+            preparedStatement.setString(3, nhaCungCapDTO.getEmail());
+            preparedStatement.setInt   (4, maKhoHang);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            JDBCConfigure.closeConnection();
+        }
+
         return true;
     }
 
