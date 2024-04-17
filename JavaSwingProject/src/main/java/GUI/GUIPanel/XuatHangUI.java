@@ -24,8 +24,8 @@ public class XuatHangUI extends JPanel implements ActionListener{
             //? Main left
             JPanel main_left;
                   JPanel tim_kiem;
+                        JLabel tim_kiem_lb;
                         JTextField tim_kiem_tf;
-                        JButton tim_kiem_refesh;
                   DefaultTableModel model_ds_san_pham;
                   JTable table_ds_san_pham;
                   JScrollPane ds_san_pham;
@@ -71,14 +71,20 @@ public class XuatHangUI extends JPanel implements ActionListener{
                               tim_kiem.setPreferredSize(new Dimension(550, 70));
                               tim_kiem.setBorder(new CompoundBorder(new TitledBorder("Tìm Kiếm"), new EmptyBorder(4, 4, 4, 4)));
                               tim_kiem.setBackground(Color.WHITE);
+
+                                    tim_kiem_lb = new JLabel("Tìm theo tên : ");
                                     tim_kiem_tf = new JTextField(30);
                                     tim_kiem_tf.setPreferredSize(new Dimension(100, 35));
-                                    tim_kiem_refesh = new JButton("Làm mới");
-                                    tim_kiem_refesh.addActionListener(this);
+                                    tim_kiem_tf.addKeyListener(new KeyAdapter(){
+                                          public void keyReleased(KeyEvent e){
+                                              ArrayList<SanPhamDTO> listSanPham=phieuXuatKhoBUS.search(tim_kiem_tf.getText());
+                                              showDanhSachSanPham(listSanPham);
+                                          }
+                                    });
+                              tim_kiem.add(tim_kiem_lb);
                               tim_kiem.add(tim_kiem_tf);
-                              tim_kiem.add(customButtonMain(tim_kiem_refesh,100,35));
 
-                              String columns_ds_san_pham[] = {"Mã máy", "Tên máy", "Số lượng", "Đơn giá"};
+                              String columns_ds_san_pham[] = {"STT", "Tên sản phẩm", "Số lượng", "Đơn giá"};
                               String data_ds_san_pham[][] = {};
                               model_ds_san_pham = new DefaultTableModel(data_ds_san_pham, columns_ds_san_pham){
                                     @Override
@@ -117,7 +123,7 @@ public class XuatHangUI extends JPanel implements ActionListener{
                               ds_san_pham = new JScrollPane(table_ds_san_pham);
                               ds_san_pham.setPreferredSize(new Dimension(550, 600));
                               ds_san_pham.setBackground(Color.WHITE);
-                              showDanhSachSanPham();
+                              showDanhSachSanPham(sanPhamBUS.getAll());
 
                               them_sp = new JPanel();
                               them_sp.setBackground(Color.WHITE);
@@ -256,7 +262,7 @@ public class XuatHangUI extends JPanel implements ActionListener{
             return button;
       }
       public String toCurrency(double a) {
-            DecimalFormat numberFormat = new DecimalFormat("###,### đ");
+            DecimalFormat numberFormat = new DecimalFormat("###,### VNĐ");
             return  numberFormat.format(a);
       }
       public Double currencyBack(String a) {
@@ -329,14 +335,22 @@ public class XuatHangUI extends JPanel implements ActionListener{
                   System.out.println("Bam 1 nut nao do");
             }
       }
-      public void showDanhSachSanPham() {
-            for (SanPhamDTO sanPham : sanPhamBUS.getAll()) {
+      public void showDanhSachSanPham(ArrayList<SanPhamDTO> dsSanPham) {
+            int i = 1;
+            int rowCount = model_ds_san_pham.getRowCount();
+            //? Xóa tất cả các dòng
+            for (int j = rowCount - 1; j >= 0; j--) {
+                model_ds_san_pham.removeRow(j);
+            }
+            //? Thêm các dòng
+            for (SanPhamDTO sanPham : dsSanPham) {
                   model_ds_san_pham.addRow(new Object[]{
-                              sanPham.getMaSanPham(),
+                              i,
                               sanPham.getTenSanPham(),
                               sanPham.getSoLuongConLai(),
                               toCurrency(sanPham.getGiaSanPham())
                   });
+                  i++;
             }
       }
       public void themSanPhamPhieuXuatKho() {
@@ -470,7 +484,7 @@ public class XuatHangUI extends JPanel implements ActionListener{
             //? cập nhật danh sách sản phẩm
             for (int i = model_ds_san_pham.getRowCount() - 1; i >= 0; i--) 
                   model_ds_san_pham.removeRow(i);
-            showDanhSachSanPham();
+            showDanhSachSanPham(sanPhamBUS.getAll());
             
             //?cập nhật thành tiền
             thanh_tien_total.setText("0 đ");
