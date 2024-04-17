@@ -1,6 +1,7 @@
 package GUI.GUIDialog;
 import BUS.LoaiSanPhamBUS;
 import DTO.ThongTinSanPham.LoaiSanPhamDTO;
+import GUI.GUIPanel.GiaoDienLoaiSanPham;
 import GUI.GUIThanhPhan.ButtonCustom;
 import GUI.GUIThanhPhan.InputFormCustom;
 import javax.swing.*;
@@ -18,20 +19,23 @@ public class LoaiSPDialog extends  JDialog implements ActionListener{
     
     private LoaiSanPhamBUS LoaiSPBUS= new LoaiSanPhamBUS();
     private LoaiSanPhamDTO loaiSPDuocChon;
+    private GiaoDienLoaiSanPham loaiSPGUI;
     
     public LoaiSPDialog() {
         this.init();
     }
 
-    public LoaiSPDialog(String tieuDe, String type) {
+    public LoaiSPDialog(GiaoDienLoaiSanPham LoaiSPGUI,String tieuDe, String type) {
         this.tieuDe=tieuDe;
         this.type=type;
+        this.loaiSPGUI=LoaiSPGUI;
         init();
     }
-    public LoaiSPDialog(String tieuDe, String type, LoaiSanPhamDTO loaisp) {
+    public LoaiSPDialog(GiaoDienLoaiSanPham LoaiSPGUI,String tieuDe, String type, LoaiSanPhamDTO loaisp) {
         this.tieuDe=tieuDe;
         this.type=type;
         this.loaiSPDuocChon=loaisp;
+        this.loaiSPGUI=LoaiSPGUI;
         init();
     }
     
@@ -64,7 +68,8 @@ public class LoaiSPDialog extends  JDialog implements ActionListener{
         if ( type.equals("Add")){
             this.btn_them= new ButtonCustom("Thêm","","#00FF7F");
             this.btn_them.setHorizontalTextPosition(SwingConstants.CENTER);
-            this.btn_them.setHorizontalAlignment(SwingConstants.CENTER);            
+            this.btn_them.setHorizontalAlignment(SwingConstants.CENTER);
+            this.btn_them.addActionListener(this);
             cacNutNhan.add(this.btn_them);
         }
         else if (type.equals("Change")){
@@ -72,6 +77,7 @@ public class LoaiSPDialog extends  JDialog implements ActionListener{
             this.btn_chinhsua.setHorizontalTextPosition(SwingConstants.CENTER);
             this.btn_chinhsua.setHorizontalAlignment(SwingConstants.CENTER);              
             themDuLieu();
+            this.btn_chinhsua.addActionListener(this);
             cacNutNhan.add(this.btn_chinhsua);
         }
         this.btn_huy.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -95,6 +101,61 @@ public class LoaiSPDialog extends  JDialog implements ActionListener{
         
     }
     
+    
+    
+    public void XuLyThemLoaiSP(){
+        if (
+            maLoaiSP.getTxtForm().getText().trim().equals("") ||
+            tenLoaiSP.getTxtForm().getText().trim().equals("") ||
+            maKho.getTxtForm().getText().trim().equals("")){
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đủ thông tin cần thiết !!!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+            }
+        else {
+            try{
+                int maLoaiSP=Integer.parseInt(this.maLoaiSP.getTxtForm().getText().trim());
+                String tenLoaiSP=this.tenLoaiSP.getTxtForm().getText().trim();
+                int maKho=Integer.parseInt(this.maKho.getTxtForm().getText().trim());
+                if(LoaiSPBUS.create(maKho, new LoaiSanPhamDTO(maLoaiSP, tenLoaiSP,maKho))){
+                    JOptionPane.showMessageDialog(this, "Thêm Loại Sản Phẩm Mới Thành Công ^^","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+                    this.loaiSPGUI.loadDuLieuLoaiSP(LoaiSPBUS.getAll());
+                    this.dispose();
+                }
+                else 
+                    JOptionPane.showMessageDialog(this, "Lỗi, vui lòng kiểm tra lại mã sản phẩm hoặc thông tin khác nếu trùng!","Thông báo",JOptionPane.ERROR_MESSAGE);
+            } catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập số với các ô yêu cầu điền mã loại, mã kho","Thông báo",JOptionPane.ERROR_MESSAGE);
+            }
+                 
+        }
+
+    }
+    
+    public void XuLyChinhSuaLoaiSP(){
+        if (
+            maLoaiSP.getTxtForm().getText().trim().equals("") ||
+            tenLoaiSP.getTxtForm().getText().trim().equals("") ||
+            maKho.getTxtForm().getText().trim().equals("")){
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đủ thông tin cần thiết !!!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+            }
+        else {
+            try{
+                int maLoaiSP=Integer.parseInt(this.maLoaiSP.getTxtForm().getText().trim());
+                String tenLoaiSP=this.tenLoaiSP.getTxtForm().getText().trim();
+                int maKho=Integer.parseInt(this.maKho.getTxtForm().getText().trim());
+                if(LoaiSPBUS.update(new LoaiSanPhamDTO(maLoaiSP, tenLoaiSP,maKho))){
+                    JOptionPane.showMessageDialog(this, "Chỉnh sửa thành công ^^","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+                    this.loaiSPGUI.loadDuLieuLoaiSP(LoaiSPBUS.getAll());
+                    this.dispose();
+                }
+                else 
+                    JOptionPane.showMessageDialog(this, "Lỗi khi chỉnh sửa!","Thông báo",JOptionPane.ERROR_MESSAGE);
+            } catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập số với các ô yêu cầu điền mã loại, mã kho","Thông báo",JOptionPane.ERROR_MESSAGE);
+            }
+                 
+        }
+    }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         String cauLenh=e.getActionCommand();
@@ -103,8 +164,10 @@ public class LoaiSPDialog extends  JDialog implements ActionListener{
                 this.dispose();
                 break;
             case "Thêm":
+                XuLyThemLoaiSP();
                 break;
             case "Chỉnh Sửa":
+                XuLyChinhSuaLoaiSP();
                 break;
         }
     }
