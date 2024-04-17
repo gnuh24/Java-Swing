@@ -23,6 +23,6 @@ public class ChiTietPhieuXuatKhoDTO {
 
     private Integer soLuong;
 
-    private long thanhTien;
+    private Integer thanhTien;
 
 }
