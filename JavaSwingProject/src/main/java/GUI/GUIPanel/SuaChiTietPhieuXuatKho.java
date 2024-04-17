@@ -94,7 +94,7 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
                                     tim_kiem_tf.setPreferredSize(new Dimension(100, 35));
                                     tim_kiem_tf.addKeyListener(new KeyAdapter(){
                                           public void keyReleased(KeyEvent e){
-                                              ArrayList<SanPhamDTO> listSanPham=phieuXuatKhoBUS.search(tim_kiem_tf.getText());
+                                              ArrayList<SanPhamDTO> listSanPham=sanPhamBUS.search(tim_kiem_tf.getText());
                                               showDanhSachSanPham(listSanPham);
                                           }
                                     });
