@@ -11,8 +11,8 @@ public class CloundinaryServices {
 
     private static final String urlImage = "http://res.cloudinary.com/djhoea2bo/image/upload/v1711511636/";
 
-    public static String getUrlImage(){
-        return urlImage;
+    public static String getUrlImage(String link){
+        return urlImage+link;
     }
 
     /*************************
