@@ -15,7 +15,7 @@ import javax.swing.border.*;
 import javax.swing.table.*;
 
 public class XuatHangUI extends JPanel implements ActionListener{
-      int maKhoHang = 4;
+      int maKhoHang = 0;
       SanPhamBUS sanPhamBUS = new SanPhamBUS();
       PhieuXuatKhoBUS phieuXuatKhoBUS = new PhieuXuatKhoBUS();
       ChiTietPhieuXuatKhoBUS chiTietPhieuXuatKhoBUS = new ChiTietPhieuXuatKhoBUS();
@@ -59,8 +59,8 @@ public class XuatHangUI extends JPanel implements ActionListener{
 
 
       Color bgBlue = new Color(0,145,253);
-      public XuatHangUI() {
-
+      public XuatHangUI(int maKhoHang) {
+            this.maKhoHang = maKhoHang;
             main = new JPanel();
             main.setPreferredSize(new Dimension(1300, 800));
             main.setLayout(new FlowLayout());
@@ -77,7 +77,7 @@ public class XuatHangUI extends JPanel implements ActionListener{
                                     tim_kiem_tf.setPreferredSize(new Dimension(100, 35));
                                     tim_kiem_tf.addKeyListener(new KeyAdapter(){
                                           public void keyReleased(KeyEvent e){
-                                              ArrayList<SanPhamDTO> listSanPham=phieuXuatKhoBUS.search(tim_kiem_tf.getText());
+                                              ArrayList<SanPhamDTO> listSanPham=sanPhamBUS.search(tim_kiem_tf.getText());
                                               showDanhSachSanPham(listSanPham);
                                           }
                                     });
@@ -330,7 +330,7 @@ public class XuatHangUI extends JPanel implements ActionListener{
             } else if(e.getSource() == sua_sl_sp) {
                   suaSanPhamPhieuXuatKho();
             } else if(e.getSource() == thanh_tien_xac_nhan) {
-                  taoPhieuXuatKho();
+                  taoPhieuXuatKho(maKhoHang);
             }else {
                   System.out.println("Bam 1 nut nao do");
             }
@@ -462,7 +462,7 @@ public class XuatHangUI extends JPanel implements ActionListener{
            }
             return danhSachSanPhamTaoPhieuXuatHang;
       }
-      public void taoPhieuXuatKho() {
+      public void taoPhieuXuatKho(int maKhoHang) {
             //! Cần thêm giá trị kho hàng
             PhieuXuatKhoDTO phieuXuatKho = new PhieuXuatKhoDTO();
             phieuXuatKho.setTongGiaTri(tongGiaTri);
