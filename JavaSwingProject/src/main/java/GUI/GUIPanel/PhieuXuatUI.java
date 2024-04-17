@@ -63,7 +63,7 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
 
             bot = new JPanel();
                   
-                  String columns_ds_xuat_hang[] = {"Mã phiếu xuất", "Mã kho hàng", "Ngày xuất kho","Tổng giá trị"};
+                  String columns_ds_xuat_hang[] = {"Mã phiếu xuất", "Ngày xuất kho","Tổng giá trị"};
                   String data_ds_xuat_hang[][] = {};
                   model_ds_xuat_hang = new DefaultTableModel(data_ds_xuat_hang, columns_ds_xuat_hang){
                         @Override
@@ -71,11 +71,9 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
                               // Đặt kiểu dữ liệu cho từng cột
                               if (columnIndex == 0) {
                                     return Integer.class; // Kiểu dữ liệu cho cột 0 là Integer
-                              } else if (columnIndex == 1 ) {
-                                    return String.class; // Kiểu dữ liệu cho cột 1 và 2 là String
-                              } else if (columnIndex == 2) {
+                              } else if (columnIndex == 1) {
                                     return LocalDateTime.class; // Giả sử kiểu dữ liệu cho cột 3 là Date
-                              } else if (columnIndex == 3) {
+                              } else if (columnIndex == 2) {
                                     return Integer.class; // Kiểu dữ liệu cho cột 4 là Double
                               } else {
                                     return Object.class; // Hoặc có thể trả về kiểu Object làm mặc định
@@ -84,16 +82,14 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
                     };
                   table_ds_xuat_hang = new JTable(model_ds_xuat_hang);
                   table_ds_xuat_hang.getColumnModel().getColumn(0).setPreferredWidth(100);
-                  table_ds_xuat_hang.getColumnModel().getColumn(1).setPreferredWidth(100);
+                  table_ds_xuat_hang.getColumnModel().getColumn(1).setPreferredWidth(200);
                   table_ds_xuat_hang.getColumnModel().getColumn(2).setPreferredWidth(200);
-                  table_ds_xuat_hang.getColumnModel().getColumn(3).setPreferredWidth(200);
                   //? Set vị trí cho nội dung (căn giữa cho nội dung)
                   DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
                   centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
                   table_ds_xuat_hang.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
                   table_ds_xuat_hang.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
                   table_ds_xuat_hang.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
-                  table_ds_xuat_hang.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
                   table_ds_xuat_hang.setRowHeight(40);
                   showDanhSachPhieuXuatHang();
                   ds_xuat_hang = new JScrollPane(table_ds_xuat_hang);
@@ -130,7 +126,7 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
             return button;
       }
       public String toCurrency(long a) {
-            DecimalFormat numberFormat = new DecimalFormat("###,###.## đ");
+            DecimalFormat numberFormat = new DecimalFormat("###,###.## VNĐ");
             return  numberFormat.format(a);
       }
       @Override
@@ -155,7 +151,6 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
            for (PhieuXuatKhoDTO phieuXuatKho : phieuXuatKhoList) {
                  model_ds_xuat_hang.addRow(new Object[]{
                              phieuXuatKho.getMaPhieu(),
-                             phieuXuatKho.getMaKhoHang(),
                              String.valueOf(phieuXuatKho.getNgayXuatKho()).replace("T"," "),
                              toCurrency(phieuXuatKho.getTongGiaTri())
                  });
