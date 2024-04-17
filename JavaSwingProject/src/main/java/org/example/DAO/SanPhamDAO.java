@@ -5,6 +5,7 @@
 package org.example.DAO;
 
 import DAO.DAOInterface;
+import DTO.NguoiDung.TaiKhoanDTO;
 import DTO.ThongTinSanPham.SanPhamDTO;
 import Others.JDBCConfigure;
 
@@ -60,7 +61,6 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO> {
     public boolean create(Integer maKhoHang, SanPhamDTO sanPhamDTO) {
         try {
             Connection ketNoi= JDBCConfigure.getConnection();
-
             String sql="";
 
             System.out.println(ketNoi);

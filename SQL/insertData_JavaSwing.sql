@@ -8,22 +8,12 @@ INSERT INTO `KhoHang` (`TenKhoHang`) VALUES
 ('Kho hàng của MinhVi');
 
 /* Dữ liệu mẫu cho bảng TaiKhoan */
-INSERT INTO `TaiKhoan` (`TenDangNhap`,		 	`MatKhau`, `TrangThai`, `Quyen`, `MaKhoHang`) 
+INSERT INTO `TaiKhoan` (`TenDangNhap`,		 	`MatKhau`, `TrangThai`, `Quyen`, `MaKhoHang`,   `HoTen`, 				`NgaySinh`,		 	`GioiTinh`, `SoDienThoai`, `Email`, 					`DiaChi`) 
 VALUES 
-						('THug24', 				'123456',	true,		'Admin',	1),
-						('An1808', 				'123456', 	true, 		'User',		2),
-						('YangHoHocMon', 		'123456', 	true, 		'User',		3),
-						('MinhViDepTrai04', 	'123456', 	true, 		'User',		4);
-
-
-/* Dữ liệu mẫu cho bảng NguoiDung */
-INSERT INTO `NguoiDung` (`MaNguoiDung`, `HoTen`, 				`NgaySinh`,		 	`GioiTinh`, `SoDienThoai`, `Email`, 					`DiaChi`) VALUES
-						(1, 		'Ngô Tuấn Hưng', 			'1990-01-01', 		'Male', '	0123456789', 'thug24@gmail.com', 			'DKP1221'),
-						(2, 		'Diệp Thụy An', 			'1995-05-05', 		'Male', '	0123456789', 'an1808@example.com', 			'DCT1221'),
-						(3, 		'Nguyễn Thanh Điền', 		'1998-08-08', 		'Male', '	0123456789', 'yangHoHocHon@example.com', 	'DKP1222'),
-						(4, 		'Dương Văn Minh Vi', 		'1998-08-08', 		'Male', '	0123456789', 'minhViDepTrai04@example.com', 'DCT1222');
-
-
+						('THug24', 				'123456',	true,		'Admin',	1		, 'Ngô Tuấn Hưng', 			'1990-01-01', 		'Male', '	0123456789', 'thug24@gmail.com', 			'DKP1221'),
+						('An1808', 				'123456', 	true, 		'User',		2		,'Diệp Thụy An', 			'1995-05-05', 		'Male', '	0123456789', 'an1808@example.com', 			'DCT1221'),
+						('YangHoHocMon', 		'123456', 	true, 		'User',		3		,'Nguyễn Thanh Điền', 		'1998-08-08', 		'Male', '	0123456789', 'yangHoHocHon@example.com', 	'DKP1222'),
+						('MinhViDepTrai04', 	'123456', 	true, 		'User',		4		,'Dương Văn Minh Vi', 		'1998-08-08', 		'Male', '	0123456789', 'minhViDepTrai04@example.com', 'DCT1222');
 
 
 /* Dữ liệu mẫu cho bảng LoaiSanPham */

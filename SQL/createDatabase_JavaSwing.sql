@@ -18,20 +18,13 @@ CREATE TABLE IF NOT EXISTS `TaiKhoan` (
     `TrangThai`     		BOOLEAN                 NOT NULL    DEFAULT true,
     `NgayTao`				DATETIME                NOT NULL 	DEFAULT NOW(),
 	`Quyen`					ENUM("User", "Admin"),
-    `MaKhoHang`				INT UNSIGNED			NOT NULL,
-	FOREIGN KEY (`MaKhoHang`) REFERENCES `KhoHang`(`MaKhoHang`)
-);
-
-DROP TABLE IF EXISTS `NguoiDung`;
-CREATE TABLE IF NOT EXISTS `NguoiDung` (
-    `MaNguoiDung`  		INT UNSIGNED PRIMARY KEY,
-    `HoTen` 			NVARCHAR(255) 			NOT NULL,
-    `NgaySinh`			DATE 					NOT NULL,
-    `GioiTinh`  		ENUM('Male', 'Female')  NOT NULL,
-    `SoDienThoai` 		NVARCHAR(20) 			NOT NULL,
-    `Email` 			NVARCHAR(255) 			NOT NULL,
-	`DiaChi` 			NVARCHAR(255) 			NOT NULL,
-	FOREIGN KEY (`MaNguoiDung`) REFERENCES `TaiKhoan`(`MaTaiKhoan`)
+    `HoTen` 				NVARCHAR(255) 			,
+    `NgaySinh`				DATE 					,
+    `GioiTinh`  			ENUM('Male', 'Female')  ,
+    `SoDienThoai` 			NVARCHAR(20) 			,
+    `Email` 				NVARCHAR(255) 			,
+	`DiaChi` 				NVARCHAR(255) 			,
+    `MaKhoHang`				INT UNSIGNED			
 );
 
 /* _____________________________________________________________________ CÁC BẢNG LIÊN QUAN TỚI SẢN PHẨM _________________________________________________________*/
