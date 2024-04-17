@@ -1,5 +1,7 @@
 package GUI.GUIPanel;
 
+import BUS.LoaiSanPhamBUS;
+import DTO.ThongTinSanPham.LoaiSanPhamDTO;
 import GUI.GUIDialog.LoaiSPDialog;
 import GUI.GUIThanhPhan.ButtonCustom;
 import GUI.GUIThanhPhan.InputFormCustom;
@@ -9,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.ArrayList;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -24,12 +27,18 @@ public class GiaoDienLoaiSanPham extends JPanel implements ActionListener{
     private  DefaultTableModel model;
     private  JTable thongTin;
 
+    
+    private LoaiSanPhamBUS LoaiSPBUS= new LoaiSanPhamBUS();
+    private ArrayList<LoaiSanPhamDTO> listLoaiSP= LoaiSPBUS.getAll();
+    private  ButtonCustom themLoaiSP, suaLoaiSP, xoaLoaiSP;
+    
+    
     public GiaoDienLoaiSanPham() {
         this.setSize(1200,900);// 1980, 1050
         this.setLayout(new BorderLayout(0,0));  
 
         // tiêu đề trên JPanel
-        JPanel panelTren= new JPanel(new FlowLayout(FlowLayout.LEFT,20,20));
+        JPanel panelTren= new JPanel(new FlowLayout(FlowLayout.LEFT,20,30));
         JLabel tieuDe=new JLabel("Loại Sản Phẩm");
         panelTren.setBackground(new Color(255,255,255));
         panelTren.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
@@ -84,22 +93,22 @@ public class GiaoDienLoaiSanPham extends JPanel implements ActionListener{
         
         JPanel cacNutNhan= new JPanel(new FlowLayout(FlowLayout.LEFT,10,30));
         cacNutNhan.setBackground(Color.white);
-        ButtonCustom themLoaiSP= new ButtonCustom("Thêm Loại Mới");
+         themLoaiSP= new ButtonCustom("Thêm Loại Mới");
         themLoaiSP.setPreferredSize(new Dimension(350,100));
-        ButtonCustom suaLoaiSP= new ButtonCustom("Sửa Loại Hiện Tại");
+         suaLoaiSP= new ButtonCustom("Sửa Loại Hiện Tại");
         suaLoaiSP.setPreferredSize(new Dimension(350,100));
-        ButtonCustom xoaLoaiSP= new ButtonCustom("Xóa Loại Sản Phẩm");
+         xoaLoaiSP= new ButtonCustom("Xóa Loại Sản Phẩm");
         xoaLoaiSP.setPreferredSize(new Dimension(350,100));
+        chinhSuaGiaoDienNut();
         cacNutNhan.add(themLoaiSP);cacNutNhan.add(suaLoaiSP);cacNutNhan.add(xoaLoaiSP);
         panelPhai.add(cacNutNhan,BorderLayout.CENTER);
         // bên trái
-        String[] colum = new String[]{"Mã Loại Sản Phẩm","Tên Loại Sản Phẩm","Mã Kho Hàng"};
-        Object data[][]={{"L001","Nước ngọt","Kho A"},
-                        {"L002","Rượu","Kho A"},
-                        {"L003","Quần Áo","Kho B"}};
-         model = new DefaultTableModel(data, colum);
-         thongTin = new JTable(model);
-         chinhSuaGiaoDienTable();
+        String[] colum = new String[]{"STT","Mã Loại Sản Phẩm","Tên Loại Sản Phẩm","Mã Kho Hàng"};
+        model = new DefaultTableModel();
+        model.setColumnIdentifiers(colum);
+        thongTin = new JTable(model);
+        loadDuLieuLoaiSP(listLoaiSP);
+        chinhSuaGiaoDienTable();
         JScrollPane dulieuLoaiSP = new JScrollPane(thongTin);
         
         panelTrai.add(dulieuLoaiSP,BorderLayout.CENTER);
@@ -114,7 +123,28 @@ public class GiaoDienLoaiSanPham extends JPanel implements ActionListener{
         this.add(noiDung);
     }
     
-        public void chinhSuaGiaoDienTable(){
+    
+    public void loadDuLieuLoaiSP(ArrayList<LoaiSanPhamDTO> listLoaiSP){
+        int dem=1;
+        for(LoaiSanPhamDTO loaiSP: listLoaiSP){
+            Object dong[]={dem,loaiSP.getMaLoaiSanPham(),loaiSP.getTenLoaiSanPham(),loaiSP.getMaKhoHang()};
+            model.addRow(dong);
+            dem++;
+        }
+    }
+    
+    public void chinhSuaGiaoDienNut(){
+        this.themLoaiSP.setHorizontalTextPosition(SwingConstants.CENTER);
+        this.themLoaiSP.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        this.suaLoaiSP.setHorizontalTextPosition(SwingConstants.CENTER);
+        this.suaLoaiSP.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        this.xoaLoaiSP.setHorizontalTextPosition(SwingConstants.CENTER);
+        this.xoaLoaiSP.setHorizontalAlignment(SwingConstants.CENTER);
+    }
+    
+    public void chinhSuaGiaoDienTable(){
                 // Căn giữa tiêu đề của các cột
             //DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) thongTin.getTableHeader().getDefaultRenderer();
             //headerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -127,18 +157,15 @@ public class GiaoDienLoaiSanPham extends JPanel implements ActionListener{
             thongTin.getTableHeader().setBackground(Color.WHITE);
             DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
             centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+            for(int i=0; i < thongTin.getColumnCount();i++){
+                thongTin.getColumnModel().getColumn(i).setPreferredWidth(180);
+                thongTin.getColumnModel().getColumn(i).setCellRenderer(centerRenderer );
+            }
+            thongTin.getColumnModel().getColumn(0).setPreferredWidth(20);
+    }
 
 
-
-           for(int i=0; i < thongTin.getColumnCount();i++){
-                thongTin.getColumnModel().getColumn(i).setPreferredWidth(100);
-                if( i !=1)
-                    thongTin.getColumnModel().getColumn(i).setCellRenderer(centerRenderer );
-
-
-           }
-        }
-
+        
     @Override
     public void actionPerformed(ActionEvent e) {
         String btnLenh=e.getActionCommand();
@@ -152,7 +179,7 @@ public class GiaoDienLoaiSanPham extends JPanel implements ActionListener{
                 if( this.thongTin.getSelectedRow()!=-1)
                 {
                     System.out.println(this.thongTin.getSelectedRow());
-                    LoaiSPDialog suaLoaiSP=new LoaiSPDialog("Chỉnh Sửa", "Change",this.thongTin);
+                    LoaiSPDialog suaLoaiSP=new LoaiSPDialog("Chỉnh Sửa", "Change",this.listLoaiSP.get(thongTin.getSelectedRow()));
                 }
                 else JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để chỉnh sửa!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 

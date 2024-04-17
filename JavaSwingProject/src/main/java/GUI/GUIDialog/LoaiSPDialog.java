@@ -1,4 +1,6 @@
 package GUI.GUIDialog;
+import BUS.LoaiSanPhamBUS;
+import DTO.ThongTinSanPham.LoaiSanPhamDTO;
 import GUI.GUIThanhPhan.ButtonCustom;
 import GUI.GUIThanhPhan.InputFormCustom;
 import javax.swing.*;
@@ -12,7 +14,11 @@ public class LoaiSPDialog extends  JDialog implements ActionListener{
     public String tieuDe,type; // type để set cho nút thêm hoặc xóa
     public InputFormCustom maLoaiSP, tenLoaiSP, maKho;
     public ButtonCustom btn_them,btn_chinhsua,btn_huy;
-    public JTable thongtin;
+    
+    
+    private LoaiSanPhamBUS LoaiSPBUS= new LoaiSanPhamBUS();
+    private LoaiSanPhamDTO loaiSPDuocChon;
+    
     public LoaiSPDialog() {
         this.init();
     }
@@ -22,10 +28,10 @@ public class LoaiSPDialog extends  JDialog implements ActionListener{
         this.type=type;
         init();
     }
-    public LoaiSPDialog(String tieuDe, String type, JTable thongTin) {
+    public LoaiSPDialog(String tieuDe, String type, LoaiSanPhamDTO loaisp) {
         this.tieuDe=tieuDe;
         this.type=type;
-        this.thongtin=thongTin;
+        this.loaiSPDuocChon=loaisp;
         init();
     }
     
@@ -57,13 +63,19 @@ public class LoaiSPDialog extends  JDialog implements ActionListener{
         this.btn_huy= new ButtonCustom("Thoát","","#DC143C");
         if ( type.equals("Add")){
             this.btn_them= new ButtonCustom("Thêm","","#00FF7F");
+            this.btn_them.setHorizontalTextPosition(SwingConstants.CENTER);
+            this.btn_them.setHorizontalAlignment(SwingConstants.CENTER);            
             cacNutNhan.add(this.btn_them);
         }
         else if (type.equals("Change")){
             this.btn_chinhsua= new ButtonCustom("Chỉnh Sửa","","#FFD700");
+            this.btn_chinhsua.setHorizontalTextPosition(SwingConstants.CENTER);
+            this.btn_chinhsua.setHorizontalAlignment(SwingConstants.CENTER);              
             themDuLieu();
             cacNutNhan.add(this.btn_chinhsua);
         }
+        this.btn_huy.setHorizontalTextPosition(SwingConstants.CENTER);
+        this.btn_huy.setHorizontalAlignment(SwingConstants.CENTER);
        cacNutNhan.add(this.btn_huy);
         // sự kiện
         this.btn_huy.addActionListener(this);
@@ -77,10 +89,9 @@ public class LoaiSPDialog extends  JDialog implements ActionListener{
     }
     
     public void themDuLieu(){
-        int dongDuocChon= this.thongtin.getSelectedRow();
-        this.maLoaiSP.getTxtForm().setText(this.thongtin.getValueAt(dongDuocChon, 0).toString());
-        this.tenLoaiSP.getTxtForm().setText(this.thongtin.getValueAt(dongDuocChon, 1).toString());
-        this.maKho.getTxtForm().setText(this.thongtin.getValueAt(dongDuocChon, 2).toString());
+        this.maLoaiSP.getTxtForm().setText(this.loaiSPDuocChon.getMaLoaiSanPham().toString());
+        this.tenLoaiSP.getTxtForm().setText(this.loaiSPDuocChon.getTenLoaiSanPham());
+        this.maKho.getTxtForm().setText(this.loaiSPDuocChon.getMaKhoHang().toString());
         
     }
     

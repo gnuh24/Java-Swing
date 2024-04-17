@@ -1,8 +1,9 @@
-package GUI;
+package GUI.GUIPanel;
 
 
-import BUS.XuatHangBUS;
+import BUS.PhieuXuatKhoBUS;
 import DTO.NghiepVuXuatKho.PhieuXuatKhoDTO;
+
 import com.google.protobuf.Timestamp;
 
 import java.awt.*;
@@ -16,7 +17,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 public class PhieuXuatUI extends JPanel implements ActionListener{
-      XuatHangBUS XuatHang_BUS = new XuatHangBUS();
+      PhieuXuatKhoBUS XuatHang_BUS = new PhieuXuatKhoBUS();
       JPanel top;
             JPanel chucNangPanel;
                   JButton xoa_btn;

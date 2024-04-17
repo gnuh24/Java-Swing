@@ -8,10 +8,11 @@ import lombok.*;
 @Data
 
 public class MenuTaskBar extends JPanel{
-
+    private String linkToIMG = "C:\\Users\\dvmv2\\OneDrive\\Documents\\Nam_2\\Fixx\\Java-Swing-main-9-4\\Java-Swing-main\\JavaSwingProject\\src\\main\\java\\Resources";
     private ButtonCustom btn_TrangChu, btn_sanPham, btn_loaiSP;
-    private ButtonCustom btn_PhieuNhap, btn_PhieuXuat, btn_TaiKhoan;
-    private ButtonCustom btn_ThongKe, btn_DoiThongTin, btn_DangXuat;
+    private ButtonCustom btn_NhapHang, btn_PhieuNhap;
+    private ButtonCustom btn_XuatHang, btn_PhieuXuat;
+    private ButtonCustom btn_TaiKhoan,btn_ThongKe, btn_DoiThongTin, btn_DangXuat;
 
     public MenuTaskBar() {
         this.setPreferredSize(new Dimension(288,800));
@@ -43,20 +44,24 @@ public class MenuTaskBar extends JPanel{
         this.add(thongTinUser,BorderLayout.NORTH);
         this.setPreferredSize(new Dimension(200,900));
         // Chuyển thành giao diện sản phẩm
-        JPanel dieuHuong= new JPanel(new GridLayout(9,1,0,0));// giữa, khoảng cách chiều ngang là 0, khoảng cách dọc là 5
+        JPanel dieuHuong= new JPanel(new GridLayout(11,1,0,0));// giữa, khoảng cách chiều ngang là 0, khoảng cách dọc là 5
         dieuHuong.setBackground(Color.WHITE);
-        btn_TrangChu= new ButtonCustom("Trang chủ","C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHung\\JavaHung\\src\\main\\java\\Resources\\trangchu.png");
-        btn_sanPham= new ButtonCustom("Sản phẩm","C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHung\\JavaHung\\src\\main\\java\\Resources\\sanpham.png");
-        btn_loaiSP= new ButtonCustom("Loại Sản phẩm","C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHung\\JavaHung\\src\\main\\java\\Resources\\sanpham.png");
-        btn_PhieuNhap= new ButtonCustom("Phiếu nhập","C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHung\\JavaHung\\src\\main\\java\\Resources\\phieunhap.png");
-        btn_PhieuXuat= new ButtonCustom("Phiếu xuất","C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHung\\JavaHung\\src\\main\\java\\Resources\\phieuxuat.png");
-        btn_TaiKhoan= new ButtonCustom("Tài khoản","C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHung\\JavaHung\\src\\main\\java\\Resources\\taikhoan.png");
-        btn_ThongKe= new ButtonCustom("Thống kê","C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHung\\JavaHung\\src\\main\\java\\Resources\\thongke.png");
-        btn_DoiThongTin= new ButtonCustom("Đổi thông tin","C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHung\\JavaHung\\src\\main\\java\\Resources\\thongtin.png");
-        btn_DangXuat= new ButtonCustom("Đăng xuất","C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHung\\JavaHung\\src\\main\\java\\Resources\\dangxuat.png");
+        btn_TrangChu= new ButtonCustom("Trang chủ",linkToIMG + "\\trangchu.png");
+        btn_sanPham= new ButtonCustom("Sản phẩm",linkToIMG + "\\sanpham.png");
+        btn_loaiSP= new ButtonCustom("Loại Sản phẩm",linkToIMG + "\\sanpham.png");
+        btn_NhapHang = new ButtonCustom("Nhập hàng",linkToIMG + "\\nhaphang.png");
+        btn_PhieuNhap= new ButtonCustom("Phiếu nhập",linkToIMG + "\\phieunhap.png");
+        btn_XuatHang = new ButtonCustom("Xuất hàng", linkToIMG + "\\xuathang.png");
+        btn_PhieuXuat= new ButtonCustom("Phiếu xuất",linkToIMG + "\\phieuxuat.png");
+        btn_TaiKhoan= new ButtonCustom("Tài khoản",linkToIMG + "\\taikhoan.png");
+        btn_ThongKe= new ButtonCustom("Thống kê",linkToIMG + "\\thongke.png");
+        btn_DoiThongTin= new ButtonCustom("Đổi thông tin",linkToIMG + "\\thongtin.png");
+        btn_DangXuat= new ButtonCustom("Đăng xuất",linkToIMG + "\\dangxuat.png");
         dieuHuong.add(btn_TrangChu); dieuHuong.add(btn_sanPham); dieuHuong.add(btn_loaiSP);
-        dieuHuong.add(btn_PhieuNhap); dieuHuong.add(btn_PhieuXuat); dieuHuong.add(btn_TaiKhoan);
-        dieuHuong.add(btn_ThongKe);  dieuHuong.add(btn_DoiThongTin); dieuHuong.add(btn_DangXuat);
+        dieuHuong.add(btn_NhapHang); dieuHuong.add(btn_PhieuNhap);
+        dieuHuong.add(btn_XuatHang); dieuHuong.add(btn_PhieuXuat); 
+        dieuHuong.add(btn_TaiKhoan); dieuHuong.add(btn_ThongKe);
+        dieuHuong.add(btn_DoiThongTin); dieuHuong.add(btn_DangXuat);
         this.add(dieuHuong,BorderLayout.CENTER);
     }
     

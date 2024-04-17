@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 
@@ -24,9 +23,8 @@ public class PhieuXuatKhoDTO {
 
       private LocalDateTime ngayXuatKho;
 
-      private Integer tongGiaTri;
+      private long tongGiaTri;
 
       private Integer   maKhoHang;
-
 
 }

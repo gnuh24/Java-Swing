@@ -1,6 +1,10 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package DAO;
 
+import DAO.DAOInterface;
 import DTO.ThongTinSanPham.SanPhamDTO;
 import Others.JDBCConfigure;
 
@@ -10,10 +14,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+public class SanPhamDAO implements DAOInterface<SanPhamDTO> {
 
-
-public class SanPhamDAO implements DAOInterface<SanPhamDTO>{
-    
     public int check=0;
 
     public static SanPhamDAO getInstance() {
@@ -35,13 +37,13 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO>{
                 String xuatXu=kq.getString("XuatXu");
                 int gia=kq.getInt("Gia");
                 int soLuong=kq.getInt("SoLuongConLai");
-                boolean trangThai= kq.getBoolean("TrangThai");
+                boolean trangThai=kq.getBoolean("TrangThai");
                 String maLoaiSP=String.valueOf(kq.getInt("MaLoaiSanPham"));
                 String hinhAnh=kq.getString("AnhMinhHoa");
                 int maKho=kq.getInt("MaKhoHang");
                 SanPhamDTO sp= new SanPhamDTO(maSP, tenSP, xuatXu, gia, soLuong, trangThai, hinhAnh, maSP, maKho);
                 list.add(sp);
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -56,20 +58,19 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO>{
 
     @Override
     public boolean create(Integer maKhoHang, SanPhamDTO sanPhamDTO) {
-//        try {
-//            Connection ketNoi= JDBCConfigure.getConnection();
-//
-//            String sql="";
-//
-//            System.out.println(ketNoi);
-//            PreparedStatement pst= ketNoi.prepareStatement(sql);
-//
-//
-//            return check;
-//        } catch (SQLException ex) {
-//            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return check;
+        try {
+            Connection ketNoi= JDBCConfigure.getConnection();
+
+            String sql="";
+
+            System.out.println(ketNoi);
+            PreparedStatement pst= ketNoi.prepareStatement(sql);
+
+
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return true;
     }
 

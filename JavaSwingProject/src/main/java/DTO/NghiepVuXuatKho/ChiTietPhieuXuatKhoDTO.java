@@ -1,9 +1,7 @@
 package DTO.NghiepVuXuatKho;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 @Data
 /************************************************************
@@ -16,10 +14,12 @@ import lombok.NonNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChiTietPhieuXuatKhoDTO {
-
-    private String tenSanPham;
+      
+    private Integer maSanPham;
 
     private Integer donGia;
+
+    private Integer maPhieu;
 
     private Integer soLuong;
 

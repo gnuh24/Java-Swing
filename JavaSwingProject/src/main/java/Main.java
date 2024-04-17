@@ -1,8 +1,5 @@
+import GUI.GUIPanel.*;
 
-package GUI;
-import GUI.GUIPanel.GiaoDienLoaiSanPham;
-import GUI.GUIPanel.GiaoDienSanPham;
-import GUI.GUIPanel.MenuTaskBar;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,8 +16,8 @@ public class Main extends JFrame implements ActionListener{
     private JPanel MainContent;
     private  MenuTaskBar menu;
     public Main(){
-        this.setSize(1400,800);// 1980, 1050
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
         this.setLocationRelativeTo(null);
         this.setLayout(new BorderLayout(0,0));    
         
@@ -62,10 +59,16 @@ public class Main extends JFrame implements ActionListener{
             }
         });
         
+        menu.getBtn_XuatHang().addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e){
+                JPanel xuathang= new XuatHangUI();
+                setPanelMain(xuathang); 
+                hieuUngHover(e);
+            }
+        });
         menu.getBtn_PhieuXuat().addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e){
-                JPanel phieuxuat= new JPanel();
-                phieuxuat.setBackground(Color.gray);  
+                JPanel phieuxuat= new PhieuXuatUI();
                 setPanelMain(phieuxuat); 
                 hieuUngHover(e);
             }
@@ -137,7 +140,7 @@ public class Main extends JFrame implements ActionListener{
 
     }
     public static void main(String[] args) {
-        Main a= new Main();
+        new Main();
     }
     
 }

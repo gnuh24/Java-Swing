@@ -1,25 +1,25 @@
-package GUI;
+package GUI.GUIPanel;
 
 
-import BUS.XuatHangBUS;
-import DAO.PhieuXuatKhoDAO;
-import DTO.ThongTinSanPham.SanPhamDTO;
-import Others.JDBCConfigure;
+import BUS.*;
+import DTO.NghiepVuXuatKho.*;
+import DTO.ThongTinSanPham.*;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.*;
 import javax.swing.border.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.table.*;
 
 public class XuatHangUI extends JPanel implements ActionListener{
-      XuatHangBUS XuatHang_BUS = new XuatHangBUS();
+      int maKhoHang = 4;
+      SanPhamBUS sanPhamBUS = new SanPhamBUS();
+      PhieuXuatKhoBUS phieuXuatKhoBUS = new PhieuXuatKhoBUS();
+      ChiTietPhieuXuatKhoBUS chiTietPhieuXuatKhoBUS = new ChiTietPhieuXuatKhoBUS();
+      long tongGiaTri = 0;
       JPanel main;
             //? Main left
             JPanel main_left;
@@ -37,9 +37,9 @@ public class XuatHangUI extends JPanel implements ActionListener{
                   //? Main right
                   JPanel main_right;
                         JPanel thong_tin;
-                              JPanel ma_phieu_nhap_pn;
-                                    JLabel ma_phieu_nhap;
-                                    JTextField ma_phieu_nhap_tf;
+                              JPanel ma_phieu_xuat_pn;
+                                    JLabel ma_phieu_xuat;
+                                    JTextField ma_phieu_xuat_tf;
 
                               JPanel nguoi_tao_phieu_pn;
                                     JLabel nguoi_tao_phieu;
@@ -89,9 +89,9 @@ public class XuatHangUI extends JPanel implements ActionListener{
                                           } else if (columnIndex == 1) {
                                                 return String.class; // Kiểu dữ liệu cho cột 1 là String
                                           } else if (columnIndex == 2) {
-                                                return Integer.class; // Giả sử kiểu dữ liệu cho cột 2 là Integer
+                                                return Integer.class;
                                           } else if (columnIndex == 3) {
-                                                return String.class; // Kiểu dữ liệu cho cột 3 là Double
+                                                return String.class;
                                           } else {
                                                 return Object.class; // Hoặc có thể trả về kiểu Object làm mặc định
                                           }
@@ -143,24 +143,27 @@ public class XuatHangUI extends JPanel implements ActionListener{
                         main_right.setPreferredSize(new Dimension(600,800));
                               thong_tin = new JPanel();
                               thong_tin.setLayout(new BoxLayout(thong_tin, BoxLayout.Y_AXIS));
-                                    ma_phieu_nhap_pn = new JPanel();
-                                          ma_phieu_nhap = new JLabel("Mã phiếu nhập : ");
-                                          ma_phieu_nhap_tf = new JTextField(30);
-                                          ma_phieu_nhap_tf.setPreferredSize(new Dimension(500, 35));
-                                          ma_phieu_nhap_tf.setEditable(false);
-                                    ma_phieu_nhap_pn.setPreferredSize(new Dimension(550,50));
-                                    ma_phieu_nhap_pn.add(ma_phieu_nhap);
-                                    ma_phieu_nhap_pn.add(ma_phieu_nhap_tf);
+                                    ma_phieu_xuat_pn = new JPanel();
+                                          ma_phieu_xuat = new JLabel("Mã phiếu xuất : ");
+                                          ma_phieu_xuat_tf = new JTextField(30);
+                                          ma_phieu_xuat_tf.setPreferredSize(new Dimension(500, 35));
+                                          //! sửa ở đây
+                                          capNhatMaPhieuXuatTiepTheo();
+                                          ma_phieu_xuat_tf.setEditable(false);
+                                    ma_phieu_xuat_pn.setPreferredSize(new Dimension(550,50));
+                                    ma_phieu_xuat_pn.add(ma_phieu_xuat);
+                                    ma_phieu_xuat_pn.add(ma_phieu_xuat_tf);
 
                                     nguoi_tao_phieu_pn = new JPanel();
                                           nguoi_tao_phieu = new JLabel("Người tạo phiếu : ");
                                           nguoi_tao_phieu_tf = new JTextField("Admin",30);
                                           nguoi_tao_phieu_tf.setPreferredSize(new Dimension(50, 35));
+                                          //! sửa ở đây
                                           nguoi_tao_phieu_tf.setEditable(false);
                                     nguoi_tao_phieu_pn.setPreferredSize(new Dimension(550,50));
                                     nguoi_tao_phieu_pn.add(nguoi_tao_phieu);
                                     nguoi_tao_phieu_pn.add(nguoi_tao_phieu_tf);
-                              thong_tin.add(ma_phieu_nhap_pn);
+                              thong_tin.add(ma_phieu_xuat_pn);
                               thong_tin.add(nguoi_tao_phieu_pn);
 
                               String columns_xuat_hang[] = {"STT", "Mã SP", "Tên SP","Số lượng", "Đơn giá"};
@@ -299,26 +302,26 @@ public class XuatHangUI extends JPanel implements ActionListener{
                         sum += getDoubleValueAt(table_ds_xuat_hang,i ,3) * currencyBack(String.valueOf(table_ds_xuat_hang.getValueAt(i,4)));
                   }
                   thanh_tien_total.setText(toCurrency(sum));
+                  tongGiaTri = sum;
             }
       }
 
       @Override
       public void actionPerformed(ActionEvent e) {
             if(e.getSource() == them_sp_confirm) {
-                  themSanPhamPhieuXuatHang();
+                  themSanPhamPhieuXuatKho();
             } else if(e.getSource() == xoa_sp) {
-                  xoaSanPhamPhieuXuatHang();
+                  xoaSanPhamPhieuXuatKho();
             } else if(e.getSource() == sua_sl_sp) {
-                  suaSanPhamPhieuXuatHang();
+                  suaSanPhamPhieuXuatKho();
             } else if(e.getSource() == thanh_tien_xac_nhan) {
-                  taoPhieuXuatHang();
+                  taoPhieuXuatKho();
             }else {
                   System.out.println("Bam 1 nut nao do");
             }
       }
       public void showDanhSachSanPham() {
-            List<SanPhamDTO> sanPhamList = XuatHang_BUS.getDanhSachSanPham();
-            for (SanPhamDTO sanPham : sanPhamList) {
+            for (SanPhamDTO sanPham : sanPhamBUS.getAll()) {
                   model_ds_san_pham.addRow(new Object[]{
                               sanPham.getMaSanPham(),
                               sanPham.getTenSanPham(),
@@ -327,7 +330,7 @@ public class XuatHangUI extends JPanel implements ActionListener{
                   });
             }
       }
-      public void themSanPhamPhieuXuatHang() {
+      public void themSanPhamPhieuXuatKho() {
             //? Check number
             String text = them_sp_number.getText();
             if (!text.matches("^\\d+$")) {
@@ -387,7 +390,7 @@ public class XuatHangUI extends JPanel implements ActionListener{
                   }
             }
       }
-      public void xoaSanPhamPhieuXuatHang() {
+      public void xoaSanPhamPhieuXuatKho() {
             //? Dòng đang chọn
             int selectedRow = table_ds_xuat_hang.getSelectedRow();
             if(selectedRow != -1) {
@@ -401,7 +404,7 @@ public class XuatHangUI extends JPanel implements ActionListener{
                   JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 sản phẩm trong bảng xuất hàng!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
             }
       }
-      public void suaSanPhamPhieuXuatHang() {
+      public void suaSanPhamPhieuXuatKho() {
             int selectedRow = table_ds_xuat_hang.getSelectedRow();
                   if(selectedRow != -1) {
                         String text = JOptionPane.showInputDialog(null,"Nhập số lượng","Sửa số lượng",JOptionPane.PLAIN_MESSAGE);
@@ -421,65 +424,52 @@ public class XuatHangUI extends JPanel implements ActionListener{
                         JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 sản phẩm trong bảng xuất hàng!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
                   }
       }
-      public List<SanPhamDTO> getDanhSachSanPhamTaoPhieuXuatHang() {
-            PhieuXuatKhoDAO xuatHang_DAO = new PhieuXuatKhoDAO();
-            List<SanPhamDTO> danhSachSanPhamTaoPhieuXuatHang = new ArrayList<>();
-//            for(int i = 0; i < table_ds_xuat_hang.getRowCount(); i++) {
-//                  int maSanPham = (Integer)table_ds_xuat_hang.getValueAt(i, 1);
-//                  SanPhamDTO temp = xuatHang_DAO.getSanPhamTheoMaSanPham(maSanPham);
-//                  temp.setSoLuongConLai((Integer)table_ds_xuat_hang.getValueAt(i, 3));
-//                  danhSachSanPhamTaoPhieuXuatHang.add(temp);
-//            }
+      public ArrayList<ChiTietPhieuXuatKhoDTO> getDanhSachChiTietPhieuXuatKho() {
+            ArrayList<ChiTietPhieuXuatKhoDTO> danhSachSanPhamTaoPhieuXuatHang = new ArrayList<>();
+           for(int i = 0; i < table_ds_xuat_hang.getRowCount(); i++) {
+                 int maSanPham = (Integer)table_ds_xuat_hang.getValueAt(i, 1);
+                 SanPhamDTO sanPham = sanPhamBUS.getById(maSanPham);
+                 ChiTietPhieuXuatKhoDTO temp = new ChiTietPhieuXuatKhoDTO();
+                 temp.setSoLuong((Integer)table_ds_xuat_hang.getValueAt(i, 3));
+                 temp.setDonGia(sanPham.getGiaSanPham());
+                 temp.setThanhTien((Integer)table_ds_xuat_hang.getValueAt(i, 3) * sanPham.getGiaSanPham());
+                 temp.setMaPhieu(Integer.valueOf(ma_phieu_xuat_tf.getText()));
+                 temp.setMaSanPham(sanPham.getMaSanPham());
+                 danhSachSanPhamTaoPhieuXuatHang.add(temp);
+           }
             return danhSachSanPhamTaoPhieuXuatHang;
       }
-      public void taoPhieuXuatHang() {
-//            //! Cần thêm giá trị kho hàng
-//            try {
-//                  Statement state = JDBCConfigure.getConnection().createStatement();
-//                  //? UPDATE phieuxuathang
-//                  int maPhieuVuaKhoiTao = 0;
-//                  if(state.executeUpdate("INSERT INTO `phieuxuatkho` (`MaPhieu`, `NgayXuatKho`, `TongGiaTri`, `MaKhoHang`) VALUES (NULL, now(), '"+currencyBack(thanh_tien_total.getText())+"', '4')") != 1) {
-//                        JOptionPane.showMessageDialog(null, "Lỗi khi tạo phiếu xuất hàng","Cảnh báo", JOptionPane.ERROR_MESSAGE);
-//                  } else {
-//                        ResultSet resultSet = state.executeQuery("SELECT LAST_INSERT_ID()");
-//                        if(resultSet.next()) {
-//                              maPhieuVuaKhoiTao = resultSet.getInt(1);
-//                        }
-//                  }
-//
-//                  //? UPDATE CTPXK
-//                  for (SanPhamDTO sanPham : getDanhSachSanPhamTaoPhieuXuatHang()) {
-//                        if(state.executeUpdate("INSERT INTO `ctpxk` (`SoLuong`, `ThanhTien`, `DonGia`, `MaPhieu`, `MaSanPham`) VALUES ('"+sanPham.getSoLuongXuatHang()+"', '"+(sanPham.getGiaSanPham() * sanPham.getSoLuongXuatHang())+"', '"+sanPham.getGiaSanPham()+"', '"+maPhieuVuaKhoiTao+"', '"+sanPham.getMaSanPham()+"')") != 1) {
-//                              JOptionPane.showMessageDialog(null, "Lỗi khi thêm sản phẩm vào Chi Tiet Phieu Xuat Hang","Cảnh báo", JOptionPane.ERROR_MESSAGE);
-//                        }
-//                  }
-//                  //? UPDATE số lượng SanPham
-//                  for (SanPhamDTO sanPham : getDanhSachSanPhamTaoPhieuXuatHang()) {
-//                        ResultSet resultSet = state.executeQuery("SELECT * FROM `sanpham` WHERE `sanpham`.`MaSanPham` = "+sanPham.getMaSanPham()+";");
-//                        int setSoLuongConLai = 0;
-//                        if(resultSet.next()) {
-//                              resultSet.getInt(5);
-//                              setSoLuongConLai = resultSet.getInt(5) - sanPham.getSoLuongXuatHang();
-//                        }
-//                        if(state.executeUpdate("UPDATE `sanpham` SET `SoLuongConLai` = '"+setSoLuongConLai+"' WHERE `sanpham`.`MaSanPham` = "+sanPham.getMaSanPham()+";") != 1) {
-//                              JOptionPane.showMessageDialog(null, "Lỗi khi set So Luong Con Lai","Cảnh báo", JOptionPane.ERROR_MESSAGE);
-//                        }
-//                  }
-//                  //?Reset
-//
-//                        //? Xóa bảng danh sách sản phẩm xuất hàng
-//                        for (int i = model_ds_xuat_hang.getRowCount() - 1; i >= 0; i--) {
-//                              model_ds_xuat_hang.removeRow(i);
-//                        }
-//                        //? cập nhật danh sách sản phẩm
-//                        for (int i = model_ds_san_pham.getRowCount() - 1; i >= 0; i--) {
-//                              model_ds_san_pham.removeRow(i);
-//                        }
-//                        showDanhSachSanPham();
-//                        //?cập nhật thành tiền
-//                        thanh_tien_total.setText("0 đ");
-//                  } catch (SQLException e) {
-//                  System.err.println(e.getMessage());
-//            }
+      public void taoPhieuXuatKho() {
+            //! Cần thêm giá trị kho hàng
+            PhieuXuatKhoDTO phieuXuatKho = new PhieuXuatKhoDTO();
+            phieuXuatKho.setTongGiaTri(tongGiaTri);
+            phieuXuatKhoBUS.create(maKhoHang, phieuXuatKho);  //? Insert vào bảng phieuxuatkho
+
+            //? UPDATE CTPXK
+            for (ChiTietPhieuXuatKhoDTO chiTietPhieuXuatKho : getDanhSachChiTietPhieuXuatKho()) {
+                  chiTietPhieuXuatKhoBUS.create(maKhoHang, chiTietPhieuXuatKho);
+
+                  //? Update số lượng còn lại của sản phẩm
+                  SanPhamDTO sanPham = sanPhamBUS.getById(chiTietPhieuXuatKho.getMaSanPham());
+                  sanPham.setSoLuongConLai(sanPham.getSoLuongConLai() - chiTietPhieuXuatKho.getSoLuong());
+                  sanPhamBUS.update(sanPham);
+            }
+            // ? Xóa bảng danh sách sản phẩm xuất hàng
+            for (int i = model_ds_xuat_hang.getRowCount() - 1; i >= 0; i--) 
+                  model_ds_xuat_hang.removeRow(i);
+            
+            //? cập nhật danh sách sản phẩm
+            for (int i = model_ds_san_pham.getRowCount() - 1; i >= 0; i--) 
+                  model_ds_san_pham.removeRow(i);
+            showDanhSachSanPham();
+            
+            //?cập nhật thành tiền
+            thanh_tien_total.setText("0 đ");
+            //? Cập nhật mã phiếu xuất tiếp theo
+            capNhatMaPhieuXuatTiepTheo();
+            JOptionPane.showMessageDialog(null, "Tạo phiếu xuất hàng thành công !","Thông báo", JOptionPane.INFORMATION_MESSAGE);
+      }
+      public void capNhatMaPhieuXuatTiepTheo() {
+            ma_phieu_xuat_tf.setText(String.valueOf(phieuXuatKhoBUS.maPhieuXuatKhoTiepTheo()));
       }
 }

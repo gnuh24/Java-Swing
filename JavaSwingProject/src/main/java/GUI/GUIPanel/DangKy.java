@@ -1,4 +1,5 @@
-package GUI;
+package GUI.GUIPanel;
+
 
 import javax.swing.*;
 
@@ -7,14 +8,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 
-public class DangNhap extends JFrame{
-	
-	public DangNhap() {
+
+
+public class DangKy extends JFrame{
+
+	public DangKy() {
 		this.init();
 	}
 	
 	public void init () {
-        this.setTitle("Đăng Nhập");
+        this.setTitle("Đăng Ký");
         this.setSize(800, 500);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
@@ -26,7 +29,7 @@ public class DangNhap extends JFrame{
         JPanel panelLeft = new JPanel();
         
         // Tiêu đề
-        JLabel Title = new JLabel("Đăng nhập ");
+        JLabel Title = new JLabel("Đăng ký ");
         Title.setFont(new Font("Arial", Font.PLAIN, 20));
         Title.setBounds(150, 30, 200, 30);
         
@@ -44,34 +47,41 @@ public class DangNhap extends JFrame{
         passwordField.setBounds(50, 190, 300, 30);
         
         
-        //Nút Đăng Nhập
-        JButton buttonLogin = new JButton("Đăng nhập");
+      //Trường Confirm Password
+        JLabel confirmPasswordLabel = new JLabel("Confirm Password");
+        confirmPasswordLabel.setBounds(50, 220, 130, 30);
+        JPasswordField confirmPasswordField = new JPasswordField(50);
+        confirmPasswordField.setBounds(50, 250, 300, 30);
+        
+        
+        //Nút Đăng Ký
+        JButton buttonLogin = new JButton("Đăng ký");
         buttonLogin.setFont(new Font("Arial", Font.BOLD, 15));
-        buttonLogin.setBounds(50, 270, 300, 50);
+        buttonLogin.setBounds(50, 300, 300, 50);
         Color buttonColor = new Color(180, 201, 226);
         buttonLogin.setBackground(buttonColor);
         buttonLogin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         
         
         //Chưa có tài khoản
-        JLabel labelQuestion = new JLabel("Bạn chưa có tài khoản?");
+        JLabel labelQuestion = new JLabel("Bạn đã có tài khoản?");
         labelQuestion.setFont(new Font("Arial", Font.PLAIN, 15));
         labelQuestion.setBounds(50, 400, 300, 30);
-        JButton labelRegister = new JButton("Đăng ký");
-        labelRegister.setActionCommand("Đăng ký");
-        labelRegister.setFont(new Font("Arial", Font.PLAIN, 15));
-        labelRegister.setBounds(220, 405, 100, 20);
-        labelRegister.setForeground(Color.BLUE);
+        JButton labelLogin = new JButton("Đăng nhập");
+        labelLogin.setActionCommand("Đăng nhập");
+        labelLogin.setFont(new Font("Arial", Font.PLAIN, 15));
+        labelLogin.setBounds(220, 405, 130, 20);
+        labelLogin.setForeground(Color.BLUE);
         
 //        DangNhapController ac = new DangNhapController(this);
 //        labelRegister.addActionListener(ac);
         
 //        DangNhapController ac = new DangNhapController(this);
-        labelRegister.addActionListener(new ActionListener() {
+        labelLogin.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new DangKy();
+				new DangNhap();
 				closeWindow();
 			}
 		});
@@ -83,9 +93,11 @@ public class DangNhap extends JFrame{
         panelLeft.add(emailField);
         panelLeft.add(passwordLabel);
         panelLeft.add(passwordField);
+        panelLeft.add(confirmPasswordLabel);
+        panelLeft.add(confirmPasswordField);
         panelLeft.add(buttonLogin);
         panelLeft.add(labelQuestion);
-        panelLeft.add(labelRegister);
+        panelLeft.add(labelLogin);
         panelLeft.setLayout(null);
         mainPanel.add(panelLeft);    
             
