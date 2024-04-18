@@ -1,8 +1,8 @@
 package GUI.GUIPanel;
 
 
-import BUS.ChiTietPhieuXuatKhoBUS;
-import BUS.PhieuXuatKhoBUS;
+import BUS.NghiepVuXuatKho.ChiTietPhieuXuatKhoBUS;
+import BUS.NghiepVuXuatKho.PhieuXuatKhoBUS;
 import DTO.NghiepVuXuatKho.PhieuXuatKhoDTO;
 
 

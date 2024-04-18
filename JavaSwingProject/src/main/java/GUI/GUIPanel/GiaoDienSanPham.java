@@ -1,7 +1,7 @@
 package GUI.GUIPanel;
 
-import BUS.LoaiSanPhamBUS;
-import BUS.SanPhamBUS;
+import BUS.ThongTinSanPham.LoaiSanPhamBUS;
+import BUS.ThongTinSanPham.SanPhamBUS;
 import DTO.ThongTinSanPham.SanPhamDTO;
 import GUI.GUIDialog.SanPhamDialog;
 import GUI.GUIThanhPhan.ButtonCustom;
@@ -19,15 +19,10 @@ import java.awt.event.MouseEvent;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-
 
 
 public class GiaoDienSanPham extends JPanel implements ActionListener{

@@ -1,4 +1,4 @@
-package BUS;
+package BUS.NghiepVuNhapKho;
 
 public class NhaCungCapBUS {
 }

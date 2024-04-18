@@ -1,12 +1,12 @@
-package BUS;
+package BUS.NghiepVuXuatKho;
 
-import DAO.*;
 import java.util.ArrayList;
 
+import DAO.NghiepVuXuatKho.PhieuXuatKhoDAO;
 import DTO.NghiepVuXuatKho.*;
 
 public class PhieuXuatKhoBUS {
-    private final PhieuXuatKhoDAO PhieuXuatKhoDAO= new PhieuXuatKhoDAO();
+    private final DAO.NghiepVuXuatKho.PhieuXuatKhoDAO PhieuXuatKhoDAO= new PhieuXuatKhoDAO();
 
     public PhieuXuatKhoBUS() {
     }

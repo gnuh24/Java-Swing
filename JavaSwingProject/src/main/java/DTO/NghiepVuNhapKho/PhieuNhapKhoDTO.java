@@ -21,9 +21,11 @@ public class PhieuNhapKhoDTO {
 
     private Integer maPhieu;
 
-    private LocalDateTime ngayNhapKho;
+    private String ngayNhapKho;
 
-    private Integer tongGiaTri;
+    private Long tongGiaTri;
+
+    private Integer maNCC;
 
     private Integer   maKhoHang;
 

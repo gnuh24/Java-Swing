@@ -1,6 +1,6 @@
 package GUI.GUIPanel;
 
-import BUS.LoaiSanPhamBUS;
+import BUS.ThongTinSanPham.LoaiSanPhamBUS;
 import DTO.ThongTinSanPham.LoaiSanPhamDTO;
 import GUI.GUIDialog.LoaiSPDialog;
 import GUI.GUIThanhPhan.ButtonCustom;

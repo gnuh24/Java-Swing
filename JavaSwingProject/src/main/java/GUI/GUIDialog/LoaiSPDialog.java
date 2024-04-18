@@ -1,5 +1,5 @@
 package GUI.GUIDialog;
-import BUS.LoaiSanPhamBUS;
+import BUS.ThongTinSanPham.LoaiSanPhamBUS;
 import DTO.ThongTinSanPham.LoaiSanPhamDTO;
 import GUI.GUIThanhPhan.ButtonCustom;
 import GUI.GUIThanhPhan.InputFormCustom;

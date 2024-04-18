@@ -17,36 +17,39 @@ VALUES
 
 
 /* Dữ liệu mẫu cho bảng LoaiSanPham */
-INSERT INTO `LoaiSanPham` (`TenLoaiSanPham`, `MaKhoHang`) VALUES
-('Lego', 1),
-('Figure', 1),
-('Xe mô tô', 1),
+INSERT INTO `LoaiSanPham` (`TenLoaiSanPham`,				 `MaKhoHang`) VALUES
+							('Các nhà cung cấp khác', 			1),
 
-('Laptop', 2),
-('Quần áo', 2);
+
+							('Lego', 1),
+							('Figure', 1),
+							('Xe mô tô', 1),
+
+							('Laptop', 2),
+							('Quần áo', 2);
 
 
 /* Dữ liệu mẫu cho bảng SanPham */
 INSERT INTO `SanPham` 	(`TenSanPham`, 																															`XuatXu`, 		`Gia`, 		`SoLuongConLai`, 	`TrangThai`,  `MaLoaiSanPham`, `MaKhoHang`, 	`AnhMinhHoa`) VALUES
-						("Lego Ninjago 9447 Lasha's bite cycle", 																								'Đan Mạch', 	864000, 		10, 				true, 		 		1, 				1,		"JavaSwingProject/ah0yyd3vpybxaox0lak1"	),
-						("Lego Ninjago 9446 Destiny's Bounty", 																									'Đan Mạch', 	7125000, 		2, 					true,		 		1, 				1,		"JavaSwingProject/jhzqkrkxoog3ldndv2zn"	),
-						("Lego Ninjago 70668 Legacy Jay's Stome Fighter", 																						'Đan Mạch', 	1480000, 		20, 				true, 		 		1, 				1,		"JavaSwingProject/t3mbom8qupxduicsybwh"	),
+						("Lego Ninjago 9447 Lasha's bite cycle", 																								'Đan Mạch', 	864000, 		10, 				true, 		 		2, 				1,		"JavaSwingProject/ah0yyd3vpybxaox0lak1"	),
+						("Lego Ninjago 9446 Destiny's Bounty", 																									'Đan Mạch', 	7125000, 		2, 					true,		 		2, 				1,		"JavaSwingProject/jhzqkrkxoog3ldndv2zn"	),
+						("Lego Ninjago 70668 Legacy Jay's Stome Fighter", 																						'Đan Mạch', 	1480000, 		20, 				true, 		 		2, 				1,		"JavaSwingProject/t3mbom8qupxduicsybwh"	),
                         
-						("Hàng loại 1 - Mô Hình DragonBall Songoku vô cực 3 đầu thay thế cao 52cm nặng 4kg - Figure DragonBall - Có Hộp carton", 				'Nhật Bản', 	739000, 		10, 				true, 		 		2, 				1,		"JavaSwingProject/ceiimkgst4z0rvugf5mj"	),
-						("Mô Hình Anime Bleach Ichigo Kurosaki cao Cao 18cm - ngang 10cm - nặng 150gram - Figure Anime Bleach - có hộp màu", 					'Nhật Bản', 	89000, 		    200, 				true,		 		2, 				1,		"JavaSwingProject/nrhhxtlimpax5muuyu7c"	),
-						("Mô Hình Naruto dáng đứng siêu ngầu - Cao 30cm - ngang 12cm - nặng 1kg5 - Figure Naruto - Có hộp màu", 								'Nhật Bản', 	238000, 		20, 				true, 		 		2, 				1,		"JavaSwingProject/iesufe0ip1rrmc45m8jr"	);
-
+						("Hàng loại 1 - Mô Hình DragonBall Songoku vô cực 3 đầu thay thế cao 52cm nặng 4kg - Figure DragonBall - Có Hộp carton", 				'Nhật Bản', 	739000, 		10, 				true, 		 		3, 				1,		"JavaSwingProject/ceiimkgst4z0rvugf5mj"	),
+						("Mô Hình Anime Bleach Ichigo Kurosaki cao Cao 18cm - ngang 10cm - nặng 150gram - Figure Anime Bleach - có hộp màu", 					'Nhật Bản', 	89000, 		    200, 				true,		 		3, 				1,		"JavaSwingProject/nrhhxtlimpax5muuyu7c"	),
+						("Mô Hình Naruto dáng đứng siêu ngầu - Cao 30cm - ngang 12cm - nặng 1kg5 - Figure Naruto - Có hộp màu", 								'Nhật Bản', 	238000, 		20, 				true, 		 		3, 				1,		"JavaSwingProject/iesufe0ip1rrmc45m8jr"	);
 
 /* Dữ liệu mẫu cho bảng NhaCungCap */
 INSERT INTO `NhaCungCap` (`TenNCC`, 						`SoDienThoai`, `Email`,					 `MaKhoHang`) VALUES
+							('Các nhà cung cấp khác', 		'0123456789', 'defaultNCC@gmail.com', 			1),
 							('Công ty TNHH Thị Trường Sỉ', 	'0123456789', 'tts@gmail.com', 					1),
 							('Ngôi Nhà Đồ Chơi', 			'0123456789', 'ngoNhaDoChoi@gmail.com', 		1);
 
 /* Dữ liệu mẫu cho bảng PhieuNhapKho */
 INSERT INTO `PhieuNhapKho` (`NgayNhapKho`, 					`TongGiaTri`, 	`MaNCC`,  `MaKhoHang`) VALUES
-							('2024-01-15 08:00:00', 		2840700000, 	1, 			 1),
-							('2024-01-16 09:00:00', 		165600000, 		1, 			 1),
-							('2024-01-17 10:00:00', 		7140000, 		2, 			 1);
+							('2024-01-15 08:00:00', 		2840700000, 	2, 			 1),
+							('2024-01-16 09:00:00', 		165600000, 		2, 			 1),
+							('2024-01-17 10:00:00', 		7140000, 		3, 			 1);
 
 /* Dữ liệu mẫu cho bảng CTPNK */
 INSERT INTO `CTPNK` (`DonGiaNhap`, `SoLuong`, 	`ThanhTien`, 	`MaPhieu`, 		`MaSanPham`) VALUES

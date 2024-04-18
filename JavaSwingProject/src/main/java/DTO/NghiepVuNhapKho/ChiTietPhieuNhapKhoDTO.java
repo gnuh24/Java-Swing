@@ -17,14 +17,14 @@ import lombok.NonNull;
 @AllArgsConstructor
 public class ChiTietPhieuNhapKhoDTO {
 
+    private Integer maPhieu;
+
     private Integer maSanPham;
 
     private Integer donGia;
 
     private Integer soLuong;
 
-    private Integer thanhTien;
-
-    private String tenNCC;
+    private Long thanhTien;
 
 }

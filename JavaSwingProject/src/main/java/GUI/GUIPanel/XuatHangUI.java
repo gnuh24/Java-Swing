@@ -1,7 +1,9 @@
 package GUI.GUIPanel;
 
 
-import BUS.*;
+import BUS.NghiepVuXuatKho.ChiTietPhieuXuatKhoBUS;
+import BUS.NghiepVuXuatKho.PhieuXuatKhoBUS;
+import BUS.ThongTinSanPham.SanPhamBUS;
 import DTO.NghiepVuXuatKho.*;
 import DTO.ThongTinSanPham.*;
 

@@ -61,20 +61,21 @@ CREATE TABLE IF NOT EXISTS `SanPham` (
 DROP TABLE IF EXISTS `NhaCungCap`;
 CREATE TABLE IF NOT EXISTS  `NhaCungCap` (
     `MaNCC` 		INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `TenNCC` 		NVARCHAR(255) 		NOT NULL 	UNIQUE,
-    `SoDienThoai` 	NVARCHAR(20) 		NOT NULL,
-    `Email` 		NVARCHAR(255) 		NOT NULL,
-    
-	`MaKhoHang` 		INT UNSIGNED 			NOT NULL,
+    `TenNCC` 		NVARCHAR(255) 			NOT NULL 	UNIQUE,
+    `SoDienThoai` 	NVARCHAR(20) 			NOT NULL,
+    `Email` 		NVARCHAR(255) 			NOT NULL,
+	`MaKhoHang` 	INT UNSIGNED 			NOT NULL,
 	FOREIGN KEY (`MaKhoHang`) REFERENCES `KhoHang`(`MaKhoHang`)
 );
+
+
 
 DROP TABLE IF EXISTS `PhieuNhapKho`;
 CREATE TABLE IF NOT EXISTS  `PhieuNhapKho` (
     `MaPhieu` 			INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `NgayNhapKho` 		DATETIME 				NOT NULL	DEFAULT NOW(),
-    `TongGiaTri` 		INT UNSIGNED 			NOT NULL,
-    `MaNCC`				INT UNSIGNED,
+    `NgayNhapKho` 		DATE 						NOT NULL,
+    `TongGiaTri` 		BIGINT UNSIGNED 			NOT NULL,
+    `MaNCC`				INT UNSIGNED			NOT NULL,
 	`MaKhoHang` 		INT UNSIGNED 			NOT NULL,
 
     FOREIGN KEY (`MaNCC`) 		REFERENCES `NhaCungCap`(`MaNCC`),
@@ -99,9 +100,9 @@ CREATE TABLE IF NOT EXISTS  `CTPNK` (
 DROP TABLE IF EXISTS `PhieuXuatKho`;
 CREATE TABLE IF NOT EXISTS `PhieuXuatKho`(
 	`MaPhieu`  					INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `NgayXuatKho` 				DATETIME 					NOT NULL		DEFAULT NOW(),
-    `TongGiaTri` 				INT UNSIGNED 				NOT NULL,
-	`MaKhoHang` 				INT UNSIGNED 				NOT NULL,
+    `NgayXuatKho` 				DATE 					NOT NULL,
+    `TongGiaTri` 				BIGINT UNSIGNED 		NOT NULL,
+	`MaKhoHang` 				INT UNSIGNED 			NOT NULL,
 
 	FOREIGN KEY (`MaKhoHang`) REFERENCES `KhoHang`(`MaKhoHang`)
 

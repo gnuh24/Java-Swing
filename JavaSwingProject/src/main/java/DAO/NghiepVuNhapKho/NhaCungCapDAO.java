@@ -1,5 +1,6 @@
-package DAO;
+package DAO.NghiepVuNhapKho;
 
+import DAO.DAOInterface;
 import DTO.NghiepVuNhapKho.NhaCungCapDTO;
 import Others.JDBCConfigure;
 
@@ -7,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NhaCungCapDAO implements DAOInterface<NhaCungCapDTO>{
+public class NhaCungCapDAO implements DAOInterface<NhaCungCapDTO> {
 
     @Override
     public List<NhaCungCapDTO> getAll(Integer maKhoHang) {
@@ -85,14 +86,16 @@ public class NhaCungCapDAO implements DAOInterface<NhaCungCapDTO>{
         return nhaCungCapDTO;
     }
 
-    public boolean isTenNCCExists(String tenNCC){
+    public boolean isTenNCCExists(Integer maKhoHang, String tenNCC){
         String createNhaCungCapQuery =
             "SELECT * FROM `NhaCungCap`" +
-                "WHERE `TenNCC` = ? ;";
+                "WHERE `TenNCC` = ? AND `MaKhoHang` = ?;";
 
         try {
             PreparedStatement preparedStatement = JDBCConfigure.getConnection().prepareStatement(createNhaCungCapQuery);
             preparedStatement.setString(1, tenNCC);
+            preparedStatement.setInt(2, maKhoHang);
+
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()){
@@ -174,23 +177,5 @@ public class NhaCungCapDAO implements DAOInterface<NhaCungCapDTO>{
             JDBCConfigure.closeConnection();
         }
     }
-
-    public static void main(String[] args) {
-        NhaCungCapDAO nhaCungCapDAO = new NhaCungCapDAO();
-        NhaCungCapDTO nhaCungCapDTO = nhaCungCapDAO.getById(3);
-
-//        nhaCungCapDTO.setTenNCC("Công ty TNHH 1 thành THug88");
-//        System.err.println(nhaCungCapDTO.getMaKhoHang());
-//        nhaCungCapDAO.update(nhaCungCapDTO);
-
-
-        System.err.println(nhaCungCapDAO.isTenNCCExists("4 chàng lính ngự lâm !!"));
-
-        System.err.println(nhaCungCapDAO.isTenNCCExists("Công ty TNHH 1 thành THug88"));
-
-
-        nhaCungCapDAO.delete(nhaCungCapDTO);
-    }
-
 
 }

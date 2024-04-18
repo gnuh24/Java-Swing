@@ -1,6 +1,7 @@
-package BUS;
+package BUS.ThongTinSanPham;
 
-import DAO.SanPhamDAO;
+import BUS.ThongTinSanPham.LoaiSanPhamBUS;
+import DAO.ThongTinSanPham.SanPhamDAO;
 import java.util.ArrayList;
 
 import DTO.ThongTinSanPham.SanPhamDTO;

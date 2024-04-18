@@ -11,7 +11,8 @@ import javax.swing.*;
 // import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.*;
 
-import BUS.*;
+import BUS.NghiepVuXuatKho.ChiTietPhieuXuatKhoBUS;
+import BUS.ThongTinSanPham.SanPhamBUS;
 import DTO.NghiepVuXuatKho.*;
 import Others.JDBCConfigure;
 

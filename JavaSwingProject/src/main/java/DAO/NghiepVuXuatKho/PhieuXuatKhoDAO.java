@@ -1,5 +1,6 @@
-package DAO;
+package DAO.NghiepVuXuatKho;
 
+import DAO.DAOInterface;
 import DTO.NghiepVuXuatKho.ChiTietPhieuXuatKhoDTO;
 import DTO.NghiepVuXuatKho.PhieuXuatKhoDTO;
 import Others.JDBCConfigure;
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class PhieuXuatKhoDAO implements DAOInterface<PhieuXuatKhoDTO>{
+public class PhieuXuatKhoDAO implements DAOInterface<PhieuXuatKhoDTO> {
       
 
       @Override

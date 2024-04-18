@@ -2,21 +2,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package org.example.DAO;
+package DAO.ThongTinSanPham;
 
 import DAO.DAOInterface;
-import DTO.NguoiDung.TaiKhoanDTO;
 import DTO.ThongTinSanPham.SanPhamDTO;
 import Others.JDBCConfigure;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SanPhamDAO implements DAOInterface<SanPhamDTO> {
-    
+
     public int check=0;
 
     public static SanPhamDAO getInstance() {
@@ -44,7 +42,7 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO> {
                 int maKho=kq.getInt("MaKhoHang");
                 SanPhamDTO sp= new SanPhamDTO(maSP, tenSP, xuatXu, gia, soLuong, trangThai, hinhAnh, maSP, maKho);
                 list.add(sp);
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -61,6 +59,7 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO> {
     public boolean create(Integer maKhoHang, SanPhamDTO sanPhamDTO) {
         try {
             Connection ketNoi= JDBCConfigure.getConnection();
+
             String sql="";
 
             System.out.println(ketNoi);

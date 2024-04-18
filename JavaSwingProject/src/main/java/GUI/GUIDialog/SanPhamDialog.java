@@ -1,10 +1,9 @@
 
 package GUI.GUIDialog;
 
-import BUS.LoaiSanPhamBUS;
-import BUS.SanPhamBUS;
+import BUS.ThongTinSanPham.LoaiSanPhamBUS;
+import BUS.ThongTinSanPham.SanPhamBUS;
 import DTO.ThongTinSanPham.SanPhamDTO;
-import GUI.GUIPanel.GiaoDienLoaiSanPham;
 import GUI.GUIPanel.GiaoDienSanPham;
 import GUI.GUIThanhPhan.ComboBoxFormCustom;
 import GUI.GUIThanhPhan.InputFormCustom;
@@ -13,15 +12,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 

@@ -5,10 +5,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="003b6990-b30a-4767-b559-0655e60cd464" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/DAO/NghiepVuNhapKho/ChiTietPhieuNhapKhoDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DAO/NghiepVuNhapKho/PhieuNhapKhoDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Others/UltilServices.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/NhaCungCapDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/NhaCungCapDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Others/CloundinaryServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Others/CloundinaryServices.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Others/mysql.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Others/mysql.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BUS/ChiTietPhieuXuatKhoBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BUS/NghiepVuXuatKho/ChiTietPhieuXuatKhoBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BUS/LoaiSanPhamBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BUS/ThongTinSanPham/LoaiSanPhamBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BUS/NhaCungCapBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BUS/NghiepVuNhapKho/NhaCungCapBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BUS/PhieuXuatKhoBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BUS/NghiepVuXuatKho/PhieuXuatKhoBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BUS/SanPhamBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BUS/ThongTinSanPham/SanPhamBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/ChiTietPhieuXuatKhoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/NghiepVuXuatKho/ChiTietPhieuXuatKhoDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/LoaiSanPhamDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/ThongTinSanPham/LoaiSanPhamDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/NhaCungCapDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/NghiepVuNhapKho/NhaCungCapDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/PhieuXuatKhoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/NghiepVuXuatKho/PhieuXuatKhoDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/SanPhamDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/ThongTinSanPham/SanPhamDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/NghiepVuNhapKho/ChiTietPhieuNhapKhoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/NghiepVuNhapKho/ChiTietPhieuNhapKhoDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/NghiepVuNhapKho/PhieuNhapKhoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/NghiepVuNhapKho/PhieuNhapKhoDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIDialog/LoaiSPDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIDialog/LoaiSPDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIDialog/SanPhamDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIDialog/SanPhamDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/ChiTietPhieuXuatKho.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/ChiTietPhieuXuatKho.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/GiaoDienLoaiSanPham.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/GiaoDienLoaiSanPham.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/GiaoDienSanPham.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/GiaoDienSanPham.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/PhieuXuatUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/PhieuXuatUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/SuaChiTietPhieuXuatKho.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/SuaChiTietPhieuXuatKho.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/XuatHangUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/XuatHangUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DAO/SanPhamDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SQL/createDatabase_JavaSwing.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../SQL/createDatabase_JavaSwing.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SQL/insertData_JavaSwing.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../SQL/insertData_JavaSwing.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,13 +70,26 @@
       <recent name="C:\Users\Tuan Hung\Desktop\Learning\Exercise\SGU Java Swing - Ms Loan\Java-Swing\JavaSwingProject\src\main\java\org\example\Resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.DAO.NhaCungCapDAO">
-    <configuration name="DAO.NhaCungCapDAO" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="DAO.NhaCungCapDAO" />
+  <component name="RunManager" selected="Application.ChiTietPhieuNhapKhoDAO">
+    <configuration name="ChiTietPhieuNhapKhoDAO" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="DAO.NghiepVuNhapKho.ChiTietPhieuNhapKhoDAO" />
       <module name="JavaSwingProject" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="DAO.*" />
+          <option name="PATTERN" value="DAO.NghiepVuNhapKho.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DAO.NghiepVuNhapKho.NhaCungCapDAO" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="DAO.NghiepVuNhapKho.NhaCungCapDAO" />
+      <module name="JavaSwingProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="DAO.NghiepVuNhapKho.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -74,19 +110,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.Main" />
-      <module name="JavaSwingProject" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="NhaCungCapDAO" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.DAO.NhaCungCapDAO" />
       <module name="JavaSwingProject" />
@@ -100,12 +123,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="org.example.Others.JDBCConfigure" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.Others.JDBCConfigure" />
+    <configuration name="PhieuNhapKhoDAO" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="DAO.NghiepVuNhapKho.PhieuNhapKhoDAO" />
       <module name="JavaSwingProject" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.Others.*" />
+          <option name="PATTERN" value="DAO.NghiepVuNhapKho.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -115,11 +138,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.DAO.NhaCungCapDAO" />
+        <item itemvalue="Application.ChiTietPhieuNhapKhoDAO" />
+        <item itemvalue="Application.PhieuNhapKhoDAO" />
+        <item itemvalue="Application.DAO.NghiepVuNhapKho.NhaCungCapDAO" />
         <item itemvalue="Application.GUI.Main" />
         <item itemvalue="Application.NhaCungCapDAO" />
-        <item itemvalue="Application.org.example.Others.JDBCConfigure" />
-        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
