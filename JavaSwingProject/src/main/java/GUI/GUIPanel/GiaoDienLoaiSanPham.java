@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -49,16 +51,16 @@ public class GiaoDienLoaiSanPham extends JPanel implements ActionListener{
         JPanel noiDung= new JPanel(new BorderLayout(0,0));
         noiDung.setPreferredSize(new Dimension(1200,800));
         JPanel panelTrai= new JPanel(new BorderLayout(0,0));
-        panelTrai.setPreferredSize(new Dimension(800,800));
+        panelTrai.setPreferredSize(new Dimension(900,800));
         JPanel panelPhai= new JPanel(new BorderLayout(0,0));
-        panelPhai.setPreferredSize(new Dimension(400,800));
+        panelPhai.setPreferredSize(new Dimension(300,800));
         panelTrai.setBackground(Color.red);
         panelPhai.setBackground(Color.blue);
         // bên phải
         JPanel timKiemLoaiSP= new JPanel(new FlowLayout(FlowLayout.LEFT,10,10));
-        timKiemLoaiSP.setPreferredSize(new Dimension(400,200));
+        timKiemLoaiSP.setPreferredSize(new Dimension(300,200));
         InputFormCustom timKiem= new InputFormCustom("Loại Sản Phẩm: ");
-        timKiem.setPreferredSize(new Dimension(350,120));
+        timKiem.setPreferredSize(new Dimension(250,120));
         timKiemLoaiSP.add(timKiem);
         panelPhai.add(timKiemLoaiSP,BorderLayout.NORTH);
         
@@ -91,14 +93,17 @@ public class GiaoDienLoaiSanPham extends JPanel implements ActionListener{
             }
         });
         
-        JPanel cacNutNhan= new JPanel(new FlowLayout(FlowLayout.LEFT,10,30));
+        JPanel cacNutNhan= new JPanel(new FlowLayout(FlowLayout.CENTER,20,50));
         cacNutNhan.setBackground(Color.white);
-         themLoaiSP= new ButtonCustom("Thêm Loại Mới");
-        themLoaiSP.setPreferredSize(new Dimension(350,100));
-         suaLoaiSP= new ButtonCustom("Sửa Loại Hiện Tại");
-        suaLoaiSP.setPreferredSize(new Dimension(350,100));
-         xoaLoaiSP= new ButtonCustom("Xóa Loại Sản Phẩm");
-        xoaLoaiSP.setPreferredSize(new Dimension(350,100));
+        themLoaiSP= new ButtonCustom("Thêm Loại Mới", "", "#0091fd");
+        themLoaiSP.setPreferredSize(new Dimension(280,100));
+        themLoaiSP.setForeground(Color.white);
+        suaLoaiSP= new ButtonCustom("Sửa Loại Hiện Tại","","#0091fd");
+        suaLoaiSP.setPreferredSize(new Dimension(280,100));
+        suaLoaiSP.setForeground(Color.white);
+        xoaLoaiSP= new ButtonCustom("Xóa Loại Sản Phẩm","","#0091fd");
+        xoaLoaiSP.setPreferredSize(new Dimension(280,100));
+        xoaLoaiSP.setForeground(Color.white);
         chinhSuaGiaoDienNut();
         cacNutNhan.add(themLoaiSP);cacNutNhan.add(suaLoaiSP);cacNutNhan.add(xoaLoaiSP);
         panelPhai.add(cacNutNhan,BorderLayout.CENTER);
@@ -116,6 +121,14 @@ public class GiaoDienLoaiSanPham extends JPanel implements ActionListener{
         themLoaiSP.addActionListener(this);
         suaLoaiSP.addActionListener(this);
         xoaLoaiSP.addActionListener(this);
+        timKiem.txtForm.addKeyListener(new KeyAdapter(){
+            public void keyReleased(KeyEvent e){
+                listLoaiSP=LoaiSPBUS.search(timKiem.txtForm.getText());
+                loadDuLieuLoaiSP(listLoaiSP);
+                chinhSuaGiaoDienTable();
+            }
+        });
+        
         
         noiDung.add(panelTrai,BorderLayout.CENTER);
         noiDung.add(panelPhai,BorderLayout.EAST);
@@ -125,6 +138,7 @@ public class GiaoDienLoaiSanPham extends JPanel implements ActionListener{
     
     
     public void loadDuLieuLoaiSP(ArrayList<LoaiSanPhamDTO> listLoaiSP){
+        model.setRowCount(0);
         int dem=1;
         for(LoaiSanPhamDTO loaiSP: listLoaiSP){
             Object dong[]={dem,loaiSP.getMaLoaiSanPham(),loaiSP.getTenLoaiSanPham(),loaiSP.getMaKhoHang()};
@@ -169,24 +183,28 @@ public class GiaoDienLoaiSanPham extends JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         String btnLenh=e.getActionCommand();
-        System.out.println(btnLenh);
         
         switch(btnLenh){
             case "Thêm Loại Mới":
-                LoaiSPDialog themLoaiSP=new LoaiSPDialog("Thêm Mới", "Add");
+                LoaiSPDialog themLoaiSP=new LoaiSPDialog(this,"Thêm Mới", "Add");
                 break;
             case "Sửa Loại Hiện Tại":
-                if( this.thongTin.getSelectedRow()!=-1)
-                {
-                    System.out.println(this.thongTin.getSelectedRow());
-                    LoaiSPDialog suaLoaiSP=new LoaiSPDialog("Chỉnh Sửa", "Change",this.listLoaiSP.get(thongTin.getSelectedRow()));
+                if( this.thongTin.getSelectedRow()!=-1){
+                   LoaiSPDialog suaLoaiSP=new LoaiSPDialog(this,"Chỉnh Sửa", "Change",this.listLoaiSP.get(thongTin.getSelectedRow()));               
                 }
-                else JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để chỉnh sửa!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                
-                
+                else 
+                    JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để chỉnh sửa!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+
                 break;
             case "Xóa Loại Sản Phẩm":
-                JOptionPane.showMessageDialog(this, "Sản phâm đã xóa");
+                int luaChon=JOptionPane.showConfirmDialog(this,"Chắc chắn xóa sản phẩm ?","Xóa Sản Phẩm",JOptionPane.YES_NO_OPTION);
+            if( luaChon==0)
+            {
+                LoaiSPBUS.delete(listLoaiSP.get(thongTin.getSelectedRow()));
+                JOptionPane.showMessageDialog(this, "Sản phẩm đã xóa");
+                loadDuLieuLoaiSP(LoaiSPBUS.getAll());
+                chinhSuaGiaoDienTable();
+            }
                 break;
         }
         

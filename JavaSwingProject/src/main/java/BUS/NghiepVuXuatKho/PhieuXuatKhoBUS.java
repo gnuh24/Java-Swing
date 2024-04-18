@@ -1,16 +1,20 @@
 package BUS.NghiepVuXuatKho;
 
+import BUS.ThongTinSanPham.SanPhamBUS;
+import DAO.*;
 import java.util.ArrayList;
 
 import DAO.NghiepVuXuatKho.PhieuXuatKhoDAO;
 import DTO.NghiepVuXuatKho.*;
+import DTO.ThongTinSanPham.*;
 
 public class PhieuXuatKhoBUS {
-    private final DAO.NghiepVuXuatKho.PhieuXuatKhoDAO PhieuXuatKhoDAO= new PhieuXuatKhoDAO();
+    private final PhieuXuatKhoDAO PhieuXuatKhoDAO= new PhieuXuatKhoDAO();
+    private SanPhamBUS danhSachSanPhamBUS = new SanPhamBUS();
 
     public PhieuXuatKhoBUS() {
     }
-    
+
     public ArrayList<PhieuXuatKhoDTO> getAll(int maKhoHang){
         return PhieuXuatKhoDAO.getAll(maKhoHang);
     }
@@ -30,7 +34,49 @@ public class PhieuXuatKhoBUS {
     public int maPhieuXuatKhoTiepTheo() {
         return PhieuXuatKhoDAO.maPhieuXuatKhoTiepTheo();
     }
-    
-    
-    
+    public ArrayList<PhieuXuatKhoDTO> search(int index){
+        ArrayList<PhieuXuatKhoDTO> kq= new ArrayList<>();
+        switch (index) {
+            case 0:
+                for(PhieuXuatKhoDTO sp: this.getAll(4)){
+                    kq.add(sp);
+                }
+                break;
+            case 1:
+                for(PhieuXuatKhoDTO sp: this.getAll(4)){
+                    if( sp.getTongGiaTri() <=  5000000)
+                        kq.add(sp);
+                }
+                break;
+            case 2:
+                for(PhieuXuatKhoDTO sp: this.getAll(4)){
+                    if( sp.getTongGiaTri() >  5000000 && sp.getTongGiaTri() <=  10000000)
+                        kq.add(sp);
+                }
+                break;
+            case 3:
+                for(PhieuXuatKhoDTO sp: this.getAll(4)){
+                    if( sp.getTongGiaTri() >  10000000 && sp.getTongGiaTri() <=  20000000)
+                        kq.add(sp);
+                }
+                break;
+            case 4:
+                for(PhieuXuatKhoDTO sp: this.getAll(4)){
+                    if( sp.getTongGiaTri() >  20000000 && sp.getTongGiaTri() <=  40000000)
+                        kq.add(sp);
+                }
+                break;
+            case 5:
+                for(PhieuXuatKhoDTO sp: this.getAll(4)){
+                    if( sp.getTongGiaTri() >  40000000)
+                        kq.add(sp);
+                }
+                break;
+
+            default:
+                break;
+        }
+        return kq;
+    }
+
 }

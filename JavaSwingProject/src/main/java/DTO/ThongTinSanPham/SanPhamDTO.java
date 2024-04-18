@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SanPhamDTO {
-
       private Integer   maSanPham;
 
       private String    tenSanPham;
@@ -33,5 +32,16 @@ public class SanPhamDTO {
       private Integer   maLoaiSanPham;
 
       private Integer   maKhoHang;
+      
+      public SanPhamDTO(String tenSanPham, String xuatXu, Integer giaSanPham, Integer soLuongConLai, Boolean trangThai, String anhMinhHoa, Integer maLoaiSanPham, Integer maKhoHang){
+          this.tenSanPham=tenSanPham;
+          this.xuatXu=xuatXu;
+          this.giaSanPham=giaSanPham;
+          this.soLuongConLai=soLuongConLai;
+          this.trangThai=trangThai;
+          this.anhMinhhoa=anhMinhHoa;
+          this.maLoaiSanPham=maLoaiSanPham;
+          this.maKhoHang=maLoaiSanPham;
+      }
 
 }

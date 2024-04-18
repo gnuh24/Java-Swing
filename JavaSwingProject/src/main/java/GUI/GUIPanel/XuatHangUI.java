@@ -17,7 +17,7 @@ import javax.swing.border.*;
 import javax.swing.table.*;
 
 public class XuatHangUI extends JPanel implements ActionListener{
-      int maKhoHang = 4;
+      int maKhoHang = 0;
       SanPhamBUS sanPhamBUS = new SanPhamBUS();
       PhieuXuatKhoBUS phieuXuatKhoBUS = new PhieuXuatKhoBUS();
       ChiTietPhieuXuatKhoBUS chiTietPhieuXuatKhoBUS = new ChiTietPhieuXuatKhoBUS();
@@ -26,8 +26,8 @@ public class XuatHangUI extends JPanel implements ActionListener{
             //? Main left
             JPanel main_left;
                   JPanel tim_kiem;
+                        JLabel tim_kiem_lb;
                         JTextField tim_kiem_tf;
-                        JButton tim_kiem_refesh;
                   DefaultTableModel model_ds_san_pham;
                   JTable table_ds_san_pham;
                   JScrollPane ds_san_pham;
@@ -61,8 +61,8 @@ public class XuatHangUI extends JPanel implements ActionListener{
 
 
       Color bgBlue = new Color(0,145,253);
-      public XuatHangUI() {
-
+      public XuatHangUI(int maKhoHang) {
+            this.maKhoHang = maKhoHang;
             main = new JPanel();
             main.setPreferredSize(new Dimension(1300, 800));
             main.setLayout(new FlowLayout());
@@ -73,14 +73,20 @@ public class XuatHangUI extends JPanel implements ActionListener{
                               tim_kiem.setPreferredSize(new Dimension(550, 70));
                               tim_kiem.setBorder(new CompoundBorder(new TitledBorder("Tìm Kiếm"), new EmptyBorder(4, 4, 4, 4)));
                               tim_kiem.setBackground(Color.WHITE);
+
+                                    tim_kiem_lb = new JLabel("Tìm theo tên : ");
                                     tim_kiem_tf = new JTextField(30);
                                     tim_kiem_tf.setPreferredSize(new Dimension(100, 35));
-                                    tim_kiem_refesh = new JButton("Làm mới");
-                                    tim_kiem_refesh.addActionListener(this);
+                                    tim_kiem_tf.addKeyListener(new KeyAdapter(){
+                                          public void keyReleased(KeyEvent e){
+                                              ArrayList<SanPhamDTO> listSanPham=sanPhamBUS.search(tim_kiem_tf.getText());
+                                              showDanhSachSanPham(listSanPham);
+                                          }
+                                    });
+                              tim_kiem.add(tim_kiem_lb);
                               tim_kiem.add(tim_kiem_tf);
-                              tim_kiem.add(customButtonMain(tim_kiem_refesh,100,35));
 
-                              String columns_ds_san_pham[] = {"Mã máy", "Tên máy", "Số lượng", "Đơn giá"};
+                              String columns_ds_san_pham[] = {"STT", "Tên sản phẩm", "Số lượng", "Đơn giá"};
                               String data_ds_san_pham[][] = {};
                               model_ds_san_pham = new DefaultTableModel(data_ds_san_pham, columns_ds_san_pham){
                                     @Override
@@ -104,17 +110,22 @@ public class XuatHangUI extends JPanel implements ActionListener{
                               table_ds_san_pham.getColumnModel().getColumn(1).setPreferredWidth(225);
                               table_ds_san_pham.getColumnModel().getColumn(2).setPreferredWidth(20);
                               table_ds_san_pham.getColumnModel().getColumn(3).setPreferredWidth(80);
+                              table_ds_san_pham.setRowHeight(40);
                               //? Set vị trí cho nội dung (căn giữa cho nội dung)
                               DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
                               centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
                               table_ds_san_pham.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
                               table_ds_san_pham.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
                               table_ds_san_pham.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+                              JTableHeader header_san_pham = table_ds_san_pham.getTableHeader();
+                              // Set the preferred size of the header
+                              header_san_pham.setPreferredSize(new Dimension(header_san_pham.getWidth(), 35));
+                              table_ds_san_pham.setRowHeight(40);
                               table_ds_san_pham.getTableHeader().setReorderingAllowed(false);
                               ds_san_pham = new JScrollPane(table_ds_san_pham);
                               ds_san_pham.setPreferredSize(new Dimension(550, 600));
                               ds_san_pham.setBackground(Color.WHITE);
-                              showDanhSachSanPham();
+                              showDanhSachSanPham(sanPhamBUS.getAll());
 
                               them_sp = new JPanel();
                               them_sp.setBackground(Color.WHITE);
@@ -194,8 +205,12 @@ public class XuatHangUI extends JPanel implements ActionListener{
                               table_ds_xuat_hang.getColumnModel().getColumn(3).setPreferredWidth(20);
                               table_ds_xuat_hang.getColumnModel().getColumn(4).setPreferredWidth(70);
                               //? Set vị trí cho nội dung (căn giữa cho nội dung)
-
+                                
+                              JTableHeader header_xuat_hang = table_ds_xuat_hang.getTableHeader();
+                              // Set the preferred size of the header
+                              header_xuat_hang.setPreferredSize(new Dimension(header_xuat_hang.getWidth(), 35));
                               table_ds_xuat_hang.getTableHeader().setReorderingAllowed(false);
+                              table_ds_xuat_hang.setRowHeight(40);
                               ds_xuat_hang = new JScrollPane(table_ds_xuat_hang);
                               ds_xuat_hang.setPreferredSize(new Dimension(550, 550));
 
@@ -249,7 +264,7 @@ public class XuatHangUI extends JPanel implements ActionListener{
             return button;
       }
       public String toCurrency(double a) {
-            DecimalFormat numberFormat = new DecimalFormat("###,### đ");
+            DecimalFormat numberFormat = new DecimalFormat("###,### VNĐ");
             return  numberFormat.format(a);
       }
       public Double currencyBack(String a) {
@@ -317,19 +332,27 @@ public class XuatHangUI extends JPanel implements ActionListener{
             } else if(e.getSource() == sua_sl_sp) {
                   suaSanPhamPhieuXuatKho();
             } else if(e.getSource() == thanh_tien_xac_nhan) {
-                  taoPhieuXuatKho();
+                  taoPhieuXuatKho(maKhoHang);
             }else {
                   System.out.println("Bam 1 nut nao do");
             }
       }
-      public void showDanhSachSanPham() {
-            for (SanPhamDTO sanPham : sanPhamBUS.getAll()) {
+      public void showDanhSachSanPham(ArrayList<SanPhamDTO> dsSanPham) {
+            int i = 1;
+            int rowCount = model_ds_san_pham.getRowCount();
+            //? Xóa tất cả các dòng
+            for (int j = rowCount - 1; j >= 0; j--) {
+                model_ds_san_pham.removeRow(j);
+            }
+            //? Thêm các dòng
+            for (SanPhamDTO sanPham : dsSanPham) {
                   model_ds_san_pham.addRow(new Object[]{
-                              sanPham.getMaSanPham(),
+                              i,
                               sanPham.getTenSanPham(),
                               sanPham.getSoLuongConLai(),
                               toCurrency(sanPham.getGiaSanPham())
                   });
+                  i++;
             }
       }
       public void themSanPhamPhieuXuatKho() {
@@ -441,7 +464,7 @@ public class XuatHangUI extends JPanel implements ActionListener{
            }
             return danhSachSanPhamTaoPhieuXuatHang;
       }
-      public void taoPhieuXuatKho() {
+      public void taoPhieuXuatKho(int maKhoHang) {
             //! Cần thêm giá trị kho hàng
             PhieuXuatKhoDTO phieuXuatKho = new PhieuXuatKhoDTO();
             phieuXuatKho.setTongGiaTri(tongGiaTri);
@@ -463,7 +486,7 @@ public class XuatHangUI extends JPanel implements ActionListener{
             //? cập nhật danh sách sản phẩm
             for (int i = model_ds_san_pham.getRowCount() - 1; i >= 0; i--) 
                   model_ds_san_pham.removeRow(i);
-            showDanhSachSanPham();
+            showDanhSachSanPham(sanPhamBUS.getAll());
             
             //?cập nhật thành tiền
             thanh_tien_total.setText("0 đ");

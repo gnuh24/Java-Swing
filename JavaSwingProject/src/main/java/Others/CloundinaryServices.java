@@ -3,6 +3,7 @@ package Others;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -30,6 +31,7 @@ public class CloundinaryServices {
 
 
     public static String createImage(String imageUrl){
+
         try {
             /*****************
              *  Tải lên ảnh và lưu vào thư mục JavaSwingProject trên Cloudinary
@@ -38,9 +40,12 @@ public class CloundinaryServices {
              *          2. String: Folder bạn muốn lưu trên clound
              ********************/
 
-            Map uploadResult =
-                cloudinary.uploader()
-                    .upload(imageUrl, ObjectUtils.asMap("folder", CloundinaryServices.folder));
+        Map<String, Object> params = new HashMap<>();
+        params.put("folder", CloundinaryServices.folder); // Thư mục bạn muốn lưu trên Cloudinary
+         // Tên của ảnh trên Cloudinary
+        params.put("public_id", imageUrl.substring(imageUrl.lastIndexOf("\\")+1,imageUrl.lastIndexOf(".")));
+
+        Map uploadResult = cloudinary.uploader().upload(imageUrl, params);
 
             System.out.println("Image uploaded successfully.");
 

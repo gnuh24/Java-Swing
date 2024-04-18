@@ -5,22 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="003b6990-b30a-4767-b559-0655e60cd464" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/DAO/NghiepVuNhapKho/ChiTietPhieuNhapKhoDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/DAO/NghiepVuNhapKho/PhieuNhapKhoDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Others/UltilServices.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/BUS/ChiTietPhieuXuatKhoBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BUS/NghiepVuXuatKho/ChiTietPhieuXuatKhoBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/BUS/LoaiSanPhamBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BUS/ThongTinSanPham/LoaiSanPhamBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/BUS/NhaCungCapBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BUS/NghiepVuNhapKho/NhaCungCapBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/BUS/PhieuXuatKhoBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BUS/NghiepVuXuatKho/PhieuXuatKhoBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/BUS/SanPhamBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BUS/ThongTinSanPham/SanPhamBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/ChiTietPhieuXuatKhoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/NghiepVuXuatKho/ChiTietPhieuXuatKhoDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/LoaiSanPhamDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/ThongTinSanPham/LoaiSanPhamDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/NhaCungCapDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/NghiepVuNhapKho/NhaCungCapDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/PhieuXuatKhoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/NghiepVuXuatKho/PhieuXuatKhoDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/SanPhamDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/ThongTinSanPham/SanPhamDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/NghiepVuNhapKho/ChiTietPhieuNhapKhoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/NghiepVuNhapKho/ChiTietPhieuNhapKhoDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/NghiepVuNhapKho/PhieuNhapKhoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/NghiepVuNhapKho/PhieuNhapKhoDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BUS/NghiepVuXuatKho/ChiTietPhieuXuatKhoBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BUS/NghiepVuXuatKho/ChiTietPhieuXuatKhoBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BUS/NghiepVuXuatKho/PhieuXuatKhoBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BUS/NghiepVuXuatKho/PhieuXuatKhoBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BUS/ThongTinSanPham/LoaiSanPhamBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BUS/ThongTinSanPham/LoaiSanPhamBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BUS/ThongTinSanPham/SanPhamBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BUS/ThongTinSanPham/SanPhamBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/NghiepVuXuatKho/PhieuXuatKhoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/NghiepVuXuatKho/PhieuXuatKhoDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/ThongTinSanPham/LoaiSanPhamDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/ThongTinSanPham/LoaiSanPhamDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/ThongTinSanPham/SanPhamDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/ThongTinSanPham/SanPhamDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/ThongTinSanPham/LoaiSanPhamDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/ThongTinSanPham/LoaiSanPhamDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/ThongTinSanPham/SanPhamDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/ThongTinSanPham/SanPhamDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIDialog/LoaiSPDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIDialog/LoaiSPDialog.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIDialog/SanPhamDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIDialog/SanPhamDialog.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/ChiTietPhieuXuatKho.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/ChiTietPhieuXuatKho.java" afterDir="false" />
@@ -29,9 +24,7 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/PhieuXuatUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/PhieuXuatUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/SuaChiTietPhieuXuatKho.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/SuaChiTietPhieuXuatKho.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/XuatHangUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/XuatHangUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DAO/SanPhamDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SQL/createDatabase_JavaSwing.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../SQL/createDatabase_JavaSwing.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SQL/insertData_JavaSwing.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../SQL/insertData_JavaSwing.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Others/CloundinaryServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Others/CloundinaryServices.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,18 +46,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Tuan Hung/Desktop/Learning/Exercise/SGU Java Swing - Ms Loan/Java-Swing/JavaSwingProject&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/Tuan Hung/Desktop/Learning/Exercise/SGU Java Swing - Ms Loan/Java-Swing/JavaSwingProject/src/main/java/org/example/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Merging main",
+    "last_opened_file_path": "C:/Users/Tuan Hung/Desktop/Learning/Exercise/SGU Java Swing - Ms Loan/Java-Swing/JavaSwingProject",
+    "onboarding.tips.debug.path": "C:/Users/Tuan Hung/Desktop/Learning/Exercise/SGU Java Swing - Ms Loan/Java-Swing/JavaSwingProject/src/main/java/org/example/Main.java",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Tuan Hung\Desktop\Learning\Exercise\SGU Java Swing - Ms Loan\Java-Swing\JavaSwingProject\src\main\java\org\example\Resources" />

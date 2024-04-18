@@ -134,10 +134,12 @@ public class PhieuXuatKhoDAO implements DAOInterface<PhieuXuatKhoDTO> {
       // }
       @Override
       public boolean update(PhieuXuatKhoDTO phieuXuatKhoDTO) {
+            
+            System.out.println("UPDATE `phieuxuatkho` SET `TongGiaTri` = '"+phieuXuatKhoDTO.getTongGiaTri()+"', `NgayXuatKho` = '"+String.valueOf(phieuXuatKhoDTO.getNgayXuatKho())+"'  WHERE `phieuxuatkho`.`MaPhieu` = " + phieuXuatKhoDTO.getMaPhieu());
             try{
                   //? UPDATE `phieuxuatkho` SET `NgayXuatKho` = now(), `TongGiaTri` = '15000000' WHERE `phieuxuatkho`.`MaPhieu` = 33;
                   Statement state = JDBCConfigure.getConnection().createStatement();
-                  int capNhatPhieuXuatHang = state.executeUpdate("UPDATE `phieuxuatkho` SET `TongGiaTri` = '"+phieuXuatKhoDTO.getTongGiaTri()+"', `NgayXuatKho` = now()  WHERE `phieuxuatkho`.`MaPhieu` = " + phieuXuatKhoDTO.getMaPhieu());
+                  int capNhatPhieuXuatHang = state.executeUpdate("UPDATE `phieuxuatkho` SET `TongGiaTri` = '"+phieuXuatKhoDTO.getTongGiaTri()+"', `NgayXuatKho` = '"+String.valueOf(phieuXuatKhoDTO.getNgayXuatKho())+"'  WHERE `phieuxuatkho`.`MaPhieu` = " + phieuXuatKhoDTO.getMaPhieu());
                   if(capNhatPhieuXuatHang != 1) {
                         System.out.println("Cap nhat phieu xuat hàng that bai !");
                         return false;

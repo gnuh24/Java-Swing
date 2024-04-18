@@ -1,14 +1,15 @@
 package BUS.NghiepVuXuatKho;
+import DAO.*;
 import java.util.ArrayList;
 
 import DAO.NghiepVuXuatKho.ChiTietPhieuXuatKhoDAO;
 import DTO.NghiepVuXuatKho.*;
 public class ChiTietPhieuXuatKhoBUS {
-      private final DAO.NghiepVuXuatKho.ChiTietPhieuXuatKhoDAO ChiTietPhieuXuatKhoDAO= new ChiTietPhieuXuatKhoDAO();
+    private final ChiTietPhieuXuatKhoDAO  ChiTietPhieuXuatKhoDAO = new ChiTietPhieuXuatKhoDAO();
 
     public ChiTietPhieuXuatKhoBUS() {
     }
-    
+
     public ArrayList<ChiTietPhieuXuatKhoDTO> getAll(int maKhoHang){
         return ChiTietPhieuXuatKhoDAO.getAll(maKhoHang);
     }
@@ -20,5 +21,8 @@ public class ChiTietPhieuXuatKhoBUS {
     }
     public boolean delete(ChiTietPhieuXuatKhoDTO ChiTietPhieuXuatKhoDTO) {
         return ChiTietPhieuXuatKhoDAO.delete(ChiTietPhieuXuatKhoDTO);
+    }
+    public boolean updateNgayTaoPhieu() {
+        return true;
     }
 }
