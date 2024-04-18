@@ -20,12 +20,12 @@ public class JDBCConfigure {
             Class.forName(driver);
 
             connection = DriverManager.getConnection(url,username,password);
-            if (connection != null){
-                System.out.println("Kết nối Database  Thành Công !!!");
-            }
-            else {
-                System.out.println("Kết nối Database Không Thành Công !! Mời Kiểm Tra Lại");
-            }
+//            if (connection != null){
+//                System.out.println("Kết nối Database  Thành Công !!!");
+//            }
+//            else {
+//                System.out.println("Kết nối Database Không Thành Công !! Mời Kiểm Tra Lại");
+//            }
         }
         catch (Exception e){
             System.err.println(e.getMessage());
@@ -36,7 +36,6 @@ public class JDBCConfigure {
         if (connection!=null){
             try{
                 connection.close();
-                System.out.println("Connection has been closed!!");
             }catch (SQLException e){
                 System.err.println(e.getMessage());
             }

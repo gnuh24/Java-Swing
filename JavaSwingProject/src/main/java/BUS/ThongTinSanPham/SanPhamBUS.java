@@ -50,6 +50,10 @@ public class SanPhamBUS {
         }
         return false;
     }
+
+    public boolean updateSoLuongSanPham(SanPhamDTO dto){
+        return sanPhamDAO.updateSoLuongSanPham(dto);
+    }
     
     
     

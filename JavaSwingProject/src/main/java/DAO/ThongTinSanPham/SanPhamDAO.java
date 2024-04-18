@@ -1,10 +1,12 @@
 
-package DAO;
+package DAO.ThongTinSanPham;
 
+import DAO.DAOInterface;
 import DTO.ThongTinSanPham.SanPhamDTO;
 import Others.JDBCConfigure;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -12,7 +14,7 @@ import java.util.logging.Logger;
 
 
 
-public class SanPhamDAO implements DAOInterface<SanPhamDTO>{
+public class SanPhamDAO implements DAOInterface<SanPhamDTO> {
 
     public int check=0;
 
@@ -132,6 +134,28 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO>{
             JDBCConfigure.closeConnection();
         }
         return false;
+    }
+
+    public boolean updateSoLuongSanPham(SanPhamDTO sanPhamDTO){
+        String createPhieuNhapKhoQuery =
+            "UPDATE `SanPham` " +
+                "SET `SoLuongConLai`=? Where `MaSanPham`=?";
+
+        try {
+            PreparedStatement preparedStatement = JDBCConfigure.getConnection().prepareStatement(createPhieuNhapKhoQuery);
+
+            preparedStatement.setInt(1, sanPhamDTO.getSoLuongConLai());
+            preparedStatement.setInt(2, sanPhamDTO.getMaSanPham());
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            JDBCConfigure.closeConnection();
+        }
+
+        return true;
     }
 
     @Override

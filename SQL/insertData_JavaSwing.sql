@@ -49,7 +49,7 @@ INSERT INTO `NhaCungCap` (`TenNCC`, 						`SoDienThoai`, `Email`,					 `MaKhoHan
 INSERT INTO `PhieuNhapKho` (`NgayNhapKho`, 					`TongGiaTri`, 	`MaNCC`,  `MaKhoHang`) VALUES
 							('2024-01-15 08:00:00', 		2840700000, 	2, 			 1),
 							('2024-01-16 09:00:00', 		165600000, 		2, 			 1),
-							('2024-01-17 10:00:00', 		7140000, 		3, 			 1);
+							('2024-01-17 10:00:00', 		7140000, 		3, 			 2);
 
 /* Dữ liệu mẫu cho bảng CTPNK */
 INSERT INTO `CTPNK` (`DonGiaNhap`, `SoLuong`, 	`ThanhTien`, 	`MaPhieu`, 		`MaSanPham`) VALUES

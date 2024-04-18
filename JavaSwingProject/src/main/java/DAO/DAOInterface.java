@@ -11,8 +11,6 @@ public interface DAOInterface<T> {
     T getById(Integer id);
 
 
-    //
-
     boolean create(Integer maKhoHang, T t);
 
     boolean update(T t);

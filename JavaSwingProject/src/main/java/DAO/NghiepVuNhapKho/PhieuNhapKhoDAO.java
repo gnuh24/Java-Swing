@@ -89,8 +89,7 @@ public class PhieuNhapKhoDAO implements DAOInterface<PhieuNhapKhoDTO> {
             "VALUES (?, ?, ?, ?)";
 
         try {
-            PreparedStatement preparedStatement = JDBCConfigure.getConnection().prepareStatement(createPhieuNhapKhoQuery);
-
+            PreparedStatement preparedStatement = JDBCConfigure.getConnection().prepareStatement(createPhieuNhapKhoQuery, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1,
                 (phieuNhapKhoDTO.getNgayNhapKho() != null) ?
                     phieuNhapKhoDTO.getNgayNhapKho() : LocalDate.now().toString()
@@ -101,6 +100,14 @@ public class PhieuNhapKhoDAO implements DAOInterface<PhieuNhapKhoDTO> {
             preparedStatement.setInt(4, maKhoHang);
 
             preparedStatement.executeUpdate();
+            // Lấy ra giá trị MaPhieu của PhieuNhapKho vừa được tạo
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+
+            if (generatedKeys.next()) {
+                int maPhieu = generatedKeys.getInt(1);
+                phieuNhapKhoDTO.setMaPhieu(maPhieu );
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
