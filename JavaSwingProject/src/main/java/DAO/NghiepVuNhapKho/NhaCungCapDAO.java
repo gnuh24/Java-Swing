@@ -47,7 +47,7 @@ public class NhaCungCapDAO implements DAOInterface<NhaCungCapDTO> {
 
     @Override
     public NhaCungCapDTO getById(Integer id) {
-        NhaCungCapDTO nhaCungCapDTO = new NhaCungCapDTO();
+        NhaCungCapDTO nhaCungCapDTO = null;
         try{
             JDBCConfigure.getConnection();
             String query = "SELECT * FROM `NhaCungCap` " +
@@ -60,6 +60,7 @@ public class NhaCungCapDAO implements DAOInterface<NhaCungCapDTO> {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()){
+                nhaCungCapDTO =  new NhaCungCapDTO();
                 Integer maNCC = resultSet.getInt("MaNCC");
                 String tenNCC = resultSet.getString("TenNCC");
                 String email = resultSet.getString("Email");
@@ -110,6 +111,49 @@ public class NhaCungCapDAO implements DAOInterface<NhaCungCapDTO> {
         finally {
             JDBCConfigure.closeConnection();
         }
+    }
+
+    public NhaCungCapDTO getNhaCungCapByTenNCC(Integer maKhoHang, String tenNcc){
+        NhaCungCapDTO nhaCungCapDTO = null;
+        try{
+            JDBCConfigure.getConnection();
+            String query = "SELECT * FROM `NhaCungCap` " +
+                            "WHERE `TenNCC` = ? AND" +
+                            "`MaKhoHang` = ?";
+
+            PreparedStatement preparedStatement = JDBCConfigure.getConnection().prepareStatement(query);
+
+            preparedStatement.setString(1, tenNcc);
+            preparedStatement.setInt(2, maKhoHang);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                nhaCungCapDTO = new NhaCungCapDTO();
+                Integer maNCC = resultSet.getInt("MaNCC");
+                String tenNCC = resultSet.getString("TenNCC");
+                String email = resultSet.getString("Email");
+                String sdt = resultSet.getString("SoDienThoai");
+                Integer maKhoHangSQL = resultSet.getInt("MaKhoHang");
+
+
+                nhaCungCapDTO.setMaNCC(maNCC);
+                nhaCungCapDTO.setTenNCC(tenNCC);
+                nhaCungCapDTO.setEmail(email);
+                nhaCungCapDTO.setSoDienThoai(sdt);
+                nhaCungCapDTO.setMaKhoHang(maKhoHangSQL);
+
+            }
+
+        }
+        catch (SQLException e){
+            System.err.println("Lỗi truy vấn !!");
+        }
+        finally {
+            JDBCConfigure.closeConnection();
+        }
+
+        return nhaCungCapDTO;
     }
 
     @Override
