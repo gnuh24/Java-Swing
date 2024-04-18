@@ -61,14 +61,14 @@ public class Main extends JFrame implements ActionListener{
         
         menu.getBtn_XuatHang().addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e){
-                JPanel xuathang= new XuatHangUI();
+                JPanel xuathang= new XuatHangUI(1);
                 setPanelMain(xuathang); 
                 hieuUngHover(e);
             }
         });
         menu.getBtn_PhieuXuat().addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e){
-                JPanel phieuxuat= new PhieuXuatUI();
+                JPanel phieuxuat= new PhieuXuatUI(1);
                 setPanelMain(phieuxuat); 
                 hieuUngHover(e);
             }

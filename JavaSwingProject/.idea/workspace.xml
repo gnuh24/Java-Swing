@@ -6,25 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="003b6990-b30a-4767-b559-0655e60cd464" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/BUS/NghiepVuXuatKho/ChiTietPhieuXuatKhoBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BUS/NghiepVuXuatKho/ChiTietPhieuXuatKhoBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/BUS/NghiepVuXuatKho/PhieuXuatKhoBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BUS/NghiepVuXuatKho/PhieuXuatKhoBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/BUS/ThongTinSanPham/LoaiSanPhamBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BUS/ThongTinSanPham/LoaiSanPhamBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/BUS/ThongTinSanPham/SanPhamBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BUS/ThongTinSanPham/SanPhamBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/NghiepVuXuatKho/PhieuXuatKhoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/NghiepVuXuatKho/PhieuXuatKhoDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/ThongTinSanPham/LoaiSanPhamDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/ThongTinSanPham/LoaiSanPhamDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/ThongTinSanPham/SanPhamDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/ThongTinSanPham/SanPhamDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/ThongTinSanPham/LoaiSanPhamDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/ThongTinSanPham/LoaiSanPhamDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/ThongTinSanPham/SanPhamDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/ThongTinSanPham/SanPhamDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIDialog/LoaiSPDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIDialog/LoaiSPDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIDialog/SanPhamDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIDialog/SanPhamDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/ChiTietPhieuXuatKho.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/ChiTietPhieuXuatKho.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/GiaoDienLoaiSanPham.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/GiaoDienLoaiSanPham.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/GiaoDienSanPham.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/GiaoDienSanPham.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/PhieuXuatUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/PhieuXuatUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/SuaChiTietPhieuXuatKho.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/SuaChiTietPhieuXuatKho.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/XuatHangUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/XuatHangUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Others/CloundinaryServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Others/CloundinaryServices.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +32,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Merging main",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "C:/Users/Tuan Hung/Desktop/Learning/Exercise/SGU Java Swing - Ms Loan/Java-Swing/JavaSwingProject",
     "onboarding.tips.debug.path": "C:/Users/Tuan Hung/Desktop/Learning/Exercise/SGU Java Swing - Ms Loan/Java-Swing/JavaSwingProject/src/main/java/org/example/Main.java",
     "project.structure.last.edited": "Modules",
@@ -63,7 +45,7 @@
       <recent name="C:\Users\Tuan Hung\Desktop\Learning\Exercise\SGU Java Swing - Ms Loan\Java-Swing\JavaSwingProject\src\main\java\org\example\Resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ChiTietPhieuNhapKhoDAO">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="ChiTietPhieuNhapKhoDAO" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="DAO.NghiepVuNhapKho.ChiTietPhieuNhapKhoDAO" />
       <module name="JavaSwingProject" />
@@ -103,15 +85,9 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="NhaCungCapDAO" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.DAO.NhaCungCapDAO" />
-      <module name="JavaSwingProject" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.DAO.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="JavaHung" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -131,11 +107,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="Application.ChiTietPhieuNhapKhoDAO" />
         <item itemvalue="Application.PhieuNhapKhoDAO" />
         <item itemvalue="Application.DAO.NghiepVuNhapKho.NhaCungCapDAO" />
         <item itemvalue="Application.GUI.Main" />
-        <item itemvalue="Application.NhaCungCapDAO" />
       </list>
     </recent_temporary>
   </component>
