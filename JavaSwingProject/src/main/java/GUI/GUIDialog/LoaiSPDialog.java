@@ -5,17 +5,14 @@ import GUI.GUIPanel.GiaoDienLoaiSanPham;
 import GUI.GUIThanhPhan.ButtonCustom;
 import GUI.GUIThanhPhan.InputFormCustom;
 import javax.swing.*;
-
-
-
 import java.awt.*;
 import java.awt.event.*;
 
 public class LoaiSPDialog extends  JDialog implements ActionListener{
     public String tieuDe,type; // type để set cho nút thêm hoặc xóa
-    public InputFormCustom maLoaiSP, tenLoaiSP, maKho;
+    public InputFormCustom tenLoaiSP;
     public ButtonCustom btn_them,btn_chinhsua,btn_huy;
-    
+    int maKho=1;
     
     private LoaiSanPhamBUS LoaiSPBUS= new LoaiSanPhamBUS();
     private LoaiSanPhamDTO loaiSPDuocChon;
@@ -41,7 +38,7 @@ public class LoaiSPDialog extends  JDialog implements ActionListener{
     
     public void init(){
         this.setLayout(new BorderLayout(20,20));
-        this.setSize(600, 600);
+        this.setSize(600, 400);
         this.setLocationRelativeTo(null);
         
         this.setTitle(this.tieuDe);
@@ -52,16 +49,9 @@ public class LoaiSPDialog extends  JDialog implements ActionListener{
         tieuDeLabel.setFont(tieuDeFont);
         tieuDePanel.add(tieuDeLabel);
         JPanel thongTin= new JPanel(new  FlowLayout(FlowLayout.CENTER,20,20));
-        this.maLoaiSP= new InputFormCustom("Mã Loại Sản Phẩm:");
         this.tenLoaiSP=new InputFormCustom("Tên Loại Sản Phẩm:");
-        this.maKho= new InputFormCustom("Mã Kho:");
-        maLoaiSP.setPreferredSize(new Dimension(400,100));
         tenLoaiSP.setPreferredSize(new Dimension(400,100));
-        maKho.setPreferredSize(new Dimension(400,100));
-        thongTin.add(maLoaiSP);
         thongTin.add(tenLoaiSP);
-        thongTin.add(maKho);
-        
         // các nút 
         JPanel cacNutNhan= new JPanel(new FlowLayout(FlowLayout.CENTER,10,10));
         this.btn_huy= new ButtonCustom("Thoát","","#DC143C");
@@ -95,63 +85,27 @@ public class LoaiSPDialog extends  JDialog implements ActionListener{
     }
     
     public void themDuLieu(){
-        this.maLoaiSP.getTxtForm().setText(this.loaiSPDuocChon.getMaLoaiSanPham().toString());
         this.tenLoaiSP.getTxtForm().setText(this.loaiSPDuocChon.getTenLoaiSanPham());
-        this.maKho.getTxtForm().setText(this.loaiSPDuocChon.getMaKhoHang().toString());
         
     }
     
     
     
     public void XuLyThemLoaiSP(){
-        if (
-            maLoaiSP.getTxtForm().getText().trim().equals("") ||
-            tenLoaiSP.getTxtForm().getText().trim().equals("") ||
-            maKho.getTxtForm().getText().trim().equals("")){
+        if (tenLoaiSP.getTxtForm().getText().trim().equals(""))
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đủ thông tin cần thiết !!!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
-            }
         else {
-            try{
-                int maLoaiSP=Integer.parseInt(this.maLoaiSP.getTxtForm().getText().trim());
                 String tenLoaiSP=this.tenLoaiSP.getTxtForm().getText().trim();
-                int maKho=Integer.parseInt(this.maKho.getTxtForm().getText().trim());
-                if(LoaiSPBUS.create(maKho, new LoaiSanPhamDTO(maLoaiSP, tenLoaiSP,maKho))){
+                if(LoaiSPBUS.create(maKho, new LoaiSanPhamDTO(tenLoaiSP,maKho))){
+                    this.loaiSPGUI.loadDuLieuLoaiSP(LoaiSPBUS.getAll());
+                    this.loaiSPGUI.chinhSuaGiaoDienTable();
                     JOptionPane.showMessageDialog(this, "Thêm Loại Sản Phẩm Mới Thành Công ^^","Thông báo",JOptionPane.INFORMATION_MESSAGE);
-                    this.loaiSPGUI.loadDuLieuLoaiSP(LoaiSPBUS.getAll());
                     this.dispose();
                 }
                 else 
-                    JOptionPane.showMessageDialog(this, "Lỗi, vui lòng kiểm tra lại mã sản phẩm hoặc thông tin khác nếu trùng!","Thông báo",JOptionPane.ERROR_MESSAGE);
-            } catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập số với các ô yêu cầu điền mã loại, mã kho","Thông báo",JOptionPane.ERROR_MESSAGE);
-            }
-                 
-        }
-
-    }
-    
-    public void XuLyChinhSuaLoaiSP(){
-        if (
-            maLoaiSP.getTxtForm().getText().trim().equals("") ||
-            tenLoaiSP.getTxtForm().getText().trim().equals("") ||
-            maKho.getTxtForm().getText().trim().equals("")){
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập đủ thông tin cần thiết !!!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
-            }
-        else {
-            try{
-                int maLoaiSP=Integer.parseInt(this.maLoaiSP.getTxtForm().getText().trim());
-                String tenLoaiSP=this.tenLoaiSP.getTxtForm().getText().trim();
-                int maKho=Integer.parseInt(this.maKho.getTxtForm().getText().trim());
-                if(LoaiSPBUS.update(new LoaiSanPhamDTO(maLoaiSP, tenLoaiSP,maKho))){
-                    JOptionPane.showMessageDialog(this, "Chỉnh sửa thành công ^^","Thông báo",JOptionPane.INFORMATION_MESSAGE);
-                    this.loaiSPGUI.loadDuLieuLoaiSP(LoaiSPBUS.getAll());
-                    this.dispose();
+                {
+                    JOptionPane.showMessageDialog(this, "Tên loại sản phẩm này đã tồn tại torng hệ thống","Thông báo",JOptionPane.ERROR_MESSAGE);
                 }
-                else 
-                    JOptionPane.showMessageDialog(this, "Lỗi khi chỉnh sửa!","Thông báo",JOptionPane.ERROR_MESSAGE);
-            } catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập số với các ô yêu cầu điền mã loại, mã kho","Thông báo",JOptionPane.ERROR_MESSAGE);
-            }
                  
         }
     }
@@ -171,5 +125,29 @@ public class LoaiSPDialog extends  JDialog implements ActionListener{
                 break;
         }
     }
+    
+    public void XuLyChinhSuaLoaiSP(){
+        if (
+            tenLoaiSP.getTxtForm().getText().trim().equals("") ){
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đủ thông tin cần thiết !!!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+            }
+        else {
+            try{
+                String tenLoaiSP=this.tenLoaiSP.getTxtForm().getText().trim();
+                
+                if(LoaiSPBUS.update(new LoaiSanPhamDTO(loaiSPDuocChon.getMaLoaiSanPham(),tenLoaiSP,maKho))){
+                    JOptionPane.showMessageDialog(this, "Chỉnh sửa thành công ^^","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+                    this.loaiSPGUI.loadDuLieuLoaiSP(LoaiSPBUS.getAll());
+                    this.dispose();
+                }
+                else 
+                    JOptionPane.showMessageDialog(this, "Tên loại này đã tồn tại !!!","Thông báo",JOptionPane.ERROR_MESSAGE);
+            } catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập số với các ô yêu cầu điền mã loại, mã kho","Thông báo",JOptionPane.ERROR_MESSAGE);
+            }
+                 
+        }
+    }
+    
     
 }
