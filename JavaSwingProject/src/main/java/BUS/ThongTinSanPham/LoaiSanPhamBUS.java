@@ -1,17 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package BUS.ThongTinSanPham;
 
 import DAO.ThongTinSanPham.LoaiSanPhamDAO;
 import DTO.ThongTinSanPham.LoaiSanPhamDTO;
 import java.util.ArrayList;
 
-/**
- *
- * @author Admin
- */
+
 public class LoaiSanPhamBUS {
     private LoaiSanPhamDAO loaiSPDAO= new LoaiSanPhamDAO();
     private ArrayList<LoaiSanPhamDTO> listLoaiSP= new ArrayList<>();
@@ -47,15 +41,22 @@ public class LoaiSanPhamBUS {
     }
 
     public boolean create(Integer maKhoHang, LoaiSanPhamDTO loaiSP){
-        if(loaiSPDAO.create(maKhoHang, loaiSP)){
+        LoaiSanPhamDTO loai= loaiSPDAO.getByName(loaiSP.getTenLoaiSanPham());
+        if( loai != null)
+            return false;
+        else if(loaiSPDAO.create(maKhoHang, loaiSP)){
             listLoaiSP.add(loaiSP);
             return true;
         }
         return false;
     }
-    // 7h-11h30 1h30-5h30, 7h-11h
+    
     public boolean update(LoaiSanPhamDTO loaiSP){
-        if(loaiSPDAO.update(loaiSP)){
+        LoaiSanPhamDTO loai= loaiSPDAO.getByName(loaiSP.getTenLoaiSanPham());
+        if ( loai != null && loaiSP.getMaLoaiSanPham() != loai.getMaLoaiSanPham()){
+            return false;
+        }
+        else if(loaiSPDAO.update(loaiSP)){
             listLoaiSP.set(getIndexByMaLoaiSP(loaiSP.getMaLoaiSanPham()), loaiSP);
             return true;
         }
@@ -76,7 +77,6 @@ public class LoaiSanPhamBUS {
         txt=txt.toLowerCase();
         ArrayList<LoaiSanPhamDTO> kq= new ArrayList<>();
         for(LoaiSanPhamDTO loaiSP: this.listLoaiSP){
-            System.out.println("a");
             if ( loaiSP.getTenLoaiSanPham().toLowerCase().contains(txt) || String.valueOf(loaiSP.getMaLoaiSanPham()).contains(txt))
                 kq.add(loaiSP);
         }
