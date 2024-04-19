@@ -1,25 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package DAO.ThongTinSanPham;
 
 import DAO.DAOInterface;
-import DAO.SanPhamDAO;
+import DAO.ThongTinSanPham.SanPhamDAO;
 import DTO.ThongTinSanPham.LoaiSanPhamDTO;
 import Others.JDBCConfigure;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-/**
- *
- * @author Admin
- */
+
+
 public class LoaiSanPhamDAO implements DAOInterface<LoaiSanPhamDTO> {
-
     @Override
     public ArrayList<LoaiSanPhamDTO> getAll(Integer maKhoHang) {
         ArrayList<LoaiSanPhamDTO> list= new ArrayList<>();
@@ -38,7 +30,7 @@ public class LoaiSanPhamDAO implements DAOInterface<LoaiSanPhamDTO> {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(LoaiSanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Lỗi SQL");
         } finally{
             JDBCConfigure.closeConnection();
         }
@@ -62,7 +54,32 @@ public class LoaiSanPhamDAO implements DAOInterface<LoaiSanPhamDTO> {
                 loaisp= new LoaiSanPhamDTO(maLoaiSP,tenLoaiSP,maKho);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(LoaiSanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Lỗi SQL");
+        }finally{
+            JDBCConfigure.closeConnection();
+        }
+        return loaisp;
+
+    }
+    
+    
+    public LoaiSanPhamDTO getByName(String tenLoai) {
+        LoaiSanPhamDTO loaisp=null;
+        try {
+
+            Connection con=JDBCConfigure.getConnection();
+            String sql="Select * from loaisanpham Where TenLoaiSanPham=?";
+            PreparedStatement pst=con.prepareStatement(sql);
+            pst.setString(1, tenLoai);
+            ResultSet kq=pst.executeQuery();
+            while(kq.next()){
+                int maLoaiSP=kq.getInt("MaLoaiSanPham");
+                String tenLoaiSP=kq.getString("TenLoaiSanPham");
+                int maKho=kq.getInt("MaKhoHang");
+                loaisp= new LoaiSanPhamDTO(maLoaiSP,tenLoaiSP,maKho);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Lỗi SQL");
         }finally{
             JDBCConfigure.closeConnection();
         }
@@ -80,17 +97,16 @@ public class LoaiSanPhamDAO implements DAOInterface<LoaiSanPhamDTO> {
             }else
             {
                 Connection con= JDBCConfigure.getConnection();
-                String sql = "INSERT INTO loaisanpham (MaLoaiSanPham, TenLoaiSanPham, MaKhoHang) VALUES (?, ?, ?)";
+                String sql = "INSERT INTO loaisanpham (TenLoaiSanPham, MaKhoHang) VALUES (?, ?)";
                 PreparedStatement pst= con.prepareStatement(sql);
-                pst.setInt(1, loaiSP.getMaLoaiSanPham());
-                pst.setString(2,loaiSP.getTenLoaiSanPham());
-                pst.setInt(3, loaiSP.getMaKhoHang());
+                pst.setString(1,loaiSP.getTenLoaiSanPham());
+                pst.setInt(2, loaiSP.getMaKhoHang());
                 int check= pst.executeUpdate();
                 return true;
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(DAO.SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Lỗi SQL create loại SP");
         }  finally{
             JDBCConfigure.closeConnection();
         }
@@ -102,16 +118,15 @@ public class LoaiSanPhamDAO implements DAOInterface<LoaiSanPhamDTO> {
         Connection con = JDBCConfigure.getConnection();
         try {
 
-            String sql="Update loaisanpham Set MaLoaiSanPham=?, TenLoaiSanPham=? Where MaLoaiSanPham=?";
+            String sql="Update loaisanpham Set TenLoaiSanPham=? Where MaLoaiSanPham=?";
             PreparedStatement pst= con.prepareStatement(sql);
-            pst.setInt(1, loaiSP.getMaLoaiSanPham());
-            pst.setString(2, loaiSP.getTenLoaiSanPham());
-            pst.setInt(3, loaiSP.getMaLoaiSanPham());
+            pst.setString(1, loaiSP.getTenLoaiSanPham());
+            pst.setInt(2, loaiSP.getMaLoaiSanPham());
             int check=pst.executeUpdate();
 
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Lỗi SQL");
         } finally{
             JDBCConfigure.closeConnection();
         }
@@ -122,15 +137,17 @@ public class LoaiSanPhamDAO implements DAOInterface<LoaiSanPhamDTO> {
     public boolean delete(LoaiSanPhamDTO loaiSP) {
         Connection con=JDBCConfigure.getConnection();
         try {
-
+            SanPhamDAO.getInstance().updateWithDelteLoaiSP(loaiSP);
             String sql="DELETE FROM loaisanpham WHERE MaLoaiSanPham=?";
             PreparedStatement pst=con.prepareStatement(sql);
             pst.setInt(1, loaiSP.getMaLoaiSanPham());
+
             int check=pst.executeUpdate();
+
             return true;
 
         } catch (SQLException ex) {
-            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Lỗi SQL");
         } finally{
             JDBCConfigure.closeConnection();
         }
