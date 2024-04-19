@@ -21,8 +21,8 @@ import javax.swing.border.EmptyBorder;
 
 public class SanPhamDialog extends  JDialog implements ActionListener{
     public String tieuDe,type;
-    public InputFormCustom tenSP, thuongHieu, trongLuong, giaSP;
-    public ComboBoxFormCustom xuatXu,tenLoai;
+    public InputFormCustom tenSP, thuongHieu, trongLuong, giaSP, xuatXu;
+    public ComboBoxFormCustom tenLoai;
     private JLabel hinhAnh;
     private SanPhamDTO SPDuocChon;
     private GiaoDienSanPham SPGUI;
@@ -94,10 +94,9 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
         // phải là các input cho sản phẩm
         JPanel thongTinSP=new JPanel(new GridLayout(4,1));//GridLayout(3,4,10,5)
         thongTinSP.setPreferredSize(new Dimension(650,600));
-        String xuatxu[]= {"Tất Cả","Đan Mạch", "Nhật Bản,","Việt Nam","USA","Nhật Bản","Đức","Pháp","Thái Lan","Hàn Quốc","Indonesia"};
         tenSP= new InputFormCustom("Tên Sản Phẩm:");
         tenSP.setPreferredSize(new Dimension(400,150));
-        xuatXu= new ComboBoxFormCustom("Xuất Xứ:",xuatxu);
+        xuatXu= new InputFormCustom("Xuất Xứ");
                 xuatXu.setPreferredSize(new Dimension(400,150));
         //thuongHieu= new InputFormCustom("Thương Hiệu:");
         //trongLuong= new InputFormCustom("Trọng Lượng:");
@@ -171,13 +170,13 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
         this.tenSP.getTxtForm().setText(this.SPDuocChon.getTenSanPham());
         this.tenLoai.getList().setSelectedIndex(this.SPDuocChon.getMaLoaiSanPham());
         this.giaSP.getTxtForm().setText(this.SPDuocChon.getGiaSanPham().toString());
-        this.xuatXu.getList().setSelectedItem(this.SPDuocChon.getXuatXu());
+        this.xuatXu.getTxtForm().setText(this.SPDuocChon.getXuatXu());
         
     }
 
     public void XuLyThemSP(){
         if( this.tenSP.txtForm.getText().trim().equals("") ||
-            this.xuatXu.list.getSelectedItem().toString().equals("Tất cả") ||
+            this.xuatXu.txtForm.getText().toString().equals("Tất cả") ||
             this.giaSP.txtForm.getText().trim().equals(""))
         {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đủ thông tin cần thiết !!!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
@@ -185,7 +184,7 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
         else 
         try {
             String tenSP=this.tenSP.txtForm.getText();
-            String xuatXu=this.xuatXu.list.getSelectedItem().toString();
+            String xuatXu=this.xuatXu.txtForm.getText();
             int giaSP=Integer.parseInt(this.giaSP.txtForm.getText());
             int maLoai=tenLoai.list.getSelectedIndex();
             int maKho=1;            
@@ -197,14 +196,16 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
                 linkAnhTuCloud=CloundinaryServices.createImage(hinhanh);
 
             }
-            SanPhamDTO spMoi=new SanPhamDTO(tenSP, xuatXu, giaSP, 0, true, linkAnhTuCloud, maLoai, maKho);
-            if(SanPhamBUS.create(spMoi)){
-                JOptionPane.showMessageDialog(this, "Thêm Sản Phẩm Mới Thành Công ^^","Thông báo",JOptionPane.INFORMATION_MESSAGE);
-                this.SPGUI.loadDuLieuTuDatabase(SanPhamBUS.getAll());
-                this.SPGUI.chinhSuaGiaoDienTable();
-                this.dispose();
+            if (maLoai!=0){
+                SanPhamDTO spMoi=new SanPhamDTO(tenSP, xuatXu, giaSP, 0, true, linkAnhTuCloud, maLoai, maKho);
+                if(SanPhamBUS.create(spMoi)){
+                    JOptionPane.showMessageDialog(this, "Thêm Sản Phẩm Mới Thành Công ^^","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+                    this.SPGUI.loadDuLieuTuDatabase(SanPhamBUS.getAll());
+                    this.SPGUI.chinhSuaGiaoDienTable();
+                    this.dispose();
+                }else JOptionPane.showMessageDialog(this, "Lỗi, tên sản phẩm đã tồn tại trong kho!","Thông báo",JOptionPane.ERROR_MESSAGE);
             }
-            else JOptionPane.showMessageDialog(this, "Lỗi, Tên không được trùng hoặc thông tin phải là số khác!","Thông báo",JOptionPane.ERROR_MESSAGE);
+            else JOptionPane.showMessageDialog(this, "Lỗi, chưa chọn loại sản phẩm!","Thông báo",JOptionPane.ERROR_MESSAGE);
         } catch(NumberFormatException e){
             JOptionPane.showMessageDialog(this, "Vui lòng nhập số với các ô yêu cầu điền số lượng, giá tiền !!!","Thông báo",JOptionPane.ERROR_MESSAGE);
         }
@@ -213,7 +214,7 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
     
     public void XuLyChinhSuaSP(){
               if(   this.tenSP.txtForm.getText().trim().equals("") ||
-                    this.xuatXu.list.getSelectedItem().toString().equals("Tất cả") ||
+                    this.xuatXu.txtForm.getText().equals("") ||
                     this.giaSP.txtForm.getText().trim().equals(""))
                 {
                    JOptionPane.showMessageDialog(this, "Vui lòng không để trống !!!","Thông báo",JOptionPane.ERROR_MESSAGE);
@@ -222,7 +223,7 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
                   try {
                    int maSP=this.SPDuocChon.getMaSanPham();
                     String tenSP=this.tenSP.txtForm.getText();
-                    String xuatXu=this.xuatXu.list.getSelectedItem().toString();
+                    String xuatXu=this.xuatXu.txtForm.getText();
                     int giaSP=Integer.parseInt(this.giaSP.txtForm.getText());
                     int soLuong=this.SPDuocChon.getSoLuongConLai();
                     
