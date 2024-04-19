@@ -18,12 +18,10 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import lombok.Data;
 
+@Data
 
-/**
- *
- * @author Admin
- */
 public class GiaoDienLoaiSanPham extends JPanel implements ActionListener{
 
     private  DefaultTableModel model;
@@ -65,7 +63,7 @@ public class GiaoDienLoaiSanPham extends JPanel implements ActionListener{
         panelPhai.add(timKiemLoaiSP,BorderLayout.NORTH);
         
             // hiệu ứng cho textfield
-        timKiem.getTxtForm().setText("Nhập loại tìm kiếm...");
+        timKiem.getTxtForm().setText("Nhập tên loại tìm kiếm...");
         timKiem.getTxtForm().setForeground(Color.gray);
         timKiem.setBorder(new EmptyBorder(10,20,10,10)); // top left bottom right
         timKiem.getTxtForm().addFocusListener(new FocusListener() {
@@ -108,7 +106,7 @@ public class GiaoDienLoaiSanPham extends JPanel implements ActionListener{
         cacNutNhan.add(themLoaiSP);cacNutNhan.add(suaLoaiSP);cacNutNhan.add(xoaLoaiSP);
         panelPhai.add(cacNutNhan,BorderLayout.CENTER);
         // bên trái
-        String[] colum = new String[]{"STT","Mã Loại Sản Phẩm","Tên Loại Sản Phẩm","Mã Kho Hàng"};
+        String[] colum = new String[]{"STT","Tên Loại Sản Phẩm","Mã Kho Hàng"};
         model = new DefaultTableModel();
         model.setColumnIdentifiers(colum);
         thongTin = new JTable(model);
@@ -141,7 +139,7 @@ public class GiaoDienLoaiSanPham extends JPanel implements ActionListener{
         model.setRowCount(0);
         int dem=1;
         for(LoaiSanPhamDTO loaiSP: listLoaiSP){
-            Object dong[]={dem,loaiSP.getMaLoaiSanPham(),loaiSP.getTenLoaiSanPham(),loaiSP.getMaKhoHang()};
+            Object dong[]={dem,loaiSP.getTenLoaiSanPham(),loaiSP.getMaKhoHang()};
             model.addRow(dong);
             dem++;
         }
@@ -190,23 +188,36 @@ public class GiaoDienLoaiSanPham extends JPanel implements ActionListener{
                 break;
             case "Sửa Loại Hiện Tại":
                 if( this.thongTin.getSelectedRow()!=-1){
-                   LoaiSPDialog suaLoaiSP=new LoaiSPDialog(this,"Chỉnh Sửa", "Change",this.listLoaiSP.get(thongTin.getSelectedRow()));               
+                    if ( listLoaiSP.get(thongTin.getSelectedRow()).getMaLoaiSanPham()==1){
+                        JOptionPane.showMessageDialog(this, "Sản phẩm mặc định không thể chỉnh sửa !!", "Thông báo", JOptionPane.ERROR_MESSAGE);           
+                    }else{
+                         LoaiSPDialog suaLoaiSP=new LoaiSPDialog(this,"Chỉnh Sửa", "Change",this.listLoaiSP.get(thongTin.getSelectedRow()));                     
+                    }
                 }
                 else 
                     JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để chỉnh sửa!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-
-                break;
-            case "Xóa Loại Sản Phẩm":
-                int luaChon=JOptionPane.showConfirmDialog(this,"Chắc chắn xóa sản phẩm ?","Xóa Sản Phẩm",JOptionPane.YES_NO_OPTION);
-            if( luaChon==0)
-            {
-                LoaiSPBUS.delete(listLoaiSP.get(thongTin.getSelectedRow()));
-                JOptionPane.showMessageDialog(this, "Sản phẩm đã xóa");
                 loadDuLieuLoaiSP(LoaiSPBUS.getAll());
                 chinhSuaGiaoDienTable();
-            }
                 break;
+            case "Xóa Loại Sản Phẩm":
+                    int luaChon=JOptionPane.showConfirmDialog(this,"Chắc chắn xóa sản phẩm ?","Xóa Sản Phẩm",JOptionPane.YES_NO_OPTION);
+                if( luaChon==0)
+                {
+                    if ( listLoaiSP.get(thongTin.getSelectedRow()).getMaLoaiSanPham()==1)
+                        JOptionPane.showMessageDialog(this, "Sản phẩm mặc định không thể xóa !!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                    else {
+                        LoaiSPBUS.delete(listLoaiSP.get(thongTin.getSelectedRow()));
+                        loadDuLieuLoaiSP(LoaiSPBUS.getAll());
+                        chinhSuaGiaoDienTable();
+                        JOptionPane.showMessageDialog(this, "Sản phẩm đã xóa");
+
+                    }
+
+                }
+                    break;      
         }
+        loadDuLieuLoaiSP(LoaiSPBUS.getAll());
+        chinhSuaGiaoDienTable();  
         
     }
     
