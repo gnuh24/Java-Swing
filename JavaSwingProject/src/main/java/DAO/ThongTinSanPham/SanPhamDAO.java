@@ -2,6 +2,7 @@
 package DAO.ThongTinSanPham;
 
 import DAO.DAOInterface;
+import DTO.ThongTinSanPham.LoaiSanPhamDTO;
 import DTO.ThongTinSanPham.SanPhamDTO;
 import Others.JDBCConfigure;
 
@@ -9,8 +10,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 
 
@@ -28,7 +28,7 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO> {
         ArrayList<SanPhamDTO> list= new ArrayList<>();
         try {
             Connection con= JDBCConfigure.getConnection();
-            String sql="Select * From sanpham";
+            String sql="Select * From sanpham Where TrangThai=True";
             PreparedStatement pst=con.prepareStatement(sql);
             ResultSet kq=pst.executeQuery();
             while( kq.next()){
@@ -43,10 +43,10 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO> {
                 int maKho=kq.getInt("MaKhoHang");
                 SanPhamDTO sp= new SanPhamDTO(maSP, tenSP, xuatXu, gia, soLuong, trangThai, hinhAnh, maLoaiSP, maKho);
                 list.add(sp);
-
+                
             }
         } catch (SQLException ex) {
-            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Lỗi SQL từ SP DAO");
         }finally{
             JDBCConfigure.closeConnection();
         }
@@ -58,10 +58,10 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO> {
         SanPhamDTO sanPham=null;
         try {
             Connection con= JDBCConfigure.getConnection();
-            String sql="Select * From sanpham Where MaSanPham=?";
+            String sql="Select * From sanpham Where MaSanPham=? and TrangThai=true";
             PreparedStatement pst= con.prepareStatement(sql);
             pst.setString(1, String.valueOf(id));
-            ResultSet kq=pst.executeQuery();
+            ResultSet kq=pst.executeQuery();    
             while(kq.next()){
                 int maSP=kq.getInt("MaSanPham");
                 String tenSP=kq.getString("TenSanPham");
@@ -76,61 +76,70 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO> {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Lỗi SQL từ SP DAO");
         }
         finally{
             JDBCConfigure.closeConnection();
         }
         return sanPham;
     }
+    public SanPhamDTO getByName(int maKhoHang,String name) {
+        SanPhamDTO sanPham=null;
+        try {
+            Connection con= JDBCConfigure.getConnection();
+            String sql="Select * From sanpham Where TenSanPham=? and MaKhoHang=? and TrangThai=True";
+            PreparedStatement pst= con.prepareStatement(sql);
+            pst.setString(1, name);
+            pst.setInt(2, maKhoHang);
+            ResultSet kq=pst.executeQuery();    
+            while(kq.next()){
+                int maSP=kq.getInt("MaSanPham");
+                String tenSP=kq.getString("TenSanPham");
+                String xuatXu=kq.getString("XuatXu");
+                int gia=kq.getInt("Gia");
+                int soLuong=kq.getInt("SoLuongConLai");
+                boolean trangThai= kq.getBoolean("TrangThai");
+                String maLoaiSP=String.valueOf(kq.getInt("MaLoaiSanPham"));
+                String hinhAnh=kq.getString("AnhMinhHoa");
+                int maKho=kq.getInt("MaKhoHang");
+                sanPham= new SanPhamDTO(maSP, tenSP, xuatXu, gia, soLuong, trangThai, hinhAnh, maSP, maKho);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Lỗi SQL từ SP DAO");
+        }
+        finally{
+            JDBCConfigure.closeConnection();
+        }
+        return sanPham;
+    }
+    
+    
+    
+    
     @Override
     public boolean create(Integer maKhoHang, SanPhamDTO sanPhamDTO) {
         try {
 
-            Connection con= JDBCConfigure.getConnection();
-            String sql = "INSERT INTO sanpham (TenSanPham, XuatXu, Gia, SoLuongConLai, TrangThai, AnhMinhHoa, MaLoaiSanPham, MaKhoHang)"
+                Connection con= JDBCConfigure.getConnection();
+                String sql = "INSERT INTO sanpham (TenSanPham, XuatXu, Gia, SoLuongConLai, TrangThai, AnhMinhHoa, MaLoaiSanPham, MaKhoHang)"
                 + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement pst= con.prepareStatement(sql);
-            pst.setString(1, sanPhamDTO.getTenSanPham());
-            pst.setString(2, sanPhamDTO.getXuatXu());
-            pst.setInt(3, sanPhamDTO.getGiaSanPham());
-            pst.setInt(4, sanPhamDTO.getSoLuongConLai());
-            pst.setBoolean(5, true);
-            pst.setString(6, sanPhamDTO.getAnhMinhhoa());
-            pst.setInt(7, sanPhamDTO.getMaLoaiSanPham());
-            pst.setInt(8, sanPhamDTO.getMaKhoHang());
-            check=pst.executeUpdate();
+                PreparedStatement pst= con.prepareStatement(sql);
+                pst.setString(1, sanPhamDTO.getTenSanPham());
+                pst.setString(2, sanPhamDTO.getXuatXu());
+                pst.setInt(3, sanPhamDTO.getGiaSanPham());
+                pst.setInt(4, sanPhamDTO.getSoLuongConLai());
+                pst.setBoolean(5, true);
+                pst.setString(6, sanPhamDTO.getAnhMinhhoa());
+                pst.setInt(7, sanPhamDTO.getMaLoaiSanPham());
+                pst.setInt(8, maKhoHang); 
+                check=pst.executeUpdate();
 
-            return true;
+                return true;
 
         } catch (SQLException ex) {
-            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Lỗi SQL từ SP DAO");
         } finally{
-            JDBCConfigure.closeConnection();
-        }
-        return false;
-    }
-
-    @Override
-    public boolean update(SanPhamDTO sanPhamDTO) {
-        Connection con = JDBCConfigure.getConnection();
-        try {
-
-            String sql="Update sanpham Set TenSanPham=?, XuatXu=?, Gia=?, SoLuongConLai=?, TrangThai=1, MaLoaiSanPham=?, AnhMinhHoa=?, MaKhoHang=? Where MaSanPham=?";
-            PreparedStatement pst= con.prepareStatement(sql);
-            pst.setString(1, sanPhamDTO.getTenSanPham());
-            pst.setString(2, sanPhamDTO.getXuatXu());
-            pst.setInt(3, sanPhamDTO.getGiaSanPham());
-            pst.setInt(4, sanPhamDTO.getSoLuongConLai());
-            pst.setInt(5, sanPhamDTO.getMaLoaiSanPham());
-            pst.setString(6, sanPhamDTO.getAnhMinhhoa());
-            pst.setInt(7, sanPhamDTO.getMaKhoHang());
-            pst.setInt(8, sanPhamDTO.getMaSanPham());
-            check=pst.executeUpdate();
-            return true;
-        } catch (SQLException ex) {
-            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }  finally{
             JDBCConfigure.closeConnection();
         }
         return false;
@@ -159,18 +168,61 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO> {
     }
 
     @Override
+    public boolean update(SanPhamDTO sanPhamDTO) {
+        Connection con = JDBCConfigure.getConnection();
+        try {
+
+            String sql="Update sanpham Set TenSanPham=?, XuatXu=?, Gia=?, SoLuongConLai=?, TrangThai=1, MaLoaiSanPham=?, AnhMinhHoa=?, MaKhoHang=? Where MaSanPham=?";
+            PreparedStatement pst= con.prepareStatement(sql);
+            pst.setString(1, sanPhamDTO.getTenSanPham());
+            pst.setString(2, sanPhamDTO.getXuatXu());
+            pst.setInt(3, sanPhamDTO.getGiaSanPham());
+            pst.setInt(4, sanPhamDTO.getSoLuongConLai());
+            pst.setInt(5, sanPhamDTO.getMaLoaiSanPham());
+            pst.setString(6, sanPhamDTO.getAnhMinhhoa());
+            pst.setInt(7, sanPhamDTO.getMaKhoHang());
+            pst.setInt(8, sanPhamDTO.getMaSanPham());
+            check=pst.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            System.out.println("Lỗi SQL từ SP DAO");
+        }  finally{
+            JDBCConfigure.closeConnection();
+        }
+        return false;
+    }
+
+    public boolean updateWithDelteLoaiSP(LoaiSanPhamDTO loaiSP){
+        Connection con = JDBCConfigure.getConnection();
+        try {
+
+            String sql="Update sanpham Set MaLoaiSanPham=? Where MaLoaiSanPham=?";
+            PreparedStatement pst= con.prepareStatement(sql);
+            pst.setInt(1, 1);
+            pst.setInt(2, loaiSP.getMaLoaiSanPham());
+            check=pst.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            System.out.println("Lỗi SQL từ SP DAO");
+        }  finally{
+            JDBCConfigure.closeConnection();
+        }
+        return false;
+    }
+    
+    @Override
     public boolean delete(SanPhamDTO sanPhamDTO) {
         Connection con=JDBCConfigure.getConnection();
         try {
-
-            String sql="DELETE FROM sanpham WHERE MaSanPham=?";
+            String sql="Update sanpham Set TrangThai=? Where MaSanPham=?";
             PreparedStatement pst=con.prepareStatement(sql);
-            pst.setInt(1, sanPhamDTO.getMaSanPham());
+            pst.setBoolean(1, false);
+            pst.setInt(2, sanPhamDTO.getMaSanPham());
             check=pst.executeUpdate();
             return true;
-
+            
         } catch (SQLException ex) {
-            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Lỗi SQL từ SP DAO");
         }  finally{
             JDBCConfigure.closeConnection();
         }
