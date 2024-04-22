@@ -1,4 +1,5 @@
 package GUI.GUIPanel;
+import DTO.NguoiDung.TaiKhoanDTO;
 import GUI.GUIThanhPhan.ButtonCustom;
 import javax.swing.*;
 
@@ -8,13 +9,13 @@ import lombok.*;
 @Data
 
 public class MenuTaskBar extends JPanel{
-    private String linkToIMG = "C:\\Users\\dvmv2\\OneDrive\\Documents\\Nam_2\\Fixx\\Java-Swing-main-9-4\\Java-Swing-main\\JavaSwingProject\\src\\main\\java\\Resources";
+    private String linkToIMG = "C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHungNew\\JavaSwingProject\\src\\main\\java\\Resources";
     private ButtonCustom btn_TrangChu, btn_sanPham, btn_loaiSP;
     private ButtonCustom btn_NhapHang, btn_PhieuNhap;
     private ButtonCustom btn_XuatHang, btn_PhieuXuat;
     private ButtonCustom btn_TaiKhoan,btn_ThongKe, btn_DoiThongTin, btn_DangXuat;
 
-    public MenuTaskBar() {
+    public MenuTaskBar(TaiKhoanDTO taiKhoanDTO) {
         this.setPreferredSize(new Dimension(288,800));
         this.setBackground(Color.WHITE);
         this.setLayout(new BorderLayout(0,0));
@@ -25,7 +26,7 @@ public class MenuTaskBar extends JPanel{
         JLabel hoTen= new JLabel("Tên Đăng Nhập");
         hoTen.setVerticalAlignment(JLabel.CENTER);
         hoTen.setHorizontalAlignment(JLabel.CENTER);
-        hoTen.setIcon(new ImageIcon("C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHung\\JavaHung\\src\\main\\java\\Resources\\iconUser64.png"));
+        hoTen.setIcon(new ImageIcon("C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHungNew\\JavaSwingProject\\src\\main\\java\\Resources\\iconUser64.png"));
         JPanel bar1= new JPanel();
         bar1.setBackground(Color.BLACK);//new Color(204,214,219));
         bar1.setPreferredSize(new Dimension(1,0));
@@ -60,8 +61,12 @@ public class MenuTaskBar extends JPanel{
         dieuHuong.add(btn_TrangChu); dieuHuong.add(btn_sanPham); dieuHuong.add(btn_loaiSP);
         dieuHuong.add(btn_NhapHang); dieuHuong.add(btn_PhieuNhap);
         dieuHuong.add(btn_XuatHang); dieuHuong.add(btn_PhieuXuat); 
-        dieuHuong.add(btn_TaiKhoan); dieuHuong.add(btn_ThongKe);
+        if(taiKhoanDTO.getQuyen().equals("Admin")){
+            dieuHuong.add(btn_TaiKhoan);
+        }
+        dieuHuong.add(btn_ThongKe);
         dieuHuong.add(btn_DoiThongTin); dieuHuong.add(btn_DangXuat);
+        
         this.add(dieuHuong,BorderLayout.CENTER);
     }
     

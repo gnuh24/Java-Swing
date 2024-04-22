@@ -4,28 +4,23 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Data
-/************************************************************
- * @Data = @Setter + @Getter + @RequiredArgsConstructor + .....
- *          @Setter: Lombok tự động viết toàn bộ Setter cho class
- *          @Getter: Lombok tự động viết toàn bộ Getter cho class
- *          @RequiredArgsConstructor: Dùng để tạo các constructor có các tham số chỉ định
- *              Sử dụng @NonNull để chỉ định trường đặc biệt
- *******************************************/
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+
 public class TaiKhoanDTO {
 
     private Integer maTaiKhoan;
-
     private String tenDangNhap;
-
+    private String matKhau;
+    private Integer trangThai;
+    private String ngayTao;
     private String quyen;
-
-    private LocalDateTime ngayTao;
-
-    private Boolean trangThai;
-
+    private String hoVaTen;
+    private String ngaySinh;
+    private String gioiTinh;
+    private String soDienThoai;
+    private String email;
+    private String diaChi;
+    private Integer maKhoHang;
 }

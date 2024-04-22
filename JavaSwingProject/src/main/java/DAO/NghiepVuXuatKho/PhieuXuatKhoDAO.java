@@ -28,7 +28,9 @@ public class PhieuXuatKhoDAO implements DAOInterface<PhieuXuatKhoDTO> {
                         
                         //? Định dạng Localdatetime
                         String dateString = resultSet.getString("NgayXuatKho");
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                        System.out.println("Ngày đọc dc:" +dateString);
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                        System.out.println("Ngày local:" +formatter.toString());
                         LocalDateTime parsedDateTime = LocalDateTime.parse(dateString, formatter);
                         phieuXuatKhoObject.setNgayXuatKho(parsedDateTime);
                         phieuXuatKhoObject.setTongGiaTri(resultSet.getLong("TongGiaTri"));
@@ -54,7 +56,7 @@ public class PhieuXuatKhoDAO implements DAOInterface<PhieuXuatKhoDTO> {
                        phieuXuatKho.setMaPhieu(phieuXuatKhoRow.getInt("MaPhieu"));
                        phieuXuatKho.setMaKhoHang(phieuXuatKhoRow.getInt("MaKhoHang"));
                        String dateString = phieuXuatKhoRow.getString("NgayXuatKho");
-                       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                        LocalDateTime parsedDateTime = LocalDateTime.parse(dateString, formatter);
                        phieuXuatKho.setNgayXuatKho(parsedDateTime);
                        phieuXuatKho.setTongGiaTri(phieuXuatKhoRow.getInt("TongGiaTri"));
