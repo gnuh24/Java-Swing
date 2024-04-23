@@ -10,12 +10,14 @@ import DTO.ThongTinSanPham.*;
 
 public class PhieuXuatKhoBUS {
     private final PhieuXuatKhoDAO PhieuXuatKhoDAO= new PhieuXuatKhoDAO();
-    private SanPhamBUS danhSachSanPhamBUS = new SanPhamBUS();
+    int maKhoHang;
+    private SanPhamBUS danhSachSanPhamBUS = new SanPhamBUS(this.maKhoHang);
 
     public PhieuXuatKhoBUS() {
     }
 
     public ArrayList<PhieuXuatKhoDTO> getAll(int maKhoHang){
+        this.maKhoHang=maKhoHang;
         return PhieuXuatKhoDAO.getAll(maKhoHang);
     }
     public PhieuXuatKhoDTO getById(int maPhieu){

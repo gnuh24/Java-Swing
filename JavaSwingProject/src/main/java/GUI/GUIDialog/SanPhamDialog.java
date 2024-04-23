@@ -28,14 +28,16 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
     private GiaoDienSanPham SPGUI;
     private File selectedFile=null;
     
-    private LoaiSanPhamBUS LoaiSPBUS= new LoaiSanPhamBUS();
-    private SanPhamBUS SanPhamBUS= new SanPhamBUS();
+    private LoaiSanPhamBUS LoaiSPBUS;
+    private SanPhamBUS SanPhamBUS;
     
     
     public SanPhamDialog(GiaoDienSanPham guiaa,String title,String type) {
         this.tieuDe=title;
         this.type=type;
         this.SPGUI=guiaa;
+        this.SanPhamBUS= new SanPhamBUS(guiaa.getMaKhoHang());
+        this.LoaiSPBUS= new LoaiSanPhamBUS(guiaa.getMaKhoHang());
         this.init();
     }
     public SanPhamDialog(String title,String type, SanPhamDTO sanPhamDuocChon) {
@@ -176,8 +178,9 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
 
     public void XuLyThemSP(){
         if( this.tenSP.txtForm.getText().trim().equals("") ||
-            this.xuatXu.txtForm.getText().toString().equals("Tất cả") ||
-            this.giaSP.txtForm.getText().trim().equals(""))
+            this.tenLoai.list.getSelectedItem().toString().equals("Tất cả") ||
+            this.giaSP.txtForm.getText().trim().equals("") ||
+            this.xuatXu.txtForm.getText().trim().equals(""))
         {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đủ thông tin cần thiết !!!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
         }
@@ -186,7 +189,7 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
             String tenSP=this.tenSP.txtForm.getText();
             String xuatXu=this.xuatXu.txtForm.getText();
             int giaSP=Integer.parseInt(this.giaSP.txtForm.getText());
-            int maLoai=tenLoai.list.getSelectedIndex();
+            int maLoai=LoaiSPBUS.getMaLoaispWithTen(tenLoai.list.getSelectedItem().toString());
             int maKho=1;            
             
             // hình ảnh thêm
@@ -215,6 +218,7 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
     public void XuLyChinhSuaSP(){
               if(   this.tenSP.txtForm.getText().trim().equals("") ||
                     this.xuatXu.txtForm.getText().equals("") ||
+                    this.tenLoai.list.getSelectedItem().toString().equals("Tất cả") ||
                     this.giaSP.txtForm.getText().trim().equals(""))
                 {
                    JOptionPane.showMessageDialog(this, "Vui lòng không để trống !!!","Thông báo",JOptionPane.ERROR_MESSAGE);

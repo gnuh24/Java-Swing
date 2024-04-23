@@ -14,21 +14,25 @@ public class LoaiSPDialog extends  JDialog implements ActionListener{
     public ButtonCustom btn_them,btn_chinhsua,btn_huy;
     int maKho=1;
     
-    private LoaiSanPhamBUS LoaiSPBUS= new LoaiSanPhamBUS();
+    private LoaiSanPhamBUS LoaiSPBUS;
     private LoaiSanPhamDTO loaiSPDuocChon;
     private GiaoDienLoaiSanPham loaiSPGUI;
+    
     
     public LoaiSPDialog() {
         this.init();
     }
 
     public LoaiSPDialog(GiaoDienLoaiSanPham LoaiSPGUI,String tieuDe, String type) {
+        this.maKho=LoaiSPGUI.getMaKhoHang();
+        this.LoaiSPBUS= new LoaiSanPhamBUS(maKho);
         this.tieuDe=tieuDe;
         this.type=type;
         this.loaiSPGUI=LoaiSPGUI;
         init();
     }
     public LoaiSPDialog(GiaoDienLoaiSanPham LoaiSPGUI,String tieuDe, String type, LoaiSanPhamDTO loaisp) {
+        this.maKho=LoaiSPGUI.getMaKhoHang();
         this.tieuDe=tieuDe;
         this.type=type;
         this.loaiSPDuocChon=loaisp;
@@ -96,7 +100,7 @@ public class LoaiSPDialog extends  JDialog implements ActionListener{
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đủ thông tin cần thiết !!!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
         else {
                 String tenLoaiSP=this.tenLoaiSP.getTxtForm().getText().trim();
-                if(LoaiSPBUS.create(maKho, new LoaiSanPhamDTO(tenLoaiSP,maKho))){
+                if(LoaiSPBUS.create(this.maKho, new LoaiSanPhamDTO(tenLoaiSP,maKho))){
                     this.loaiSPGUI.loadDuLieuLoaiSP(LoaiSPBUS.getAll());
                     this.loaiSPGUI.chinhSuaGiaoDienTable();
                     JOptionPane.showMessageDialog(this, "Thêm Loại Sản Phẩm Mới Thành Công ^^","Thông báo",JOptionPane.INFORMATION_MESSAGE);

@@ -9,9 +9,11 @@ import java.util.ArrayList;
 public class LoaiSanPhamBUS {
     private LoaiSanPhamDAO loaiSPDAO= new LoaiSanPhamDAO();
     private ArrayList<LoaiSanPhamDTO> listLoaiSP= new ArrayList<>();
-
-    public LoaiSanPhamBUS() {
-        listLoaiSP=loaiSPDAO.getAll(0);// 0 là mã kho
+    private int maKhohang=0;
+    
+    public LoaiSanPhamBUS(int makho) {
+        this.maKhohang=makho;
+        listLoaiSP=loaiSPDAO.getAll(makho);// 0 là mã kho
     }
 
     public LoaiSanPhamDAO getLoaiSPDAO() {
@@ -29,6 +31,11 @@ public class LoaiSanPhamBUS {
         }
         return -1;
     }
+    public int getMaLoaispWithTen(String tenLoai){
+        LoaiSanPhamDTO tmp=loaiSPDAO.getByName(tenLoai);
+        return tmp.getMaLoaiSanPham();
+    }
+    
 
 
     public String[] tenLoaiSanPham(){

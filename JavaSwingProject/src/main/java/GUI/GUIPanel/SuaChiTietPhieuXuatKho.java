@@ -21,7 +21,7 @@ import javax.swing.table.*;
 
 public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
       int maKhoHang = 4;
-      SanPhamBUS sanPhamBUS = new SanPhamBUS();
+      SanPhamBUS sanPhamBUS = new SanPhamBUS(this.maKhoHang);
       PhieuXuatKhoBUS phieuXuatKhoBUS = new PhieuXuatKhoBUS();
       ChiTietPhieuXuatKhoBUS chiTietPhieuXuatKhoBUS = new ChiTietPhieuXuatKhoBUS();
       ArrayList<ChiTietPhieuXuatKhoDTO> listFirst = new ArrayList<>();

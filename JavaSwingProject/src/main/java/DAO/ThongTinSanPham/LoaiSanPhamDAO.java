@@ -12,15 +12,18 @@ import java.util.List;
 
 
 public class LoaiSanPhamDAO implements DAOInterface<LoaiSanPhamDTO> {
+    private int maKho;
     @Override
     public ArrayList<LoaiSanPhamDTO> getAll(Integer maKhoHang) {
+        maKho=maKhoHang;
         ArrayList<LoaiSanPhamDTO> list= new ArrayList<>();
         try {
 
             Connection con= JDBCConfigure.getConnection();
-            String sql="Select * From loaisanpham";
+            String sql="Select * From loaisanpham Where MaKhoHang=? or loaisanpham.TenLoaiSanPham='Các nhà cung cấp khác'";
             PreparedStatement pst= con.prepareStatement(sql);
-            ResultSet kq=pst.executeQuery(sql);
+            pst.setInt(1, maKhoHang);
+            ResultSet kq=pst.executeQuery();
             while(kq.next()){
                 int maLoaiSP=kq.getInt("MaLoaiSanPham");
                 String tenLoaiSP=kq.getString("TenLoaiSanPham");
@@ -30,7 +33,7 @@ public class LoaiSanPhamDAO implements DAOInterface<LoaiSanPhamDTO> {
             }
 
         } catch (SQLException ex) {
-            System.out.println("Lỗi SQL");
+            System.out.println(ex);
         } finally{
             JDBCConfigure.closeConnection();
         }
@@ -54,7 +57,7 @@ public class LoaiSanPhamDAO implements DAOInterface<LoaiSanPhamDTO> {
                 loaisp= new LoaiSanPhamDTO(maLoaiSP,tenLoaiSP,maKho);
             }
         } catch (SQLException ex) {
-            System.out.println("Lỗi SQL");
+            System.out.println(ex);
         }finally{
             JDBCConfigure.closeConnection();
         }
@@ -79,7 +82,7 @@ public class LoaiSanPhamDAO implements DAOInterface<LoaiSanPhamDTO> {
                 loaisp= new LoaiSanPhamDTO(maLoaiSP,tenLoaiSP,maKho);
             }
         } catch (SQLException ex) {
-            System.out.println("Lỗi SQL");
+            System.out.println(ex);
         }finally{
             JDBCConfigure.closeConnection();
         }
@@ -117,7 +120,7 @@ public class LoaiSanPhamDAO implements DAOInterface<LoaiSanPhamDTO> {
     public boolean update(LoaiSanPhamDTO loaiSP) {
         Connection con = JDBCConfigure.getConnection();
         try {
-
+            
             String sql="Update loaisanpham Set TenLoaiSanPham=? Where MaLoaiSanPham=?";
             PreparedStatement pst= con.prepareStatement(sql);
             pst.setString(1, loaiSP.getTenLoaiSanPham());
@@ -126,7 +129,7 @@ public class LoaiSanPhamDAO implements DAOInterface<LoaiSanPhamDTO> {
 
             return true;
         } catch (SQLException ex) {
-            System.out.println("Lỗi SQL");
+            System.out.println(ex);
         } finally{
             JDBCConfigure.closeConnection();
         }
@@ -137,6 +140,7 @@ public class LoaiSanPhamDAO implements DAOInterface<LoaiSanPhamDTO> {
     public boolean delete(LoaiSanPhamDTO loaiSP) {
         Connection con=JDBCConfigure.getConnection();
         try {
+            System.out.println("Thông tin mã loại:" +loaiSP.toString());
             SanPhamDAO.getInstance().updateWithDelteLoaiSP(loaiSP);
             String sql="DELETE FROM loaisanpham WHERE MaLoaiSanPham=?";
             PreparedStatement pst=con.prepareStatement(sql);
@@ -147,7 +151,7 @@ public class LoaiSanPhamDAO implements DAOInterface<LoaiSanPhamDTO> {
             return true;
 
         } catch (SQLException ex) {
-            System.out.println("Lỗi SQL");
+            System.out.println(ex);
         } finally{
             JDBCConfigure.closeConnection();
         }

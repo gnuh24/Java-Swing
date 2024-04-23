@@ -18,7 +18,7 @@ import javax.swing.table.*;
 
 public class XuatHangUI extends JPanel implements ActionListener{
       int maKhoHang = 0;
-      SanPhamBUS sanPhamBUS = new SanPhamBUS();
+      SanPhamBUS sanPhamBUS = new SanPhamBUS(this.maKhoHang);
       PhieuXuatKhoBUS phieuXuatKhoBUS = new PhieuXuatKhoBUS();
       ChiTietPhieuXuatKhoBUS chiTietPhieuXuatKhoBUS = new ChiTietPhieuXuatKhoBUS();
       long tongGiaTri = 0;

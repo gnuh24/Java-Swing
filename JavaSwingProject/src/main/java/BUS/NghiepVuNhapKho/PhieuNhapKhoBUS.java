@@ -21,11 +21,12 @@ public class PhieuNhapKhoBUS {
     private final ChiTietPhieuNhapKhoBUS chiTietPhieuNhapKhoBUS;
 
     private final SanPhamBUS sanPhamBUS;
-
+    private int maKhoHang;
+    
     public PhieuNhapKhoBUS() {
         this.phieuNhapKhoDAO = new PhieuNhapKhoDAO();
         this.chiTietPhieuNhapKhoBUS = new ChiTietPhieuNhapKhoBUS();
-        this.sanPhamBUS = new SanPhamBUS();
+        this.sanPhamBUS = new SanPhamBUS(this.maKhoHang);
     }
 
     public List<PhieuNhapKhoDTO> getAllPhieuNhapKho(Integer maKhoHang){

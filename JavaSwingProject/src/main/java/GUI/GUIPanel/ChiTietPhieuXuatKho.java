@@ -18,7 +18,7 @@ import Others.JDBCConfigure;
 
 public class ChiTietPhieuXuatKho{
       ChiTietPhieuXuatKhoBUS chiTietPhieuXuatKhoBUS = new ChiTietPhieuXuatKhoBUS();
-      SanPhamBUS sanPhamBUS = new SanPhamBUS();
+      SanPhamBUS sanPhamBUS;
       JFrame frame = new JFrame();
       JPanel header;
       JLabel header_lb;
@@ -127,7 +127,7 @@ public class ChiTietPhieuXuatKho{
             main.setLayout(new FlowLayout());
             main.setPreferredSize(new Dimension(750,430));
             setThongTinMain(maPhieuXuat);
-
+            this.sanPhamBUS= new SanPhamBUS(Integer.valueOf(this.ma_kho_hang_lb.getText()));
             frame.add(header);
             frame.add(main);
             frame.setLayout(new FlowLayout());

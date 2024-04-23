@@ -1,6 +1,7 @@
 package GUI.GUIPanel;
 
 import BUS.ThongTinSanPham.LoaiSanPhamBUS;
+import DTO.NguoiDung.TaiKhoanDTO;
 import DTO.ThongTinSanPham.LoaiSanPhamDTO;
 import GUI.GUIDialog.LoaiSPDialog;
 import GUI.GUIThanhPhan.ButtonCustom;
@@ -21,22 +22,23 @@ import javax.swing.table.DefaultTableModel;
 import lombok.Data;
 
 @Data
-
 public class GiaoDienLoaiSanPham extends JPanel implements ActionListener{
 
     private  DefaultTableModel model;
     private  JTable thongTin;
 
-    
-    private LoaiSanPhamBUS LoaiSPBUS= new LoaiSanPhamBUS();
-    private ArrayList<LoaiSanPhamDTO> listLoaiSP= LoaiSPBUS.getAll();
+    int maKhoHang=0;
+    private LoaiSanPhamBUS LoaiSPBUS;
+    private ArrayList<LoaiSanPhamDTO> listLoaiSP;
     private  ButtonCustom themLoaiSP, suaLoaiSP, xoaLoaiSP;
     
     
-    public GiaoDienLoaiSanPham() {
+    public GiaoDienLoaiSanPham(int maKho) {
         this.setSize(1200,900);// 1980, 1050
         this.setLayout(new BorderLayout(0,0));  
-
+        this.maKhoHang=maKho;
+        this.LoaiSPBUS= new LoaiSanPhamBUS(this.maKhoHang);
+        this.listLoaiSP= LoaiSPBUS.getAll();
         // tiêu đề trên JPanel
         JPanel panelTren= new JPanel(new FlowLayout(FlowLayout.LEFT,20,30));
         JLabel tieuDe=new JLabel("Loại Sản Phẩm");

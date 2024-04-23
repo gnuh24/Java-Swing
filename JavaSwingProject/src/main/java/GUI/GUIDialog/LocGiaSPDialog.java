@@ -22,10 +22,11 @@ import java.util.ArrayList;
  */
 public class LocGiaSPDialog extends  JDialog implements ActionListener{
     private GiaoDienSanPham SPGUI;
-    private SanPhamBUS SanPhamBUS= new SanPhamBUS();
+    private SanPhamBUS SanPhamBUS;
     private InputFormCustom tuGia, denGia;
     public LocGiaSPDialog(GiaoDienSanPham guiSP) {
         this.SPGUI=guiSP;
+        this.SanPhamBUS= new SanPhamBUS(guiSP.getMaKhoHang());
         this.init();
     }
     

@@ -11,16 +11,18 @@ import java.util.Comparator;
 public class SanPhamBUS {
     private final SanPhamDAO sanPhamDAO= new SanPhamDAO();
     private ArrayList<SanPhamDTO> danhSachSanPham= new ArrayList<>();
-    private LoaiSanPhamBUS loaiSPBUS= new LoaiSanPhamBUS();
+    private LoaiSanPhamBUS loaiSPBUS;
     private int maKho;
     
-    public SanPhamBUS() {
-        danhSachSanPham=sanPhamDAO.getAll(0);
+    public SanPhamBUS(int maKhoHang) {
+        maKho=maKhoHang;
+        danhSachSanPham=sanPhamDAO.getAll(maKhoHang);
+        loaiSPBUS= new LoaiSanPhamBUS(maKhoHang);
     }
     
     public ArrayList<SanPhamDTO> getAll(){
         
-        danhSachSanPham=sanPhamDAO.getAll(0); 
+        danhSachSanPham=sanPhamDAO.getAll(this.maKho); 
         return this.danhSachSanPham;
     }
     // hàm hỗ trợ lấy ra index trong danh sách sản phẩm dành cho việc update thông tin sản phẩm
@@ -46,7 +48,7 @@ public class SanPhamBUS {
             if(this.danhSachSanPham.get(i).getTenSanPham().equals(spMoi.getTenSanPham()))
                 return false;
         
-        if( sanPhamDAO.create(1,spMoi))
+        if( sanPhamDAO.create(this.maKho,spMoi))
         {
             this.danhSachSanPham.add(spMoi);
             return true;
@@ -76,7 +78,7 @@ public class SanPhamBUS {
     public boolean delete(SanPhamDTO spCanXoa){
         if( sanPhamDAO.delete(spCanXoa))
         {
-            this.danhSachSanPham=sanPhamDAO.getAll(0);
+            this.danhSachSanPham=sanPhamDAO.getAll(this.maKho);
             return true;
         }
         return false;

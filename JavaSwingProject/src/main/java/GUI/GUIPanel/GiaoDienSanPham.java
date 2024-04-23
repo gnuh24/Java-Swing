@@ -34,28 +34,33 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import lombok.Data;
 import org.apache.poi.ss.*;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.*;
 import org.apache.poi.xssf.usermodel.*;
 
+@Data
 public class GiaoDienSanPham extends JPanel implements ActionListener{
 
     private  JTable thongTin;
     private  DefaultTableModel model;
-    private SanPhamBUS SPBUS= new SanPhamBUS();
-    private LoaiSanPhamBUS LoaiSPBUS= new LoaiSanPhamBUS();
-    private ArrayList<SanPhamDTO> listSP= SPBUS.getAll();
+    private LoaiSanPhamBUS LoaiSPBUS;
     private JComboBox<String> locSP, locGia;
     private JRadioButton rbtn1, rbtn2, rbtn3, rbtn4;
     private String linkToIMG = "C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHungNew\\JavaSwingProject\\src\\main\\java\\Resources";
-    public GiaoDienSanPham()  {
+    int maKhoHang=0;
+    private SanPhamBUS SPBUS;
+    private ArrayList<SanPhamDTO> listSP;
+    public GiaoDienSanPham(int maKho)  {
+        this.maKhoHang=maKho;
+        this.SPBUS= new SanPhamBUS(this.maKhoHang);
+        this.LoaiSPBUS= new LoaiSanPhamBUS(this.maKhoHang);
+        this.listSP= SPBUS.getAll();
         this.setSize(1200,800);// 1980, 1050
         this.setLayout(new BorderLayout(0,0));    
-        //this.getContentPane().setBackground(Color.LIGHT_GRAY);
         // menu điều hướng bên trái 15% 
         
-        //////// kết thúc
         // chia 1/3 là chức năng, 2/3 dưới là table sản phẩm
         // PanelTren
         JPanel panelTren= new JPanel(new BorderLayout(0,0));
@@ -174,7 +179,7 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
                 {
                     SanPhamDialog spDia=new SanPhamDialog("Chi Tiết Sản Phẩm","ChiTiet",listSP.get(thongTin.getSelectedRow()));
                     System.out.println(listSP.get(thongTin.getSelectedRow()).getAnhMinhhoa());
-                    loadDuLieuTuDatabase(new SanPhamBUS().getAll());
+                    loadDuLieuTuDatabase(new SanPhamBUS(maKhoHang).getAll());
                     chinhSuaGiaoDienTable();
                 }
             }
@@ -248,11 +253,15 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
         int dem=1;
         for(SanPhamDTO sanPham: listSP){
             try {
+                System.out.println("THông tin");
+                System.out.println(sanPham.toString());
+                int viTriTrongKho=LoaiSPBUS.getIndexByMaLoaiSP(sanPham.getMaLoaiSanPham());
+                String tenLoaiSP=LoaiSPBUS.tenLoaiSanPham()[viTriTrongKho+1];
                 URL img= new URL(CloundinaryServices.getUrlImage(sanPham.getAnhMinhhoa()));
                 ImageIcon pic= new ImageIcon(img);
                 Image scaleImage = pic.getImage().getScaledInstance(60,60,Image.SCALE_SMOOTH);
                 Icon picFix= new ImageIcon(scaleImage);
-                Object dong[]={dem,picFix,sanPham.getTenSanPham(),LoaiSPBUS.tenLoaiSanPham()[sanPham.getMaLoaiSanPham()],sanPham.getXuatXu(), sanPham.getSoLuongConLai(), toCurrency(sanPham.getGiaSanPham())};
+                Object dong[]={dem,picFix,sanPham.getTenSanPham(),tenLoaiSP,sanPham.getXuatXu(), sanPham.getSoLuongConLai(), toCurrency(sanPham.getGiaSanPham())};
                 dtm.addRow(dong);
                 dem+=1;
             } catch (MalformedURLException ex) {
@@ -385,12 +394,7 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
 
         
     }
-    
-    public static void main(String[] args) {
 
-            new GiaoDienSanPham();
-                
-    }
 
 
 }

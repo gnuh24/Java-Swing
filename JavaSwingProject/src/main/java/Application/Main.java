@@ -44,7 +44,7 @@ public class Main extends JFrame implements ActionListener{
         
         menu.getBtn_sanPham().addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e){
-                GiaoDienSanPham sanPham= new GiaoDienSanPham();
+                GiaoDienSanPham sanPham= new GiaoDienSanPham(taiKhoanDTO.getMaKhoHang());
                 setPanelMain(sanPham);
                 hieuUngHover(e);
             }
@@ -52,7 +52,7 @@ public class Main extends JFrame implements ActionListener{
         
         menu.getBtn_loaiSP().addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e){
-                GiaoDienLoaiSanPham loaiSP= new GiaoDienLoaiSanPham();
+                GiaoDienLoaiSanPham loaiSP= new GiaoDienLoaiSanPham(taiKhoanDTO.getMaKhoHang());
                 setPanelMain(loaiSP);
                 hieuUngHover(e);
             }
