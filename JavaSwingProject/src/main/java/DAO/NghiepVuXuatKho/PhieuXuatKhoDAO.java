@@ -65,7 +65,7 @@ public class PhieuXuatKhoDAO implements DAOInterface<PhieuXuatKhoDTO> {
       public boolean create(Integer maKhoHang, PhieuXuatKhoDTO phieuXuatKhoDTO) {
             try{
                   Statement state = JDBCConfigure.getConnection().createStatement();
-                  int taoPhieuXuatHang = state.executeUpdate("INSERT INTO `phieuxuatkho` (`MaPhieu`, `NgayXuatKho`, `TongGiaTri`, `MaKhoHang`) VALUES (NULL, now(), '"+phieuXuatKhoDTO.getTongGiaTri()+"', '"+maKhoHang+"');");
+                  int taoPhieuXuatHang = state.executeUpdate("INSERT INTO `phieuxuatkho` (`NgayXuatKho`, `TongGiaTri`, `MaKhoHang`) VALUES (now(), '"+phieuXuatKhoDTO.getTongGiaTri()+"', '"+maKhoHang+"');");
                   if(taoPhieuXuatHang != 1) {
                         System.out.println("Khoi tao phieu xuat hàng that bai !");
                         return false;
@@ -74,6 +74,7 @@ public class PhieuXuatKhoDAO implements DAOInterface<PhieuXuatKhoDTO> {
                         return true;
                   }
             }catch(SQLException e) {
+                  System.out.println("Khu a");
                   System.err.println(e.getMessage());
                   return false;
             }
