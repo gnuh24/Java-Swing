@@ -72,6 +72,7 @@ public class ChiTietPhieuXuatKhoDAO implements DAOInterface<ChiTietPhieuXuatKhoD
                         return true;
                   }
             }catch(SQLException e) {
+                  System.out.println("khu b");
                   System.err.println(e.getMessage());
                   return false;
             }
