@@ -6,7 +6,7 @@ import BUS.NghiepVuXuatKho.PhieuXuatKhoBUS;
 import DTO.NghiepVuXuatKho.PhieuXuatKhoDTO;
 
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -82,7 +82,7 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
                               if (columnIndex == 0) {
                                     return Integer.class; // Kiểu dữ liệu cho cột 0 là Integer
                               } else if (columnIndex == 1) {
-                                    return LocalDateTime.class; // Giả sử kiểu dữ liệu cho cột 3 là Date
+                                    return LocalDate.class; // Giả sử kiểu dữ liệu cho cột 3 là Date
                               } else if (columnIndex == 2) {
                                     return Integer.class; // Kiểu dữ liệu cho cột 4 là Double
                               } else {
