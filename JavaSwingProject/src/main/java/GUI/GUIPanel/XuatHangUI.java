@@ -18,7 +18,7 @@ import javax.swing.table.*;
 
 public class XuatHangUI extends JPanel implements ActionListener{
       int maKhoHang = 0;
-      SanPhamBUS sanPhamBUS = new SanPhamBUS(this.maKhoHang);
+      SanPhamBUS sanPhamBUS;
       PhieuXuatKhoBUS phieuXuatKhoBUS = new PhieuXuatKhoBUS();
       ChiTietPhieuXuatKhoBUS chiTietPhieuXuatKhoBUS = new ChiTietPhieuXuatKhoBUS();
       long tongGiaTri = 0;
@@ -63,6 +63,7 @@ public class XuatHangUI extends JPanel implements ActionListener{
       Color bgBlue = new Color(0,145,253);
       public XuatHangUI(int maKhoHang) {
             this.maKhoHang = maKhoHang;
+            this.sanPhamBUS= new SanPhamBUS(this.maKhoHang);
             main = new JPanel();
             main.setPreferredSize(new Dimension(1300, 800));
             main.setLayout(new FlowLayout());
