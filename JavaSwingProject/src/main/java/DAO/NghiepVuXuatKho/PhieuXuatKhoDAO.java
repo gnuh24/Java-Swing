@@ -1,19 +1,16 @@
 package DAO.NghiepVuXuatKho;
 
 import DAO.DAOInterface;
-import DTO.NghiepVuXuatKho.ChiTietPhieuXuatKhoDTO;
 import DTO.NghiepVuXuatKho.PhieuXuatKhoDTO;
 import Others.JDBCConfigure;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class PhieuXuatKhoDAO implements DAOInterface<PhieuXuatKhoDTO> {
-      
-
       @Override
       public ArrayList<PhieuXuatKhoDTO> getAll(Integer maKhoHang) {
             ArrayList<PhieuXuatKhoDTO> phieuXuatKhoList = new ArrayList<>();
@@ -28,10 +25,8 @@ public class PhieuXuatKhoDAO implements DAOInterface<PhieuXuatKhoDTO> {
                         
                         //? Định dạng Localdatetime
                         String dateString = resultSet.getString("NgayXuatKho");
-                        System.out.println("Ngày đọc dc:" +dateString);
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                        System.out.println("Ngày local:" +formatter.toString());
-                        LocalDateTime parsedDateTime = LocalDateTime.parse(dateString, formatter);
+                        LocalDate parsedDateTime = LocalDate.parse(dateString, formatter);
                         phieuXuatKhoObject.setNgayXuatKho(parsedDateTime);
                         phieuXuatKhoObject.setTongGiaTri(resultSet.getLong("TongGiaTri"));
                         phieuXuatKhoObject.setMaKhoHang(resultSet.getInt("MaKhoHang"));
@@ -50,14 +45,13 @@ public class PhieuXuatKhoDAO implements DAOInterface<PhieuXuatKhoDTO> {
             PhieuXuatKhoDTO phieuXuatKho = new PhieuXuatKhoDTO();
            try {
                  Statement statement = JDBCConfigure.getConnection().createStatement();
-                 ResultSet phieuXuatKhoRow = statement.executeQuery(
-                     "select * from phieuxuatkho where phieuxuatkho.MaPhieu = " + id);
+                 ResultSet phieuXuatKhoRow = statement.executeQuery( "select * from phieuxuatkho where phieuxuatkho.MaPhieu = " + id);
                  while(phieuXuatKhoRow.next()) {
                        phieuXuatKho.setMaPhieu(phieuXuatKhoRow.getInt("MaPhieu"));
                        phieuXuatKho.setMaKhoHang(phieuXuatKhoRow.getInt("MaKhoHang"));
                        String dateString = phieuXuatKhoRow.getString("NgayXuatKho");
                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                       LocalDateTime parsedDateTime = LocalDateTime.parse(dateString, formatter);
+                       LocalDate parsedDateTime = LocalDate.parse(dateString, formatter);
                        phieuXuatKho.setNgayXuatKho(parsedDateTime);
                        phieuXuatKho.setTongGiaTri(phieuXuatKhoRow.getInt("TongGiaTri"));
                  }
