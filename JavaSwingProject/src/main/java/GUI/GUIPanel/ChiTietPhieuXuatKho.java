@@ -37,7 +37,6 @@ public class ChiTietPhieuXuatKho{
       JLabel tong_tien, tong_tien_lb;
       JButton closeCTPXK;
       public ChiTietPhieuXuatKho(int maPhieuXuat) {
-
             header = new JPanel();
             header_lb = new JLabel("CHI TIẾT PHIẾU XUẤT");
             header_lb.setForeground(Color.WHITE);
@@ -127,7 +126,9 @@ public class ChiTietPhieuXuatKho{
             main.setLayout(new FlowLayout());
             main.setPreferredSize(new Dimension(750,430));
             setThongTinMain(maPhieuXuat);
+            System.out.println("Day la ma kho:" +this.ma_kho_hang_lb.getText());
             this.sanPhamBUS= new SanPhamBUS(Integer.valueOf(this.ma_kho_hang_lb.getText()));
+
             frame.add(header);
             frame.add(main);
             frame.setLayout(new FlowLayout());
@@ -142,7 +143,7 @@ public class ChiTietPhieuXuatKho{
       public void setThongTinMain(int maPhieuXuat) {
             try {
                   Statement state = JDBCConfigure.getConnection().createStatement();
-                  ResultSet result = state.executeQuery("SELECT * FROM `phieuxuatkho`, `khohang`, `taikhoan`, `nguoidung` WHERE phieuxuatkho.MaKhoHang = khohang.MaKhoHang and taikhoan.MaTaiKhoan = nguoidung.MaNguoiDung and taikhoan.MaKhoHang = khohang.MaKhoHang and phieuxuatkho.MaPhieu = " + maPhieuXuat);
+                  ResultSet result = state.executeQuery("SELECT * FROM `phieuxuatkho`, `khohang`, `taikhoan` WHERE phieuxuatkho.MaKhoHang = khohang.MaKhoHang  and taikhoan.MaKhoHang = khohang.MaKhoHang and phieuxuatkho.MaPhieu = " + maPhieuXuat);
                   while(result.next()) {
                         ma_phieu_lb.setText(String.valueOf(maPhieuXuat));
                         ma_kho_hang_lb.setText(String.valueOf(result.getInt("MaKhoHang")));
@@ -155,7 +156,7 @@ public class ChiTietPhieuXuatKho{
             } catch(SQLException e) {
                   System.err.println(e.getMessage());
             }
-
+            this.sanPhamBUS= new SanPhamBUS(Integer.valueOf(this.ma_kho_hang_lb.getText()));
             //? Tạo bảng danh sách
             ArrayList<ChiTietPhieuXuatKhoDTO> chiTietPhieuXuatKhoList = chiTietPhieuXuatKhoBUS.getAll(maPhieuXuat);
             for(int i = 0; i < chiTietPhieuXuatKhoList.size(); i++) {
