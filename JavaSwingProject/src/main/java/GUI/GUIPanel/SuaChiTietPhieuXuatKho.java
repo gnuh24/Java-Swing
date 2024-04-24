@@ -20,8 +20,8 @@ import javax.swing.table.*;
 // import java.sql.*;
 
 public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
-      int maKhoHang = 4;
-      SanPhamBUS sanPhamBUS = new SanPhamBUS(this.maKhoHang);
+      private int maKhoHang =0 ; 
+      SanPhamBUS sanPhamBUS;
       PhieuXuatKhoBUS phieuXuatKhoBUS = new PhieuXuatKhoBUS();
       ChiTietPhieuXuatKhoBUS chiTietPhieuXuatKhoBUS = new ChiTietPhieuXuatKhoBUS();
       ArrayList<ChiTietPhieuXuatKhoDTO> listFirst = new ArrayList<>();
@@ -144,7 +144,7 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
                               ds_san_pham = new JScrollPane(table_ds_san_pham);
                               ds_san_pham.setPreferredSize(new Dimension(550, 500));
                               ds_san_pham.setBackground(Color.WHITE);
-                              showDanhSachSanPham(sanPhamBUS.getAll());
+                              
 
                               them_sp = new JPanel();
                               them_sp.setBackground(Color.WHITE);
@@ -281,6 +281,7 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
 
 
                   setCTPXK(maPhieuXuat);
+                  showDanhSachSanPham(sanPhamBUS.getAll());
                   listFirst = getDanhSachChiTietPhieuXuatKho();
                   add(header);
                   add(main);
@@ -473,11 +474,12 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
             int selectedRow = table_ds_xuat_hang.getSelectedRow();
                   if(selectedRow != -1) {
                         String text = JOptionPane.showInputDialog(null,"Nhập số lượng","Sửa số lượng",JOptionPane.PLAIN_MESSAGE);
+                        int soLuongConLai = sanPhamBUS.getById((int)(table_ds_xuat_hang.getValueAt(selectedRow, 1))).getSoLuongConLai();
                         if(text!= null) {
                               if (!text.matches("^\\d+$")) {
                                     //? Check kí tự có hợp lệ hay không
                                     JOptionPane.showMessageDialog(null, "Chỉ được nhập số!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
-                              } else if(Integer.valueOf(text) <= 0) {
+                              } else if(Integer.valueOf(text) <= 0 || Integer.valueOf(text) > soLuongConLai + (int)(table_ds_xuat_hang.getValueAt(selectedRow, 3))) {
                                     //? Check xem số lượng cần thêm có phải số âm hoặc bằng 0 hay không
                                     JOptionPane.showMessageDialog(null, "Số lượng không hợp lệ!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
                               } else {
@@ -509,16 +511,16 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
             PhieuXuatKhoDTO phieuXuatKho = new PhieuXuatKhoDTO();
             phieuXuatKho.setTongGiaTri(tongGiaTri);
             phieuXuatKho.setMaPhieu(Integer.parseInt(ma_phieu_xuat_tf.getText()));
-            String ngayTaoPhieu = ngay_tao_phieu_tf.getText().replace(" ","T");
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+            String ngayTaoPhieu = ngay_tao_phieu_tf.getText();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             
-            // Phân tích chuỗi thành LocalDateTime
-            LocalDateTime localDateTime = LocalDateTime.parse(ngayTaoPhieu, formatter);
-            LocalDateTime localDateTimeNow = LocalDateTime.now();
+            // Phân tích chuỗi thành LocalDate
+            LocalDate localDate = LocalDate.parse(ngayTaoPhieu, formatter);
+            LocalDate localDateNow = LocalDate.now();
 
-            if(localDateTime.isBefore(localDateTimeNow)) {
-                  phieuXuatKho.setNgayXuatKho(localDateTime);
-            } else if(localDateTime.isAfter(localDateTimeNow) || localDateTime.isEqual(localDateTimeNow)){
+            if(localDate.isBefore(localDateNow)) {
+                  phieuXuatKho.setNgayXuatKho(localDate);
+            } else if(localDate.isAfter(localDateNow) || localDate.isEqual(localDateNow)){
                   JOptionPane.showMessageDialog(null, "Thời gian không hợp lệ !","Thông báo", JOptionPane.ERROR_MESSAGE);
                   return;
             }
@@ -533,7 +535,7 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
             }
             //? UPDATE CTPXK
             for (ChiTietPhieuXuatKhoDTO chiTietPhieuXuatKho : getDanhSachChiTietPhieuXuatKho()) {
-                  chiTietPhieuXuatKhoBUS.create(maKhoHang, chiTietPhieuXuatKho);
+                  chiTietPhieuXuatKhoBUS.create(this.maKhoHang, chiTietPhieuXuatKho);
 
                   //? Update số lượng còn lại của sản phẩm
                   SanPhamDTO sanPham = sanPhamBUS.getById(chiTietPhieuXuatKho.getMaSanPham());
@@ -552,6 +554,10 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
       }
       public void setCTPXK(int maPhieuXuat) {
             //? Tạo bảng danh sách
+            PhieuXuatKhoDTO phieuXuatKho = phieuXuatKhoBUS.getById(maPhieuXuat);
+            this.maKhoHang = phieuXuatKho.getMaKhoHang();
+            System.out.println("MÃ KHO HÀNG : " + this.maKhoHang);
+            sanPhamBUS = new SanPhamBUS(this.maKhoHang);
             ArrayList<ChiTietPhieuXuatKhoDTO> chiTietPhieuXuatKhoList = chiTietPhieuXuatKhoBUS.getAll(maPhieuXuat);
             for(int i = 0; i < chiTietPhieuXuatKhoList.size(); i++) {
                   model_ds_xuat_hang.addRow(new Object[]{
