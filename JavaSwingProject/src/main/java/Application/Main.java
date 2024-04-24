@@ -22,7 +22,7 @@ import java.awt.event.MouseEvent;
  */
 public class Main extends JFrame implements ActionListener{
     private JPanel MainContent;
-    private  MenuTaskBar menu;
+    private MenuTaskBar menu;
     public Main(TaiKhoanDTO taiKhoanDTO){
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
@@ -69,14 +69,14 @@ public class Main extends JFrame implements ActionListener{
         
         menu.getBtn_XuatHang().addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e){
-                JPanel xuathang= new XuatHangUI(1);
+                JPanel xuathang= new XuatHangUI(taiKhoanDTO.getMaKhoHang());
                 setPanelMain(xuathang); 
                 hieuUngHover(e);
             }
         });
         menu.getBtn_PhieuXuat().addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e){
-                JPanel phieuxuat= new PhieuXuatUI(1);
+                JPanel phieuxuat= new PhieuXuatUI(taiKhoanDTO.getMaKhoHang());
                 setPanelMain(phieuxuat); 
                 hieuUngHover(e);
             }
