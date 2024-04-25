@@ -38,12 +38,15 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
         this.SPGUI=guiaa;
         this.SanPhamBUS= new SanPhamBUS(guiaa.getMaKhoHang());
         this.LoaiSPBUS= new LoaiSanPhamBUS(guiaa.getMaKhoHang());
+        System.out.println(this.LoaiSPBUS);
         this.init();
     }
     public SanPhamDialog(String title,String type, SanPhamDTO sanPhamDuocChon) {
         this.tieuDe=title;
         this.type=type;
         this.SPDuocChon=sanPhamDuocChon;
+        System.out.println(sanPhamDuocChon);
+        this.LoaiSPBUS= new LoaiSanPhamBUS(sanPhamDuocChon.getMaKhoHang());
         this.init();
 
     }
@@ -170,7 +173,7 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
         Image scaleImage = pic.getImage().getScaledInstance(320, 320,Image.SCALE_SMOOTH);
         this.hinhAnh.setIcon(new ImageIcon(scaleImage));
         this.tenSP.getTxtForm().setText(this.SPDuocChon.getTenSanPham());
-        this.tenLoai.getList().setSelectedIndex(this.SPDuocChon.getMaLoaiSanPham());
+        this.tenLoai.getList().setSelectedIndex(LoaiSPBUS.getIndexByMaLoaiSP(this.SPDuocChon.getMaLoaiSanPham()));
         this.giaSP.getTxtForm().setText(this.SPDuocChon.getGiaSanPham().toString());
         this.xuatXu.getTxtForm().setText(this.SPDuocChon.getXuatXu());
         
