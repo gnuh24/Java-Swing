@@ -48,7 +48,7 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO> {
                 
             }
         } catch (SQLException ex) {
-            System.out.println("Lỗi SQL từ SP DAO");
+            System.out.println("Lỗi SQL getALL từ SPDAO");
         }finally{
             JDBCConfigure.closeConnection();
         }
@@ -108,7 +108,7 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO> {
             }
 
         } catch (SQLException ex) {
-            System.out.println("Lỗi SQL getAll SPDAO: " + ex);
+            System.out.println("Lỗi SQL getByName SPDAO: ");
         }
         finally{
             JDBCConfigure.closeConnection();
@@ -140,7 +140,7 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO> {
                 return true;
 
         } catch (SQLException ex) {
-            System.out.println("Lỗi SQL thêm SPDAO:" + ex);
+            System.out.println("Lỗi SQL create SPDAO:" + ex);
         } finally{
             JDBCConfigure.closeConnection();
         }
@@ -161,7 +161,7 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO> {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            System.out.println("Lỗi SQL update SPDAO: " + e);
+            System.out.println("Lỗi SQL update SPDAO: ");
         } finally {
             JDBCConfigure.closeConnection();
         }
@@ -187,7 +187,7 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO> {
             check=pst.executeUpdate();
             return true;
         } catch (SQLException ex) {
-            System.out.println("Lỗi SQL update SPDAO: " + ex);
+            System.out.println("Lỗi SQL update SPDAO: ");
         }  finally{
             JDBCConfigure.closeConnection();
         }
@@ -197,14 +197,13 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO> {
     public boolean updateWithDelteLoaiSP(LoaiSanPhamDTO loaiSP){
         Connection con = JDBCConfigure.getConnection();
         try {
-            System.out.println("Thông tin loại bên updateWih:" +loaiSP.toString());
             String sql="Update sanpham Set MaLoaiSanPham=1 Where MaLoaiSanPham=?";
             PreparedStatement pst= con.prepareStatement(sql);
             pst.setInt(1, loaiSP.getMaLoaiSanPham());
             check=pst.executeUpdate();
             return true;
         } catch (SQLException ex) {
-            System.out.println("Lỗi SQL từ SP DAO");
+            System.out.println("Lỗi SQL updateWith từ SPDAO");
         }  finally{
             JDBCConfigure.closeConnection();
         }
@@ -223,7 +222,7 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO> {
             return true;
             
         } catch (SQLException ex) {
-            System.out.println("Lỗi SQL từ SP DAO");
+            System.out.println("Lỗi SQL delete từ SPDAO");
         }  finally{
             JDBCConfigure.closeConnection();
         }

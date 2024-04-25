@@ -33,7 +33,7 @@ public class LoaiSanPhamDAO implements DAOInterface<LoaiSanPhamDTO> {
             }
 
         } catch (SQLException ex) {
-            System.out.println(ex);
+            System.out.println("Lỗi SQL getALL từ LoaiSPDAO");
         } finally{
             JDBCConfigure.closeConnection();
         }
@@ -57,7 +57,7 @@ public class LoaiSanPhamDAO implements DAOInterface<LoaiSanPhamDTO> {
                 loaisp= new LoaiSanPhamDTO(maLoaiSP,tenLoaiSP,maKho);
             }
         } catch (SQLException ex) {
-            System.out.println(ex);
+            System.out.println("Lỗi SQL getById từ loaiSPDAO");
         }finally{
             JDBCConfigure.closeConnection();
         }
@@ -82,7 +82,7 @@ public class LoaiSanPhamDAO implements DAOInterface<LoaiSanPhamDTO> {
                 loaisp= new LoaiSanPhamDTO(maLoaiSP,tenLoaiSP,maKho);
             }
         } catch (SQLException ex) {
-            System.out.println(ex);
+            System.out.println("Lỗi SQL getByName từ loaiSPDAO");
         }finally{
             JDBCConfigure.closeConnection();
         }
@@ -109,7 +109,7 @@ public class LoaiSanPhamDAO implements DAOInterface<LoaiSanPhamDTO> {
             }
 
         } catch (SQLException ex) {
-            System.out.println("Lỗi SQL create loại SP");
+            System.out.println("Lỗi SQL create LoaiSPDAO");
         }  finally{
             JDBCConfigure.closeConnection();
         }
@@ -129,7 +129,7 @@ public class LoaiSanPhamDAO implements DAOInterface<LoaiSanPhamDTO> {
 
             return true;
         } catch (SQLException ex) {
-            System.out.println(ex);
+            System.out.println("Lỗi SQL update loaiSPDAO");
         } finally{
             JDBCConfigure.closeConnection();
         }
@@ -140,7 +140,6 @@ public class LoaiSanPhamDAO implements DAOInterface<LoaiSanPhamDTO> {
     public boolean delete(LoaiSanPhamDTO loaiSP) {
         Connection con=JDBCConfigure.getConnection();
         try {
-            System.out.println("Thông tin mã loại:" +loaiSP.toString());
             SanPhamDAO.getInstance().updateWithDelteLoaiSP(loaiSP);
             String sql="DELETE FROM loaisanpham WHERE MaLoaiSanPham=?";
             PreparedStatement pst=con.prepareStatement(sql);
@@ -151,7 +150,7 @@ public class LoaiSanPhamDAO implements DAOInterface<LoaiSanPhamDTO> {
             return true;
 
         } catch (SQLException ex) {
-            System.out.println(ex);
+            System.out.println("Lỗi SQL delete từ LoaiSPDAO");
         } finally{
             JDBCConfigure.closeConnection();
         }
