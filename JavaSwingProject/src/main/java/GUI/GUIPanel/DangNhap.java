@@ -3,11 +3,14 @@ package GUI.GUIPanel;
 import Application.Main;
 import DAO.TaiKhoanDAO;
 import DTO.NguoiDung.TaiKhoanDTO;
+import GUI.GUIThanhPhan.ButtonCustom;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class DangNhap extends JFrame{
 
@@ -15,10 +18,10 @@ public class DangNhap extends JFrame{
     private JTextField userNameField;
     private JLabel passwordLabel;
     private JPasswordField passwordField;
-    private JButton buttonLogin;
+    private ButtonCustom buttonLogin;
     private JLabel labelQuestion;
     private JButton labelRegister;
-
+    private String linkToIMG = "C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHungNew\\JavaSwingProject\\src\\main\\java\\Resources";
     public DangNhap() {
         this.init();
     }
@@ -29,13 +32,13 @@ public class DangNhap extends JFrame{
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         JPanel mainPanel = new JPanel(new GridLayout(1, 2));
 
         JPanel panelLeft = new JPanel();
+        panelLeft.setBackground(Color.white);
 
         JLabel Title = new JLabel("Đăng nhập ");
-        Title.setFont(new Font("Arial", Font.PLAIN, 20));
+        Title.setFont(new Font("Arial", Font.BOLD, 25));
         Title.setBounds(150, 30, 200, 30);
 
         userNameLabel = new JLabel("Tên đăng nhập");
@@ -48,11 +51,11 @@ public class DangNhap extends JFrame{
         passwordField = new JPasswordField(50);
         passwordField.setBounds(50, 190, 300, 30);
 
-        buttonLogin = new JButton("Đăng nhập");
-        buttonLogin.setFont(new Font("Arial", Font.BOLD, 15));
+        buttonLogin = new ButtonCustom("Đăng nhập","","#3eceff");
+        buttonLogin.setFont(new Font("Arial", Font.BOLD, 18));
         buttonLogin.setBounds(50, 270, 300, 50);
-        Color buttonColor = new Color(180, 201, 226);
-        buttonLogin.setBackground(buttonColor);
+        buttonLogin.setForeground(Color.white);
+        buttonLogin.setHorizontalAlignment(SwingConstants.CENTER);
         buttonLogin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         buttonLogin.addActionListener(new ActionListener() {
             @Override
@@ -64,11 +67,29 @@ public class DangNhap extends JFrame{
         labelQuestion = new JLabel("Bạn chưa có tài khoản?");
         labelQuestion.setFont(new Font("Arial", Font.PLAIN, 15));
         labelQuestion.setBounds(50, 400, 300, 30);
+        
         labelRegister = new JButton("Đăng ký");
         labelRegister.setActionCommand("Đăng ký");
+        labelRegister.setBorderPainted(false);
+        labelRegister.setBackground(Color.white);
         labelRegister.setFont(new Font("Arial", Font.PLAIN, 15));
         labelRegister.setBounds(220, 405, 100, 20);
-        labelRegister.setForeground(Color.BLUE);
+        labelRegister.setForeground(Color.decode("#3eceff"));
+        labelRegister.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent mevt){
+                labelRegister.setBackground(Color.decode("#3eceff"));
+                labelRegister.setForeground(Color.white);
+                labelRegister.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent mevt){
+                labelRegister.setBackground(Color.white);
+                labelRegister.setForeground(Color.decode("#3eceff"));
+                labelRegister.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+    });
+        
         labelRegister.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -106,9 +127,10 @@ public class DangNhap extends JFrame{
         mainPanel.add(panelLeft);
 
         JPanel panelRight = new JPanel();
-        ImageIcon icon = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHungNew\\JavaSwingProject\\src\\main\\java\\Resources\\imgLogin.png");
+        panelRight.setBackground(Color.white);
+        ImageIcon icon = new ImageIcon(linkToIMG+"\\imgLogin.png");
         Image img = icon.getImage();
-        Image scaledImg = img.getScaledInstance(300, 300, Image.SCALE_SMOOTH);
+        Image scaledImg = img.getScaledInstance(300, 400, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImg);
         JLabel label = new JLabel(scaledIcon);
         panelRight.add(label);
@@ -127,8 +149,6 @@ public class DangNhap extends JFrame{
         String userField = userNameField.getText();
         String passField = new String(passwordField.getPassword());
         if (userField.equals("") || passField.equals("")) {
-            System.out.println(userField);
-            System.out.println(passField);
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ !", "Cảnh báo !", JOptionPane.WARNING_MESSAGE);
         } else {
             try {

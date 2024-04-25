@@ -178,7 +178,7 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
                 if (e.getClickCount() == 2)
                 {
                     SanPhamDialog spDia=new SanPhamDialog("Chi Tiết Sản Phẩm","ChiTiet",listSP.get(thongTin.getSelectedRow()));
-                    System.out.println(listSP.get(thongTin.getSelectedRow()).getAnhMinhhoa());
+                    //System.out.println(listSP.get(thongTin.getSelectedRow()).getAnhMinhhoa());
                     loadDuLieuTuDatabase(new SanPhamBUS(maKhoHang).getAll());
                     chinhSuaGiaoDienTable();
                 }
@@ -253,8 +253,6 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
         int dem=1;
         for(SanPhamDTO sanPham: listSP){
             try {
-                System.out.println("THông tin");
-                System.out.println(sanPham.toString());
                 int viTriTrongKho=LoaiSPBUS.getIndexByMaLoaiSP(sanPham.getMaLoaiSanPham());
                 String tenLoaiSP=LoaiSPBUS.tenLoaiSanPham()[viTriTrongKho+1];
                 URL img= new URL(CloundinaryServices.getUrlImage(sanPham.getAnhMinhhoa()));

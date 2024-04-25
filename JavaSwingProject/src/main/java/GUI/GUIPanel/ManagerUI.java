@@ -63,11 +63,12 @@ public class ManagerUI extends JPanel{
                         ButtonGroup genderButtonGroup = new ButtonGroup();
                         genderButtonGroup.add(maleCheckbox);
                         genderButtonGroup.add(femaleCheckbox);
-                        
-                        
+                        System.out.println("a"+taiKhoanDTO.getSoDienThoai()+"b");
+                        System.out.println(taiKhoanDTO.getSoDienThoai().length());
                         phoneLabel = new JLabel("Số điện thoại : " +
                         (taiKhoanDTO.getSoDienThoai() != null && !taiKhoanDTO.getSoDienThoai().isEmpty()
-                        ? taiKhoanDTO.getSoDienThoai() : ""));
+                        ? taiKhoanDTO.getSoDienThoai().trim() : ""));
+                        
 			phoneLabel.setBounds(150, 280, 300, 50);
 			phoneField = new JTextField(20);
 			phoneField.setBounds(150, 315, 1050, 30);

@@ -3,11 +3,14 @@ package GUI.GUIPanel;
 
 import BUS.TaiKhoanBUS;
 import DTO.NguoiDung.TaiKhoanDTO;
+import GUI.GUIThanhPhan.ButtonCustom;
 import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.net.URL;
 
 
@@ -17,8 +20,8 @@ public class DangKy extends JFrame {
     private JTextField userNameField;
     private JPasswordField passwordField;
     private JPasswordField confirmPasswordField;
-    private JButton buttonRegister;
-
+    private ButtonCustom buttonRegister;
+    private String linkToIMG = "C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHungNew\\JavaSwingProject\\src\\main\\java\\Resources";
     public DangKy() {
         this.init();
     }
@@ -30,15 +33,15 @@ public class DangKy extends JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        
         JPanel mainPanel = new JPanel(new GridLayout(1, 2));
-
+        mainPanel.setBackground(Color.white);
         
         JPanel panelLeft = new JPanel();
-        
+        panelLeft.setBackground(Color.white);
         
         JLabel title = new JLabel("Đăng ký ");
-        title.setFont(new Font("Arial", Font.PLAIN, 20));
+        title.setFont(new Font("Arial", Font.BOLD, 25));
         title.setBounds(150, 30, 200, 30);
         
         
@@ -60,18 +63,13 @@ public class DangKy extends JFrame {
         confirmPasswordField.setBounds(50, 250, 300, 30);
         
        
-        buttonRegister = new JButton("Đăng ký");
-        buttonRegister.setFont(new Font("Arial", Font.BOLD, 15));
+        buttonRegister = new ButtonCustom("Đăng ký","","#3eceff");
+        buttonRegister.setFont(new Font("Arial", Font.BOLD, 18));
+        buttonRegister.setHorizontalAlignment(SwingConstants.CENTER);
         buttonRegister.setBounds(50, 300, 300, 50);
-        Color buttonColor = new Color(180, 201, 226);
-        buttonRegister.setBackground(buttonColor);
+        buttonRegister.setBackground(Color.decode("#3eceff"));
+        buttonRegister.setForeground(Color.white);
         buttonRegister.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        buttonRegister.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                registerAccount();  
-            }
-        });
         
         userNameField.addActionListener(new ActionListener() {
         @Override
@@ -102,10 +100,26 @@ public class DangKy extends JFrame {
         labelQuestion.setBounds(50, 400, 300, 30);
         JButton labelLogin = new JButton("Đăng nhập");
         labelLogin.setActionCommand("Đăng nhập");
+        labelLogin.setBorderPainted(false);
         labelLogin.setFont(new Font("Arial", Font.PLAIN, 15));
         labelLogin.setBounds(220, 405, 130, 20);
-        labelLogin.setForeground(Color.BLUE);
-        
+        labelLogin.setForeground(Color.white);
+        labelLogin.setBackground(Color.decode("#3eceff"));
+
+        labelLogin.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent mevt){
+                labelLogin.setBackground(Color.decode("#3eceff"));
+                labelLogin.setForeground(Color.white);
+                labelLogin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent mevt){
+                labelLogin.setBackground(Color.white);
+                labelLogin.setForeground(Color.decode("#3eceff"));
+                labelLogin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+    });       
         
         labelLogin.addActionListener(new ActionListener() {
             @Override
@@ -131,9 +145,10 @@ public class DangKy extends JFrame {
 
         
         JPanel panelRight = new JPanel();
-        ImageIcon icon = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHungNew\\JavaSwingProject\\src\\main\\java\\Resources\\imgLogin.png");
+        panelRight.setBackground(Color.white);
+        ImageIcon icon = new ImageIcon(linkToIMG+"\\imgLogin.png");
         Image img = icon.getImage();
-        Image scaledImg = img.getScaledInstance(300, 300, Image.SCALE_SMOOTH);
+        Image scaledImg = img.getScaledInstance(300, 400, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImg);
         JLabel label = new JLabel(scaledIcon);
         panelRight.add(label);

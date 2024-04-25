@@ -23,7 +23,8 @@ public class MenuTaskBar extends JPanel{
         JPanel thongTinUser= new JPanel(new BorderLayout(0,0));
         thongTinUser.setBackground(Color.WHITE);
         thongTinUser.setPreferredSize(new Dimension(288,120));
-        JLabel hoTen= new JLabel("Tên Đăng Nhập");
+        String ten=taiKhoanDTO.getHoVaTen();
+        JLabel hoTen= new JLabel(ten!=null&&!ten.isEmpty()?ten:taiKhoanDTO.getTenDangNhap());
         hoTen.setVerticalAlignment(JLabel.CENTER);
         hoTen.setHorizontalAlignment(JLabel.CENTER);
         hoTen.setIcon(new ImageIcon("C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHungNew\\JavaSwingProject\\src\\main\\java\\Resources\\iconUser64.png"));
