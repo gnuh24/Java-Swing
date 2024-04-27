@@ -31,6 +31,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -309,19 +310,32 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
             cell=row.createCell(6,CellType.NUMERIC);
             cell.setCellValue(listSP.get(i).getGiaSanPham());
        }
-       File f= new File("danhSachSanPham.xlsx");
+    JFileChooser chonFile = new JFileChooser();
+    chonFile.setDialogTitle("Chọn thư mục tạo file");
+
+   
+   // Ktra chọn file
+   int chonThuMuc = chonFile.showSaveDialog(null);
+   if (chonThuMuc == JFileChooser.APPROVE_OPTION) {
+       File chonTenFile = chonFile.getSelectedFile();
+       String filePath = chonTenFile.getAbsolutePath();
+       
+       if (!filePath.toLowerCase().endsWith(".xlsx"))
+           filePath += ".xlsx";
+
        try {
-           FileOutputStream file= new FileOutputStream(f);
+           FileOutputStream file= new FileOutputStream(filePath);
            workbook.write(file);
            file.close();
-           
-       }catch (FileNotFoundException e){
+           JOptionPane.showMessageDialog(this, "Tạo file thành công");
+       } catch (FileNotFoundException e) {
            System.out.println("Lỗi ko tìm dc file");
        } catch (IOException ex) {
            System.out.println("Lỗi IO");
-        }
-        JOptionPane.showMessageDialog(this, "Tạo file thành công");
-    }
+       }
+   }
+       
+}
     
     
 @Override
