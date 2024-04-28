@@ -60,7 +60,7 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO> {
         SanPhamDTO sanPham=null;
         try {
             Connection con= JDBCConfigure.getConnection();
-            String sql="Select * From sanpham Where MaSanPham=? and TrangThai=true";
+            String sql="Select * From sanpham Where MaSanPham=?";
             PreparedStatement pst= con.prepareStatement(sql);
             pst.setString(1, String.valueOf(id));
             ResultSet kq=pst.executeQuery();    
