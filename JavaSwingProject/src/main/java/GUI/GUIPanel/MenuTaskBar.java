@@ -14,7 +14,8 @@ public class MenuTaskBar extends JPanel{
     private ButtonCustom btn_NhapHang, btn_PhieuNhap;
     private ButtonCustom btn_XuatHang, btn_PhieuXuat;
     private ButtonCustom btn_TaiKhoan,btn_ThongKe, btn_DoiThongTin, btn_DangXuat;
-
+    private JLabel hoTen;
+    
     public MenuTaskBar(TaiKhoanDTO taiKhoanDTO) {
         this.setPreferredSize(new Dimension(288,800));
         this.setBackground(Color.WHITE);
@@ -24,7 +25,7 @@ public class MenuTaskBar extends JPanel{
         thongTinUser.setBackground(Color.WHITE);
         thongTinUser.setPreferredSize(new Dimension(288,120));
         String ten=taiKhoanDTO.getHoVaTen();
-        JLabel hoTen= new JLabel(ten!=null&&!ten.isEmpty()?ten:taiKhoanDTO.getTenDangNhap());
+        hoTen=new JLabel(ten!=null&&!ten.isEmpty()?ten:taiKhoanDTO.getTenDangNhap());
         hoTen.setVerticalAlignment(JLabel.CENTER);
         hoTen.setHorizontalAlignment(JLabel.CENTER);
         hoTen.setIcon(new ImageIcon("C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHungNew\\JavaSwingProject\\src\\main\\java\\Resources\\iconUser64.png"));
