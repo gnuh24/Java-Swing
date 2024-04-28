@@ -20,13 +20,12 @@ CREATE TABLE IF NOT EXISTS `TaiKhoan` (
 	`Quyen`					ENUM("User", "Admin"),
     `HoTen` 				NVARCHAR(255) 			,
     `NgaySinh`				DATE 					,
-    `GioiTinh`  			ENUM('Male', 'Female')  ,
+    `GioiTinh`  			VARCHAR(10)  ,
     `SoDienThoai` 			NVARCHAR(20) 			,
     `Email` 				NVARCHAR(255) 			,
 	`DiaChi` 				NVARCHAR(255) 			,
     `MaKhoHang`				INT UNSIGNED			
 );
-
 /* _____________________________________________________________________ CÁC BẢNG LIÊN QUAN TỚI SẢN PHẨM _________________________________________________________*/
 
 
