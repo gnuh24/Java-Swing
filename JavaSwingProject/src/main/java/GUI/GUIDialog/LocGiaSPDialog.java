@@ -92,6 +92,7 @@ public class LocGiaSPDialog extends  JDialog implements ActionListener{
                        JOptionPane.showMessageDialog(this, "Giá tiền giới hạn phải lớn hơn giá tiền bắt đầu !!","Thông báo",JOptionPane.ERROR_MESSAGE);
                     
                    else {
+                       
                        ArrayList<SanPhamDTO> kq=SanPhamBUS.locTheoKhoangGia(5, num1, num2);
                         SPGUI.loadDuLieuTuDatabase(kq);
                         SPGUI.chinhSuaGiaoDienTable();

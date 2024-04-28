@@ -45,7 +45,8 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
         this.tieuDe=title;
         this.type=type;
         this.SPDuocChon=sanPhamDuocChon;
-        System.out.println(sanPhamDuocChon);
+        this.SanPhamBUS= new SanPhamBUS(sanPhamDuocChon.getMaKhoHang());
+        this.LoaiSPBUS= new LoaiSanPhamBUS(sanPhamDuocChon.getMaKhoHang());
         this.LoaiSPBUS= new LoaiSanPhamBUS(sanPhamDuocChon.getMaKhoHang());
         this.init();
 

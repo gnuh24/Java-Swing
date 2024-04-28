@@ -37,6 +37,7 @@ public class LoaiSPDialog extends  JDialog implements ActionListener{
         this.type=type;
         this.loaiSPDuocChon=loaisp;
         this.loaiSPGUI=LoaiSPGUI;
+        this.LoaiSPBUS= new LoaiSanPhamBUS(maKho);
         init();
     }
     
@@ -108,7 +109,7 @@ public class LoaiSPDialog extends  JDialog implements ActionListener{
                 }
                 else 
                 {
-                    JOptionPane.showMessageDialog(this, "Tên loại sản phẩm này đã tồn tại torng hệ thống","Thông báo",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Tên loại sản phẩm này đã tồn tại trong hệ thống","Thông báo",JOptionPane.ERROR_MESSAGE);
                 }
                  
         }
