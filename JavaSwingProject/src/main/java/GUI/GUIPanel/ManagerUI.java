@@ -16,8 +16,10 @@ public class ManagerUI extends JPanel{
     private JPasswordField oldPasswordField, newPasswordField;
     private JCheckBox changePasswordCheckbox, femaleCheckbox, maleCheckbox;
     private JButton submitButton;
-
-		public ManagerUI(TaiKhoanDTO taiKhoanDTO) {
+    private MenuTaskBar menu;
+    
+		public ManagerUI(TaiKhoanDTO taiKhoanDTO,MenuTaskBar menu) {
+                        this.menu=menu;
 			Border compoundBorder = BorderFactory.createCompoundBorder(
 			BorderFactory.createTitledBorder("Thông tin cá nhân"),
 			BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -212,6 +214,7 @@ public class ManagerUI extends JPanel{
         
         // Kiểm tra kết quả của phương thức update
         if (result > 0) {
+            
             JOptionPane.showMessageDialog(null, "Cập nhật thông tin thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             loadData(taiKhoanDTO);
         } else {
@@ -251,8 +254,9 @@ public void loadData(TaiKhoanDTO taiKhoanDTO) {
       
         TaiKhoanBUS taiKhoanBUS = new TaiKhoanBUS();
         TaiKhoanDTO taiKhoanFromDB = taiKhoanBUS.getUserByUserName(taiKhoanDTO.getTenDangNhap());
-
         if (taiKhoanFromDB != null) {
+            String ten=taiKhoanDTO.getHoVaTen();
+            this.menu.getHoTen().setText(ten!=null&&!ten.isEmpty()?ten:taiKhoanDTO.getTenDangNhap());
            Hello.setText("Xin Chào " +(taiKhoanDTO.getHoVaTen() != null && !taiKhoanDTO.getHoVaTen().isEmpty() 
                         ? taiKhoanDTO.getHoVaTen() : taiKhoanDTO.getTenDangNhap()) + " !");
             nameLabel.setText("Họ và tên : " + (taiKhoanFromDB.getHoVaTen() != null && !taiKhoanFromDB.getHoVaTen().isEmpty() ? taiKhoanFromDB.getHoVaTen() : ""));
