@@ -35,4 +35,13 @@ public class TaiKhoanBUS {
     public ArrayList<TaiKhoanDTO> searchUserName(String userName) {
         return taiKhoanDAO.searchUserName(userName);
     }
+    
+    public ArrayList<TaiKhoanDTO> searchByUserNameAndStatus(String userName, int status) {
+        return taiKhoanDAO.searchByUserNameAndStatus(userName, status);
+    }
+    
+    public ArrayList<TaiKhoanDTO> getAccountsByStatus(int status) {
+        return taiKhoanDAO.getAccountsByStatus(status);
+    }
+
 }
