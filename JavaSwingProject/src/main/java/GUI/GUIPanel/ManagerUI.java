@@ -2,6 +2,8 @@ package GUI.GUIPanel;
 
 import BUS.TaiKhoanBUS;
 import DTO.NguoiDung.TaiKhoanDTO;
+import Others.UltilServices;
+import static Others.UltilServices.convertToDate;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.Border;
@@ -39,11 +41,16 @@ public class ManagerUI extends JPanel{
 			nameLabel.setBounds(150, 85, 200, 50);
 			nameField = new JTextField(20);
 			nameField.setBounds(150, 120, 1050, 30);
-			
+			System.out.println("Truoc khi doi:" + taiKhoanDTO.getNgaySinh());
                         
+                        String abc= UltilServices.convertToDate(taiKhoanDTO.getNgaySinh());
+                        System.out.println("Sau khi doi:"+UltilServices.convertToDate(taiKhoanDTO.getNgaySinh()));
                         birthdayLabel = new JLabel("Ngày Sinh : " +
                         (taiKhoanDTO.getNgaySinh() != null && !taiKhoanDTO.getNgaySinh().isEmpty()
-                        ? taiKhoanDTO.getNgaySinh() : ""));
+                        ?abc : ""));
+			birthdayLabel.setBounds(150, 145, 200, 50);
+			birthdayField = new JTextField(20);
+			birthdayField.setBounds(150, 180, 1050, 30);
 			birthdayLabel.setBounds(150, 145, 200, 50);
 			birthdayField = new JTextField(20);
 			birthdayField.setBounds(150, 180, 1050, 30);
@@ -158,15 +165,14 @@ public class ManagerUI extends JPanel{
             JOptionPane.showMessageDialog(null, "Họ và tên phải có ít nhất 7 ký tự.", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+     
         if (!newBirthday.isEmpty()) {
             // Kiểm tra định dạng ngày sinh
             try {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                sdf.setLenient(false);
-                sdf.parse(newBirthday);
+                newBirthday=UltilServices.convertFromDate(newBirthday);
+                System.out.println("sau khi doi:" +newBirthday);
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Ngày sinh không hợp lệ. Vui lòng nhập lại theo định dạng yyyy-MM-dd.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Ngày sinh không hợp lệ. Vui lòng nhập lại theo định dạng dd-MM-yyyy.", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
@@ -194,12 +200,15 @@ public class ManagerUI extends JPanel{
             if (!oldPassword.equals(currentPassword)) {
                 JOptionPane.showMessageDialog(null, "Mật khẩu cũ không đúng.", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
-            }
-            if (newPassword.isEmpty()) {
+            }else if (newPassword.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Vui lòng nhập mật khẩu mới.", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
+            }else if (newPassword.length() < 8) {
+                JOptionPane.showMessageDialog(null, "Mật khẩu mới phải có ít nhất 8 ký tự.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }else {
+                taiKhoanDTO.setMatKhau(newPassword);
             }
-            // Lưu trữ newPassword
         }
 
         // Cập nhật thông tin
@@ -260,7 +269,10 @@ public void loadData(TaiKhoanDTO taiKhoanDTO) {
            Hello.setText("Xin Chào " +(taiKhoanDTO.getHoVaTen() != null && !taiKhoanDTO.getHoVaTen().isEmpty() 
                         ? taiKhoanDTO.getHoVaTen() : taiKhoanDTO.getTenDangNhap()) + " !");
             nameLabel.setText("Họ và tên : " + (taiKhoanFromDB.getHoVaTen() != null && !taiKhoanFromDB.getHoVaTen().isEmpty() ? taiKhoanFromDB.getHoVaTen() : ""));
-            birthdayLabel.setText("Ngày Sinh : " + (taiKhoanFromDB.getNgaySinh() != null && !taiKhoanFromDB.getNgaySinh().isEmpty() ? taiKhoanFromDB.getNgaySinh() : ""));
+            System.out.println("Taikhoanfromdb" + taiKhoanFromDB.getNgaySinh());
+
+            String ngayMoi=UltilServices.convertToDate(taiKhoanFromDB.getNgaySinh());
+            birthdayLabel.setText("Ngày Sinh : " + (taiKhoanFromDB.getNgaySinh() != null && !taiKhoanFromDB.getNgaySinh().isEmpty() ?  ngayMoi : ""));
             roleLabel.setText("Vai trò: " + taiKhoanFromDB.getQuyen());
             
             String genderText = "Giới tính: " + (taiKhoanFromDB.getGioiTinh() != null && !taiKhoanFromDB.getGioiTinh().isEmpty() ? taiKhoanFromDB.getGioiTinh() : "");
@@ -277,7 +289,7 @@ public void loadData(TaiKhoanDTO taiKhoanDTO) {
                         (taiKhoanDTO.getDiaChi()!= null && !taiKhoanDTO.getDiaChi().isEmpty()
                         ? taiKhoanDTO.getDiaChi() : ""));
             nameField.setText(taiKhoanFromDB.getHoVaTen());
-            birthdayField.setText(taiKhoanFromDB.getNgaySinh());
+            birthdayField.setText(ngayMoi);
             phoneField.setText(taiKhoanFromDB.getSoDienThoai());
             emailField.setText(taiKhoanFromDB.getEmail());
             addressField.setText(taiKhoanFromDB.getDiaChi());
