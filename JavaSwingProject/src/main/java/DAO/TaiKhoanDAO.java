@@ -52,7 +52,42 @@ public class TaiKhoanDAO implements DAOAccount<TaiKhoanDTO>{
         }
         return ketQua;
     }
-
+  
+public ArrayList<TaiKhoanDTO> getAccountsByStatus(int status) {
+    ArrayList<TaiKhoanDTO> ketQua = new ArrayList<TaiKhoanDTO>();
+    try {
+        Connection con = JDBCConfigure.getConnection();
+        String sql = "SELECT * FROM TaiKhoan WHERE Quyen = 'User' and TrangThai = ?";
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setInt(1, status);
+        ResultSet rs = pst.executeQuery();
+        
+        while (rs.next()) {
+            Integer maTaiKhoan = rs.getInt("MaTaiKhoan");
+            String tenDangNhap = rs.getString("TenDangNhap");
+            String matKhau = rs.getString("MatKhau");
+            Integer trangThai = rs.getInt("TrangThai");
+            String ngayTao = rs.getString("NgayTao");
+            String quyen = rs.getString("Quyen");
+            String hoVaTen = rs.getString("HoTen");
+            String ngaySinh = rs.getString("NgaySinh");
+            String gioiTinh = rs.getString("GioiTinh");
+            String soDienThoai = rs.getString("SoDienThoai");
+            String email = rs.getString("Email");
+            String diaChi = rs.getString("DiaChi");
+            Integer maKhoHang = rs.getInt("MaKhoHang");
+            
+            TaiKhoanDTO acc = new TaiKhoanDTO(maTaiKhoan, tenDangNhap, matKhau, trangThai, ngayTao, quyen, hoVaTen, ngaySinh, gioiTinh, soDienThoai, email, diaChi, maKhoHang);
+            ketQua.add(acc);
+        }
+        rs.close();
+        pst.close();
+        con.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return ketQua;
+}
 
     @Override
 public int insert(TaiKhoanDTO taiKhoanDTO) {
@@ -124,6 +159,7 @@ public int insert(TaiKhoanDTO taiKhoanDTO) {
     @Override
     public int update(TaiKhoanDTO taiKhoanDTO) {
         int ketQua = 0;
+        System.out.println(taiKhoanDTO.getTenDangNhap());
         try {
             Connection con = JDBCConfigure.getConnection();
             String sql = "UPDATE taikhoan SET TenDangNhap = ?, MatKhau = ?,"
@@ -133,7 +169,7 @@ public int insert(TaiKhoanDTO taiKhoanDTO) {
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, taiKhoanDTO.getTenDangNhap() != null ? taiKhoanDTO.getTenDangNhap() : "");
             pst.setString(2, taiKhoanDTO.getMatKhau() != null ? taiKhoanDTO.getMatKhau() : "");
-            pst.setInt(3, 1);
+            pst.setInt(3, taiKhoanDTO.getTrangThai());
             pst.setString(4, taiKhoanDTO.getQuyen() != null ? taiKhoanDTO.getQuyen() : "User");
             pst.setString(5, taiKhoanDTO.getHoVaTen() != null ? taiKhoanDTO.getHoVaTen() : "");
             pst.setDate(6, taiKhoanDTO.getNgaySinh() != null ? Date.valueOf(taiKhoanDTO.getNgaySinh()) : null);
@@ -271,6 +307,64 @@ public ArrayList<TaiKhoanDTO> searchUserName(String userName) {
     }
     return accounts;
 }
+
+public ArrayList<TaiKhoanDTO> searchByUserNameAndStatus(String userName, int status) {
+    ArrayList<TaiKhoanDTO> accounts = new ArrayList<>();
+    Connection con = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    try {
+        con = JDBCConfigure.getConnection();
+        String sql = "SELECT * FROM TaiKhoan WHERE TenDangNhap LIKE ? AND TrangThai = ?";
+        pst = con.prepareStatement(sql);
+        pst.setString(1, "%" + userName + "%");
+        pst.setInt(2, status);
+        rs = pst.executeQuery();
+        
+        while (rs.next()) {
+            // Lấy thông tin từ ResultSet
+            Integer maTaiKhoan = rs.getInt("MaTaiKhoan");
+            String tenDangNhap = rs.getString("TenDangNhap");
+            String matKhau = rs.getString("MatKhau");
+            Integer trangThai = rs.getInt("TrangThai");
+            String ngayTao = rs.getString("NgayTao");
+            String quyen = rs.getString("Quyen");
+            String hoVaTen = rs.getString("HoTen");
+            String ngaySinh = rs.getString("NgaySinh");
+            String gioiTinh = rs.getString("GioiTinh");
+            String soDienThoai = rs.getString("SoDienThoai");
+            String email = rs.getString("Email");
+            String diaChi = rs.getString("DiaChi");
+            Integer maKhoHang = rs.getInt("MaKhoHang");
+            
+            // Tạo đối tượng TaiKhoanDTO từ thông tin lấy được
+            TaiKhoanDTO account = new TaiKhoanDTO(
+                maTaiKhoan, tenDangNhap, matKhau, trangThai, ngayTao, quyen, hoVaTen,
+                ngaySinh, gioiTinh, soDienThoai, email, diaChi, maKhoHang
+            );
+            // Thêm đối tượng vào danh sách kết quả
+            accounts.add(account);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    return accounts;
+}
+
 
 
 public int updatePassword(String userName, String password) {
