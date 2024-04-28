@@ -104,7 +104,7 @@ public class Main extends JFrame implements ActionListener{
 //                JPanel doithongtin= new JPanel();
 //                doithongtin.setBackground(Color.yellow);  
 //                setPanelMain(doithongtin);
-                  ManagerUI managerUI = new ManagerUI(taiKhoanDTO);
+                  ManagerUI managerUI = new ManagerUI(taiKhoanDTO,menu);
                   setPanelMain(managerUI);
                   hieuUngHover(e);
             }
@@ -132,7 +132,7 @@ public class Main extends JFrame implements ActionListener{
         this.setVisible(true);
     }
 
-
+ 
     public void setPanelMain(JPanel pn){
         MainContent.removeAll();
         MainContent.add(pn).setVisible(true);
