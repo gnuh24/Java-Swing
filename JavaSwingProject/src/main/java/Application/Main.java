@@ -57,19 +57,17 @@ public class Main extends JFrame implements ActionListener{
                 hieuUngHover(e);
             }
         });
-
-        menu.getBtn_NhaCungCap().addMouseListener(new MouseAdapter() {
+        
+        menu.getBtn_NhapHang().addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e){
-                NhaCungCapGUI nhaCungCapGUI = new  NhaCungCapGUI (taiKhoanDTO.getMaKhoHang());
-                setPanelMain(nhaCungCapGUI);
+                JPanel nhaphang= new NhapHangUI(taiKhoanDTO.getMaKhoHang());
+                setPanelMain(nhaphang); 
                 hieuUngHover(e);
             }
         });
-        
         menu.getBtn_PhieuNhap().addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e){
-                JPanel phieunhap= new JPanel();
-                phieunhap.setBackground(Color.cyan);  
+                JPanel phieunhap= new PhieuNhapUI(taiKhoanDTO.getMaKhoHang());
                 setPanelMain(phieunhap); 
                 hieuUngHover(e);
             }
