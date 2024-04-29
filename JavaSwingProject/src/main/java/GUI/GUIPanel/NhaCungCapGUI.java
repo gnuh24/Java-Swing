@@ -28,7 +28,7 @@ public class NhaCungCapGUI extends JPanel implements ActionListener {
     private DefaultTableModel model;
     private JTable thongTin;
 
-    private int maKhoHang = 0;
+    private int maKhoHang;
     private NhaCungCapBUS nhaCungCapBUS;
     private List<NhaCungCapDTO> nhaCungCapDTOArrayList;
     private ButtonCustom themNhaCungCap, suaNhaCungCap, xoaNhaCungCap;

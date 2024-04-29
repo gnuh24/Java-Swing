@@ -5,17 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="003b6990-b30a-4767-b559-0655e60cd464" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIDialog/NhaCungCapDialog.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIThanhPhan/NhaCungCapForm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Application/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Application/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/BUS/NghiepVuNhapKho/NhaCungCapBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BUS/NghiepVuNhapKho/NhaCungCapBUS.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/DAO/NghiepVuNhapKho/NhaCungCapDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/NghiepVuNhapKho/NhaCungCapDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/MenuTaskBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/MenuTaskBar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/NhaCungCapGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/NhaCungCapGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Others/CloundinaryServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Others/CloundinaryServices.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Others/JDBCConfigure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Others/JDBCConfigure.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Others/mysql.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Others/mysql.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SQL/insertData_JavaSwing.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../SQL/insertData_JavaSwing.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -141,7 +133,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/DAO/NghiepVuNhapKho/NhaCungCapDAO.java</url>
-          <line>126</line>
+          <line>161</line>
           <properties class="DAO.NghiepVuNhapKho.NhaCungCapDAO" method="isTenNCCExists">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />

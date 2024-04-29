@@ -21,7 +21,14 @@ public class NhaCungCapBUS {
 
     public List<NhaCungCapDTO> getAllNhaCungCap(Integer maKhoHang){
 
-        return nhaCungCapDAO.getAll(maKhoHang);
+        if (maKhoHang == 1){
+            return nhaCungCapDAO.getAll(maKhoHang);
+
+        }else{
+            List<NhaCungCapDTO> nhaCungCapDTOList = nhaCungCapDAO.getAll(maKhoHang);
+            nhaCungCapDTOList.add(0, nhaCungCapDAO.getNhaCungCapMacDinh());
+            return  nhaCungCapDTOList;
+        }
     }
 
 
@@ -44,6 +51,10 @@ public class NhaCungCapBUS {
             throw new TheValueAlreadyExists("Tên nhà cung cấp `" + nhaCungCapDTO.getTenNCC() + "` đã tồn tại !!");
 
         }
+    }
+
+    public NhaCungCapDTO getNhaCungCapMacDinh(){
+        return nhaCungCapDAO.getNhaCungCapMacDinh();
     }
 
     public boolean updateNhaCungCap(NhaCungCapDTO nhaCungCapDTO) throws TheValueAlreadyExists {

@@ -45,6 +45,41 @@ public class NhaCungCapDAO implements DAOInterface<NhaCungCapDTO> {
         return danhSachNhaCungCap;
     }
 
+    public NhaCungCapDTO getNhaCungCapMacDinh(){
+
+        try{
+            Connection connection = JDBCConfigure.getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM `NhaCungCap` WHERE `MaNCC` = 1");
+
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()){
+                Integer maNCC = resultSet.getInt("MaNCC");
+                String tenNCC = resultSet.getString("TenNCC");
+                String email = resultSet.getString("Email");
+                String sdt = resultSet.getString("SoDienThoai");
+
+                NhaCungCapDTO nhaCungCapDTO = new NhaCungCapDTO();
+                nhaCungCapDTO.setMaNCC(maNCC);
+                nhaCungCapDTO.setTenNCC(tenNCC);
+                nhaCungCapDTO.setEmail(email);
+                nhaCungCapDTO.setSoDienThoai(sdt);
+                return nhaCungCapDTO;
+
+            }
+        }
+        catch (SQLException e){
+            System.err.println("Lỗi truy vấn !!");
+        }
+        finally {
+            JDBCConfigure.closeConnection();
+        }
+        return null;
+
+    }
+
+
 
     public List<NhaCungCapDTO> search(Integer maKhoHang, String searchValue) {
         List<NhaCungCapDTO> danhSachNhaCungCap = new ArrayList<>();
