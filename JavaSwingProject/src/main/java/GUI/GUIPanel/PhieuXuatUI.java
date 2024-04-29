@@ -31,6 +31,7 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
             JPanel timKiemPanel;
                   JLabel tim_kiem;
                   JComboBox tim_kiem_cb;
+            JButton refeshButton;
       JPanel bot;
             DefaultTableModel model_ds_xuat_hang;
             JTable table_ds_xuat_hang;
@@ -67,9 +68,15 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
                   timKiemPanel.setBorder(new CompoundBorder(new TitledBorder("Tìm Kiếm"), new EmptyBorder(4, 4, 4, 4)));
                   timKiemPanel.add(tim_kiem);
                   timKiemPanel.add(tim_kiem_cb);
+
+                  refeshButton = new JButton("Tải lại");
+                  refeshButton.setIcon(new ImageIcon("C:\\Users\\dvmv2\\OneDrive\\Documents\\Nam_2\\Fixx\\Java-Swing-main-29-2\\Java-Swing-main\\JavaSwingProject\\src\\main\\java\\Resources\\refesh.png"));
+                  refeshButton.setPreferredSize(new Dimension(110,40));
+                  refeshButton.addActionListener(this);
             top.setPreferredSize(new Dimension(1200,100));
             top.add(chucNangPanel);
             top.add(timKiemPanel);
+            top.add(refeshButton);
 
             bot = new JPanel();
                   
@@ -147,7 +154,9 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
                   suaChiTietPhieuXuatHang();
             } else if(e.getSource() == chi_tiet_btn) {
                   xemChiTietPhieuXuatHang();
-            } 
+            } else if(e.getSource() == refeshButton) {
+                  showDanhSachPhieuXuatHang(phieuXuatKhoBUS.getAll(maKhoHang));
+            }
       }
       public void showDanhSachPhieuXuatHang(ArrayList<PhieuXuatKhoDTO> dsPhieuXuatKho) {
            //? Xóa bảng danh sách sản phẩm xuất hàng
