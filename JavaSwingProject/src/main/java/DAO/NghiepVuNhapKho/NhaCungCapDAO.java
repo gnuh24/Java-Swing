@@ -15,9 +15,10 @@ public class NhaCungCapDAO implements DAOInterface<NhaCungCapDTO> {
         List<NhaCungCapDTO> danhSachNhaCungCap = new ArrayList<>();
 
         try{
-            JDBCConfigure.getConnection();
-            Statement statement = JDBCConfigure.getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM `NhaCungCap`");
+            Connection connection = JDBCConfigure.getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM `NhaCungCap` WHERE `MaKhoHang` = ?");
+            statement.setInt(1, maKhoHang);
+            ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()){
                 Integer maNCC = resultSet.getInt("MaNCC");
@@ -32,7 +33,43 @@ public class NhaCungCapDAO implements DAOInterface<NhaCungCapDTO> {
                 nhaCungCapDTO.setSoDienThoai(sdt);
 
                 danhSachNhaCungCap.add(nhaCungCapDTO);
+            }
+        }
+        catch (SQLException e){
+            System.err.println("Lỗi truy vấn !!");
+        }
+        finally {
+            JDBCConfigure.closeConnection();
+        }
 
+        return danhSachNhaCungCap;
+    }
+
+
+    public List<NhaCungCapDTO> search(Integer maKhoHang, String searchValue) {
+        List<NhaCungCapDTO> danhSachNhaCungCap = new ArrayList<>();
+
+        try{
+            Connection connection = JDBCConfigure.getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM `NhaCungCap` WHERE `MaKhoHang` = ? AND `TenNCC` LIKE ?");
+            statement.setInt(1, maKhoHang);
+            statement.setString(2, "%" + searchValue + "%");
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()){
+                Integer maNCC = resultSet.getInt("MaNCC");
+                String tenNCC = resultSet.getString("TenNCC");
+                String email = resultSet.getString("Email");
+                String sdt = resultSet.getString("SoDienThoai");
+
+                NhaCungCapDTO nhaCungCapDTO = new NhaCungCapDTO();
+                nhaCungCapDTO.setMaNCC(maNCC);
+                nhaCungCapDTO.setTenNCC(tenNCC);
+                nhaCungCapDTO.setEmail(email);
+                nhaCungCapDTO.setSoDienThoai(sdt);
+
+                danhSachNhaCungCap.add(nhaCungCapDTO);
             }
         }
         catch (SQLException e){

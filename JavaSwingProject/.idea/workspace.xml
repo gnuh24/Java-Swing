@@ -5,14 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="003b6990-b30a-4767-b559-0655e60cd464" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/BUS/NghiepVuNhapKho/ChiTietPhieuNhapKhoBUS.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIDialog/NhaCungCapDialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIThanhPhan/NhaCungCapForm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/BUS/NghiepVuNhapKho/PhieuNhapKhoBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BUS/NghiepVuNhapKho/PhieuNhapKhoBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/BUS/ThongTinSanPham/SanPhamBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BUS/ThongTinSanPham/SanPhamBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/DAOInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/DAOInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/NghiepVuNhapKho/PhieuNhapKhoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/NghiepVuNhapKho/PhieuNhapKhoDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/ThongTinSanPham/SanPhamDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/ThongTinSanPham/SanPhamDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Application/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Application/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BUS/NghiepVuNhapKho/NhaCungCapBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BUS/NghiepVuNhapKho/NhaCungCapBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/NghiepVuNhapKho/NhaCungCapDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/NghiepVuNhapKho/NhaCungCapDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/MenuTaskBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/MenuTaskBar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/NhaCungCapGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/NhaCungCapGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Others/CloundinaryServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Others/CloundinaryServices.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Others/JDBCConfigure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Others/JDBCConfigure.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Others/mysql.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Others/mysql.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SQL/insertData_JavaSwing.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../SQL/insertData_JavaSwing.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,7 +55,20 @@
       <recent name="C:\Users\Tuan Hung\Desktop\Learning\Exercise\SGU Java Swing - Ms Loan\Java-Swing\JavaSwingProject\src\main\java\org\example\Resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.PhieuNhapKhoBUS">
+  <component name="RunManager" selected="Application.Application.Main">
+    <configuration name="Application.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Application.Main" />
+      <module name="JavaHung" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Application.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ChiTietPhieuNhapKhoDAO" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="DAO.NghiepVuNhapKho.ChiTietPhieuNhapKhoDAO" />
       <module name="JavaSwingProject" />
@@ -99,26 +115,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PhieuNhapKhoDAO" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="DAO.NghiepVuNhapKho.PhieuNhapKhoDAO" />
-      <module name="JavaSwingProject" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="DAO.NghiepVuNhapKho.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Application.Main" />
         <item itemvalue="Application.PhieuNhapKhoBUS" />
         <item itemvalue="Application.NhaCungCapBUS" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.ChiTietPhieuNhapKhoDAO" />
-        <item itemvalue="Application.PhieuNhapKhoDAO" />
       </list>
     </recent_temporary>
   </component>
@@ -138,7 +141,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/DAO/NghiepVuNhapKho/NhaCungCapDAO.java</url>
-          <line>89</line>
+          <line>126</line>
           <properties class="DAO.NghiepVuNhapKho.NhaCungCapDAO" method="isTenNCCExists">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />

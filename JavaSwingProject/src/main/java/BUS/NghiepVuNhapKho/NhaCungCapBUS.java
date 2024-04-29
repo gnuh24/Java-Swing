@@ -20,12 +20,20 @@ public class NhaCungCapBUS {
     }
 
     public List<NhaCungCapDTO> getAllNhaCungCap(Integer maKhoHang){
+
         return nhaCungCapDAO.getAll(maKhoHang);
     }
 
+
     public NhaCungCapDTO getNhaCungCapById(Integer maNCC){
+
         return nhaCungCapDAO.getById(maNCC);
     }
+
+    public List<NhaCungCapDTO> searchNhaCungCapByTenNCC(Integer maKhoHang, String tenNCC){
+        return nhaCungCapDAO.search(maKhoHang, tenNCC);
+    }
+
 
     public boolean createNhaCungCap(NhaCungCapDTO nhaCungCapDTO) throws TheValueAlreadyExists {
 
