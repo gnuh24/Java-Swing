@@ -18,7 +18,7 @@ VALUES
 
 /* Dữ liệu mẫu cho bảng LoaiSanPham */
 INSERT INTO `LoaiSanPham` (`TenLoaiSanPham`,				 `MaKhoHang`) VALUES
-							('Các nhà cung cấp khác', 			1),
+							('Các loại sản phẩm khác', 			1),
 
 
 							('Lego', 1),
@@ -43,7 +43,12 @@ INSERT INTO `SanPham` 	(`TenSanPham`, 																															`XuatXu`, 	
 INSERT INTO `NhaCungCap` (`TenNCC`, 						`SoDienThoai`, `Email`,					 `MaKhoHang`) VALUES
 							('Các nhà cung cấp khác', 		'0123456789', 'defaultNCC@gmail.com', 			1),
 							('Công ty TNHH Thị Trường Sỉ', 	'0123456789', 'tts@gmail.com', 					1),
-							('Ngôi Nhà Đồ Chơi', 			'0123456789', 'ngoNhaDoChoi@gmail.com', 		1);
+							('Ngôi Nhà Đồ Chơi', 			'0123456789', 'ngoNhaDoChoi@gmail.com', 		1),
+                            ('Speedwagon', 					'0123456789', 'speedwagon@gmail.com', 			2),
+							('Phong Vũ Computer', 			'0123456789', 'phongVu@gmail.com', 				2),
+                            ('THug88Techno', 				'0123456789', 'thug88@gmail.com', 				1);
+
+
 
 /* Dữ liệu mẫu cho bảng PhieuNhapKho */
 INSERT INTO `PhieuNhapKho` (`NgayNhapKho`, 					`TongGiaTri`, 	`MaNCC`,  `MaKhoHang`) VALUES
