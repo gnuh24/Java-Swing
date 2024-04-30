@@ -189,6 +189,8 @@ public class GiaoDienLoaiSanPham extends JPanel implements ActionListener{
                 LoaiSPDialog themLoaiSP=new LoaiSPDialog(this,"Thêm Mới", "Add");
                 break;
             case "Sửa Loại Hiện Tại":
+                LoaiSanPhamBUS a= new LoaiSanPhamBUS(this.maKhoHang);
+                listLoaiSP=a.getAll();
                 if( this.thongTin.getSelectedRow()!=-1){
                     if ( listLoaiSP.get(thongTin.getSelectedRow()).getMaLoaiSanPham()==1){
                         JOptionPane.showMessageDialog(this, "Sản phẩm mặc định không thể chỉnh sửa !!", "Thông báo", JOptionPane.ERROR_MESSAGE);           
@@ -202,6 +204,8 @@ public class GiaoDienLoaiSanPham extends JPanel implements ActionListener{
                 chinhSuaGiaoDienTable();
                 break;
             case "Xóa Loại Sản Phẩm":
+                LoaiSanPhamBUS b= new LoaiSanPhamBUS(this.maKhoHang);
+                listLoaiSP=b.getAll();
                     int luaChon=JOptionPane.showConfirmDialog(this,"Chắc chắn xóa sản phẩm ?","Xóa Sản Phẩm",JOptionPane.YES_NO_OPTION);
                 if( luaChon==0)
                 {
