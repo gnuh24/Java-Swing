@@ -81,4 +81,14 @@ INSERT INTO `CTPXK` (`DonGia`, `SoLuong`,	 `ThanhTien`,  		`MaPhieu`, `MaSanPham
                     (739000, 		190, 		14041000, 				2, 		4),
 					(238000, 		10	, 		2380000, 				2, 		6);
 
+SELECT sp.TenSanPham as TenSanPham, SUM(ct.SoLuong) as SoLuong, SUM(ct.ThanhTien) as TongTien FROM PhieuNhapKho pnk 
+JOIN CTPNK ct ON pnk.MaPhieu = ct.MaPhieu
+JOIN SanPham sp ON sp.MaSanPham = ct.MaSanPham
+WHERE pnk.MaKhoHang = 1
+AND  pnk.TrangThai = 'DaDuyet'
+AND  pnk.NgayNhapKho BETWEEN COALESCE(NULL, '2010-01-01') AND COALESCE(NULL, CURRENT_DATE())
+GROUP BY TenSanPham
+ORDER BY TongTien desc
+
+
 
