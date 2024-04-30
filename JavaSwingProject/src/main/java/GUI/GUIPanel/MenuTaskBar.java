@@ -10,7 +10,7 @@ import lombok.*;
 
 public class MenuTaskBar extends JPanel{
     private String linkToIMG = "C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHungNew\\JavaSwingProject\\src\\main\\java\\Resources";
-    private ButtonCustom btn_TrangChu, btn_sanPham, btn_loaiSP;
+    private ButtonCustom btn_sanPham, btn_loaiSP;
     private ButtonCustom btn_NhaCungCap, btn_NhapHang, btn_PhieuNhap;
     private ButtonCustom btn_XuatHang, btn_PhieuXuat;
     private ButtonCustom btn_TaiKhoan,btn_ThongKe, btn_DoiThongTin, btn_DangXuat;
@@ -28,7 +28,7 @@ public class MenuTaskBar extends JPanel{
         hoTen=new JLabel(ten!=null&&!ten.isEmpty()?ten:taiKhoanDTO.getTenDangNhap());
         hoTen.setVerticalAlignment(JLabel.CENTER);
         hoTen.setHorizontalAlignment(JLabel.CENTER);
-        hoTen.setIcon(new ImageIcon("C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHungNew\\JavaSwingProject\\src\\main\\java\\Resources\\iconUser64.png"));
+        hoTen.setIcon(new ImageIcon(linkToIMG+"\\iconUser64.png"));
         JPanel bar1= new JPanel();
         bar1.setBackground(Color.BLACK);//new Color(204,214,219));
         bar1.setPreferredSize(new Dimension(1,0));
@@ -49,10 +49,9 @@ public class MenuTaskBar extends JPanel{
         // Chuyển thành giao diện sản phẩm
         JPanel dieuHuong= new JPanel(new GridLayout(11,1,0,0));// giữa, khoảng cách chiều ngang là 0, khoảng cách dọc là 5
         dieuHuong.setBackground(Color.WHITE);
-        btn_TrangChu= new ButtonCustom("Trang chủ",linkToIMG + "\\trangchu.png");
         btn_sanPham= new ButtonCustom("Sản phẩm",linkToIMG + "\\sanpham.png");
-        btn_loaiSP= new ButtonCustom("Loại Sản phẩm",linkToIMG + "\\sanpham.png");
-        btn_NhaCungCap = new ButtonCustom("Nhà cung cấp",linkToIMG + "\\sanpham.png");
+        btn_loaiSP= new ButtonCustom("Loại Sản phẩm",linkToIMG + "\\loaisanpham.png");
+        btn_NhaCungCap = new ButtonCustom("Nhà cung cấp",linkToIMG + "\\nhacungcap.png");
 
         btn_NhapHang = new ButtonCustom("Nhập hàng",linkToIMG + "\\nhaphang.png");
         btn_PhieuNhap= new ButtonCustom("Phiếu nhập",linkToIMG + "\\phieunhap.png");
@@ -62,7 +61,7 @@ public class MenuTaskBar extends JPanel{
         btn_ThongKe= new ButtonCustom("Thống kê",linkToIMG + "\\thongke.png");
         btn_DoiThongTin= new ButtonCustom("Đổi thông tin",linkToIMG + "\\thongtin.png");
         btn_DangXuat= new ButtonCustom("Đăng xuất",linkToIMG + "\\dangxuat.png");
-        dieuHuong.add(btn_TrangChu); dieuHuong.add(btn_sanPham); dieuHuong.add(btn_loaiSP);
+        dieuHuong.add(btn_sanPham); dieuHuong.add(btn_loaiSP);
         dieuHuong.add(btn_NhaCungCap); dieuHuong.add(btn_NhapHang); dieuHuong.add(btn_PhieuNhap);
         dieuHuong.add(btn_XuatHang); dieuHuong.add(btn_PhieuXuat); 
         if(taiKhoanDTO.getQuyen().equals("Admin")){
