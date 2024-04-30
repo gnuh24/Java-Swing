@@ -20,7 +20,7 @@ public class LoaiSanPhamDAO implements DAOInterface<LoaiSanPhamDTO> {
         try {
 
             Connection con= JDBCConfigure.getConnection();
-            String sql="Select * From loaisanpham Where MaKhoHang=? or loaisanpham.TenLoaiSanPham='Các nhà cung cấp khác'";
+            String sql="Select * From loaisanpham Where MaKhoHang=? or loaisanpham.TenLoaiSanPham='Các loại sản phẩm khác'";
             PreparedStatement pst= con.prepareStatement(sql);
             pst.setInt(1, maKhoHang);
             ResultSet kq=pst.executeQuery();
