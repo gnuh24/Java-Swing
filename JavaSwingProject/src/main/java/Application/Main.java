@@ -32,16 +32,7 @@ public class Main extends JFrame implements ActionListener{
         
         // MenuTaskbar
          menu = new MenuTaskBar(taiKhoanDTO);
-        // add sự kiện
-        menu.getBtn_TrangChu().addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent e){
-                JPanel trangchu= new JPanel();
-                trangchu.setBackground(Color.white);  
-                setPanelMain(trangchu); 
-                hieuUngHover(e);
-            }
-        });
-        
+        // add sự kiện     
         menu.getBtn_sanPham().addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e){
                 GiaoDienSanPham sanPham= new GiaoDienSanPham(taiKhoanDTO.getMaKhoHang());
@@ -54,6 +45,14 @@ public class Main extends JFrame implements ActionListener{
             public void mousePressed(MouseEvent e){
                 GiaoDienLoaiSanPham loaiSP= new GiaoDienLoaiSanPham(taiKhoanDTO.getMaKhoHang());
                 setPanelMain(loaiSP);
+                hieuUngHover(e);
+            }
+        });
+        
+        menu.getBtn_NhaCungCap().addMouseListener(new MouseAdapter(){
+            public void mousePressed(MouseEvent e){
+                NhaCungCapGUI nhaCC= new NhaCungCapGUI(taiKhoanDTO.getMaKhoHang());
+                setPanelMain(nhaCC);
                 hieuUngHover(e);
             }
         });
@@ -131,9 +130,9 @@ public class Main extends JFrame implements ActionListener{
         MainContent.setBackground(new Color(255,255,255));
         MainContent.setLayout(new BorderLayout(0, 0));
         this.add(MainContent, BorderLayout.CENTER);
-        JPanel trangchu= new JPanel();
-        trangchu.setBackground(Color.orange);
-        this.setPanelMain(trangchu);
+        ManagerUI managerUI = new ManagerUI(taiKhoanDTO,menu);
+        this.setPanelMain(managerUI);
+        
         this.setResizable(false);
         this.setVisible(true);
     }
