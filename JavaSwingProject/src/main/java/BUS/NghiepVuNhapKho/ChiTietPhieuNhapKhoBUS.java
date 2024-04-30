@@ -3,7 +3,9 @@ package BUS.NghiepVuNhapKho;
 
 import DAO.NghiepVuNhapKho.ChiTietPhieuNhapKhoDAO;
 import DTO.NghiepVuNhapKho.ChiTietPhieuNhapKhoDTO;
+import DTO.NghiepVuNhapKho.PhieuNhapKhoDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChiTietPhieuNhapKhoBUS {
@@ -14,8 +16,8 @@ public class ChiTietPhieuNhapKhoBUS {
         this.chiTietPhieuNhapKhoDAO = new ChiTietPhieuNhapKhoDAO();
     }
 
-    public List<ChiTietPhieuNhapKhoDTO> getChiTietPhieuNhapKhoByMaPhieu(Integer maPhieu){
-        return chiTietPhieuNhapKhoDAO.getAll(maPhieu);
+    public ArrayList<ChiTietPhieuNhapKhoDTO> getChiTietPhieuNhapKhoByMaPhieu(Integer maPhieu){
+        return (ArrayList<ChiTietPhieuNhapKhoDTO>) chiTietPhieuNhapKhoDAO.getAll(maPhieu);
     }
 
     public boolean createChiTietPhieuNhapKho(ChiTietPhieuNhapKhoDTO dto){

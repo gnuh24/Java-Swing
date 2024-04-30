@@ -1,9 +1,9 @@
 package GUI.GUIPanel;
 
 import BUS.NghiepVuNhapKho.ChiTietPhieuNhapKhoBUS;
+import BUS.NghiepVuNhapKho.NhaCungCapBUS;
 import BUS.NghiepVuNhapKho.PhieuNhapKhoBUS;
 import DTO.NghiepVuNhapKho.PhieuNhapKhoDTO;
-import DTO.NghiepVuXuatKho.PhieuXuatKhoDTO;
 
 import java.time.LocalDate;
 
@@ -20,6 +20,9 @@ import javax.swing.table.DefaultTableModel;
 public class PhieuNhapUI extends JPanel implements ActionListener{
       int maKhoHang = 0;
       PhieuNhapKhoBUS phieuNhapKhoBUS = new PhieuNhapKhoBUS();
+
+      NhaCungCapBUS nhaCungCapBUS = new NhaCungCapBUS();
+
       ChiTietPhieuNhapKhoBUS chiTietPhieuNhapKhoBUS = new ChiTietPhieuNhapKhoBUS();
       JPanel top;
             JPanel chucNangPanel;
@@ -32,9 +35,9 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
                   JComboBox tim_kiem_cb;
             JButton refeshButton;
       JPanel bot;
-            DefaultTableModel model_ds_xuat_hang;
-            JTable table_ds_xuat_hang;
-            JScrollPane ds_xuat_hang;
+            DefaultTableModel modelDSPhieuNhapKho;
+            JTable tableDSPhieuNhapKho;
+            JScrollPane dsPhieuNhapKho;
       public PhieuNhapUI(int maKhoHang) {
             this.maKhoHang = maKhoHang;
             top = new JPanel();
@@ -79,9 +82,9 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
 
             bot = new JPanel();
                   
-                  String columns_ds_xuat_hang[] = {"Mã phiếu xuất", "Ngày xuất kho","Tổng giá trị"};
+                  String columns_ds_xuat_hang[] = {"Mã phiếu xuất", "Ngày xuất kho","Nhà cung cấp" ,"Tổng giá trị", };
                   String data_ds_xuat_hang[][] = {};
-                  model_ds_xuat_hang = new DefaultTableModel(data_ds_xuat_hang, columns_ds_xuat_hang){
+                  modelDSPhieuNhapKho = new DefaultTableModel(data_ds_xuat_hang, columns_ds_xuat_hang){
                         @Override
                         public Class<?> getColumnClass(int columnIndex) {
                               // Đặt kiểu dữ liệu cho từng cột
@@ -96,31 +99,35 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
                               }
                         }
                     };
-                  table_ds_xuat_hang = new JTable(model_ds_xuat_hang);
-                  table_ds_xuat_hang.getColumnModel().getColumn(0).setPreferredWidth(100);
-                  table_ds_xuat_hang.getColumnModel().getColumn(1).setPreferredWidth(200);
-                  table_ds_xuat_hang.getColumnModel().getColumn(2).setPreferredWidth(200);
-                  //? Set vị trí cho nội dung (căn giữa cho nội dung)
+                  tableDSPhieuNhapKho = new JTable(modelDSPhieuNhapKho);
+                  tableDSPhieuNhapKho.getColumnModel().getColumn(0).setPreferredWidth(100);
+                  tableDSPhieuNhapKho.getColumnModel().getColumn(1).setPreferredWidth(100);
+                  tableDSPhieuNhapKho.getColumnModel().getColumn(2).setPreferredWidth(200);
+                  tableDSPhieuNhapKho.getColumnModel().getColumn(3).setPreferredWidth(200);
+
+            //? Set vị trí cho nội dung (căn giữa cho nội dung)
                   DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
                   centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-                  table_ds_xuat_hang.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-                  table_ds_xuat_hang.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-                  table_ds_xuat_hang.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
-                  table_ds_xuat_hang.setRowHeight(40);
+                  tableDSPhieuNhapKho.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+                  tableDSPhieuNhapKho.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+                  tableDSPhieuNhapKho.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+                  tableDSPhieuNhapKho.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+
+                  tableDSPhieuNhapKho.setRowHeight(40);
                   // showDanhSachPhieuXuatHang(phieuXuatKhoBUS.getAll(maKhoHang));
-                  ds_xuat_hang = new JScrollPane(table_ds_xuat_hang);
-                  ds_xuat_hang.setPreferredSize(new Dimension(900, 600));
-                  ds_xuat_hang.setBackground(Color.WHITE);
+                  dsPhieuNhapKho = new JScrollPane(tableDSPhieuNhapKho);
+                  dsPhieuNhapKho.setPreferredSize(new Dimension(900, 600));
+                  dsPhieuNhapKho.setBackground(Color.WHITE);
 
             bot.setPreferredSize(new Dimension(1200,700));
-            bot.add(ds_xuat_hang);
+            bot.add(dsPhieuNhapKho);
 
             add(top);
             add(bot);
             setPreferredSize(new Dimension(1300,800));
             setLayout(new FlowLayout());
             setVisible(true);
-            // showDanhSachPhieuXuatHang(phieuXuatKhoBUS.getAll(maKhoHang));
+            showDanhSachPhieuNhapHang((ArrayList<PhieuNhapKhoDTO>) phieuNhapKhoBUS.getAllPhieuNhapKho(maKhoHang));
       }
       public JButton customButtonOption(JButton button, String linkIMG) {
             BoxLayout boxlayout = new BoxLayout(button, BoxLayout.Y_AXIS);
@@ -148,7 +155,36 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
       @Override
       public void actionPerformed(ActionEvent e) {
             if(e.getSource() == refeshButton) {
-                  //Reset ds
+                  showDanhSachPhieuNhapHang((ArrayList<PhieuNhapKhoDTO>) phieuNhapKhoBUS.getAllPhieuNhapKho(maKhoHang));
+            } else if(e.getSource() == chi_tiet_btn) {
+                  xemChiTietPhieuNhapHang();
+            }
+      }
+
+      public void showDanhSachPhieuNhapHang(ArrayList<PhieuNhapKhoDTO> phieuNhapKhoDTOS) {
+            //? Xóa bảng danh sách sản phẩm xuất hàng
+            for (int i = modelDSPhieuNhapKho.getRowCount() - 1; i >= 0; i--) {
+                  modelDSPhieuNhapKho.removeRow(i);
+            }
+            for (PhieuNhapKhoDTO phieuNhapKhoDTO : phieuNhapKhoDTOS) {
+                  modelDSPhieuNhapKho.addRow(new Object[]{
+                      phieuNhapKhoDTO.getMaPhieu(),
+                      String.valueOf(phieuNhapKhoDTO.getNgayNhapKho()).replace("T"," "),
+                      nhaCungCapBUS.getNhaCungCapById(phieuNhapKhoDTO.getMaNCC()).getTenNCC(),
+                      toCurrency(phieuNhapKhoDTO.getTongGiaTri())
+                  });
+            }
+      }
+
+      public void xemChiTietPhieuNhapHang() {
+            int selectedRow = tableDSPhieuNhapKho.getSelectedRow();
+            //? kiểm tra xem có dòng nào đang được chọn không
+            if(selectedRow != -1) {
+                  int maPhieuXuat = (Integer) tableDSPhieuNhapKho.getValueAt(selectedRow, 0);
+                  new ChiTietPhieuNhapKho(maPhieuXuat);
+            } else {
+                  System.out.println("1b");
+                  JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 phiếu nhập hàng!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
             }
       }
 }

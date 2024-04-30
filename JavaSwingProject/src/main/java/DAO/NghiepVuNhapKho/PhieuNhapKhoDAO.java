@@ -17,9 +17,11 @@ public class PhieuNhapKhoDAO implements DAOInterface<PhieuNhapKhoDTO> {
         List<PhieuNhapKhoDTO> danhSachPhieuNhapKho = new ArrayList<>();
 
         try {
-            JDBCConfigure.getConnection();
-            Statement statement = JDBCConfigure.getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM `PhieuNhapKho`");
+            Connection connection = JDBCConfigure.getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM `PhieuNhapKho` WHERE `MaKhoHang` = ?");
+            statement.setInt(1, maKhoHang); // Thiết lập giá trị cho tham số trong câu truy vấn
+
+            ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 Integer maPhieu = resultSet.getInt("MaPhieu");
@@ -46,6 +48,7 @@ public class PhieuNhapKhoDAO implements DAOInterface<PhieuNhapKhoDTO> {
 
         return danhSachPhieuNhapKho;
     }
+
 
     @Override
     public PhieuNhapKhoDTO getById(Integer id) {

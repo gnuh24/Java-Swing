@@ -26,12 +26,14 @@ public class ChiTietPhieuNhapKhoDAO implements DAOInterface<ChiTietPhieuNhapKhoD
             while (resultSet.next()) {
                 Integer maPhieu     = resultSet.getInt("MaPhieu");
                 Integer maSanPham   = resultSet.getInt("MaSanPham");
+                Integer donGia     = resultSet.getInt("DonGiaNhap");
                 Integer soLuong     = resultSet.getInt("SoLuong");
                 Long thanhTien      = resultSet.getLong("ThanhTien");
 
                 ChiTietPhieuNhapKhoDTO chiTietPhieuNhapKhoDTO = new ChiTietPhieuNhapKhoDTO();
                 chiTietPhieuNhapKhoDTO.setMaPhieu(maPhieu);
                 chiTietPhieuNhapKhoDTO.setMaSanPham(maSanPham);
+                chiTietPhieuNhapKhoDTO.setDonGia(donGia);
                 chiTietPhieuNhapKhoDTO.setSoLuong(soLuong);
                 chiTietPhieuNhapKhoDTO.setThanhTien(thanhTien);
 
