@@ -11,7 +11,7 @@ INSERT INTO `KhoHang` (`TenKhoHang`) VALUES
 INSERT INTO `TaiKhoan` (`TenDangNhap`,		 	`MatKhau`, `TrangThai`, `Quyen`, `MaKhoHang`,   `HoTen`, 				`NgaySinh`,		 	`GioiTinh`, `SoDienThoai`, `Email`, 					`DiaChi`) 
 VALUES 
 						('THug24', 				'123456',	true,		'Admin',	1		, 'Ngô Tuấn Hưng', 			'1990-01-01', 		'Male', '	0123456789', 'thug24@gmail.com', 			'DKP1221'),
-						('An1808', 				'123456', 	true, 		'User',		2		,'Diệp Thụy An', 			'1995-05-05', 		'Male', '	0123456789', 'an1808@example.com', 			'DCT1221'),
+						('ctpnkAn1808', 				'123456', 	true, 		'User',		2		,'Diệp Thụy An', 			'1995-05-05', 		'Male', '	0123456789', 'an1808@example.com', 			'DCT1221'),
 						('YangHoHocMon', 		'123456', 	true, 		'User',		3		,'Nguyễn Thanh Điền', 		'1998-08-08', 		'Male', '	0123456789', 'yangHoHocHon@example.com', 	'DKP1222'),
 						('MinhViDepTrai04', 	'123456', 	true, 		'User',		4		,'Dương Văn Minh Vi', 		'1998-08-08', 		'Male', '	0123456789', 'minhViDepTrai04@example.com', 'DCT1222');
 
@@ -51,10 +51,10 @@ INSERT INTO `NhaCungCap` (`TenNCC`, 						`SoDienThoai`, `Email`,					 `MaKhoHan
 
 
 /* Dữ liệu mẫu cho bảng PhieuNhapKho */
-INSERT INTO `PhieuNhapKho` (`NgayNhapKho`, 					`TongGiaTri`, 	`MaNCC`,  `MaKhoHang`) VALUES
-							('2024-01-15 08:00:00', 		2840700000, 	2, 			 1),
-							('2024-01-16 09:00:00', 		165600000, 		2, 			 1),
-							('2024-01-17 10:00:00', 		7140000, 		3, 			 2);
+INSERT INTO `PhieuNhapKho` (`NgayNhapKho`, 					`TongGiaTri`, 	`MaNCC`,  `MaKhoHang`, `TrangThai`) VALUES
+							('2024-01-15 08:00:00', 		2840700000, 	2, 			 1,			"DaDuyet"),
+							('2024-01-16 09:00:00', 		165600000, 		2, 			 1,			"DaDuyet"),
+							('2024-01-17 10:00:00', 		7140000, 		3, 			 2,			"DaDuyet");
 
 /* Dữ liệu mẫu cho bảng CTPNK */
 INSERT INTO `CTPNK` (`DonGiaNhap`, `SoLuong`, 	`ThanhTien`, 	`MaPhieu`, 		`MaSanPham`) VALUES
@@ -68,9 +68,9 @@ INSERT INTO `CTPNK` (`DonGiaNhap`, `SoLuong`, 	`ThanhTien`, 	`MaPhieu`, 		`MaSan
 					(238000, 		30, 		7140000, 			3, 				6);
 
 /* Dữ liệu mẫu cho bảng PhieuXuatKho */
-INSERT INTO `PhieuXuatKho` (`NgayXuatKho`, 				`TongGiaTri`, 	 	`MaKhoHang`) VALUES
-							('2024-02-15 08:00:00', 		2787810000, 			1),
-							('2024-02-16 09:00:00', 		750000, 		 		1);
+INSERT INTO `PhieuXuatKho` (`NgayXuatKho`, 				`TongGiaTri`, 	 	`MaKhoHang`, `TrangThai`) VALUES
+							('2024-02-15 08:00:00', 		2787810000, 			1,			"DaDuyet"),
+							('2024-02-16 09:00:00', 		750000, 		 		1,			"DaDuyet");
 
 /* Dữ liệu mẫu cho bảng CTPXK */
 INSERT INTO `CTPXK` (`DonGia`, `SoLuong`,	 `ThanhTien`,  		`MaPhieu`, `MaSanPham`) VALUES
@@ -80,3 +80,5 @@ INSERT INTO `CTPXK` (`DonGia`, `SoLuong`,	 `ThanhTien`,  		`MaPhieu`, `MaSanPham
                     
                     (739000, 		190, 		14041000, 				2, 		4),
 					(238000, 		10	, 		2380000, 				2, 		6);
+
+

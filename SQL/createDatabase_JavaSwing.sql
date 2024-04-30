@@ -76,6 +76,7 @@ CREATE TABLE IF NOT EXISTS  `PhieuNhapKho` (
     `TongGiaTri` 		BIGINT UNSIGNED 			NOT NULL,
     `MaNCC`				INT UNSIGNED			NOT NULL,
 	`MaKhoHang` 		INT UNSIGNED 			NOT NULL,
+    `TrangThai`			ENUM("ChoDuyet", "DaDuyet", "Huy") DEFAULT "ChoDuyet",
 
     FOREIGN KEY (`MaNCC`) 		REFERENCES `NhaCungCap`(`MaNCC`),
 	FOREIGN KEY (`MaKhoHang`) REFERENCES `KhoHang`(`MaKhoHang`)
@@ -102,6 +103,7 @@ CREATE TABLE IF NOT EXISTS `PhieuXuatKho`(
     `NgayXuatKho` 				DATE 					NOT NULL,
     `TongGiaTri` 				BIGINT UNSIGNED 		NOT NULL,
 	`MaKhoHang` 				INT UNSIGNED 			NOT NULL,
+    `TrangThai`					ENUM("ChoDuyet", "DaDuyet", "Huy") DEFAULT "ChoDuyet",
 
 	FOREIGN KEY (`MaKhoHang`) REFERENCES `KhoHang`(`MaKhoHang`)
 
