@@ -241,6 +241,10 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
             return  numberFormat.format(a);
       }
     public void loadDuLieuTuDatabase(ArrayList<SanPhamDTO> listSP){
+        
+//        for (int i = model.getRowCount() - 1; i >= 0; i--) {
+//                  model.removeRow(i);
+//            }        
         DefaultTableModel dtm= new DefaultTableModel(){
             public Class getColumnClass(int column)
             {
@@ -362,20 +366,24 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
             loadDuLieuTuDatabase(listSP);
             chinhSuaGiaoDienTable();
         }
-        else {
-            switch (lenh) {
-            case "comboBoxChanged":
-                if (locSP.getSelectedItem().toString().equals("Tất cả"))
-                    listSP=SPBUS.getAll();
-                else 
-                    listSP=SPBUS.search(locSP.getSelectedItem().toString());
-                if( locGia.getSelectedItem().toString().equals("Giá tăng dần"))
-                    listSP=SPBUS.locTheoGiaTangGiam("Tăng");
-                else if (locGia.getSelectedItem().toString().equals("Giá giảm dần"))
-                    listSP=SPBUS.locTheoGiaTangGiam("Giảm");
-                loadDuLieuTuDatabase(listSP);
-                chinhSuaGiaoDienTable();
-                break;
+        else if( ae.getSource()== locSP){
+            if (locSP.getSelectedItem().toString().equals("Tất cả"))
+                    listSP=SPBUS.getAll();   
+            else 
+                listSP=SPBUS.searchVoiLoaiSP(locSP.getSelectedItem().toString());
+            loadDuLieuTuDatabase(listSP);
+            chinhSuaGiaoDienTable(); 
+        }
+        
+        else if (ae.getSource()==locGia){
+            if(locGia.getSelectedItem().toString().equals("Giá tăng dần"))
+                listSP=SPBUS.locTheoGiaTangGiam(listSP,"Tăng");
+            else 
+                listSP=SPBUS.locTheoGiaTangGiam(listSP,"Giảm");
+            loadDuLieuTuDatabase(listSP);
+            chinhSuaGiaoDienTable();
+        }
+        switch (lenh) {
             case "Thêm Sản Phẩm":
                 ab=new SanPhamDialog(this,"Thêm SP mới","Add");
                 listSP=SPBUS.getAll();
@@ -401,12 +409,6 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
                 LocGiaSPDialog locKhoangGia= new LocGiaSPDialog(this);
                 break;
                 
-        }
-        } 
-
-        
+            }
+        }    
     }
-
-
-
-}
