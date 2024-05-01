@@ -30,6 +30,7 @@ public class PhieuNhapKhoBUS {
     }
 
     public List<PhieuNhapKhoDTO> getAllPhieuNhapKho(Integer maKhoHang){
+        this.maKhoHang=maKhoHang;
         return phieuNhapKhoDAO.getAll(maKhoHang);
     }
 
@@ -71,6 +72,36 @@ public class PhieuNhapKhoBUS {
 
     public boolean updatePhieuNhapKhoVeNCCMacDinh(Integer maNCC){
         return phieuNhapKhoDAO.updatePhieuNhapKhoByMaNhaCungCap(maNCC);
+    }
+    
+//"tất cả","dưới 5,000,000 VNĐ", "5,000,000 VNĐ - 10,000,000 VNĐ", "10,000,000 VNĐ - 20,000,000 VNĐ","20,000,000 VNĐ - 40,000,000 VNĐ", "lớn hơn 40,000,000 VNĐ"    
+    public ArrayList<PhieuNhapKhoDTO> locTheoKhoangGia(String txt){
+        ArrayList<PhieuNhapKhoDTO> danhSach=new ArrayList<>();
+        for(PhieuNhapKhoDTO PhieuNhap: phieuNhapKhoDAO.getAll(maKhoHang)){
+            if (txt.equals("tất cả"))
+                danhSach.add(PhieuNhap);
+            else if ( txt.equals("dưới 5,000,000 VNĐ") && PhieuNhap.getTongGiaTri() <5000000)
+                danhSach.add(PhieuNhap);
+            else if ( txt.equals("5,000,000 VNĐ - 10,000,000 VNĐ") && PhieuNhap.getTongGiaTri() >=5000000 && PhieuNhap.getTongGiaTri()<10000000)
+                danhSach.add(PhieuNhap);
+            else if ( txt.equals("10,000,000 VNĐ - 20,000,000 VNĐ") && PhieuNhap.getTongGiaTri() >=10000000 && PhieuNhap.getTongGiaTri()<20000000)
+                danhSach.add(PhieuNhap);
+            else if ( txt.equals("20,000,000 VNĐ - 40,000,000 VNĐ") && PhieuNhap.getTongGiaTri() >=20000000 && PhieuNhap.getTongGiaTri()<40000000)
+                danhSach.add(PhieuNhap);
+            else if ( txt.equals("lớn hơn 40,000,000 VNĐ") && PhieuNhap.getTongGiaTri() >=40000000)
+                danhSach.add(PhieuNhap);
+        }
+        return danhSach;
+    }
+    public ArrayList<PhieuNhapKhoDTO> locTheoTrangThai(String txt){
+        ArrayList<PhieuNhapKhoDTO> danhSach=new ArrayList<>();
+        for(PhieuNhapKhoDTO PhieuNhap: phieuNhapKhoDAO.getAll(maKhoHang)){
+            if (txt.equals("Đã Duyệt") && PhieuNhap.getTrangThai().equals("DaDuyet"))
+                danhSach.add(PhieuNhap);
+            else if ( txt.equals("Chờ Duyệt") && PhieuNhap.getTrangThai().equals("ChoDuyet"))
+                danhSach.add(PhieuNhap);
+        }
+        return danhSach;
     }
 
 
