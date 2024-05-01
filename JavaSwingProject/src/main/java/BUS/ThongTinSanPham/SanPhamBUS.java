@@ -96,10 +96,19 @@ public class SanPhamBUS {
         }
         return kq;
     }
-    public ArrayList<SanPhamDTO> locTheoGiaTangGiam(String txt){
+    
+    public ArrayList<SanPhamDTO> searchVoiLoaiSP(String txt){
+        ArrayList<SanPhamDTO> kq= new ArrayList<>();
+        for(SanPhamDTO sp: this.danhSachSanPham){
+            if(loaiSPBUS.tenLoaiSanPham()[sp.getMaLoaiSanPham()].equals(txt))
+                kq.add(sp);
+        }    
+        return kq;
+    }
+    public ArrayList<SanPhamDTO> locTheoGiaTangGiam(ArrayList<SanPhamDTO> listSP, String txt){
         if (txt.equals("Tăng"))
         {
-            Collections.sort(this.danhSachSanPham, new Comparator<SanPhamDTO>() {
+            Collections.sort(listSP, new Comparator<SanPhamDTO>() {
                 @Override
                 public int compare(SanPhamDTO sp1, SanPhamDTO sp2) {
                     return Double.compare(sp1.getGiaSanPham(), sp2.getGiaSanPham());
@@ -107,14 +116,14 @@ public class SanPhamBUS {
             });
         }
         else {
-                Collections.sort(this.danhSachSanPham, new Comparator<SanPhamDTO>() {
+                Collections.sort(listSP, new Comparator<SanPhamDTO>() {
                 @Override
                 public int compare(SanPhamDTO sp1, SanPhamDTO sp2) {
                     return Double.compare(sp2.getGiaSanPham(), sp1.getGiaSanPham());
                 }
             });
         }
-        return this.danhSachSanPham;
+        return listSP;
         
     }
     public ArrayList<SanPhamDTO> locTheoKhoangGia(int loai,int num1, int num2){
