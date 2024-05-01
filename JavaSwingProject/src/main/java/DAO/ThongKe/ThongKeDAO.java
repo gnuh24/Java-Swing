@@ -18,10 +18,10 @@ public class ThongKeDAO {
     public Long tongDoanhThu(String minDate, String maxDate){
         Long tongTien = 0L;
         Connection connection = JDBCConfigure.getConnection();
-        String query = "SELECT SUM(TongGiaTri) AS TongGiaTri FROM PhieuNhapKho\n" +
+        String query = "SELECT SUM(TongGiaTri) AS TongGiaTri FROM PhieuXuatKho\n" +
                         "WHERE MaKhoHang = ?\n" +
                         "AND TrangThai = 'DaDuyet'\n" +
-                        "AND NgayNhapKho BETWEEN COALESCE(?, '2010-01-01') AND COALESCE(?, CURRENT_DATE())";
+                        "AND NgayXuatKho BETWEEN COALESCE(?, '2010-01-01') AND COALESCE(?, CURRENT_DATE())";
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, this.maKhoHang);
@@ -56,10 +56,10 @@ public class ThongKeDAO {
     public Long tongChiTieu(String minDate, String maxDate){
         Long tongTien = 0L;
         Connection connection = JDBCConfigure.getConnection();
-        String query = "SELECT SUM(TongGiaTri) AS TongGiaTri FROM PhieuXuatKho\n" +
+        String query = "SELECT SUM(TongGiaTri) AS TongGiaTri FROM PhieuNhapKho\n" +
             "WHERE MaKhoHang = ?\n" +
             "AND TrangThai = 'DaDuyet'\n" +
-            "AND NgayXuatKho BETWEEN COALESCE(?, '2010-01-01') AND COALESCE(?, CURRENT_DATE())";
+            "AND NgayNhapKho BETWEEN COALESCE(?, '2010-01-01') AND COALESCE(?, CURRENT_DATE())";
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, this.maKhoHang);

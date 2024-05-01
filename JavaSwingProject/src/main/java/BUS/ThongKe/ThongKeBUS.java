@@ -9,7 +9,7 @@ public class ThongKeBUS {
 
     private ThongKeDAO thongKeDAO = null ;
 
-    private ThongKeBUS(Integer maKhoHang){
+    public ThongKeBUS(Integer maKhoHang){
         thongKeDAO = new ThongKeDAO(maKhoHang);
     }
 

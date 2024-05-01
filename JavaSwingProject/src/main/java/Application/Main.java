@@ -94,12 +94,11 @@ public class Main extends JFrame implements ActionListener{
                 hieuUngHover(e);
             }
         });
-        
+
         menu.getBtn_ThongKe().addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e){
-                JPanel thongke= new JPanel();
-                thongke.setBackground(Color.PINK);  
-                setPanelMain(thongke);
+                ThongKeUI thongKeUI = new ThongKeUI(taiKhoanDTO.getMaKhoHang());
+                setPanelMain(thongKeUI);
                 hieuUngHover(e);
             }
         });

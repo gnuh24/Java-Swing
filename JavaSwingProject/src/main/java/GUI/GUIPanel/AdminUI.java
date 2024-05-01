@@ -2,8 +2,8 @@ package GUI.GUIPanel;
 
 import BUS.TaiKhoanBUS;
 import DTO.NguoiDung.TaiKhoanDTO;
-import Others.UltilServices;
-import static Others.UltilServices.convertToDate;
+import Others.UtilServices;
+import static Others.UtilServices.convertToDate;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -223,7 +223,7 @@ private void loadAllAccounts() {
         account.setSoDienThoai(phoneNumber.isEmpty() ? null : phoneNumber);
         account.setEmail(email.isEmpty() ? null : email);
         account.setDiaChi(address.isEmpty() ? null : address);
-        account.setNgaySinh(birthday.isEmpty() ? null : UltilServices.convertFromDate(birthday));
+        account.setNgaySinh(birthday.isEmpty() ? null : UtilServices.convertFromDate(birthday));
         account.setGioiTinh(gender);
         account.setTrangThai(status);
         // Thực hiện cập nhật tài khoản
@@ -428,7 +428,7 @@ private void loadAllAccounts() {
         account.setSoDienThoai(phoneNumber.isEmpty() ? null : phoneNumber);
         account.setEmail(email.isEmpty() ? null : email);
         account.setDiaChi(address.isEmpty() ? null : address);
-        account.setNgaySinh(birthday.isEmpty() ? null : UltilServices.convertFromDate(birthday));
+        account.setNgaySinh(birthday.isEmpty() ? null : UtilServices.convertFromDate(birthday));
         account.setGioiTinh(gender);
 
         return account;

@@ -5,11 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="003b6990-b30a-4767-b559-0655e60cd464" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/BUS/ThongKe/ThongKeBUS.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/DAO/ThongKe/ThongKeDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/DTO/ThongKe/ThongKeSanPham.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/ThongKeUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIThanhPhan/InputFormCustomForStatistic.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Others/UtilServices.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SQL/insertData_JavaSwing.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../SQL/insertData_JavaSwing.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Application/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Application/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BUS/ThongKe/ThongKeBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BUS/ThongKe/ThongKeBUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/ThongKe/ThongKeDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/ThongKe/ThongKeDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/AdminUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/AdminUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/ManagerUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/ManagerUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Others/UltilServices.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +53,7 @@
       <recent name="C:\Users\Tuan Hung\Desktop\Learning\Exercise\SGU Java Swing - Ms Loan\Java-Swing\JavaSwingProject\src\main\java\org\example\Resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ThongKeDAO">
+  <component name="RunManager" selected="Application.Application.Main">
     <configuration name="Application.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Application.Main" />
       <module name="JavaHung" />
@@ -108,10 +113,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="JavaSwingProject" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="JavaSwingProject" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ThongKeDAO" />
         <item itemvalue="Application.Application.Main" />
+        <item itemvalue="Application.ThongKeDAO" />
         <item itemvalue="Application.PhieuNhapKhoBUS" />
         <item itemvalue="Application.NhaCungCapBUS" />
         <item itemvalue="Application.Main" />

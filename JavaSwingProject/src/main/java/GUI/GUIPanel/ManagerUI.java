@@ -2,14 +2,13 @@ package GUI.GUIPanel;
 
 import BUS.TaiKhoanBUS;
 import DTO.NguoiDung.TaiKhoanDTO;
-import Others.UltilServices;
-import static Others.UltilServices.convertToDate;
+import Others.UtilServices;
+
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.Border;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
 
 public class ManagerUI extends JPanel{
 	
@@ -43,8 +42,8 @@ public class ManagerUI extends JPanel{
 			nameField.setBounds(150, 120, 1050, 30);
 			System.out.println("Truoc khi doi:" + taiKhoanDTO.getNgaySinh());
                         
-                        String abc= UltilServices.convertToDate(taiKhoanDTO.getNgaySinh());
-                        System.out.println("Sau khi doi:"+UltilServices.convertToDate(taiKhoanDTO.getNgaySinh()));
+                        String abc= UtilServices.convertToDate(taiKhoanDTO.getNgaySinh());
+                        System.out.println("Sau khi doi:"+ UtilServices.convertToDate(taiKhoanDTO.getNgaySinh()));
                         birthdayLabel = new JLabel("Ngày Sinh : " +
                         (taiKhoanDTO.getNgaySinh() != null && !taiKhoanDTO.getNgaySinh().isEmpty()
                         ?abc : ""));
@@ -169,7 +168,7 @@ public class ManagerUI extends JPanel{
         if (!newBirthday.isEmpty()) {
             // Kiểm tra định dạng ngày sinh
             try {
-                newBirthday=UltilServices.convertFromDate(newBirthday);
+                newBirthday= UtilServices.convertFromDate(newBirthday);
                 System.out.println("sau khi doi:" +newBirthday);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Ngày sinh không hợp lệ. Vui lòng nhập lại theo định dạng dd-MM-yyyy.", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -271,7 +270,7 @@ public void loadData(TaiKhoanDTO taiKhoanDTO) {
             nameLabel.setText("Họ và tên : " + (taiKhoanFromDB.getHoVaTen() != null && !taiKhoanFromDB.getHoVaTen().isEmpty() ? taiKhoanFromDB.getHoVaTen() : ""));
             System.out.println("Taikhoanfromdb" + taiKhoanFromDB.getNgaySinh());
 
-            String ngayMoi=UltilServices.convertToDate(taiKhoanFromDB.getNgaySinh());
+            String ngayMoi= UtilServices.convertToDate(taiKhoanFromDB.getNgaySinh());
             birthdayLabel.setText("Ngày Sinh : " + (taiKhoanFromDB.getNgaySinh() != null && !taiKhoanFromDB.getNgaySinh().isEmpty() ?  ngayMoi : ""));
             roleLabel.setText("Vai trò: " + taiKhoanFromDB.getQuyen());
             
