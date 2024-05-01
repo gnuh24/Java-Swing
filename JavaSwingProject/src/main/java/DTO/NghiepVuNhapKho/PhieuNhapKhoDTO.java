@@ -28,6 +28,8 @@ public class PhieuNhapKhoDTO {
     private Integer maNCC;
 
     private Integer   maKhoHang;
+    
+    private String trangThai;
 
 
 }
