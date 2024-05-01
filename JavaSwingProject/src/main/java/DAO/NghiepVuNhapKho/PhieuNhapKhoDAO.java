@@ -29,6 +29,7 @@ public class PhieuNhapKhoDAO implements DAOInterface<PhieuNhapKhoDTO> {
                 Long tongGiaTri = resultSet.getLong("TongGiaTri");
                 Integer maNCC = resultSet.getInt("MaNCC");
                 Integer maKhoHangPhieu = resultSet.getInt("MaKhoHang");
+                String trangthai= resultSet.getString("TrangThai");
 
                 PhieuNhapKhoDTO phieuNhapKhoDTO = new PhieuNhapKhoDTO();
                 phieuNhapKhoDTO.setMaPhieu(maPhieu);
@@ -36,6 +37,7 @@ public class PhieuNhapKhoDAO implements DAOInterface<PhieuNhapKhoDTO> {
                 phieuNhapKhoDTO.setTongGiaTri(tongGiaTri);
                 phieuNhapKhoDTO.setMaNCC(maNCC);
                 phieuNhapKhoDTO.setMaKhoHang(maKhoHangPhieu);
+                phieuNhapKhoDTO.setTrangThai(trangthai);
 
                 danhSachPhieuNhapKho.add(phieuNhapKhoDTO);
             }
@@ -69,12 +71,13 @@ public class PhieuNhapKhoDAO implements DAOInterface<PhieuNhapKhoDTO> {
                 Long tongGiaTri = resultSet.getLong("TongGiaTri");
                 Integer maNCC = resultSet.getInt("MaNCC");
                 Integer maKhoHangPhieu = resultSet.getInt("MaKhoHang");
-
+                String trangthai= resultSet.getString("TrangThai");
                 phieuNhapKhoDTO.setMaPhieu(maPhieu);
                 phieuNhapKhoDTO.setNgayNhapKho(ngayNhapKho);
                 phieuNhapKhoDTO.setTongGiaTri(tongGiaTri);
                 phieuNhapKhoDTO.setMaNCC(maNCC);
                 phieuNhapKhoDTO.setMaKhoHang(maKhoHangPhieu);
+                phieuNhapKhoDTO.setTrangThai(trangthai);
             }
         } catch (SQLException e) {
             System.err.println("Lỗi truy vấn!!");
@@ -126,7 +129,8 @@ public class PhieuNhapKhoDAO implements DAOInterface<PhieuNhapKhoDTO> {
             "UPDATE `PhieuNhapKho` SET " +
                 "`NgayNhapKho` = ?, " +
                 "`TongGiaTri` = ?, " +
-                "`MaNCC` = ? " +
+                "`MaNCC` = ?, " +
+                "`TrangThai` = ? " +
                 "WHERE `MaPhieu` = ?";
 
         try {
@@ -134,7 +138,8 @@ public class PhieuNhapKhoDAO implements DAOInterface<PhieuNhapKhoDTO> {
             preparedStatement.setString(1, phieuNhapKhoDTO.getNgayNhapKho());
             preparedStatement.setLong(2, phieuNhapKhoDTO.getTongGiaTri());
             preparedStatement.setInt(3, phieuNhapKhoDTO.getMaNCC());
-            preparedStatement.setInt(4, phieuNhapKhoDTO.getMaPhieu());
+            preparedStatement.setString(4, phieuNhapKhoDTO.getTrangThai());
+            preparedStatement.setInt(5, phieuNhapKhoDTO.getMaPhieu());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
