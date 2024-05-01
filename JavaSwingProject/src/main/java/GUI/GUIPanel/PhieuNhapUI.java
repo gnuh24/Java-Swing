@@ -4,6 +4,8 @@ import BUS.NghiepVuNhapKho.ChiTietPhieuNhapKhoBUS;
 import BUS.NghiepVuNhapKho.NhaCungCapBUS;
 import BUS.NghiepVuNhapKho.PhieuNhapKhoBUS;
 import DTO.NghiepVuNhapKho.PhieuNhapKhoDTO;
+import GUI.GUIDialog.TrangThaiDonNhapDialog;
+import Others.UltilServices;
 
 import java.time.LocalDate;
 
@@ -26,13 +28,15 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
       ChiTietPhieuNhapKhoBUS chiTietPhieuNhapKhoBUS = new ChiTietPhieuNhapKhoBUS();
       JPanel top;
             JPanel chucNangPanel;
-                  JButton xoa_btn;
+                  JButton trangthai_btn;
                   JButton sua_btn;
                   JButton chi_tiet_btn;
                   JButton xuatExcel_btn;
             JPanel timKiemPanel;
                   JLabel tim_kiem;
                   JComboBox tim_kiem_cb;
+                  JLabel locTrangThai;
+                  JComboBox locTrangThai_cb;                 
             JButton refeshButton;
       JPanel bot;
             DefaultTableModel modelDSPhieuNhapKho;
@@ -42,19 +46,21 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
             this.maKhoHang = maKhoHang;
             top = new JPanel();
                   chucNangPanel = new JPanel();
-                        xoa_btn = new JButton("Xóa");
-                        xoa_btn.addActionListener(this);
+                        trangthai_btn = new JButton("Trạng thái đơn");
+                        trangthai_btn.addActionListener(this);
                         sua_btn = new JButton("Sửa");
                         sua_btn.addActionListener(this);
                         chi_tiet_btn = new JButton("Chi tiết");
                         chi_tiet_btn.addActionListener(this);
-                  chucNangPanel.setBorder(new CompoundBorder(new TitledBorder("Chức năng"), new EmptyBorder(4, 4, 4, 4)));
-                  chucNangPanel.add(customButtonOption(xoa_btn,"xoa_btn.png"));
-                  chucNangPanel.add(customButtonOption(sua_btn,"sua_btn.png"));
-                  chucNangPanel.add(customButtonOption(chi_tiet_btn,"chi_tiet.png"));
+                        chucNangPanel.setBorder(new CompoundBorder(new TitledBorder("Chức năng"), new EmptyBorder(4, 4, 4, 4)));
+                        chucNangPanel.add(customButtonOption(chi_tiet_btn,"chi_tiet.png"));
+                        chucNangPanel.add(customButtonOption(sua_btn,"sua_btn.png"));
+                        chucNangPanel.add(customButtonOption(trangthai_btn,"xoa_btn.png"));
 
 
-                  timKiemPanel = new JPanel();
+
+
+                  timKiemPanel = new JPanel(new FlowLayout());
                         tim_kiem = new JLabel("Tổng giá trị : ");
                         String price[] = {"tất cả","dưới 5,000,000 VNĐ", "5,000,000 VNĐ - 10,000,000 VNĐ", "10,000,000 VNĐ - 20,000,000 VNĐ","20,000,000 VNĐ - 40,000,000 VNĐ", "lớn hơn 40,000,000 VNĐ"};
  
@@ -62,17 +68,30 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
                           tim_kiem_cb.addItemListener(new ItemListener() {
                               public void itemStateChanged(ItemEvent e) {
                                   if (e.getStateChange() == ItemEvent.SELECTED) {
-                                    // ArrayList<PhieuXuatKhoDTO> listPhieuXuatKho=phieuXuatKhoBUS.search(tim_kiem_cb.getSelectedIndex());
-                                    // showDanhSachPhieuXuatHang(listPhieuXuatKho);
+                                      ArrayList<PhieuNhapKhoDTO> danhSachLoc=phieuNhapKhoBUS.locTheoKhoangGia(e.getItem().toString());
+                                      showDanhSachPhieuNhapHang(danhSachLoc);
                                   }
                               }
                           });
+                        locTrangThai= new JLabel("Trạng thái:");
+                        String tt[]={"Đã Duyệt","Chờ Duyệt"};
+                        locTrangThai_cb= new JComboBox<>(tt);
+                        locTrangThai_cb.addItemListener(new ItemListener() {
+                              public void itemStateChanged(ItemEvent e) {
+                                  if (e.getStateChange() == ItemEvent.SELECTED) {
+                                      ArrayList<PhieuNhapKhoDTO> danhSachLoc=phieuNhapKhoBUS.locTheoTrangThai(e.getItem().toString());
+                                      showDanhSachPhieuNhapHang(danhSachLoc);
+                                  }
+                              }
+                          });                        
+                          
                   timKiemPanel.setBorder(new CompoundBorder(new TitledBorder("Tìm Kiếm"), new EmptyBorder(4, 4, 4, 4)));
                   timKiemPanel.add(tim_kiem);
                   timKiemPanel.add(tim_kiem_cb);
-                  
+                  timKiemPanel.add(locTrangThai);
+                  timKiemPanel.add(locTrangThai_cb);
                   refeshButton = new JButton("Tải lại");
-                  refeshButton.setIcon(new ImageIcon("C:\\Users\\dvmv2\\OneDrive\\Documents\\Nam_2\\Fixx\\Java-Swing-main-29-2\\Java-Swing-main\\JavaSwingProject\\src\\main\\java\\Resources\\refesh.png"));
+                  refeshButton.setIcon(new ImageIcon("C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHungNew\\JavaSwingProject\\src\\main\\java\\Resources\\refesh.png"));
                   refeshButton.setPreferredSize(new Dimension(110,40));
                   refeshButton.addActionListener(this);
             top.setPreferredSize(new Dimension(1200,100));
@@ -82,7 +101,7 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
 
             bot = new JPanel();
                   
-                  String columns_ds_xuat_hang[] = {"Mã phiếu xuất", "Ngày xuất kho","Nhà cung cấp" ,"Tổng giá trị", };
+                  String columns_ds_xuat_hang[] = {"Mã phiếu xuất", "Ngày xuất kho","Nhà cung cấp" ,"Tổng giá trị", "Trạng Thái"};
                   String data_ds_xuat_hang[][] = {};
                   modelDSPhieuNhapKho = new DefaultTableModel(data_ds_xuat_hang, columns_ds_xuat_hang){
                         @Override
@@ -104,6 +123,7 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
                   tableDSPhieuNhapKho.getColumnModel().getColumn(1).setPreferredWidth(100);
                   tableDSPhieuNhapKho.getColumnModel().getColumn(2).setPreferredWidth(200);
                   tableDSPhieuNhapKho.getColumnModel().getColumn(3).setPreferredWidth(200);
+                  tableDSPhieuNhapKho.getColumnModel().getColumn(4).setPreferredWidth(200);
 
             //? Set vị trí cho nội dung (căn giữa cho nội dung)
                   DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -112,6 +132,7 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
                   tableDSPhieuNhapKho.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
                   tableDSPhieuNhapKho.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
                   tableDSPhieuNhapKho.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+                  tableDSPhieuNhapKho.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
 
                   tableDSPhieuNhapKho.setRowHeight(40);
                   // showDanhSachPhieuXuatHang(phieuXuatKhoBUS.getAll(maKhoHang));
@@ -132,18 +153,18 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
       public JButton customButtonOption(JButton button, String linkIMG) {
             BoxLayout boxlayout = new BoxLayout(button, BoxLayout.Y_AXIS);
             button.setLayout(boxlayout);
-            button.setFont(new Font("Arial", Font.BOLD, 14)); // Thiết lập font
+            button.setFont(new Font("Arial", Font.BOLD, 12)); // Thiết lập font
             button.setForeground(Color.BLACK); // Thiết lập màu chữ
             button.setBackground(Color.WHITE); // Thiết lập màu nền
             button.setBorder(BorderFactory.createLineBorder(Color.WHITE,1)); // Thiết lập viền
             button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             // Tùy chỉnh kích thước
             Dimension size = button.getPreferredSize();
-            size.width = 90;
+            size.width = 100;
             size.height = 40;
             button.setPreferredSize(size);
 
-            ImageIcon icon = new ImageIcon("Java-Swing\\JavaSwingProject\\src\\main\\java\\org\\example\\GUI\\IMG\\" + linkIMG); 
+            ImageIcon icon = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHungNew\\JavaSwingProject\\src\\main\\java\\Resources\\" + linkIMG); 
             button.setIcon(new ImageIcon(icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)));
 
             return button;
@@ -158,6 +179,20 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
                   showDanhSachPhieuNhapHang((ArrayList<PhieuNhapKhoDTO>) phieuNhapKhoBUS.getAllPhieuNhapKho(maKhoHang));
             } else if(e.getSource() == chi_tiet_btn) {
                   xemChiTietPhieuNhapHang();
+            }else if (e.getSource() == trangthai_btn){
+                int selectedRow = tableDSPhieuNhapKho.getSelectedRow();
+                if(selectedRow != -1) {
+                    if (!tableDSPhieuNhapKho.getValueAt(selectedRow,4).toString().equals("Đã Duyệt")){
+                      int maPhieuXuat = (Integer) tableDSPhieuNhapKho.getValueAt(selectedRow, 0);
+                      new TrangThaiDonNhapDialog(this,maPhieuXuat);                        
+                    }
+                    else {
+                      JOptionPane.showMessageDialog(null, "Thay đổi trạng thái chỉ dành cho đơn chờ duyệt !!!","Cảnh báo", JOptionPane.ERROR_MESSAGE);                        
+                    }
+
+                } else {
+                      JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 phiếu nhập hàng!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
+                }                
             }
       }
 
@@ -167,11 +202,18 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
                   modelDSPhieuNhapKho.removeRow(i);
             }
             for (PhieuNhapKhoDTO phieuNhapKhoDTO : phieuNhapKhoDTOS) {
+                String tt="";
+                if(phieuNhapKhoDTO.getTrangThai().equals("ChoDuyet"))
+                    tt="Chờ Duyệt";
+                else if(phieuNhapKhoDTO.getTrangThai().equals("DaDuyet"))
+                    tt="Đã Duyệt";
+                else tt="Hủy";
                   modelDSPhieuNhapKho.addRow(new Object[]{
                       phieuNhapKhoDTO.getMaPhieu(),
-                      String.valueOf(phieuNhapKhoDTO.getNgayNhapKho()).replace("T"," "),
+                      UltilServices.convertToDate(String.valueOf(phieuNhapKhoDTO.getNgayNhapKho()).replace("T"," ")),
                       nhaCungCapBUS.getNhaCungCapById(phieuNhapKhoDTO.getMaNCC()).getTenNCC(),
-                      toCurrency(phieuNhapKhoDTO.getTongGiaTri())
+                      toCurrency(phieuNhapKhoDTO.getTongGiaTri()),
+                      tt
                   });
             }
       }
@@ -183,7 +225,6 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
                   int maPhieuXuat = (Integer) tableDSPhieuNhapKho.getValueAt(selectedRow, 0);
                   new ChiTietPhieuNhapKho(maPhieuXuat);
             } else {
-                  System.out.println("1b");
                   JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 phiếu nhập hàng!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
             }
       }

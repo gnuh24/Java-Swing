@@ -23,17 +23,18 @@ public class ChiTietPhieuNhapKho{
     JLabel ma_phieu,ma_phieu_lb;
     JLabel ma_kho_hang, ma_kho_hang_lb;
     JLabel ten_kho_hang, ten_kho_hang_lb;
-    JLabel nguoi_xuat, nguoi_xuat_lb;
-    JLabel ngay_xuat_kho, ngay_xuat_kho_lb;
+    JLabel nguoi_nhap, nguoi_nhap_lb;
+    JLabel ngay_nhap_kho, ngay_nhap_kho_lb;
+    JLabel trang_thai, trang_thai_lb;
     JPanel main_middle;
     DefaultTableModel model_ds_ctpxk;
-    JTable table_ds_ctpxk;
-    JScrollPane ds_ctpxk;
+    JTable table_ds_ctpnk;
+    JScrollPane ds_ctpnk;
     JPanel main_bottom;
     JLabel tong_tien, tong_tien_lb;
-    JButton closeCTPXK;
+    JButton closeCTPNK;
 
-    public ChiTietPhieuNhapKho(int maPhieuXuat) {
+    public ChiTietPhieuNhapKho(int maPhieuNhap) {
         header = new JPanel();
         header_lb = new JLabel("CHI TIẾT PHIẾU NHẬP");
         header_lb.setForeground(Color.WHITE);
@@ -54,17 +55,22 @@ public class ChiTietPhieuNhapKho{
         ten_kho_hang = new JLabel("Tên kho hàng : ");
         ten_kho_hang_lb = new JLabel();
 
-        nguoi_xuat = new JLabel("Tên người xuất : ");
-        nguoi_xuat_lb = new JLabel();
+        nguoi_nhap = new JLabel("Tên người xuất : ");
+        nguoi_nhap_lb = new JLabel();
 
-        ngay_xuat_kho = new JLabel("Ngày xuất kho : ");
-        ngay_xuat_kho_lb = new JLabel();
+        ngay_nhap_kho = new JLabel("Ngày nhập kho : ");
+        ngay_nhap_kho_lb = new JLabel();
+
+        trang_thai = new JLabel("Trạng thái đơn: ");
+        trang_thai_lb = new JLabel();
 
         main_top.add(ma_phieu); main_top.add(ma_phieu_lb);
         main_top.add(ma_kho_hang); main_top.add(ma_kho_hang_lb);
         main_top.add(ten_kho_hang); main_top.add(ten_kho_hang_lb);
-        main_top.add(nguoi_xuat); main_top.add(nguoi_xuat_lb);
-        main_top.add(ngay_xuat_kho); main_top.add(ngay_xuat_kho_lb);
+        main_top.add(nguoi_nhap); main_top.add(nguoi_nhap_lb);
+        main_top.add(ngay_nhap_kho); main_top.add(ngay_nhap_kho_lb);
+        main_top.add(trang_thai); main_top.add(trang_thai_lb);
+        
         main_top.setLayout(new GridLayout(3, 3));
         main_top.setPreferredSize(new Dimension(600,70));
 
@@ -83,26 +89,26 @@ public class ChiTietPhieuNhapKho{
                 }
             }
         };
-        table_ds_ctpxk = new JTable(model_ds_ctpxk);
-        table_ds_ctpxk.getColumnModel().getColumn(0).setPreferredWidth(20);
-        table_ds_ctpxk.getColumnModel().getColumn(1).setPreferredWidth(250);
-        table_ds_ctpxk.getColumnModel().getColumn(2).setPreferredWidth(70);
-        table_ds_ctpxk.getColumnModel().getColumn(3).setPreferredWidth(40);
-        table_ds_ctpxk.getColumnModel().getColumn(4).setPreferredWidth(70);
+        table_ds_ctpnk = new JTable(model_ds_ctpxk);
+        table_ds_ctpnk.getColumnModel().getColumn(0).setPreferredWidth(20);
+        table_ds_ctpnk.getColumnModel().getColumn(1).setPreferredWidth(250);
+        table_ds_ctpnk.getColumnModel().getColumn(2).setPreferredWidth(70);
+        table_ds_ctpnk.getColumnModel().getColumn(3).setPreferredWidth(40);
+        table_ds_ctpnk.getColumnModel().getColumn(4).setPreferredWidth(70);
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        table_ds_ctpxk.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-        table_ds_ctpxk.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-        table_ds_ctpxk.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
-        table_ds_ctpxk.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
-        table_ds_ctpxk.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
-        table_ds_ctpxk.getTableHeader().setReorderingAllowed(false);
-        table_ds_ctpxk.setRowHeight(40);
-        table_ds_ctpxk.setEnabled(false);
-        ds_ctpxk = new JScrollPane(table_ds_ctpxk);
-        ds_ctpxk.setPreferredSize(new Dimension(730,300));
-        ds_ctpxk.setBackground(Color.WHITE);
-        main_middle.add(ds_ctpxk);
+        table_ds_ctpnk.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        table_ds_ctpnk.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        table_ds_ctpnk.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        table_ds_ctpnk.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+        table_ds_ctpnk.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+        table_ds_ctpnk.getTableHeader().setReorderingAllowed(false);
+        table_ds_ctpnk.setRowHeight(40);
+        table_ds_ctpnk.setEnabled(false);
+        ds_ctpnk = new JScrollPane(table_ds_ctpnk);
+        ds_ctpnk.setPreferredSize(new Dimension(730,300));
+        ds_ctpnk.setBackground(Color.WHITE);
+        main_middle.add(ds_ctpnk);
 
         main_bottom = new JPanel();
         tong_tien = new JLabel("Tổng tiền : ");
@@ -115,7 +121,7 @@ public class ChiTietPhieuNhapKho{
         main.add(main_bottom);
         main.setLayout(new FlowLayout());
         main.setPreferredSize(new Dimension(750,430));
-        setThongTinMain(maPhieuXuat);
+        setThongTinMain(maPhieuNhap);
 
         frame.add(header);
         frame.add(main);
@@ -138,27 +144,33 @@ public class ChiTietPhieuNhapKho{
     public void setThongTinMain(int maPhieuXuat) {
         try {
             Statement state = JDBCConfigure.getConnection().createStatement();
-            ResultSet result = state.executeQuery("SELECT * FROM `phieuxuatkho`, `khohang`, `taikhoan` WHERE phieuxuatkho.MaKhoHang = khohang.MaKhoHang  and taikhoan.MaKhoHang = khohang.MaKhoHang and phieuxuatkho.MaPhieu = " + maPhieuXuat);
+            ResultSet result = state.executeQuery("SELECT * FROM `phieunhapkho`, `khohang`, `taikhoan` WHERE phieunhapkho.MaKhoHang = khohang.MaKhoHang  and taikhoan.MaKhoHang = khohang.MaKhoHang and phieunhapkho.MaPhieu = " + maPhieuXuat);
             while(result.next()) {
 
                 ma_phieu_lb.setText(String.valueOf(maPhieuXuat));
                 ma_kho_hang_lb.setText(String.valueOf(result.getInt("MaKhoHang")));
                 ten_kho_hang_lb.setText(result.getString("TenKhoHang"));
-                nguoi_xuat_lb.setText(result.getString("HoTen"));
-                ngay_xuat_kho_lb.setText(result.getString("NgayXuatKho"));
+                nguoi_nhap_lb.setText(result.getString("HoTen"));
+                ngay_nhap_kho_lb.setText(result.getString("NgayNhapKho"));
                 tong_tien_lb.setText(String.valueOf(toCurrency(result.getLong("TongGiaTri"))));
+                String tt=result.getString("TrangThai");
+                if( tt.equals("DaDuyet"))
+                    trang_thai_lb.setText("Đã duyệt đơn");
+                else if( tt.equals("ChoDuyet"))
+                    trang_thai_lb.setText("Chờ duyệt");
+                else if ( tt.equals("Huy"))
+                    trang_thai_lb.setText("Đơn đã hủy");
             }
         } catch(SQLException e) {
             System.err.println(e.getMessage());
         }
 
-        System.out.println("3.5c");
+
         this.sanPhamBUS = new SanPhamBUS(Integer.parseInt(this.ma_kho_hang_lb.getText()));
-        System.out.println("3.5d");
-        System.out.println("Phiếu số: " + maPhieuXuat);
+
         ArrayList<ChiTietPhieuNhapKhoDTO> chiTietPhieuNhapKhoDTOS = chiTietPhieuNhapKhoBUS.getChiTietPhieuNhapKhoByMaPhieu(maPhieuXuat);
         System.out.println(chiTietPhieuNhapKhoDTOS);
-        System.out.println("\n");
+
 
         for(int i = 0; i < chiTietPhieuNhapKhoDTOS.size(); i++) {
             model_ds_ctpxk.addRow(new Object[]{
