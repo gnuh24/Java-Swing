@@ -54,7 +54,9 @@ INSERT INTO `NhaCungCap` (`TenNCC`, 						`SoDienThoai`, `Email`,					 `MaKhoHan
 INSERT INTO `PhieuNhapKho` (`NgayNhapKho`, 					`TongGiaTri`, 	`MaNCC`,  `MaKhoHang`, `TrangThai`) VALUES
 							('2024-01-15 08:00:00', 		2840700000, 	2, 			 1,			"DaDuyet"),
 							('2024-01-16 09:00:00', 		165600000, 		2, 			 1,			"DaDuyet"),
-							('2024-01-17 10:00:00', 		7140000, 		3, 			 2,			"DaDuyet");
+							('2024-01-17 10:00:00', 		7140000, 		3, 			 2,			"DaDuyet"),
+							('2024-05-01 14:00:00', 		890000, 		2, 			 1,			"ChoDuyet"),
+							('2024-04-25 7:00:00', 		89000, 		2, 			 1,			"Huy");
 
 /* Dữ liệu mẫu cho bảng CTPNK */
 INSERT INTO `CTPNK` (`DonGiaNhap`, `SoLuong`, 	`ThanhTien`, 	`MaPhieu`, 		`MaSanPham`) VALUES
@@ -65,7 +67,9 @@ INSERT INTO `CTPNK` (`DonGiaNhap`, `SoLuong`, 	`ThanhTien`, 	`MaPhieu`, 		`MaSan
                     (739000, 		200, 		147800000, 			2, 				4),
 					(89000, 		200, 		17800000, 			2, 				5),
                     
-					(238000, 		30, 		7140000, 			3, 				6);
+					(238000, 		30, 		7140000, 			3, 				6),
+					(89000, 		10, 		890000, 			4, 				5),
+					(89000, 		1, 		89000, 			5, 				5);
 
 /* Dữ liệu mẫu cho bảng PhieuXuatKho */
 INSERT INTO `PhieuXuatKho` (`NgayXuatKho`, 				`TongGiaTri`, 	 	`MaKhoHang`, `TrangThai`) VALUES
