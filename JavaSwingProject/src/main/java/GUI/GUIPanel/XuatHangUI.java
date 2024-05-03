@@ -19,7 +19,7 @@ import javax.swing.table.*;
 public class XuatHangUI extends JPanel implements ActionListener{
       int maKhoHang = 0;
       SanPhamBUS sanPhamBUS;
-      PhieuXuatKhoBUS phieuXuatKhoBUS = new PhieuXuatKhoBUS();
+      PhieuXuatKhoBUS phieuXuatKhoBUS;
       ChiTietPhieuXuatKhoBUS chiTietPhieuXuatKhoBUS = new ChiTietPhieuXuatKhoBUS();
       long tongGiaTri = 0;
       JPanel main;
@@ -62,6 +62,7 @@ public class XuatHangUI extends JPanel implements ActionListener{
 
       Color bgBlue = new Color(0,145,253);
       public XuatHangUI(int maKhoHang) {
+            phieuXuatKhoBUS = new PhieuXuatKhoBUS();
             this.maKhoHang = maKhoHang;
             this.sanPhamBUS= new SanPhamBUS(this.maKhoHang);
             main = new JPanel();
@@ -476,18 +477,18 @@ public class XuatHangUI extends JPanel implements ActionListener{
                   chiTietPhieuXuatKhoBUS.create(maKhoHang, chiTietPhieuXuatKho);
 
                   //? Update số lượng còn lại của sản phẩm
-                  SanPhamDTO sanPham = sanPhamBUS.getById(chiTietPhieuXuatKho.getMaSanPham());
-                  sanPham.setSoLuongConLai(sanPham.getSoLuongConLai() - chiTietPhieuXuatKho.getSoLuong());
-                  sanPhamBUS.update(sanPham);
+                  // SanPhamDTO sanPham = sanPhamBUS.getById(chiTietPhieuXuatKho.getMaSanPham());
+                  // sanPham.setSoLuongConLai(sanPham.getSoLuongConLai() - chiTietPhieuXuatKho.getSoLuong());
+                  // sanPhamBUS.update(sanPham);
             }
             // ? Xóa bảng danh sách sản phẩm xuất hàng
             for (int i = model_ds_xuat_hang.getRowCount() - 1; i >= 0; i--) 
                   model_ds_xuat_hang.removeRow(i);
             
             //? cập nhật danh sách sản phẩm
-            for (int i = model_ds_san_pham.getRowCount() - 1; i >= 0; i--) 
-                  model_ds_san_pham.removeRow(i);
-            showDanhSachSanPham(sanPhamBUS.getAll());
+            // for (int i = model_ds_san_pham.getRowCount() - 1; i >= 0; i--) 
+            //       model_ds_san_pham.removeRow(i);
+            // showDanhSachSanPham(sanPhamBUS.getAll());
             
             //?cập nhật thành tiền
             thanh_tien_total.setText("0 đ");
