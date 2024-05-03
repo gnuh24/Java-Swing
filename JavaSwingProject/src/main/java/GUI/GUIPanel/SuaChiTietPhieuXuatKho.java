@@ -22,8 +22,8 @@ import javax.swing.table.*;
 public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
       private int maKhoHang =0 ; 
       SanPhamBUS sanPhamBUS;
-      PhieuXuatKhoBUS phieuXuatKhoBUS = new PhieuXuatKhoBUS();
-      ChiTietPhieuXuatKhoBUS chiTietPhieuXuatKhoBUS = new ChiTietPhieuXuatKhoBUS();
+      PhieuXuatKhoBUS phieuXuatKhoBUS;
+      ChiTietPhieuXuatKhoBUS chiTietPhieuXuatKhoBUS;
       ArrayList<ChiTietPhieuXuatKhoDTO> listFirst = new ArrayList<>();
       long tongGiaTri = 0;
       
@@ -58,6 +58,10 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
                                     JLabel ngay_tao_phieu;
                                     JTextField ngay_tao_phieu_tf;
 
+                              JPanel trang_thai_pn;
+                                    JLabel trang_thai;
+                                    JComboBox trang_thai_cb;
+
                         DefaultTableModel model_ds_xuat_hang;
                         JTable table_ds_xuat_hang;
                         JScrollPane ds_xuat_hang;
@@ -73,6 +77,8 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
 
       Color bgBlue = new Color(0,145,253);
       public SuaChiTietPhieuXuatKho(int maPhieuXuat) {
+            phieuXuatKhoBUS = new PhieuXuatKhoBUS();
+            chiTietPhieuXuatKhoBUS = new ChiTietPhieuXuatKhoBUS();
             header = new JPanel();
                   header_lb = new JLabel("SỬA CHI TIẾT PHIẾU XUẤT");
                   header_lb.setFont(new Font("Arial", Font.BOLD, 20));
@@ -179,10 +185,10 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
                                           ma_phieu_xuat = new JLabel("Mã phiếu xuất : ");
                                           ma_phieu_xuat_tf = new JTextField(30);
                                           ma_phieu_xuat_tf.setPreferredSize(new Dimension(500, 35));
-                                          //! sửa ở đây
-                                          capNhatMaPhieuXuat(maPhieuXuat);
+                                    //! sửa ở đây
+                                    capNhatMaPhieuXuat(maPhieuXuat);
                                           ma_phieu_xuat_tf.setEditable(false);
-                                    ma_phieu_xuat_pn.setPreferredSize(new Dimension(550,50));
+                                    ma_phieu_xuat_pn.setPreferredSize(new Dimension(550,40));
                                     ma_phieu_xuat_pn.add(ma_phieu_xuat);
                                     ma_phieu_xuat_pn.add(ma_phieu_xuat_tf);
 
@@ -190,23 +196,46 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
                                           nguoi_tao_phieu = new JLabel("Người tạo phiếu : ");
                                           nguoi_tao_phieu_tf = new JTextField("Admin",30);
                                           nguoi_tao_phieu_tf.setPreferredSize(new Dimension(50, 35));
-                                          //! sửa ở đây
                                           nguoi_tao_phieu_tf.setEditable(false);
-                                    nguoi_tao_phieu_pn.setPreferredSize(new Dimension(550,50));
+                                    //! sửa ở đây
+                                    capNhatAdmin(maPhieuXuat);
+                                    nguoi_tao_phieu_pn.setPreferredSize(new Dimension(550,40));
                                     nguoi_tao_phieu_pn.add(nguoi_tao_phieu);
                                     nguoi_tao_phieu_pn.add(nguoi_tao_phieu_tf);
 
                                     ngay_tao_phieu_pn = new JPanel();
                                           ngay_tao_phieu = new JLabel("Ngày tạo phiếu : ");
                                           ngay_tao_phieu_tf = new JTextField(30);
-                                          nguoi_tao_phieu_tf.setPreferredSize(new Dimension(50, 50));
-                                    ngay_tao_phieu_pn.setPreferredSize(new Dimension(550,50));
+                                          ngay_tao_phieu_tf.setPreferredSize(new Dimension(50, 35));
+                                    //! sửa ở đây
+                                    capNhatNgayXuatKho(maPhieuXuat);
+                                    ngay_tao_phieu_pn.setPreferredSize(new Dimension(550,40));
                                     ngay_tao_phieu_pn.add(ngay_tao_phieu);
                                     ngay_tao_phieu_pn.add(ngay_tao_phieu_tf);
-                                    capNhatNgayXuatKho(maPhieuXuat);
+
+                                    trang_thai_pn = new JPanel();
+                                          trang_thai = new JLabel("Trạng thái : ");
+                                          String status[] = {"Chờ Duyệt", "Đã Duyệt", "Hủy"};
+                                          trang_thai_cb = new JComboBox<>(status);
+                                          trang_thai_cb.setPreferredSize(new Dimension(350, 35));
+                                    //! sửa ở đây
+                                    //! quan trọng nếu trạng thái là hủy thì thông báo và không hiện cửa sổ sửa chi tiết
+                                    if(capNhatTrangThai(maPhieuXuat) == -1)  {
+                                          //? nếu trạng thái là đã duyệt thì đóng cửa sổ
+                                          JOptionPane.showMessageDialog(null, "Phiếu xuất này đã duyệt !", "Phiếu xuất không hợp lệ", JOptionPane.ERROR_MESSAGE);
+                                          return;
+                                    } else  if(capNhatTrangThai(maPhieuXuat) == -2) {
+                                          //? nếu trạng thái là hủy thì đóng cửa sổ
+                                          JOptionPane.showMessageDialog(null, "Phiếu xuất này hủy !", "Phiếu xuất không hợp lệ", JOptionPane.ERROR_MESSAGE);
+                                          return;
+                                    }
+                                    trang_thai_pn.setPreferredSize(new Dimension(550,40));
+                                    trang_thai_pn.add(trang_thai);
+                                    trang_thai_pn.add(trang_thai_cb);
                               thong_tin.add(ma_phieu_xuat_pn);
                               thong_tin.add(nguoi_tao_phieu_pn);
                               thong_tin.add(ngay_tao_phieu_pn);
+                              thong_tin.add(trang_thai_pn);
 
                               String columns_xuat_hang[] = {"STT", "Mã SP", "Tên SP","Số lượng", "Đơn giá"};
                               String data_xuat_hang[][] = {};
@@ -291,6 +320,7 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
                   setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                   setLocationRelativeTo(null);
                   setVisible(true);
+                  
       }
       public JButton customButtonMain(JButton button, int width, int height) {
             button.setFont(new Font("Arial", Font.BOLD, 14)); // Thiết lập font
@@ -398,9 +428,23 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
       public void capNhatMaPhieuXuat(int maPhieuXuat) {
             ma_phieu_xuat_tf.setText(String.valueOf(maPhieuXuat));
       }
+      public void capNhatAdmin(int maPhieuXuat) {
+            nguoi_tao_phieu_tf.setText(phieuXuatKhoBUS.getHoTen(maPhieuXuat));
+      }
       public void capNhatNgayXuatKho(int maPhieuXuat) {
             PhieuXuatKhoDTO phieuXuat = phieuXuatKhoBUS.getById(maPhieuXuat);
             ngay_tao_phieu_tf.setText(String.valueOf(phieuXuat.getNgayXuatKho()).replace("T"," "));
+      }
+      public int capNhatTrangThai(int maPhieuXuat) {
+            PhieuXuatKhoDTO phieuXuat = phieuXuatKhoBUS.getById(maPhieuXuat);
+            if(String.valueOf(phieuXuat.getTrangThai()).equals("ChoDuyet")) {
+                  trang_thai_cb.setSelectedIndex(0);
+                  return 1;
+            } else if(String.valueOf(phieuXuat.getTrangThai()).equals("DaDuyet")) {
+                  return -1;
+            } else {
+                  return -2;
+            }
       }
       public void themSanPhamPhieuXuatKho() {
             //? Check number
@@ -507,50 +551,59 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
             return danhSachSanPhamTaoPhieuXuatHang;
       }
       public void suaPhieuXuatKho() {
-            //! Cần thêm giá trị kho hàng
-            PhieuXuatKhoDTO phieuXuatKho = new PhieuXuatKhoDTO();
-            phieuXuatKho.setTongGiaTri(tongGiaTri);
-            phieuXuatKho.setMaPhieu(Integer.parseInt(ma_phieu_xuat_tf.getText()));
-            String ngayTaoPhieu = ngay_tao_phieu_tf.getText();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            
-            // Phân tích chuỗi thành LocalDate
-            LocalDate localDate = LocalDate.parse(ngayTaoPhieu, formatter);
-            LocalDate localDateNow = LocalDate.now();
+            if(JOptionPane.showConfirmDialog(null, "Bạn có muốn sửa phiếu xuất này ?", "Sửa phiếu xuất", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                  PhieuXuatKhoDTO phieuXuatKho = new PhieuXuatKhoDTO();
+                  phieuXuatKho.setTongGiaTri(tongGiaTri);
+                  phieuXuatKho.setMaPhieu(Integer.parseInt(ma_phieu_xuat_tf.getText()));
+                  String ngayTaoPhieu = ngay_tao_phieu_tf.getText();
+                  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                  
+                  // Phân tích chuỗi thành LocalDate
+                  LocalDate localDate = LocalDate.parse(ngayTaoPhieu, formatter);
+                  LocalDate localDateNow = LocalDate.now();
 
-            if(localDate.isBefore(localDateNow)) {
-                  phieuXuatKho.setNgayXuatKho(localDate);
-            } else if(localDate.isAfter(localDateNow) || localDate.isEqual(localDateNow)){
-                  JOptionPane.showMessageDialog(null, "Thời gian không hợp lệ !","Thông báo", JOptionPane.ERROR_MESSAGE);
-                  return;
+                  if(localDate.isBefore(localDateNow) || localDate.isEqual(localDateNow)) {
+                        phieuXuatKho.setNgayXuatKho(localDate);
+                  } else if(localDate.isAfter(localDateNow)){
+                        JOptionPane.showMessageDialog(null, "Ngày không hợp lệ !","Thông báo", JOptionPane.ERROR_MESSAGE);
+                        return;
+                  }
+                  if(trang_thai_cb.getSelectedIndex() == 0) {
+                        phieuXuatKho.setTrangThai("ChoDuyet");
+                  } else if (trang_thai_cb.getSelectedIndex() == 1) {
+                        phieuXuatKho.setTrangThai("DaDuyet");
+                  } else {
+                        phieuXuatKho.setTrangThai("Huy");
+                        phieuXuatKhoBUS.update(phieuXuatKho);
+                        return;
+                  }
+                  phieuXuatKhoBUS.update(phieuXuatKho);  //? Update phiếu xuất kho
+                  //? DELETE CTPXK
+                  for(ChiTietPhieuXuatKhoDTO chiTietPhieuXuatKho : listFirst){
+                        chiTietPhieuXuatKhoBUS.delete(chiTietPhieuXuatKho);
+                  }
+                  //? UPDATE CTPXK
+                  for (ChiTietPhieuXuatKhoDTO chiTietPhieuXuatKho : getDanhSachChiTietPhieuXuatKho()) {
+                        chiTietPhieuXuatKhoBUS.create(this.maKhoHang, chiTietPhieuXuatKho);
+                        if(trang_thai_cb.getSelectedIndex() == 1) {
+                              //? Update số lượng còn lại của sản phẩm
+                              SanPhamDTO sanPham = sanPhamBUS.getById(chiTietPhieuXuatKho.getMaSanPham());
+                              sanPham.setSoLuongConLai(sanPham.getSoLuongConLai() - chiTietPhieuXuatKho.getSoLuong() );
+                              sanPhamBUS.update(sanPham);
+                        }
+                  }
+                  //? cập nhật danh sách sản phẩm
+                  for (int i = model_ds_san_pham.getRowCount() - 1; i >= 0; i--) 
+                        model_ds_san_pham.removeRow(i);
+                  showDanhSachSanPham(sanPhamBUS.getAll());
+                  
+                  //?cập nhật thành tiền
+                  thanh_tien_total.setText("0 đ");
+                  JOptionPane.showMessageDialog(null, "Sửa phiếu xuất hàng thành công !","Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                  dispose();
+            } else {
+                  System.out.println("Huy sua  phieu xuat");
             }
-            phieuXuatKhoBUS.update(phieuXuatKho);  //? Update phiếu xuất kho
-            //? DELETE CTPXK
-            for(ChiTietPhieuXuatKhoDTO chiTietPhieuXuatKho : listFirst){
-                  chiTietPhieuXuatKhoBUS.delete(chiTietPhieuXuatKho);
-                  //? Update số lượng còn lại của sản phẩm
-                  SanPhamDTO sanPham = sanPhamBUS.getById(chiTietPhieuXuatKho.getMaSanPham());
-                  sanPham.setSoLuongConLai(sanPham.getSoLuongConLai() + chiTietPhieuXuatKho.getSoLuong() );
-                  sanPhamBUS.update(sanPham);
-            }
-            //? UPDATE CTPXK
-            for (ChiTietPhieuXuatKhoDTO chiTietPhieuXuatKho : getDanhSachChiTietPhieuXuatKho()) {
-                  chiTietPhieuXuatKhoBUS.create(this.maKhoHang, chiTietPhieuXuatKho);
-
-                  //? Update số lượng còn lại của sản phẩm
-                  SanPhamDTO sanPham = sanPhamBUS.getById(chiTietPhieuXuatKho.getMaSanPham());
-                  sanPham.setSoLuongConLai(sanPham.getSoLuongConLai() - chiTietPhieuXuatKho.getSoLuong() );
-                  sanPhamBUS.update(sanPham);
-            }
-            //? cập nhật danh sách sản phẩm
-            for (int i = model_ds_san_pham.getRowCount() - 1; i >= 0; i--) 
-                  model_ds_san_pham.removeRow(i);
-            showDanhSachSanPham(sanPhamBUS.getAll());
-            
-            //?cập nhật thành tiền
-            thanh_tien_total.setText("0 đ");
-            JOptionPane.showMessageDialog(null, "Sửa phiếu xuất hàng thành công !","Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            dispose();
       }
       public void setCTPXK(int maPhieuXuat) {
             //? Tạo bảng danh sách
