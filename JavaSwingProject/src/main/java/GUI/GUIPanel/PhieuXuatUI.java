@@ -25,7 +25,6 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
       ChiTietPhieuXuatKhoBUS chiTietPhieuXuatKhoBUS = new ChiTietPhieuXuatKhoBUS();
       JPanel top;
             JPanel chucNangPanel;
-                  JButton xoa_btn;
                   JButton sua_btn;
                   JButton chi_tiet_btn;
                   JButton xuatExcel_btn;
@@ -44,14 +43,11 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
             this.maKhoHang = maKhoHang;
             top = new JPanel();
                   chucNangPanel = new JPanel();
-                        xoa_btn = new JButton("Xóa");
-                        xoa_btn.addActionListener(this);
                         sua_btn = new JButton("Sửa");
                         sua_btn.addActionListener(this);
                         chi_tiet_btn = new JButton("Chi tiết");
                         chi_tiet_btn.addActionListener(this);
                   chucNangPanel.setBorder(new CompoundBorder(new TitledBorder("Chức năng"), new EmptyBorder(4, 4, 4, 4)));
-                  chucNangPanel.add(customButtonOption(xoa_btn,"xoa_btn.png"));
                   chucNangPanel.add(customButtonOption(sua_btn,"sua_btn.png"));
                   chucNangPanel.add(customButtonOption(chi_tiet_btn,"chi_tiet.png"));
 
@@ -168,10 +164,7 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
             return  numberFormat.format(a);
       }
       @Override
-      public void actionPerformed(ActionEvent e) {
-            if(e.getSource() == xoa_btn) {
-                  xoaChiTietPhieuXuatHang();
-            } else if(e.getSource() == sua_btn) {
+      public void actionPerformed(ActionEvent e) {if(e.getSource() == sua_btn) {
                   suaChiTietPhieuXuatHang();
             } else if(e.getSource() == chi_tiet_btn) {
                   xemChiTietPhieuXuatHang();
@@ -201,18 +194,6 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
                   return "Chờ duyệt";
             } else {
                   return "Hủy";
-            }
-      }
-      public void xoaChiTietPhieuXuatHang() {
-            int selectedRow = table_ds_xuat_hang.getSelectedRow();
-            //? kiểm tra xem có dòng nào đang được chọn không
-            if(selectedRow != -1) {
-                  int maPhieuXuat = (Integer) table_ds_xuat_hang.getValueAt(selectedRow, 0);
-                  PhieuXuatKhoDTO temp = phieuXuatKhoBUS.getById(maPhieuXuat);
-                  phieuXuatKhoBUS.delete(temp);
-                  showDanhSachPhieuXuatHang(phieuXuatKhoBUS.getAll(maKhoHang));
-            } else {
-                  JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 phiếu xuất hàng!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
             }
       }
       public void suaChiTietPhieuXuatHang() {
