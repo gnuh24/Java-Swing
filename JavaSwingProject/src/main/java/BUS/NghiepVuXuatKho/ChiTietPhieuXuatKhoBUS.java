@@ -13,6 +13,9 @@ public class ChiTietPhieuXuatKhoBUS {
     public ArrayList<ChiTietPhieuXuatKhoDTO> getAll(int maKhoHang){
         return ChiTietPhieuXuatKhoDAO.getAll(maKhoHang);
     }
+    public ChiTietPhieuXuatKhoDTO getById(int maPhieuXuat){
+        return ChiTietPhieuXuatKhoDAO.getById(maPhieuXuat);
+    }
     public boolean create(Integer maKhoHang, ChiTietPhieuXuatKhoDTO ChiTietPhieuXuatKhoDTO) {
         return ChiTietPhieuXuatKhoDAO.create(maKhoHang, ChiTietPhieuXuatKhoDTO);
     }
