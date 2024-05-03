@@ -12,12 +12,14 @@ import javax.swing.*;
 import javax.swing.table.*;
 
 import BUS.NghiepVuXuatKho.ChiTietPhieuXuatKhoBUS;
+import BUS.NghiepVuXuatKho.PhieuXuatKhoBUS;
 import BUS.ThongTinSanPham.SanPhamBUS;
 import DTO.NghiepVuXuatKho.*;
 import Others.JDBCConfigure;
 
 public class ChiTietPhieuXuatKho{
-      ChiTietPhieuXuatKhoBUS chiTietPhieuXuatKhoBUS = new ChiTietPhieuXuatKhoBUS();
+      ChiTietPhieuXuatKhoBUS chiTietPhieuXuatKhoBUS;
+      PhieuXuatKhoBUS phieuXuatKhoBUS;
       SanPhamBUS sanPhamBUS;
       JFrame frame = new JFrame();
       JPanel header;
@@ -29,6 +31,7 @@ public class ChiTietPhieuXuatKho{
       JLabel ten_kho_hang, ten_kho_hang_lb;
       JLabel nguoi_xuat, nguoi_xuat_lb;
       JLabel ngay_xuat_kho, ngay_xuat_kho_lb;
+      JLabel trang_thai, trang_thai_lb;
       JPanel main_middle;
       DefaultTableModel model_ds_ctpxk;
       JTable table_ds_ctpxk;
@@ -37,6 +40,8 @@ public class ChiTietPhieuXuatKho{
       JLabel tong_tien, tong_tien_lb;
       JButton closeCTPXK;
       public ChiTietPhieuXuatKho(int maPhieuXuat) {
+            chiTietPhieuXuatKhoBUS = new ChiTietPhieuXuatKhoBUS();
+            phieuXuatKhoBUS = new PhieuXuatKhoBUS();
             header = new JPanel();
             header_lb = new JLabel("CHI TIẾT PHIẾU XUẤT");
             header_lb.setForeground(Color.WHITE);
@@ -65,11 +70,16 @@ public class ChiTietPhieuXuatKho{
             //? JLabel ngay_xuat_kho, ngay_xuat_kho_lb;
             ngay_xuat_kho = new JLabel("Ngày xuất kho : ");
             ngay_xuat_kho_lb = new JLabel();
+
+            //? JLabel trang_thai, trang_thai_lb;
+            trang_thai = new JLabel("Trạng thái : ");
+            trang_thai_lb = new JLabel();
             main_top.add(ma_phieu); main_top.add(ma_phieu_lb);
             main_top.add(ma_kho_hang); main_top.add(ma_kho_hang_lb);
             main_top.add(ten_kho_hang); main_top.add(ten_kho_hang_lb);
             main_top.add(nguoi_xuat); main_top.add(nguoi_xuat_lb);
             main_top.add(ngay_xuat_kho); main_top.add(ngay_xuat_kho_lb);
+            main_top.add(trang_thai); main_top.add(trang_thai_lb);
             main_top.setLayout(new GridLayout(3, 3));
             main_top.setPreferredSize(new Dimension(600,70));
 
@@ -126,7 +136,6 @@ public class ChiTietPhieuXuatKho{
             main.setLayout(new FlowLayout());
             main.setPreferredSize(new Dimension(750,430));
             setThongTinMain(maPhieuXuat);
-            System.out.println("Day la ma kho:" +this.ma_kho_hang_lb.getText());
             this.sanPhamBUS= new SanPhamBUS(Integer.valueOf(this.ma_kho_hang_lb.getText()));
 
             frame.add(header);
@@ -140,22 +149,29 @@ public class ChiTietPhieuXuatKho{
             DecimalFormat numberFormat = new DecimalFormat("###,### VNĐ");
             return  numberFormat.format(a);
       }
-      public void setThongTinMain(int maPhieuXuat) {
-            try {
-                  Statement state = JDBCConfigure.getConnection().createStatement();
-                  ResultSet result = state.executeQuery("SELECT * FROM `phieuxuatkho`, `khohang`, `taikhoan` WHERE phieuxuatkho.MaKhoHang = khohang.MaKhoHang  and taikhoan.MaKhoHang = khohang.MaKhoHang and phieuxuatkho.MaPhieu = " + maPhieuXuat);
-                  while(result.next()) {
-                        ma_phieu_lb.setText(String.valueOf(maPhieuXuat));
-                        ma_kho_hang_lb.setText(String.valueOf(result.getInt("MaKhoHang")));
-                        ten_kho_hang_lb.setText(result.getString("TenKhoHang"));
-                        nguoi_xuat_lb.setText(result.getString("HoTen"));
-                        ngay_xuat_kho_lb.setText(result.getString("NgayXuatKho"));
-
-                        tong_tien_lb.setText(toCurrency(result.getInt("TongGiaTri")));
-                  }
-            } catch(SQLException e) {
-                  System.err.println(e.getMessage());
+      public String toCurrency(long a) {
+            DecimalFormat numberFormat = new DecimalFormat("###,### VNĐ");
+            return  numberFormat.format(a);
+      }
+      public String toStringTrangThai(String trangThai) {
+            if(trangThai.equals("DaDuyet")) {
+                  return "Đã duyệt";
+            } else if(trangThai.equals("ChoDuyet")) {
+                  return "Chờ duyệt";
+            } else {
+                  return "Hủy";
             }
+      }
+      public void setThongTinMain(int maPhieuXuat) {
+            PhieuXuatKhoDTO phieuXuat = phieuXuatKhoBUS.getById(maPhieuXuat);
+            //? Set thông tin hiển thị
+            ma_phieu_lb.setText(String.valueOf(maPhieuXuat));
+            ma_kho_hang_lb.setText(String.valueOf(phieuXuat.getMaKhoHang()));
+            ten_kho_hang_lb.setText(phieuXuatKhoBUS.getTenKhoHang(maPhieuXuat));
+            nguoi_xuat_lb.setText(phieuXuatKhoBUS.getHoTen(maPhieuXuat));
+            ngay_xuat_kho_lb.setText(String.valueOf(phieuXuat.getNgayXuatKho()));
+            trang_thai_lb.setText(toStringTrangThai(phieuXuat.getTrangThai()));
+            tong_tien_lb.setText(toCurrency(phieuXuat.getTongGiaTri()));
             this.sanPhamBUS= new SanPhamBUS(Integer.valueOf(this.ma_kho_hang_lb.getText()));
             //? Tạo bảng danh sách
             ArrayList<ChiTietPhieuXuatKhoDTO> chiTietPhieuXuatKhoList = chiTietPhieuXuatKhoBUS.getAll(maPhieuXuat);
