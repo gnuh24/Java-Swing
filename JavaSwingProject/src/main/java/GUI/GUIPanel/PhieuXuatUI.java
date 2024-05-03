@@ -3,6 +3,7 @@ package GUI.GUIPanel;
 
 import BUS.NghiepVuXuatKho.ChiTietPhieuXuatKhoBUS;
 import BUS.NghiepVuXuatKho.PhieuXuatKhoBUS;
+import DTO.NghiepVuNhapKho.PhieuNhapKhoDTO;
 import DTO.NghiepVuXuatKho.PhieuXuatKhoDTO;
 
 
@@ -20,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class PhieuXuatUI extends JPanel implements ActionListener{
       int maKhoHang = 0;
-      PhieuXuatKhoBUS phieuXuatKhoBUS = new PhieuXuatKhoBUS();
+      PhieuXuatKhoBUS phieuXuatKhoBUS;
       ChiTietPhieuXuatKhoBUS chiTietPhieuXuatKhoBUS = new ChiTietPhieuXuatKhoBUS();
       JPanel top;
             JPanel chucNangPanel;
@@ -31,12 +32,15 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
             JPanel timKiemPanel;
                   JLabel tim_kiem;
                   JComboBox tim_kiem_cb;
+                  JLabel locTrangThai;
+                  JComboBox locTrangThai_cb;   
             JButton refeshButton;
       JPanel bot;
             DefaultTableModel model_ds_xuat_hang;
             JTable table_ds_xuat_hang;
             JScrollPane ds_xuat_hang;
       public PhieuXuatUI(int maKhoHang) {
+            phieuXuatKhoBUS = new PhieuXuatKhoBUS();
             this.maKhoHang = maKhoHang;
             top = new JPanel();
                   chucNangPanel = new JPanel();
@@ -60,14 +64,27 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
                           tim_kiem_cb.addItemListener(new ItemListener() {
                               public void itemStateChanged(ItemEvent e) {
                                   if (e.getStateChange() == ItemEvent.SELECTED) {
-                                    ArrayList<PhieuXuatKhoDTO> listPhieuXuatKho=phieuXuatKhoBUS.search(tim_kiem_cb.getSelectedIndex());
+                                    ArrayList<PhieuXuatKhoDTO> listPhieuXuatKho=phieuXuatKhoBUS.search(tim_kiem_cb.getSelectedIndex(),maKhoHang);
                                     showDanhSachPhieuXuatHang(listPhieuXuatKho);
                                   }
                               }
                           });
+                          locTrangThai= new JLabel("Trạng thái:");
+                        String tt[]={"Tất cả","Đã Duyệt","Chờ Duyệt"};
+                        locTrangThai_cb= new JComboBox<>(tt);
+                        locTrangThai_cb.addItemListener(new ItemListener() {
+                              public void itemStateChanged(ItemEvent e) {
+                                  if (e.getStateChange() == ItemEvent.SELECTED) {
+                                      ArrayList<PhieuXuatKhoDTO> danhSachLoc = phieuXuatKhoBUS.locTrangThai(locTrangThai_cb.getSelectedIndex(), maKhoHang);
+                                      showDanhSachPhieuXuatHang(danhSachLoc);
+                                  }
+                              }
+                          });     
                   timKiemPanel.setBorder(new CompoundBorder(new TitledBorder("Tìm Kiếm"), new EmptyBorder(4, 4, 4, 4)));
                   timKiemPanel.add(tim_kiem);
                   timKiemPanel.add(tim_kiem_cb);
+                  timKiemPanel.add(locTrangThai);
+                  timKiemPanel.add(locTrangThai_cb);
 
                   refeshButton = new JButton("Tải lại");
                   refeshButton.setIcon(new ImageIcon("C:\\Users\\dvmv2\\OneDrive\\Documents\\Nam_2\\Fixx\\Java-Swing-main-29-2\\Java-Swing-main\\JavaSwingProject\\src\\main\\java\\Resources\\refesh.png"));
@@ -80,7 +97,7 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
 
             bot = new JPanel();
                   
-                  String columns_ds_xuat_hang[] = {"Mã phiếu xuất", "Ngày xuất kho","Tổng giá trị"};
+                  String columns_ds_xuat_hang[] = {"Mã phiếu xuất", "Ngày xuất kho","Tổng giá trị","Trạng thái"};
                   String data_ds_xuat_hang[][] = {};
                   model_ds_xuat_hang = new DefaultTableModel(data_ds_xuat_hang, columns_ds_xuat_hang){
                         @Override
@@ -89,9 +106,11 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
                               if (columnIndex == 0) {
                                     return Integer.class; // Kiểu dữ liệu cho cột 0 là Integer
                               } else if (columnIndex == 1) {
-                                    return LocalDate.class; // Giả sử kiểu dữ liệu cho cột 3 là Date
+                                    return LocalDate.class; // Giả sử kiểu dữ liệu cho cột 3 là LocalDate
                               } else if (columnIndex == 2) {
-                                    return Integer.class; // Kiểu dữ liệu cho cột 4 là Double
+                                    return Integer.class; // Kiểu dữ liệu cho cột 4 là Integer
+                              } else if (columnIndex == 3) {
+                                    return String.class; // Kiểu dữ liệu cho cột 4 là String
                               } else {
                                     return Object.class; // Hoặc có thể trả về kiểu Object làm mặc định
                               }
@@ -101,12 +120,14 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
                   table_ds_xuat_hang.getColumnModel().getColumn(0).setPreferredWidth(100);
                   table_ds_xuat_hang.getColumnModel().getColumn(1).setPreferredWidth(200);
                   table_ds_xuat_hang.getColumnModel().getColumn(2).setPreferredWidth(200);
+                  table_ds_xuat_hang.getColumnModel().getColumn(3).setPreferredWidth(150);
                   //? Set vị trí cho nội dung (căn giữa cho nội dung)
                   DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
                   centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
                   table_ds_xuat_hang.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
                   table_ds_xuat_hang.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
                   table_ds_xuat_hang.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+                  table_ds_xuat_hang.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
                   table_ds_xuat_hang.setRowHeight(40);
                   showDanhSachPhieuXuatHang(phieuXuatKhoBUS.getAll(maKhoHang));
                   ds_xuat_hang = new JScrollPane(table_ds_xuat_hang);
@@ -155,6 +176,7 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
             } else if(e.getSource() == chi_tiet_btn) {
                   xemChiTietPhieuXuatHang();
             } else if(e.getSource() == refeshButton) {
+                  tim_kiem_cb.setSelectedIndex(0);
                   showDanhSachPhieuXuatHang(phieuXuatKhoBUS.getAll(maKhoHang));
             }
       }
@@ -167,9 +189,19 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
                  model_ds_xuat_hang.addRow(new Object[]{
                              phieuXuatKho.getMaPhieu(),
                              String.valueOf(phieuXuatKho.getNgayXuatKho()).replace("T"," "),
-                             toCurrency(phieuXuatKho.getTongGiaTri())
+                             toCurrency(phieuXuatKho.getTongGiaTri()),
+                             toStringTrangThai(phieuXuatKho.getTrangThai()),
                  });
            }
+      }
+      public String toStringTrangThai(String trangThai) {
+            if(trangThai.equals("DaDuyet")) {
+                  return "Đã duyệt";
+            } else if(trangThai.equals("ChoDuyet")) {
+                  return "Chờ duyệt";
+            } else {
+                  return "Hủy";
+            }
       }
       public void xoaChiTietPhieuXuatHang() {
             int selectedRow = table_ds_xuat_hang.getSelectedRow();
