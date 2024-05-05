@@ -6,15 +6,14 @@ import Others.JDBCConfigure;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
 
 public class PhieuNhapKhoDAO implements DAOInterface<PhieuNhapKhoDTO> {
 
     @Override
-    public List<PhieuNhapKhoDTO> getAll(Integer maKhoHang) {
-        List<PhieuNhapKhoDTO> danhSachPhieuNhapKho = new ArrayList<>();
+    public ArrayList<PhieuNhapKhoDTO> getAll(Integer maKhoHang) {
+        ArrayList<PhieuNhapKhoDTO> danhSachPhieuNhapKho = new ArrayList<>();
 
         try {
             Connection connection = JDBCConfigure.getConnection();
@@ -25,7 +24,7 @@ public class PhieuNhapKhoDAO implements DAOInterface<PhieuNhapKhoDTO> {
 
             while (resultSet.next()) {
                 Integer maPhieu = resultSet.getInt("MaPhieu");
-                String ngayNhapKho = resultSet.getString("NgayNhapKho");
+                String dateString = resultSet.getString("NgayNhapKho");
                 Long tongGiaTri = resultSet.getLong("TongGiaTri");
                 Integer maNCC = resultSet.getInt("MaNCC");
                 Integer maKhoHangPhieu = resultSet.getInt("MaKhoHang");
@@ -33,7 +32,9 @@ public class PhieuNhapKhoDAO implements DAOInterface<PhieuNhapKhoDTO> {
 
                 PhieuNhapKhoDTO phieuNhapKhoDTO = new PhieuNhapKhoDTO();
                 phieuNhapKhoDTO.setMaPhieu(maPhieu);
-                phieuNhapKhoDTO.setNgayNhapKho(ngayNhapKho);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate parsedDateTime = LocalDate.parse(dateString, formatter);
+                phieuNhapKhoDTO.setNgayNhapKho(parsedDateTime);
                 phieuNhapKhoDTO.setTongGiaTri(tongGiaTri);
                 phieuNhapKhoDTO.setMaNCC(maNCC);
                 phieuNhapKhoDTO.setMaKhoHang(maKhoHangPhieu);
@@ -67,13 +68,15 @@ public class PhieuNhapKhoDAO implements DAOInterface<PhieuNhapKhoDTO> {
 
             while (resultSet.next()) {
                 Integer maPhieu = resultSet.getInt("MaPhieu");
-                String ngayNhapKho = resultSet.getString("NgayNhapKho");
+                String dateString = resultSet.getString("NgayNhapKho");
                 Long tongGiaTri = resultSet.getLong("TongGiaTri");
                 Integer maNCC = resultSet.getInt("MaNCC");
                 Integer maKhoHangPhieu = resultSet.getInt("MaKhoHang");
                 String trangthai= resultSet.getString("TrangThai");
                 phieuNhapKhoDTO.setMaPhieu(maPhieu);
-                phieuNhapKhoDTO.setNgayNhapKho(ngayNhapKho);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate parsedDateTime = LocalDate.parse(dateString, formatter);
+                phieuNhapKhoDTO.setNgayNhapKho(parsedDateTime);
                 phieuNhapKhoDTO.setTongGiaTri(tongGiaTri);
                 phieuNhapKhoDTO.setMaNCC(maNCC);
                 phieuNhapKhoDTO.setMaKhoHang(maKhoHangPhieu);
@@ -98,7 +101,7 @@ public class PhieuNhapKhoDAO implements DAOInterface<PhieuNhapKhoDTO> {
             PreparedStatement preparedStatement = JDBCConfigure.getConnection().prepareStatement(createPhieuNhapKhoQuery, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1,
                 (phieuNhapKhoDTO.getNgayNhapKho() != null) ?
-                    phieuNhapKhoDTO.getNgayNhapKho() : LocalDate.now().toString()
+                    phieuNhapKhoDTO.getNgayNhapKho().toString() : LocalDate.now().toString()
             );
 
             preparedStatement.setLong(2, phieuNhapKhoDTO.getTongGiaTri());
@@ -135,7 +138,7 @@ public class PhieuNhapKhoDAO implements DAOInterface<PhieuNhapKhoDTO> {
 
         try {
             PreparedStatement preparedStatement = JDBCConfigure.getConnection().prepareStatement(updatePhieuNhapKhoQuery);
-            preparedStatement.setString(1, phieuNhapKhoDTO.getNgayNhapKho());
+            preparedStatement.setString(1, phieuNhapKhoDTO.getNgayNhapKho().toString());
             preparedStatement.setLong(2, phieuNhapKhoDTO.getTongGiaTri());
             preparedStatement.setInt(3, phieuNhapKhoDTO.getMaNCC());
             preparedStatement.setString(4, phieuNhapKhoDTO.getTrangThai());
@@ -188,5 +191,57 @@ public class PhieuNhapKhoDAO implements DAOInterface<PhieuNhapKhoDTO> {
         }
 
         return true;
+    }
+        public int maPhieuNhapKhoTiepTheo() {
+            try {
+                    Statement statement = JDBCConfigure.getConnection().createStatement();
+                    ResultSet maPhieuNhapTiepTheo = statement.executeQuery("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'javaswing_database'AND TABLE_NAME = 'phieunhapkho';");
+                    while(maPhieuNhapTiepTheo.next()) {
+                        return maPhieuNhapTiepTheo.getInt("AUTO_INCREMENT");
+                    }
+                    return -1;
+            } catch (SQLException e) {
+                    e.printStackTrace(); // hoặc xử lý ngoại lệ theo cách phù hợp
+                    return -1;
+            }
+        }
+        public String getTenKhoHang(int maPhieuNhap) {
+            try {
+                Statement statement = JDBCConfigure.getConnection().createStatement();
+                ResultSet phieuNhapKho = statement.executeQuery("SELECT * FROM `phieunhapkho`,`khohang` WHERE phieunhapkho.MaKhoHang = khohang.MaKhoHang and phieunhapkho.MaPhieu = " + maPhieuNhap);
+                while(phieuNhapKho.next()) {
+                        return phieuNhapKho.getString("TenKhoHang");
+                }
+                return null;
+            } catch (SQLException e) {
+                e.printStackTrace(); // hoặc xử lý ngoại lệ theo cách phù hợp
+                return null;
+            }
+    }
+    public String getHoTen(int maPhieuNhap) {
+            try {
+                Statement statement = JDBCConfigure.getConnection().createStatement();
+                ResultSet phieuNhapKho = statement.executeQuery("SELECT * FROM `phieunhapkho`,`khohang`,`taikhoan` WHERE phieunhapkho.MaKhoHang = khohang.MaKhoHang and phieunhapkho.MaKhoHang = taikhoan.MaKhoHang and  phieunhapkho.MaPhieu = " + maPhieuNhap);
+                while(phieuNhapKho.next()) {
+                        return phieuNhapKho.getString("HoTen");
+                }
+                return null;
+            } catch (SQLException e) {
+                e.printStackTrace(); // hoặc xử lý ngoại lệ theo cách phù hợp
+                return null;
+            }
+    }
+    public String getTenNhaCungCap(int maPhieuNhap) {
+            try {
+                Statement statement = JDBCConfigure.getConnection().createStatement();
+                ResultSet phieuNhapKho = statement.executeQuery("SELECT * FROM `phieunhapkho`, `nhacungcap` where phieunhapkho.MaNCC = nhacungcap.MaNCC and phieunhapkho.MaPhieu = " + maPhieuNhap);
+                while(phieuNhapKho.next()) {
+                        return phieuNhapKho.getString("TenNCC");
+                }
+                return null;
+            } catch (SQLException e) {
+                e.printStackTrace(); // hoặc xử lý ngoại lệ theo cách phù hợp
+                return null;
+            }
     }
 }
