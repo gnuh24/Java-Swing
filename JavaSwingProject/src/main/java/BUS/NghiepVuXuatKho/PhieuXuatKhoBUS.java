@@ -14,30 +14,29 @@ import DTO.ThongTinSanPham.*;
 import Others.JDBCConfigure;
 
 public class PhieuXuatKhoBUS {
-    private final PhieuXuatKhoDAO PhieuXuatKhoDAO= new PhieuXuatKhoDAO();
-    private int maKhoHang;
+    private final PhieuXuatKhoDAO phieuXuatKhoDAO= new PhieuXuatKhoDAO();
 
     public PhieuXuatKhoBUS() {
 
     }
 
     public ArrayList<PhieuXuatKhoDTO> getAll(int maKhoHang){
-        return PhieuXuatKhoDAO.getAll(maKhoHang);
+        return phieuXuatKhoDAO.getAll(maKhoHang);
     }
     public PhieuXuatKhoDTO getById(int maPhieu){
-        return PhieuXuatKhoDAO.getById(maPhieu);
+        return phieuXuatKhoDAO.getById(maPhieu);
     }
     public boolean create(Integer maKhoHang, PhieuXuatKhoDTO phieuXuatKhoDTO) {
-        return PhieuXuatKhoDAO.create(maKhoHang, phieuXuatKhoDTO);
+        return phieuXuatKhoDAO.create(maKhoHang, phieuXuatKhoDTO);
     }
     public boolean update(PhieuXuatKhoDTO phieuXuatKhoDTO) {
-        return PhieuXuatKhoDAO.update(phieuXuatKhoDTO);
+        return phieuXuatKhoDAO.update(phieuXuatKhoDTO);
     }
     public boolean delete(PhieuXuatKhoDTO phieuXuatKhoDTO) {
-        return PhieuXuatKhoDAO.delete(phieuXuatKhoDTO);
+        return phieuXuatKhoDAO.delete(phieuXuatKhoDTO);
     }
     public int maPhieuXuatKhoTiepTheo() {
-        return PhieuXuatKhoDAO.maPhieuXuatKhoTiepTheo();
+        return phieuXuatKhoDAO.maPhieuXuatKhoTiepTheo();
     }
     public ArrayList<PhieuXuatKhoDTO> search(int index, int maKhoHang){
         ArrayList<PhieuXuatKhoDTO> kq= new ArrayList<>();
@@ -109,9 +108,9 @@ public class PhieuXuatKhoBUS {
         return kq;
     }
     public String getTenKhoHang(int maPhieuXuat) {
-        return PhieuXuatKhoDAO.getTenKhoHang(maPhieuXuat);
+        return phieuXuatKhoDAO.getTenKhoHang(maPhieuXuat);
     }
     public String getHoTen(int maPhieuXuat) {
-        return PhieuXuatKhoDAO.getHoTen(maPhieuXuat);
+        return phieuXuatKhoDAO.getHoTen(maPhieuXuat);
     }
 }
