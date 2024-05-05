@@ -6,13 +6,12 @@ import Others.JDBCConfigure;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ChiTietPhieuNhapKhoDAO implements DAOInterface<ChiTietPhieuNhapKhoDTO> {
 
     @Override
-    public List<ChiTietPhieuNhapKhoDTO> getAll(Integer maPhieuNhap) {
-        List<ChiTietPhieuNhapKhoDTO> danhSachChiTietPhieuNhapKho = new ArrayList<>();
+    public ArrayList<ChiTietPhieuNhapKhoDTO> getAll(Integer maPhieuNhap) {
+        ArrayList<ChiTietPhieuNhapKhoDTO> danhSachChiTietPhieuNhapKho = new ArrayList<>();
 
         try {
             JDBCConfigure.getConnection();
