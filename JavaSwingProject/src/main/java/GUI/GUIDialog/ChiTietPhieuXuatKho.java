@@ -1,23 +1,22 @@
 package GUI.GUIDialog;
 
 import java.awt.*;
-// import java.awt.event.*;
+import java.awt.event.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.sql.*;
 
 import javax.swing.*;
-// import javax.swing.border.*;
-// import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.*;
 
 import BUS.NghiepVuXuatKho.ChiTietPhieuXuatKhoBUS;
 import BUS.NghiepVuXuatKho.PhieuXuatKhoBUS;
 import BUS.ThongTinSanPham.SanPhamBUS;
 import DTO.NghiepVuXuatKho.*;
+import GUI.GUIThanhPhan.ButtonCustom;
 import Others.JDBCConfigure;
 
-public class ChiTietPhieuXuatKho{
+public class ChiTietPhieuXuatKho implements ActionListener{
       ChiTietPhieuXuatKhoBUS chiTietPhieuXuatKhoBUS;
       PhieuXuatKhoBUS phieuXuatKhoBUS;
       SanPhamBUS sanPhamBUS;
@@ -38,7 +37,7 @@ public class ChiTietPhieuXuatKho{
       JScrollPane ds_ctpxk;
       JPanel main_bottom;
       JLabel tong_tien, tong_tien_lb;
-      JButton closeCTPXK;
+      ButtonCustom closeCTPXK;
       public ChiTietPhieuXuatKho(int maPhieuXuat) {
             chiTietPhieuXuatKhoBUS = new ChiTietPhieuXuatKhoBUS();
             phieuXuatKhoBUS = new PhieuXuatKhoBUS();
@@ -127,7 +126,8 @@ public class ChiTietPhieuXuatKho{
             tong_tien = new JLabel("Tổng tiền : ");
             tong_tien_lb = new JLabel();
             // JButton closeCTPXK;
-            closeCTPXK = new JButton("Đóng");
+            closeCTPXK = new ButtonCustom("Đóng","","#3eceff");
+            closeCTPXK.addActionListener(this);
             main_bottom.add(tong_tien); main_bottom.add(tong_tien_lb);
             main_bottom.add(closeCTPXK);
             main.add(main_top);
@@ -184,6 +184,11 @@ public class ChiTietPhieuXuatKho{
                       chiTietPhieuXuatKhoList.get(i).getSoLuong(),
                       toCurrency(chiTietPhieuXuatKhoList.get(i).getThanhTien()),
                   });
+            }
+      }
+      public void actionPerformed(ActionEvent e) {
+            if(e.getSource() == closeCTPXK) {
+                  frame.dispose();
             }
       }
 }
