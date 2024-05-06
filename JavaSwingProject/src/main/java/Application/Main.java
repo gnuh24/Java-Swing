@@ -35,7 +35,7 @@ public class Main extends JFrame implements ActionListener{
         // add sự kiện     
         menu.getBtn_sanPham().addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e){
-                GiaoDienSanPham sanPham= new GiaoDienSanPham(taiKhoanDTO.getMaKhoHang());
+                SanPhamUI sanPham= new SanPhamUI(taiKhoanDTO.getMaKhoHang());
                 setPanelMain(sanPham);
                 hieuUngHover(e);
             }
@@ -43,7 +43,7 @@ public class Main extends JFrame implements ActionListener{
         
         menu.getBtn_loaiSP().addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e){
-                GiaoDienLoaiSanPham loaiSP= new GiaoDienLoaiSanPham(taiKhoanDTO.getMaKhoHang());
+                LoaiSanPhamUI loaiSP= new LoaiSanPhamUI(taiKhoanDTO.getMaKhoHang());
                 setPanelMain(loaiSP);
                 hieuUngHover(e);
             }
@@ -51,7 +51,7 @@ public class Main extends JFrame implements ActionListener{
         
         menu.getBtn_NhaCungCap().addMouseListener(new MouseAdapter(){
             public void mousePressed(MouseEvent e){
-                NhaCungCapGUI nhaCC= new NhaCungCapGUI(taiKhoanDTO.getMaKhoHang());
+                NhaCungCapUI nhaCC= new NhaCungCapUI(taiKhoanDTO.getMaKhoHang());
                 setPanelMain(nhaCC);
                 hieuUngHover(e);
             }
