@@ -1,11 +1,10 @@
 package GUI.GUIPanel;
 
-import BUS.NghiepVuNhapKho.ChiTietPhieuNhapKhoBUS;
-import BUS.NghiepVuNhapKho.NhaCungCapBUS;
-import BUS.NghiepVuNhapKho.PhieuNhapKhoBUS;
-import DTO.NghiepVuNhapKho.PhieuNhapKhoDTO;
-import GUI.GUIDialog.TrangThaiDonNhapDialog;
-import Others.UltilServices;
+import BUS.NghiepVuNhapKho.*;
+import DTO.NghiepVuNhapKho.*;
+import GUI.GUIDialog.*;
+import GUI.GUIThanhPhan.*;
+import Others.*;
 
 import java.time.LocalDate;
 
@@ -26,6 +25,8 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
       NhaCungCapBUS nhaCungCapBUS = new NhaCungCapBUS();
 
       ChiTietPhieuNhapKhoBUS chiTietPhieuNhapKhoBUS = new ChiTietPhieuNhapKhoBUS();
+
+      UtilServices UltilServices = new UtilServices();
       JPanel top;
             JPanel chucNangPanel;
                   JButton trangthai_btn;
@@ -74,7 +75,7 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
                               }
                           });
                         locTrangThai= new JLabel("Trạng thái:");
-                        String tt[]={"Đã Duyệt","Chờ Duyệt"};
+                        String tt[]={"Tất cả", "Đã Duyệt","Chờ Duyệt"};
                         locTrangThai_cb= new JComboBox<>(tt);
                         locTrangThai_cb.addItemListener(new ItemListener() {
                               public void itemStateChanged(ItemEvent e) {
@@ -164,7 +165,7 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
             size.height = 40;
             button.setPreferredSize(size);
 
-            ImageIcon icon = new ImageIcon("C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHungNew\\JavaSwingProject\\src\\main\\java\\Resources\\" + linkIMG); 
+            ImageIcon icon = new ImageIcon("C:\\Users\\dvmv2\\OneDrive\\Documents\\Nam_2\\Fixx\\Java-Swing-main-2-5\\Java-Swing-main\\JavaSwingProject\\src\\main\\java\\Resources" + linkIMG); 
             button.setIcon(new ImageIcon(icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)));
 
             return button;
@@ -179,20 +180,10 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
                   showDanhSachPhieuNhapHang((ArrayList<PhieuNhapKhoDTO>) phieuNhapKhoBUS.getAllPhieuNhapKho(maKhoHang));
             } else if(e.getSource() == chi_tiet_btn) {
                   xemChiTietPhieuNhapHang();
+            } else if(e.getSource() == sua_btn) {
+                  suaChiTietPhieuNhapHang();
             }else if (e.getSource() == trangthai_btn){
-                int selectedRow = tableDSPhieuNhapKho.getSelectedRow();
-                if(selectedRow != -1) {
-                    if (!tableDSPhieuNhapKho.getValueAt(selectedRow,4).toString().equals("Đã Duyệt")){
-                      int maPhieuXuat = (Integer) tableDSPhieuNhapKho.getValueAt(selectedRow, 0);
-                      new TrangThaiDonNhapDialog(this,maPhieuXuat);                        
-                    }
-                    else {
-                      JOptionPane.showMessageDialog(null, "Thay đổi trạng thái chỉ dành cho đơn chờ duyệt !!!","Cảnh báo", JOptionPane.ERROR_MESSAGE);                        
-                    }
-
-                } else {
-                      JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 phiếu nhập hàng!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
-                }                
+                  xemTrangThaiPhieuNhapHang();
             }
       }
 
@@ -217,15 +208,42 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
                   });
             }
       }
-
+      public void suaChiTietPhieuNhapHang() {
+            int selectedRow = tableDSPhieuNhapKho.getSelectedRow();
+            //? kiểm tra xem có dòng nào đang được chọn không
+            if(selectedRow != -1) {
+                  if (tableDSPhieuNhapKho.getValueAt(selectedRow,4).toString().equals("Chờ Duyệt")){
+                        int maPhieuNhap = (Integer) tableDSPhieuNhapKho.getValueAt(selectedRow, 0);
+                        new SuaChiTietPhieuNhapKho(maPhieuNhap);                  
+                  } else {
+                        JOptionPane.showMessageDialog(null, "Sửa phiếu nhập chỉ dành cho đơn chờ duyệt !!!","Cảnh báo", JOptionPane.ERROR_MESSAGE);                         
+                  }
+                  
+            } else {
+                  JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 phiếu nhập hàng!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
+            }
+      }
       public void xemChiTietPhieuNhapHang() {
             int selectedRow = tableDSPhieuNhapKho.getSelectedRow();
             //? kiểm tra xem có dòng nào đang được chọn không
             if(selectedRow != -1) {
-                  int maPhieuXuat = (Integer) tableDSPhieuNhapKho.getValueAt(selectedRow, 0);
-                  new ChiTietPhieuNhapKho(maPhieuXuat);
+                  int maPhieuNhap = (Integer) tableDSPhieuNhapKho.getValueAt(selectedRow, 0);
+                  new ChiTietPhieuNhapKho(maPhieuNhap);
             } else {
                   JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 phiếu nhập hàng!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
             }
+      }
+      public void xemTrangThaiPhieuNhapHang() {
+            int selectedRow = tableDSPhieuNhapKho.getSelectedRow();
+            if(selectedRow != -1) {
+                  if (tableDSPhieuNhapKho.getValueAt(selectedRow,4).toString().equals("Chờ Duyệt")){
+                  int maPhieuNhap = (Integer) tableDSPhieuNhapKho.getValueAt(selectedRow, 0);
+                  new TrangThaiDonNhapDialog(maPhieuNhap);                        
+                  } else {
+                  JOptionPane.showMessageDialog(null, "Thay đổi trạng thái chỉ dành cho đơn chờ duyệt !!!","Cảnh báo", JOptionPane.ERROR_MESSAGE);                        
+                  }
+            } else {
+                  JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 phiếu nhập hàng!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
+            }         
       }
 }
