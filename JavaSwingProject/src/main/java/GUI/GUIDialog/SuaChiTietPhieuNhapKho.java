@@ -180,7 +180,7 @@ public class SuaChiTietPhieuNhapKho extends JFrame implements ActionListener{
                               thong_tin = new JPanel();
                               thong_tin.setLayout(new BoxLayout(thong_tin, BoxLayout.Y_AXIS));
                                     ma_phieu_nhap_pn = new JPanel();
-                                          ma_phieu_nhap = new JLabel("Mã phiếu xuất : ");
+                                          ma_phieu_nhap = new JLabel("Mã phiếu nhập : ");
                                           ma_phieu_nhap_tf = new JTextField(30);
                                           ma_phieu_nhap_tf.setPreferredSize(new Dimension(500, 35));
                                     //! sửa ở đây
@@ -270,7 +270,7 @@ public class SuaChiTietPhieuNhapKho extends JFrame implements ActionListener{
                                           thanh_tien_total.setFont(new Font("Arial", Font.BOLD, 18));
                                           thanh_tien_total.setPreferredSize(new Dimension(150, 35));
                                           thanh_tien_total.setForeground(Color.RED);
-                                          thanh_tien_xac_nhan = new JButton("Sửa phiếu xuất hàng");
+                                          thanh_tien_xac_nhan = new JButton("Sửa phiếu nhập hàng");
                                           thanh_tien_xac_nhan.addActionListener(this);
                                           thanh_tien_xac_nhan = customButtonMain(thanh_tien_xac_nhan,130,35);
                                           thanh_tien_xac_nhan.setPreferredSize(new Dimension(130, 35));
@@ -363,7 +363,7 @@ public class SuaChiTietPhieuNhapKho extends JFrame implements ActionListener{
             }
       }
       public void xuLyTongGiaTri() {
-            //? Tính và hiển hiển thị tổng giá trị phiếu xuất hàng
+            //? Tính và hiển hiển thị tổng giá trị phiếu nhập hàng
             if(table_ds_nhap_hang.getRowCount() != -1) {
                   int sum = 0;
                   for(int i= 0; i < table_ds_nhap_hang.getRowCount(); i++) {
@@ -411,7 +411,7 @@ public class SuaChiTietPhieuNhapKho extends JFrame implements ActionListener{
             ma_phieu_nhap_tf.setText(String.valueOf(maPhieuNhap));
       }
       public void capNhatAdmin(int maPhieuNhap) {
-            nguoi_tao_phieu_tf.setText(phieuNhapKhoBUS.getHoTen(maPhieuNhap));
+            nguoi_tao_phieu_tf.setText(phieuNhapKhoBUS.getHoTenByMaPhieuNhap(maPhieuNhap));
       }
       public void capNhatNgayNhapKho(int maPhieuNhap) {
             PhieuNhapKhoDTO phieuNhap = phieuNhapKhoBUS.getPhieuNhapKhoByMaPhieu(maPhieuNhap);
@@ -431,7 +431,7 @@ public class SuaChiTietPhieuNhapKho extends JFrame implements ActionListener{
             } else {
                   int selectedRow = table_ds_san_pham.getSelectedRow();
                   if(selectedRow != -1) {
-                        //? Đếm số lượng đã có trong phiếu xuất hàng
+                        //? Đếm số lượng đã có trong phiếu nhập hàng
                         int tongSoLuong = 0;
                         boolean check = false;
                         int i;
@@ -449,7 +449,7 @@ public class SuaChiTietPhieuNhapKho extends JFrame implements ActionListener{
                                     xuLyTongGiaTri();
                                     them_sp_number.setText("");
                               } else {
-                                    //? Thêm dữ liệu vào bảng xuất hàng
+                                    //? Thêm dữ liệu vào bảng nhập hàng
                                     model_ds_nhap_hang.addRow(new Object[]{
                                           model_ds_nhap_hang.getRowCount()+1,
                                           table_ds_san_pham.getValueAt(selectedRow,0),
@@ -564,7 +564,6 @@ public class SuaChiTietPhieuNhapKho extends JFrame implements ActionListener{
             //? Tạo bảng danh sách
             PhieuNhapKhoDTO phieuNhapKho = phieuNhapKhoBUS.getPhieuNhapKhoByMaPhieu(maPhieuNhap);
             this.maKhoHang = phieuNhapKho.getMaKhoHang();
-            System.out.println("MÃ KHO HÀNG : " + this.maKhoHang);
             sanPhamBUS = new SanPhamBUS(this.maKhoHang);
             ArrayList<ChiTietPhieuNhapKhoDTO> chiTietPhieuNhapKhoList = chiTietPhieuNhapKhoBUS.getChiTietPhieuNhapKhoByMaPhieu(maPhieuNhap);
             for(int i = 0; i < chiTietPhieuNhapKhoList.size(); i++) {
