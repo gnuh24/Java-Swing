@@ -25,6 +25,7 @@ public class XuatHangUI extends JPanel implements ActionListener{
       JPanel main;
             //? Main left
             JPanel main_left;
+            JLabel xuathang_lb;
                   JPanel tim_kiem;
                         JLabel tim_kiem_lb;
                         JTextField tim_kiem_tf;
@@ -71,6 +72,9 @@ public class XuatHangUI extends JPanel implements ActionListener{
                         main_left = new JPanel();
                         main_left.setPreferredSize(new Dimension(600,800));
                         main_left.setBackground(Color.WHITE);
+                              xuathang_lb = new JLabel("XUẤT HÀNG", JLabel.CENTER);
+                              xuathang_lb.setPreferredSize(new Dimension(550,60));
+                              xuathang_lb.setFont(new Font("Arial", Font.BOLD, 25));
                               tim_kiem = new JPanel();
                               tim_kiem.setPreferredSize(new Dimension(550, 70));
                               tim_kiem.setBorder(new CompoundBorder(new TitledBorder("Tìm Kiếm"), new EmptyBorder(4, 4, 4, 4)));
@@ -146,7 +150,7 @@ public class XuatHangUI extends JPanel implements ActionListener{
                               them_sp.add(them_sp_lb);
                               them_sp.add(them_sp_number);
                               them_sp.add(customButtonMain(them_sp_confirm,100,35));
-
+                        main_left.add(xuathang_lb);
                         main_left.add(tim_kiem);
                         main_left.add(ds_san_pham);
                         main_left.add(them_sp);
@@ -175,6 +179,7 @@ public class XuatHangUI extends JPanel implements ActionListener{
                                           nguoi_tao_phieu_tf.setPreferredSize(new Dimension(50, 35));
                                           //! sửa ở đây
                                           nguoi_tao_phieu_tf.setEditable(false);
+                                          nguoi_tao_phieu_tf.setText(phieuXuatKhoBUS.getHoTen(maKhoHang));
                                     nguoi_tao_phieu_pn.setPreferredSize(new Dimension(550,50));
                                     nguoi_tao_phieu_pn.add(nguoi_tao_phieu);
                                     nguoi_tao_phieu_pn.add(nguoi_tao_phieu_tf);
