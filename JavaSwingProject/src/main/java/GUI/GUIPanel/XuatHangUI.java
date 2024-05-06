@@ -92,7 +92,7 @@ public class XuatHangUI extends JPanel implements ActionListener{
                               tim_kiem.add(tim_kiem_lb);
                               tim_kiem.add(tim_kiem_tf);
 
-                              String columns_ds_san_pham[] = {"STT", "Tên sản phẩm", "Số lượng", "Đơn giá"};
+                              String columns_ds_san_pham[] = {"Mã SP", "Tên sản phẩm", "Số lượng", "Đơn giá"};
                               String data_ds_san_pham[][] = {};
                               model_ds_san_pham = new DefaultTableModel(data_ds_san_pham, columns_ds_san_pham){
                                     @Override
@@ -178,6 +178,7 @@ public class XuatHangUI extends JPanel implements ActionListener{
                                           nguoi_tao_phieu_tf = new JTextField("Admin",30);
                                           nguoi_tao_phieu_tf.setPreferredSize(new Dimension(50, 35));
                                           //! sửa ở đây
+
                                           nguoi_tao_phieu_tf.setEditable(false);
                                           nguoi_tao_phieu_tf.setText(phieuXuatKhoBUS.getHoTen(maKhoHang));
                                     nguoi_tao_phieu_pn.setPreferredSize(new Dimension(550,50));
@@ -448,8 +449,17 @@ public class XuatHangUI extends JPanel implements ActionListener{
                                     //? Check xem số lượng cần thêm có phải số âm hoặc bằng 0 hay không
                                     JOptionPane.showMessageDialog(null, "Số lượng không hợp lệ!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
                               } else {
-                                    model_ds_xuat_hang.setValueAt(Integer.valueOf(text), selectedRow, 3);
-                                    xuLyTongGiaTri();
+                                    //? check số lượng có vượt quá số lượng trong kho
+                                    for(int i = 0; i < table_ds_san_pham.getRowCount(); i++) {
+                                          if((Integer)table_ds_san_pham.getValueAt(i,0) == (Integer)table_ds_xuat_hang.getValueAt(selectedRow, 1)) {
+                                                if((Integer)table_ds_san_pham.getValueAt(i,2) >= Integer.valueOf(text)) {
+                                                      model_ds_xuat_hang.setValueAt(Integer.valueOf(text), selectedRow, 3);
+                                                      xuLyTongGiaTri();
+                                                      return;
+                                                }
+                                          }
+                                    }
+                                    JOptionPane.showMessageDialog(null, "Số lượng vượt quá số lượng còn lại trong kho!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
                               }
                         }
                   } else {
@@ -503,5 +513,8 @@ public class XuatHangUI extends JPanel implements ActionListener{
       }
       public void capNhatMaPhieuXuatTiepTheo() {
             ma_phieu_xuat_tf.setText(String.valueOf(phieuXuatKhoBUS.maPhieuXuatKhoTiepTheo()));
+      }
+      public void capNhatTenNguoiNhapHang() {
+            nguoi_tao_phieu_tf.setText(String.valueOf(phieuXuatKhoBUS.getHoTen(maKhoHang)));
       }
 }
