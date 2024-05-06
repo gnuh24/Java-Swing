@@ -1,7 +1,8 @@
 package GUI.GUIDialog;
 
 import java.awt.*;
-// import java.awt.event.*;
+import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.sql.*;
@@ -15,7 +16,7 @@ import BUS.ThongTinSanPham.SanPhamBUS;
 import DTO.NghiepVuNhapKho.*;
 import GUI.GUIThanhPhan.ButtonCustom;
 
-public class ChiTietPhieuNhapKho{
+public class ChiTietPhieuNhapKho implements ActionListener{
       ChiTietPhieuNhapKhoBUS chiTietPhieuNhapKhoBUS;
       PhieuNhapKhoBUS phieuNhapKhoBUS;
       SanPhamBUS sanPhamBUS;
@@ -132,6 +133,7 @@ public class ChiTietPhieuNhapKho{
             tong_tien_lb = new JLabel();
             // JButton closeCTPXK;
             closeCTPNK = new ButtonCustom("Đóng","","#3eceff");
+            closeCTPNK.addActionListener(this);
             main_bottom.add(tong_tien); main_bottom.add(tong_tien_lb);
             main_bottom.add(closeCTPNK);
             main.add(main_top);
@@ -191,6 +193,11 @@ public class ChiTietPhieuNhapKho{
                     chiTietPhieuNhapKhoList.get(i).getSoLuong(),
                     toCurrency(chiTietPhieuNhapKhoList.get(i).getThanhTien()),
                 });
+            }
+      }
+      public void actionPerformed(ActionEvent e) {
+            if(e.getSource() == closeCTPNK) {
+                  frame.dispose();
             }
       }
 }
