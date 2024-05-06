@@ -38,13 +38,13 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
         this.SPGUI=guiaa;
         this.SanPhamBUS= new SanPhamBUS(guiaa.getMaKhoHang());
         this.LoaiSPBUS= new LoaiSanPhamBUS(guiaa.getMaKhoHang());
-        System.out.println(this.LoaiSPBUS);
         this.init();
     }
-    public SanPhamDialog(String title,String type, SanPhamDTO sanPhamDuocChon) {
+    public SanPhamDialog(SanPhamUI guiaa,String title,String type, SanPhamDTO sanPhamDuocChon) {
         this.tieuDe=title;
         this.type=type;
         this.SPDuocChon=sanPhamDuocChon;
+        this.SPGUI=guiaa;
         this.SanPhamBUS= new SanPhamBUS(sanPhamDuocChon.getMaKhoHang());
         this.LoaiSPBUS= new LoaiSanPhamBUS(sanPhamDuocChon.getMaKhoHang());
         this.LoaiSPBUS= new LoaiSanPhamBUS(sanPhamDuocChon.getMaKhoHang());
@@ -193,6 +193,8 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
             String tenSP=this.tenSP.txtForm.getText();
             String xuatXu=this.xuatXu.txtForm.getText();
             int giaSP=Integer.parseInt(this.giaSP.txtForm.getText());
+            System.out.println("Loại dc chọn:" + tenLoai.list.getSelectedItem().toString());
+            System.out.println("Mã của loại này: " +LoaiSPBUS.getMaLoaispWithTen(tenLoai.list.getSelectedItem().toString()));
             int maLoai=LoaiSPBUS.getMaLoaispWithTen(tenLoai.list.getSelectedItem().toString());
             int maKho=1;            
             
@@ -247,11 +249,13 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
                     anhMinhHoaMoi=CloundinaryServices.createImage(hinhanh);
                     }
 
-                    int maLoai=tenLoai.list.getSelectedIndex();
+                    int maLoai=LoaiSPBUS.getMaLoaispWithTen(tenLoai.list.getSelectedItem().toString());
                     int maKho=1;
                     SanPhamDTO spChinhSua=new SanPhamDTO(maSP,tenSP, xuatXu, giaSP, soLuong, true, anhMinhHoaMoi, maLoai, maKho);
                     if(SanPhamBUS.update(spChinhSua)){
                         JOptionPane.showMessageDialog(this, "Chỉnh sửa thành công ^^","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+                        this.SPGUI.loadDuLieuTuDatabase(SanPhamBUS.getAll());
+                        this.SPGUI.chinhSuaGiaoDienTable();
                         this.dispose();
                     }else JOptionPane.showMessageDialog(this, "Lỗi, Tên không được trùng hoặc thông tin phải là số khác","Thông báo",JOptionPane.ERROR_MESSAGE);                 
                   }catch(NumberFormatException e){
