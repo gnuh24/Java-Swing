@@ -132,10 +132,23 @@ public class PhieuXuatKhoDAO implements DAOInterface<PhieuXuatKhoDTO> {
                   return null;
             }
       }
-      public String getHoTen(int maPhieuXuat) {
+      public String getHoTen(int maKhoHang) {
             try {
                   Statement statement = JDBCConfigure.getConnection().createStatement();
-                  ResultSet phieuXuatKho = statement.executeQuery("SELECT * FROM `phieuxuatkho`,`khohang`,`taikhoan` WHERE phieuxuatkho.MaKhoHang = khohang.MaKhoHang and phieuxuatkho.MaKhoHang = taikhoan.MaKhoHang and  phieuxuatkho.MaPhieu = " + maPhieuXuat);
+                  ResultSet phieuXuatKho = statement.executeQuery("SELECT * FROM `khohang`,`taikhoan` WHERE khohang.maKhoHang = taikhoan.maKhoHang and  khohang.maKhoHang = " + maKhoHang);
+                  while(phieuXuatKho.next()) {
+                        return phieuXuatKho.getString("HoTen");
+                  }
+                  return null;
+            } catch (SQLException e) {
+                  e.printStackTrace(); // hoặc xử lý ngoại lệ theo cách phù hợp
+                  return null;
+            }
+      }
+      public String getHoTenByMaPhieuXuat(int maPhieuXuat) {
+            try {
+                  Statement statement = JDBCConfigure.getConnection().createStatement();
+                  ResultSet phieuXuatKho = statement.executeQuery("SELECT * FROM `phieuxuatkho`, `taikhoan` WHERE phieuxuatkho.MaKhoHang = taikhoan.MaKhoHang and phieuxuatkho.MaPhieu =" + maPhieuXuat);
                   while(phieuXuatKho.next()) {
                         return phieuXuatKho.getString("HoTen");
                   }
