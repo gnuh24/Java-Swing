@@ -5,7 +5,11 @@ import BUS.NghiepVuXuatKho.ChiTietPhieuXuatKhoBUS;
 import BUS.NghiepVuXuatKho.PhieuXuatKhoBUS;
 import DTO.NghiepVuNhapKho.PhieuNhapKhoDTO;
 import DTO.NghiepVuXuatKho.PhieuXuatKhoDTO;
-
+import GUI.GUIDialog.ChiTietPhieuXuatKho;
+import GUI.GUIDialog.SuaChiTietPhieuNhapKho;
+import GUI.GUIDialog.SuaChiTietPhieuXuatKho;
+import GUI.GUIDialog.TrangThaiDonNhapDialog;
+import GUI.GUIDialog.TrangThaiDonXuatDialog;
 
 import java.time.LocalDate;
 
@@ -27,6 +31,7 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
             JPanel chucNangPanel;
                   JButton sua_btn;
                   JButton chi_tiet_btn;
+                  JButton trang_thai_btn;
                   JButton xuatExcel_btn;
             JPanel timKiemPanel;
                   JLabel tim_kiem;
@@ -43,13 +48,16 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
             this.maKhoHang = maKhoHang;
             top = new JPanel();
                   chucNangPanel = new JPanel();
-                        sua_btn = new JButton("Sửa");
-                        sua_btn.addActionListener(this);
                         chi_tiet_btn = new JButton("Chi tiết");
                         chi_tiet_btn.addActionListener(this);
+                        sua_btn = new JButton("Sửa");
+                        sua_btn.addActionListener(this);
+                        trang_thai_btn = new JButton("Trạng thái đơn");
+                        trang_thai_btn.addActionListener(this);
                   chucNangPanel.setBorder(new CompoundBorder(new TitledBorder("Chức năng"), new EmptyBorder(4, 4, 4, 4)));
-                  chucNangPanel.add(customButtonOption(sua_btn,"sua_btn.png"));
                   chucNangPanel.add(customButtonOption(chi_tiet_btn,"chi_tiet.png"));
+                  chucNangPanel.add(customButtonOption(sua_btn,"sua_btn.png"));
+                  chucNangPanel.add(customButtonOption(trang_thai_btn,"xoa_btn.png"));
 
 
                   timKiemPanel = new JPanel();
@@ -143,18 +151,18 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
       public JButton customButtonOption(JButton button, String linkIMG) {
             BoxLayout boxlayout = new BoxLayout(button, BoxLayout.Y_AXIS);
             button.setLayout(boxlayout);
-            button.setFont(new Font("Arial", Font.BOLD, 14)); // Thiết lập font
+            button.setFont(new Font("Arial", Font.BOLD, 12)); // Thiết lập font
             button.setForeground(Color.BLACK); // Thiết lập màu chữ
             button.setBackground(Color.WHITE); // Thiết lập màu nền
             button.setBorder(BorderFactory.createLineBorder(Color.WHITE,1)); // Thiết lập viền
             button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             // Tùy chỉnh kích thước
             Dimension size = button.getPreferredSize();
-            size.width = 90;
+            size.width = 100;
             size.height = 40;
             button.setPreferredSize(size);
 
-            ImageIcon icon = new ImageIcon("Java-Swing\\JavaSwingProject\\src\\main\\java\\org\\example\\GUI\\IMG\\" + linkIMG); 
+            ImageIcon icon = new ImageIcon("C:\\Users\\dvmv2\\OneDrive\\Documents\\Nam_2\\Fixx\\Java-Swing-main-2-5\\Java-Swing-main\\JavaSwingProject\\src\\main\\java\\Resources" + linkIMG); 
             button.setIcon(new ImageIcon(icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)));
 
             return button;
@@ -164,11 +172,14 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
             return  numberFormat.format(a);
       }
       @Override
-      public void actionPerformed(ActionEvent e) {if(e.getSource() == sua_btn) {
+      public void actionPerformed(ActionEvent e) {
+            if(e.getSource() == sua_btn) {
                   suaChiTietPhieuXuatHang();
             } else if(e.getSource() == chi_tiet_btn) {
                   xemChiTietPhieuXuatHang();
-            } else if(e.getSource() == refeshButton) {
+            } else if(e.getSource() == trang_thai_btn) {
+                  xemTrangThaiPhieuXuatHang();
+            }else if(e.getSource() == refeshButton) {
                   tim_kiem_cb.setSelectedIndex(0);
                   showDanhSachPhieuXuatHang(phieuXuatKhoBUS.getAll(maKhoHang));
             }
@@ -196,16 +207,7 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
                   return "Hủy";
             }
       }
-      public void suaChiTietPhieuXuatHang() {
-            int selectedRow = table_ds_xuat_hang.getSelectedRow();
-            //? kiểm tra xem có dòng nào đang được chọn không
-            if(selectedRow != -1) {
-                  int maPhieuXuat = (Integer) table_ds_xuat_hang.getValueAt(selectedRow, 0);
-                  new SuaChiTietPhieuXuatKho(maPhieuXuat);
-            } else {
-                  JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 phiếu xuất hàng!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
-            }
-      }
+      
       public void xemChiTietPhieuXuatHang() {
             int selectedRow = table_ds_xuat_hang.getSelectedRow();
             //? kiểm tra xem có dòng nào đang được chọn không
@@ -215,5 +217,33 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
             } else {
                   JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 phiếu xuất hàng!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
             }
+      }
+      public void suaChiTietPhieuXuatHang() {
+            int selectedRow = table_ds_xuat_hang.getSelectedRow();
+            //? kiểm tra xem có dòng nào đang được chọn không
+            if(selectedRow != -1) {
+                  if (table_ds_xuat_hang.getValueAt(selectedRow,3).toString().equals("Chờ Duyệt")){
+                        int maPhieuXuat = (Integer) table_ds_xuat_hang.getValueAt(selectedRow, 0);
+                        new SuaChiTietPhieuXuatKho(maPhieuXuat);                  
+                  } else {
+                        JOptionPane.showMessageDialog(null, "Sửa phiếu xuất chỉ dành cho đơn chờ duyệt !!!","Cảnh báo", JOptionPane.ERROR_MESSAGE);                         
+                  }
+                  
+            } else {
+                  JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 phiếu xuất hàng!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
+            }
+      }
+      public void xemTrangThaiPhieuXuatHang() {
+            int selectedRow = table_ds_xuat_hang.getSelectedRow();
+            if(selectedRow != -1) {
+                  if (table_ds_xuat_hang.getValueAt(selectedRow,3).toString().equals("Chờ Duyệt")){
+                  int maPhieuXuat = (Integer) table_ds_xuat_hang.getValueAt(selectedRow, 0);
+                  new TrangThaiDonXuatDialog(maPhieuXuat);                        
+                  } else {
+                  JOptionPane.showMessageDialog(null, "Thay đổi trạng thái chỉ dành cho đơn chờ duyệt !!!","Cảnh báo", JOptionPane.ERROR_MESSAGE);                        
+                  }
+            } else {
+                  JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 phiếu xuất hàng!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
+            }         
       }
 }
