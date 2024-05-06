@@ -9,7 +9,7 @@ import lombok.*;
 @Data
 
 public class MenuTaskBar extends JPanel{
-    private String linkToIMG = "C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHungNew\\JavaSwingProject\\src\\main\\java\\Resources";
+    private String linkToIMG = "C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaVeryNew\\JavaSwingProject\\src\\main\\java\\Resources";
     private ButtonCustom btn_sanPham, btn_loaiSP;
     private ButtonCustom btn_NhaCungCap, btn_NhapHang, btn_PhieuNhap;
     private ButtonCustom btn_XuatHang, btn_PhieuXuat;

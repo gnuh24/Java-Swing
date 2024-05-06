@@ -192,6 +192,8 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
             for (int i = modelDSPhieuNhapKho.getRowCount() - 1; i >= 0; i--) {
                   modelDSPhieuNhapKho.removeRow(i);
             }
+
+
             for (PhieuNhapKhoDTO phieuNhapKhoDTO : phieuNhapKhoDTOS) {
                 String tt="";
                 if(phieuNhapKhoDTO.getTrangThai().equals("ChoDuyet"))

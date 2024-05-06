@@ -21,7 +21,7 @@ public class DangNhap extends JFrame{
     private ButtonCustom buttonLogin;
     private JLabel labelQuestion;
     private JButton labelRegister;
-    private String linkToIMG = "C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHungNew\\JavaSwingProject\\src\\main\\java\\Resources";
+    private String linkToIMG = "C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaVeryNew\\JavaSwingProject\\src\\main\\java\\Resources";
     public DangNhap() {
         this.init();
     }

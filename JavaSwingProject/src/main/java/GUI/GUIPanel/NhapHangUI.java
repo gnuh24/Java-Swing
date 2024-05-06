@@ -271,7 +271,6 @@ public class NhapHangUI  extends JPanel implements ActionListener{
                         main_right.add(ds_nhap_hang);
                         main_right.add(chuc_nang_pn);
                         main_right.add(thanh_tien_pn);
-
                   add(main_left);
                   add(main_right);
                   setPreferredSize(new Dimension(1300,800));
@@ -367,6 +366,7 @@ public class NhapHangUI  extends JPanel implements ActionListener{
       public void showDanhSachSanPham(ArrayList<SanPhamDTO> dsSanPham) {
             int i = 1;
             int rowCount = model_ds_san_pham.getRowCount();
+
             //? Xóa tất cả các dòng
             for (int j = rowCount - 1; j >= 0; j--) {
                 model_ds_san_pham.removeRow(j);
@@ -381,6 +381,8 @@ public class NhapHangUI  extends JPanel implements ActionListener{
                   });
                   i++;
             }
+
+
       }
       public void themSanPhamPhieuNhapKho() {
             //? Check number

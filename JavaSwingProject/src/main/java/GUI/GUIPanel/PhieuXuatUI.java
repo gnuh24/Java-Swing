@@ -186,6 +186,7 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
       }
       public void showDanhSachPhieuXuatHang(ArrayList<PhieuXuatKhoDTO> dsPhieuXuatKho) {
            //? Xóa bảng danh sách sản phẩm xuất hàng
+          
            for (int i = model_ds_xuat_hang.getRowCount() - 1; i >= 0; i--) {
                  model_ds_xuat_hang.removeRow(i);
            }
