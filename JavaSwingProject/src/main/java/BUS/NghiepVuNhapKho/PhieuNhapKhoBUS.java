@@ -148,11 +148,14 @@ public class PhieuNhapKhoBUS {
     public int maPhieuNhapKhoTiepTheo() {
         return phieuNhapKhoDAO.maPhieuNhapKhoTiepTheo();
     }
-    public String getTenKhoHang(int maPhieuNhap) {
-        return phieuNhapKhoDAO.getTenKhoHang(maPhieuNhap);
+    public String getTenKhoHang(int maKhoHang) {
+        return phieuNhapKhoDAO.getTenKhoHang(maKhoHang);
     }
-    public String getHoTen(int maPhieuNhap) {
-        return phieuNhapKhoDAO.getHoTen(maPhieuNhap);
+    public String getHoTen(int maKhoHang) {
+        return phieuNhapKhoDAO.getHoTen(maKhoHang);
+    }
+    public String getHoTenByMaPhieuNhap(int maPhieuNhap) {
+        return phieuNhapKhoDAO.getHoTenByMaPhieuNhap(maPhieuNhap);
     }
     public String getTenNhaCungCap(int maPhieuNhap) {
         return phieuNhapKhoDAO.getTenNhaCungCap(maPhieuNhap);
