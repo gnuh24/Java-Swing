@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 // import java.awt.event.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.sql.*;
 
 import javax.swing.*;
 // import javax.swing.border.*;
@@ -202,7 +201,7 @@ public class TrangThaiDonNhapDialog implements ActionListener{
             ma_phieu_lb.setText(String.valueOf(maPhieuNhap));
             ma_kho_hang_lb.setText(String.valueOf(phieuNhap.getMaKhoHang()));
             ten_kho_hang_lb.setText(phieuNhapKhoBUS.getTenKhoHang(maPhieuNhap));
-            nguoi_nhap_lb.setText(phieuNhapKhoBUS.getHoTen(maPhieuNhap));
+            nguoi_nhap_lb.setText(phieuNhapKhoBUS.getHoTenByMaPhieuNhap(maPhieuNhap));
             nha_cung_cap_lb.setText(phieuNhapKhoBUS.getTenNhaCungCap(maPhieuNhap));
             ngay_nhap_kho_lb.setText(String.valueOf(phieuNhap.getNgayNhapKho()));
             tong_tien_lb.setText(toCurrency(phieuNhap.getTongGiaTri()));
@@ -234,6 +233,7 @@ public class TrangThaiDonNhapDialog implements ActionListener{
 
                               sanPhamBUS.update(sp);
                         }
+                        JOptionPane.showMessageDialog(null, "Thay đổi trạng thái phiếu nhập thành công !","Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         frame.dispose();
                   } else {
                         System.out.println("chờ duyệt");
