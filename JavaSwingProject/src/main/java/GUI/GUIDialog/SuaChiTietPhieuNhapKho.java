@@ -5,6 +5,7 @@ import BUS.NghiepVuNhapKho.PhieuNhapKhoBUS;
 import BUS.ThongTinSanPham.SanPhamBUS;
 import DTO.NghiepVuNhapKho.*;
 import DTO.ThongTinSanPham.*;
+import GUI.GUIPanel.PhieuNhapUI;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -23,6 +24,7 @@ public class SuaChiTietPhieuNhapKho extends JFrame implements ActionListener{
       private int maKhoHang =0 ; 
       SanPhamBUS sanPhamBUS;
       PhieuNhapKhoBUS phieuNhapKhoBUS;
+      PhieuNhapUI phieuNhap;
       ChiTietPhieuNhapKhoBUS chiTietPhieuNhapKhoBUS;
       ArrayList<ChiTietPhieuNhapKhoDTO> listFirst = new ArrayList<>();
       long tongGiaTri = 0;
@@ -74,7 +76,8 @@ public class SuaChiTietPhieuNhapKho extends JFrame implements ActionListener{
 
 
       Color bgBlue = new Color(0,145,253);
-      public SuaChiTietPhieuNhapKho(int maPhieuNhap) {
+      public SuaChiTietPhieuNhapKho(PhieuNhapUI phieuNhap, int maPhieuNhap) {
+            this.phieuNhap=phieuNhap;
             phieuNhapKhoBUS = new PhieuNhapKhoBUS();
             chiTietPhieuNhapKhoBUS = new ChiTietPhieuNhapKhoBUS();
             header = new JPanel();
@@ -555,6 +558,7 @@ public class SuaChiTietPhieuNhapKho extends JFrame implements ActionListener{
                   //?cập nhật thành tiền
                   thanh_tien_total.setText("0 đ");
                   JOptionPane.showMessageDialog(null, "Sửa phiếu nhập hàng thành công !","Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                  this.phieuNhap.showDanhSachPhieuNhapHang((ArrayList<PhieuNhapKhoDTO>) phieuNhapKhoBUS.getAllPhieuNhapKho(this.maKhoHang));
                   dispose();
             } else {
                   System.out.println("Huy sua  phieu nhap");

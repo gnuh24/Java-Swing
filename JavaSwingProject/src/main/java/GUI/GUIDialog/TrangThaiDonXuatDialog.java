@@ -18,12 +18,14 @@ import BUS.NghiepVuXuatKho.PhieuXuatKhoBUS;
 import BUS.ThongTinSanPham.SanPhamBUS;
 import DTO.NghiepVuXuatKho.*;
 import DTO.ThongTinSanPham.SanPhamDTO;
+import GUI.GUIPanel.PhieuXuatUI;
 import GUI.GUIThanhPhan.ButtonCustom;
 import Others.JDBCConfigure;
 
 public class TrangThaiDonXuatDialog implements ActionListener{
       ChiTietPhieuXuatKhoBUS chiTietPhieuXuatKhoBUS;
       PhieuXuatKhoBUS phieuXuatKhoBUS;
+      PhieuXuatUI phieuXuat;
       SanPhamBUS sanPhamBUS;
       JFrame frame = new JFrame();
       JPanel header;
@@ -44,7 +46,8 @@ public class TrangThaiDonXuatDialog implements ActionListener{
       JPanel main_bottom;
       JLabel tong_tien, tong_tien_lb;
       ButtonCustom capnhat_btn;
-      public TrangThaiDonXuatDialog(int maPhieuXuat) {
+      public TrangThaiDonXuatDialog(PhieuXuatUI phieuXuat, int maPhieuXuat) {
+          this.phieuXuat=phieuXuat;
             chiTietPhieuXuatKhoBUS = new ChiTietPhieuXuatKhoBUS();
             phieuXuatKhoBUS = new PhieuXuatKhoBUS();
             header = new JPanel();
@@ -215,6 +218,7 @@ public class TrangThaiDonXuatDialog implements ActionListener{
                               sanPhamBUS.update(sp);
                         }
                         JOptionPane.showMessageDialog(null, "Thay đổi trạng thái phiếu xuất thành công !","Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        this.phieuXuat.showDanhSachPhieuXuatHang(phieuXuatKhoBUS.getAll(Integer.parseInt(ma_kho_hang_lb.getText())));
                         frame.dispose();
                   } else {
                         System.out.println("chờ duyệt");
