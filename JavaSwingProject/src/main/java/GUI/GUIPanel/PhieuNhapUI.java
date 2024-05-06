@@ -102,7 +102,7 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
 
             bot = new JPanel();
                   
-                  String columns_ds_xuat_hang[] = {"Mã phiếu xuất", "Ngày xuất kho","Nhà cung cấp" ,"Tổng giá trị", "Trạng Thái"};
+                  String columns_ds_xuat_hang[] = {"Mã phiếu nhập", "Ngày nhập kho","Nhà cung cấp" ,"Tổng giá trị", "Trạng Thái"};
                   String data_ds_xuat_hang[][] = {};
                   modelDSPhieuNhapKho = new DefaultTableModel(data_ds_xuat_hang, columns_ds_xuat_hang){
                         @Override
@@ -188,7 +188,7 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
       }
 
       public void showDanhSachPhieuNhapHang(ArrayList<PhieuNhapKhoDTO> phieuNhapKhoDTOS) {
-            //? Xóa bảng danh sách sản phẩm xuất hàng
+            //? Xóa bảng danh sách sản phẩm nhập hàng
             for (int i = modelDSPhieuNhapKho.getRowCount() - 1; i >= 0; i--) {
                   modelDSPhieuNhapKho.removeRow(i);
             }
