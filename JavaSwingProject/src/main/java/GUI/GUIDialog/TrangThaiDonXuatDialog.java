@@ -183,7 +183,7 @@ public class TrangThaiDonXuatDialog implements ActionListener{
             ma_phieu_lb.setText(String.valueOf(maPhieuXuat));
             ma_kho_hang_lb.setText(String.valueOf(phieuXuat.getMaKhoHang()));
             ten_kho_hang_lb.setText(phieuXuatKhoBUS.getTenKhoHang(maPhieuXuat));
-            nguoi_xuat_lb.setText(phieuXuatKhoBUS.getHoTen(maPhieuXuat));
+            nguoi_xuat_lb.setText(phieuXuatKhoBUS.getHoTenByMaPhieuXuat(maPhieuXuat));
             ngay_xuat_kho_lb.setText(String.valueOf(phieuXuat.getNgayXuatKho()));
             tong_tien_lb.setText(toCurrency(phieuXuat.getTongGiaTri()));
             this.sanPhamBUS= new SanPhamBUS(Integer.valueOf(this.ma_kho_hang_lb.getText()));
@@ -214,6 +214,7 @@ public class TrangThaiDonXuatDialog implements ActionListener{
 
                               sanPhamBUS.update(sp);
                         }
+                        JOptionPane.showMessageDialog(null, "Thay đổi trạng thái phiếu xuất thành công !","Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         frame.dispose();
                   } else {
                         System.out.println("chờ duyệt");
