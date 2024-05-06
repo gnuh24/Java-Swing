@@ -110,7 +110,10 @@ public class PhieuXuatKhoBUS {
     public String getTenKhoHang(int maPhieuXuat) {
         return phieuXuatKhoDAO.getTenKhoHang(maPhieuXuat);
     }
-    public String getHoTen(int maPhieuXuat) {
-        return phieuXuatKhoDAO.getHoTen(maPhieuXuat);
+    public String getHoTen(int maKhoHang) {
+        return phieuXuatKhoDAO.getHoTen(maKhoHang);
+    }
+    public String getHoTenByMaPhieuXuat(int maPhieuXuat) {
+        return phieuXuatKhoDAO.getHoTenByMaPhieuXuat(maPhieuXuat);
     }
 }
