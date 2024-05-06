@@ -411,7 +411,7 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
             ma_phieu_xuat_tf.setText(String.valueOf(maPhieuXuat));
       }
       public void capNhatAdmin(int maPhieuXuat) {
-            nguoi_tao_phieu_tf.setText(phieuXuatKhoBUS.getHoTen(maPhieuXuat));
+            nguoi_tao_phieu_tf.setText(phieuXuatKhoBUS.getHoTenByMaPhieuXuat(maPhieuXuat));
       }
       public void capNhatNgayXuatKho(int maPhieuXuat) {
             PhieuXuatKhoDTO phieuXuat = phieuXuatKhoBUS.getById(maPhieuXuat);
@@ -524,6 +524,7 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
       public void suaPhieuXuatKho() {
             if(JOptionPane.showConfirmDialog(null, "Bạn có muốn sửa phiếu xuất này ?", "Sửa phiếu xuất", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                   PhieuXuatKhoDTO phieuXuatKho = new PhieuXuatKhoDTO();
+                  System.out.println("Tổng giá trị : " + tongGiaTri);
                   phieuXuatKho.setTongGiaTri(tongGiaTri);
                   phieuXuatKho.setMaPhieu(Integer.parseInt(ma_phieu_xuat_tf.getText()));
                   String ngayTaoPhieu = ngay_tao_phieu_tf.getText();
@@ -539,6 +540,7 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
                         JOptionPane.showMessageDialog(null, "Ngày không hợp lệ !","Thông báo", JOptionPane.ERROR_MESSAGE);
                         return;
                   }
+                  phieuXuatKho.setTrangThai("ChoDuyet");
                   phieuXuatKhoBUS.update(phieuXuatKho);  //? Update phiếu xuất kho
                   //? DELETE CTPXK
                   for(ChiTietPhieuXuatKhoDTO chiTietPhieuXuatKho : listFirst){
