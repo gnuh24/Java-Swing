@@ -178,8 +178,7 @@ public class SanPhamUI extends JPanel implements ActionListener{
                 JTable target = (JTable) e.getSource();
                 if (e.getClickCount() == 2)
                 {
-                    SanPhamDialog spDia=new SanPhamDialog("Chi Tiết Sản Phẩm","ChiTiet",listSP.get(thongTin.getSelectedRow()));
-                    //System.out.println(listSP.get(thongTin.getSelectedRow()).getAnhMinhhoa());
+                    SanPhamDialog spDia=new SanPhamDialog(SanPhamUI.this,"Chi Tiết Sản Phẩm","ChiTiet",listSP.get(thongTin.getSelectedRow()));
                     loadDuLieuTuDatabase(new SanPhamBUS(maKhoHang).getAll());
                     chinhSuaGiaoDienTable();
                 }
