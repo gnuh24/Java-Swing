@@ -200,9 +200,9 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
       }
       public String toStringTrangThai(String trangThai) {
             if(trangThai.equals("DaDuyet")) {
-                  return "Đã duyệt";
+                  return "Đã Duyệt";
             } else if(trangThai.equals("ChoDuyet")) {
-                  return "Chờ duyệt";
+                  return "Chờ Duyệt";
             } else {
                   return "Hủy";
             }
@@ -237,10 +237,10 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
             int selectedRow = table_ds_xuat_hang.getSelectedRow();
             if(selectedRow != -1) {
                   if (table_ds_xuat_hang.getValueAt(selectedRow,3).toString().equals("Chờ Duyệt")){
-                  int maPhieuXuat = (Integer) table_ds_xuat_hang.getValueAt(selectedRow, 0);
-                  new TrangThaiDonXuatDialog(maPhieuXuat);                        
+                        int maPhieuXuat = (Integer) table_ds_xuat_hang.getValueAt(selectedRow, 0);
+                        new TrangThaiDonXuatDialog(maPhieuXuat);                        
                   } else {
-                  JOptionPane.showMessageDialog(null, "Thay đổi trạng thái chỉ dành cho đơn chờ duyệt !!!","Cảnh báo", JOptionPane.ERROR_MESSAGE);                        
+                        JOptionPane.showMessageDialog(null, "Thay đổi trạng thái chỉ dành cho đơn chờ duyệt !!!","Cảnh báo", JOptionPane.ERROR_MESSAGE);                        
                   }
             } else {
                   JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 phiếu xuất hàng!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
