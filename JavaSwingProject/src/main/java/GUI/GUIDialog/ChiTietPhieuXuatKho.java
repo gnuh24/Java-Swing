@@ -134,14 +134,14 @@ public class ChiTietPhieuXuatKho implements ActionListener{
             main.add(main_middle);
             main.add(main_bottom);
             main.setLayout(new FlowLayout());
-            main.setPreferredSize(new Dimension(750,430));
+            main.setPreferredSize(new Dimension(750,480));
             setThongTinMain(maPhieuXuat);
             this.sanPhamBUS= new SanPhamBUS(Integer.valueOf(this.ma_kho_hang_lb.getText()));
 
             frame.add(header);
             frame.add(main);
             frame.setLayout(new FlowLayout());
-            frame.setSize(800,550);
+            frame.setSize(800,600);
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
       }
@@ -168,7 +168,7 @@ public class ChiTietPhieuXuatKho implements ActionListener{
             ma_phieu_lb.setText(String.valueOf(maPhieuXuat));
             ma_kho_hang_lb.setText(String.valueOf(phieuXuat.getMaKhoHang()));
             ten_kho_hang_lb.setText(phieuXuatKhoBUS.getTenKhoHang(maPhieuXuat));
-            nguoi_xuat_lb.setText(phieuXuatKhoBUS.getHoTen(maPhieuXuat));
+            nguoi_xuat_lb.setText(phieuXuatKhoBUS.getHoTenByMaPhieuXuat(maPhieuXuat));
             ngay_xuat_kho_lb.setText(String.valueOf(phieuXuat.getNgayXuatKho()));
             trang_thai_lb.setText(toStringTrangThai(phieuXuat.getTrangThai()));
             tong_tien_lb.setText(toCurrency(phieuXuat.getTongGiaTri()));
