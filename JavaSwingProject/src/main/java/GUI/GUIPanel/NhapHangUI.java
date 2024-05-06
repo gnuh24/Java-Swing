@@ -339,7 +339,7 @@ public class NhapHangUI  extends JPanel implements ActionListener{
       }
 
       public void xuLyTongGiaTri() {
-            //? Tính và hiển hiển thị tổng giá trị phiếu xuất hàng
+            //? Tính và hiển hiển thị tổng giá trị phiếu nhập hàng
             if(table_ds_nhap_hang.getRowCount() != -1) {
                   int sum = 0;
                   for(int i= 0; i < table_ds_nhap_hang.getRowCount(); i++) {
@@ -389,53 +389,25 @@ public class NhapHangUI  extends JPanel implements ActionListener{
                   //? Check kí tự có hợp lệ hay không
                   JOptionPane.showMessageDialog(null, "Chỉ được nhập số!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
                   them_sp_number.setText("");
-            } else if(Integer.valueOf(them_sp_number.getText())  <= 0) {
-                  //? Check xem số lượng cần thêm có phải số âm hoặc bằng 0 hay không
-                  JOptionPane.showMessageDialog(null, "Số lượng không hợp lệ!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
-                  them_sp_number.setText("");
-            } else {
+            }  else {
                   int selectedRow = table_ds_san_pham.getSelectedRow();
                   if(selectedRow != -1) {
-                        //? Đếm số lượng đã có trong phiếu xuất hàng
-                        int tongSoLuong = 0;
-                        boolean check = false;
-                        int i;
-                        for(i= 0; i < table_ds_nhap_hang.getRowCount(); i++) {
-                              if(table_ds_san_pham.getValueAt(selectedRow,0) == table_ds_nhap_hang.getValueAt(i, 1)){
-                                    tongSoLuong += getIntegerValueAt(table_ds_nhap_hang, i, 3);
-                                    check = true;
-                                    break;
-                              }
-                        }
-                        tongSoLuong += Integer.valueOf(them_sp_number.getText());
-                        if(getIntegerValueAt(table_ds_san_pham, selectedRow, 2) >= tongSoLuong) {
-                              if(check == true) {
-                                    model_ds_nhap_hang.setValueAt(tongSoLuong, i, 3);
-                                    xuLyTongGiaTri();
-                                    them_sp_number.setText("");
-                              } else {
-                                    //? Thêm dữ liệu vào bảng xuất hàng
-                                    model_ds_nhap_hang.addRow(new Object[]{
-                                          model_ds_nhap_hang.getRowCount()+1,
-                                          table_ds_san_pham.getValueAt(selectedRow,0),
-                                          table_ds_san_pham.getValueAt(selectedRow,1),
-                                          Integer.parseInt(them_sp_number.getText()),
-                                          table_ds_san_pham.getValueAt(selectedRow,3)
-                                    });
-                                    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-                                    centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-                                    table_ds_nhap_hang.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-                                    table_ds_nhap_hang.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-                                    table_ds_nhap_hang.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
-                                    table_ds_nhap_hang.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
-                                    xuLyTongGiaTri();
-                                    them_sp_number.setText("");
-                              }
-                        } else {
-                              System.out.println(getIntegerValueAt(table_ds_san_pham, selectedRow, 2));
-                              JOptionPane.showMessageDialog(null, "Vượt quá số lượng trong kho!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
-                              them_sp_number.setText("");
-                        }
+                        //? Thêm dữ liệu vào bảng nhập hàng
+                        model_ds_nhap_hang.addRow(new Object[]{
+                              model_ds_nhap_hang.getRowCount()+1,
+                              table_ds_san_pham.getValueAt(selectedRow,0),
+                              table_ds_san_pham.getValueAt(selectedRow,1),
+                              Integer.parseInt(them_sp_number.getText()),
+                              table_ds_san_pham.getValueAt(selectedRow,3)
+                        });
+                        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+                        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+                        table_ds_nhap_hang.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+                        table_ds_nhap_hang.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+                        table_ds_nhap_hang.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+                        table_ds_nhap_hang.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+                        xuLyTongGiaTri();
+                        them_sp_number.setText("");
                   } else {
                         JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 sản phẩm!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
                         them_sp_number.setText("");
@@ -473,7 +445,7 @@ public class NhapHangUI  extends JPanel implements ActionListener{
                               }
                         }
                   } else {
-                        JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 sản phẩm trong bảng xuất hàng!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 sản phẩm trong bảng nhập hàng!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
                   }
       }
       public ArrayList<ChiTietPhieuNhapKhoDTO> getDanhSachChiTietPhieuNhapKho() {
@@ -503,7 +475,7 @@ public class NhapHangUI  extends JPanel implements ActionListener{
             phieuNhapKhoBUS.createPhieuNhapKho(maKhoHang, phieuNhapKho, dsNhap);  //? Insert vào bảng phieuxuatkho
 
             
-            // ? Xóa bảng danh sách sản phẩm xuất hàng
+            // ? Xóa bảng danh sách sản phẩm nhập hàng
             for (int i = model_ds_nhap_hang.getRowCount() - 1; i >= 0; i--) 
                   model_ds_nhap_hang.removeRow(i);
             
@@ -514,9 +486,9 @@ public class NhapHangUI  extends JPanel implements ActionListener{
             
             //?cập nhật thành tiền
             thanh_tien_total.setText("0 đ");
-            //? Cập nhật mã phiếu xuất tiếp theo
+            //? Cập nhật mã phiếu nhập tiếp theo
             capNhatMaPhieuNhapTiepTheo();
-            JOptionPane.showMessageDialog(null, "Tạo phiếu xuất hàng thành công !","Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Tạo phiếu nhập hàng thành công !","Thông báo", JOptionPane.INFORMATION_MESSAGE);
       }
       public void capNhatMaPhieuNhapTiepTheo() {
             ma_phieu_nhap_tf.setText(String.valueOf(phieuNhapKhoBUS.maPhieuNhapKhoTiepTheo()));
