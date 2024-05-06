@@ -4,7 +4,7 @@ package GUI.GUIDialog;
 import BUS.NghiepVuNhapKho.NhaCungCapBUS;
 import DTO.NghiepVuNhapKho.NhaCungCapDTO;
 import ErrorResponse.TheValueAlreadyExists;
-import GUI.GUIPanel.NhaCungCapGUI;
+import GUI.GUIPanel.NhaCungCapUI;
 import GUI.GUIThanhPhan.ButtonCustom;
 import GUI.GUIThanhPhan.NhaCungCapForm;
 
@@ -23,14 +23,14 @@ public class NhaCungCapDialog extends JDialog implements ActionListener {
 
     private NhaCungCapBUS nhaCungCapBUS;
     private NhaCungCapDTO nhaCungCapDTO;
-    private NhaCungCapGUI nhaCungCapGUI;
+    private NhaCungCapUI nhaCungCapGUI;
 
 
     public NhaCungCapDialog() {
         this.init();
     }
 
-    public NhaCungCapDialog(NhaCungCapGUI nhaCungCapGUI, String tieuDe, String type) {
+    public NhaCungCapDialog(NhaCungCapUI nhaCungCapGUI, String tieuDe, String type) {
         this.maKho= nhaCungCapGUI.getMaKhoHang();
         this.nhaCungCapBUS = new NhaCungCapBUS();
         this.tieuDe = tieuDe;
@@ -38,7 +38,7 @@ public class NhaCungCapDialog extends JDialog implements ActionListener {
         this.nhaCungCapGUI = nhaCungCapGUI;
         init();
     }
-    public NhaCungCapDialog(NhaCungCapGUI nhaCungCapGUI, String tieuDe, String type, NhaCungCapDTO nhaCungCapDTO) {
+    public NhaCungCapDialog(NhaCungCapUI nhaCungCapGUI, String tieuDe, String type, NhaCungCapDTO nhaCungCapDTO) {
         this.maKho= nhaCungCapGUI.getMaKhoHang();
         this.tieuDe=tieuDe;
         this.type=type;

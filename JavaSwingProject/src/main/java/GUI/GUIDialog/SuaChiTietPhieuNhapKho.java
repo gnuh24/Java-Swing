@@ -130,6 +130,7 @@ public class SuaChiTietPhieuNhapKho extends JFrame implements ActionListener{
                                     }
                                 };
                               table_ds_san_pham = new JTable(model_ds_san_pham);
+                              
                               table_ds_san_pham.getColumnModel().getColumn(0).setPreferredWidth(20);
                               table_ds_san_pham.getColumnModel().getColumn(1).setPreferredWidth(225);
                               table_ds_san_pham.getColumnModel().getColumn(2).setPreferredWidth(20);
@@ -144,7 +145,6 @@ public class SuaChiTietPhieuNhapKho extends JFrame implements ActionListener{
                               table_ds_san_pham.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
                               table_ds_san_pham.setRowHeight(40);
                               table_ds_san_pham.getTableHeader().setReorderingAllowed(false);
-
                               JTableHeader header_san_pham = table_ds_san_pham.getTableHeader();
                               // Set the preferred size of the header
                               header_san_pham.setPreferredSize(new Dimension(header_san_pham.getWidth(), 35));

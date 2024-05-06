@@ -6,7 +6,7 @@ package GUI.GUIDialog;
 
 import BUS.ThongTinSanPham.SanPhamBUS;
 import DTO.ThongTinSanPham.SanPhamDTO;
-import GUI.GUIPanel.GiaoDienSanPham;
+import GUI.GUIPanel.SanPhamUI;
 import GUI.GUIThanhPhan.ButtonCustom;
 import GUI.GUIThanhPhan.InputFormCustom;
 
@@ -21,10 +21,10 @@ import java.util.ArrayList;
  * @author Admin
  */
 public class LocGiaSPDialog extends  JDialog implements ActionListener{
-    private GiaoDienSanPham SPGUI;
+    private SanPhamUI SPGUI;
     private SanPhamBUS SanPhamBUS;
     private InputFormCustom tuGia, denGia;
-    public LocGiaSPDialog(GiaoDienSanPham guiSP) {
+    public LocGiaSPDialog(SanPhamUI guiSP) {
         this.SPGUI=guiSP;
         this.SanPhamBUS= new SanPhamBUS(guiSP.getMaKhoHang());
         this.init();

@@ -4,7 +4,7 @@ package GUI.GUIDialog;
 import BUS.ThongTinSanPham.LoaiSanPhamBUS;
 import BUS.ThongTinSanPham.SanPhamBUS;
 import DTO.ThongTinSanPham.SanPhamDTO;
-import GUI.GUIPanel.GiaoDienSanPham;
+import GUI.GUIPanel.SanPhamUI;
 import GUI.GUIThanhPhan.ComboBoxFormCustom;
 import GUI.GUIThanhPhan.InputFormCustom;
 import Others.CloundinaryServices;
@@ -25,14 +25,14 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
     public ComboBoxFormCustom tenLoai;
     private JLabel hinhAnh;
     private SanPhamDTO SPDuocChon;
-    private GiaoDienSanPham SPGUI;
+    private SanPhamUI SPGUI;
     private File selectedFile=null;
     
     private LoaiSanPhamBUS LoaiSPBUS;
     private SanPhamBUS SanPhamBUS;
     
     
-    public SanPhamDialog(GiaoDienSanPham guiaa,String title,String type) {
+    public SanPhamDialog(SanPhamUI guiaa,String title,String type) {
         this.tieuDe=title;
         this.type=type;
         this.SPGUI=guiaa;
