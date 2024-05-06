@@ -523,9 +523,8 @@ public class SuaChiTietPhieuNhapKho extends JFrame implements ActionListener{
       }
       public void suaPhieuNhapKho() {
             if(JOptionPane.showConfirmDialog(null, "Bạn có muốn sửa phiếu nhập này ?", "Sửa phiếu nhập", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                  PhieuNhapKhoDTO phieuNhapKho = new PhieuNhapKhoDTO();
+                  PhieuNhapKhoDTO phieuNhapKho = phieuNhapKhoBUS.getPhieuNhapKhoByMaPhieu(Integer.parseInt(ma_phieu_nhap_tf.getText()));
                   phieuNhapKho.setTongGiaTri(tongGiaTri);
-                  phieuNhapKho.setMaPhieu(Integer.parseInt(ma_phieu_nhap_tf.getText()));
                   String ngayTaoPhieu = ngay_tao_phieu_tf.getText();
                   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                   
