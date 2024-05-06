@@ -214,7 +214,7 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
             if(selectedRow != -1) {
                   if (tableDSPhieuNhapKho.getValueAt(selectedRow,4).toString().equals("Chờ Duyệt")){
                         int maPhieuNhap = (Integer) tableDSPhieuNhapKho.getValueAt(selectedRow, 0);
-                        new SuaChiTietPhieuNhapKho(maPhieuNhap);                  
+                        new SuaChiTietPhieuNhapKho(this, maPhieuNhap);                  
                   } else {
                         JOptionPane.showMessageDialog(null, "Sửa phiếu nhập chỉ dành cho đơn chờ duyệt !!!","Cảnh báo", JOptionPane.ERROR_MESSAGE);                         
                   }
@@ -238,7 +238,7 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
             if(selectedRow != -1) {
                   if (tableDSPhieuNhapKho.getValueAt(selectedRow,4).toString().equals("Chờ Duyệt")){
                   int maPhieuNhap = (Integer) tableDSPhieuNhapKho.getValueAt(selectedRow, 0);
-                  new TrangThaiDonNhapDialog(maPhieuNhap);                        
+                  new TrangThaiDonNhapDialog(this, maPhieuNhap);                        
                   } else {
                   JOptionPane.showMessageDialog(null, "Thay đổi trạng thái chỉ dành cho đơn chờ duyệt !!!","Cảnh báo", JOptionPane.ERROR_MESSAGE);                        
                   }
