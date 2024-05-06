@@ -176,7 +176,7 @@ public class ChiTietPhieuNhapKho implements ActionListener{
             ma_phieu_lb.setText(String.valueOf(maPhieuNhap));
             ma_kho_hang_lb.setText(String.valueOf(phieuNhap.getMaKhoHang()));
             ten_kho_hang_lb.setText(phieuNhapKhoBUS.getTenKhoHang(maPhieuNhap));
-            nguoi_nhap_lb.setText(phieuNhapKhoBUS.getHoTen(maPhieuNhap));
+            nguoi_nhap_lb.setText(phieuNhapKhoBUS.getHoTenByMaPhieuNhap(maPhieuNhap));
             nha_cung_cap_lb.setText(phieuNhapKhoBUS.getTenNhaCungCap(maPhieuNhap));
             ngay_nhap_kho_lb.setText(String.valueOf(phieuNhap.getNgayNhapKho()));
             trang_thai_lb.setText(toStringTrangThai(phieuNhap.getTrangThai()));
