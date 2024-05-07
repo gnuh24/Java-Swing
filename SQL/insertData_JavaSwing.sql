@@ -11,7 +11,7 @@ INSERT INTO `KhoHang` (`TenKhoHang`) VALUES
 INSERT INTO `TaiKhoan` (`TenDangNhap`,		 	`MatKhau`, `TrangThai`, `Quyen`, `MaKhoHang`,   `HoTen`, 				`NgaySinh`,		 	`GioiTinh`, `SoDienThoai`, `Email`, 					`DiaChi`) 
 VALUES 
 						('THug24', 				'123456',	true,		'Admin',	1		, 'Ngô Tuấn Hưng', 			'1990-01-01', 		'Male', '	0123456789', 'thug24@gmail.com', 			'DKP1221'),
-						('ctpnkAn1808', 				'123456', 	true, 		'User',		2		,'Diệp Thụy An', 			'1995-05-05', 		'Male', '	0123456789', 'an1808@example.com', 			'DCT1221'),
+						('ctpnkAn1808', 		'123456', 	true, 		'User',		2		,'Diệp Thụy An', 			'1995-05-05', 		'Male', '	0123456789', 'an1808@example.com', 			'DCT1221'),
 						('YangHoHocMon', 		'123456', 	true, 		'User',		3		,'Nguyễn Thanh Điền', 		'1998-08-08', 		'Male', '	0123456789', 'yangHoHocHon@example.com', 	'DKP1222'),
 						('MinhViDepTrai04', 	'123456', 	true, 		'User',		4		,'Dương Văn Minh Vi', 		'1998-08-08', 		'Male', '	0123456789', 'minhViDepTrai04@example.com', 'DCT1222');
 
@@ -81,14 +81,31 @@ INSERT INTO `CTPXK` (`DonGia`, `SoLuong`,	 `ThanhTien`,  		`MaPhieu`, `MaSanPham
                     (739000, 		190, 		14041000, 				2, 		4),
 					(238000, 		10	, 		2380000, 				2, 		6);
 
-SELECT sp.TenSanPham as TenSanPham, SUM(ct.SoLuong) as SoLuong, SUM(ct.ThanhTien) as TongTien FROM PhieuNhapKho pnk 
+SELECT pxk.NgayXuatKho, sp.TenSanPham as TenSanPham, SUM(ct.SoLuong) as SoLuong, SUM(ct.ThanhTien) as TongTien FROM PhieuXuatKho pxk 
+JOIN CTPXK ct ON pxk.MaPhieu = ct.MaPhieu
+JOIN SanPham sp ON sp.MaSanPham = ct.MaSanPham
+WHERE pxk.MaKhoHang = 1
+AND  pxk.TrangThai = 'DaDuyet'
+AND  pxk.NgayXuatKho BETWEEN COALESCE(NULL, '2010-01-01') AND COALESCE(NULL, CURRENT_DATE())
+GROUP BY pxk.NgayXuatKho, TenSanPham
+ORDER BY TongTien desc;
+
+SELECT pnk.NgayNhapKho, sp.TenSanPham as TenSanPham, SUM(ct.SoLuong) as SoLuong, SUM(ct.ThanhTien) as TongTien FROM PhieuNhapKho pnk 
 JOIN CTPNK ct ON pnk.MaPhieu = ct.MaPhieu
 JOIN SanPham sp ON sp.MaSanPham = ct.MaSanPham
 WHERE pnk.MaKhoHang = 1
 AND  pnk.TrangThai = 'DaDuyet'
 AND  pnk.NgayNhapKho BETWEEN COALESCE(NULL, '2010-01-01') AND COALESCE(NULL, CURRENT_DATE())
-GROUP BY TenSanPham
-ORDER BY TongTien desc
+GROUP BY pnk.NgayNhapKho, TenSanPham
+ORDER BY TongTien desc;
 
+SELECT SUM(TongGiaTri) AS TongGiaTri FROM PhieuXuatKho 
+            WHERE MaKhoHang = 1
+            AND TrangThai = 'DaDuyet'
+            AND NgayXuatKho BETWEEN COALESCE('2024-02-16', '2010-01-01') AND COALESCE(NULL, CURRENT_DATE());
 
+SELECT SUM(TongGiaTri) AS TongGiaTri FROM PhieuNhapKho 
+            WHERE MaKhoHang = 1
+            AND TrangThai = 'DaDuyet'
+            AND NgayNhapKho BETWEEN COALESCE('2024-01-16', '2010-01-01') AND COALESCE(NULL, CURRENT_DATE());
 

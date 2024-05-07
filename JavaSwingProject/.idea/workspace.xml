@@ -5,16 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="003b6990-b30a-4767-b559-0655e60cd464" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/ThongKeUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIThanhPhan/InputFormCustomForStatistic.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Others/UtilServices.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Application/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Application/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/BUS/ThongKe/ThongKeBUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BUS/ThongKe/ThongKeBUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/ThongKe/ThongKeDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/ThongKe/ThongKeDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/AdminUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/AdminUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/ManagerUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/ManagerUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Others/UltilServices.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SQL/insertData_JavaSwing.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../SQL/insertData_JavaSwing.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
