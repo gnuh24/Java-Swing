@@ -66,14 +66,15 @@ public class LoaiSanPhamDAO implements DAOInterface<LoaiSanPhamDTO> {
     }
     
     
-    public LoaiSanPhamDTO getByName(String tenLoai) {
+    public LoaiSanPhamDTO getByName(String tenLoai, int makho) {
         LoaiSanPhamDTO loaisp=null;
         try {
 
             Connection con=JDBCConfigure.getConnection();
-            String sql="Select * from loaisanpham Where TenLoaiSanPham=?";
+            String sql="Select * from loaisanpham Where TenLoaiSanPham=? and MaKhoHang=?";
             PreparedStatement pst=con.prepareStatement(sql);
             pst.setString(1, tenLoai);
+            pst.setInt(2, makho);
             ResultSet kq=pst.executeQuery();
             while(kq.next()){
                 int maLoaiSP=kq.getInt("MaLoaiSanPham");
@@ -88,6 +89,26 @@ public class LoaiSanPhamDAO implements DAOInterface<LoaiSanPhamDTO> {
         }
         return loaisp;
 
+    }
+    
+    public ArrayList<String> getLoaiSPChung() {
+        ArrayList<String> loaiList = new ArrayList<>();
+        try {
+            Connection con = JDBCConfigure.getConnection();
+            String sql = "SELECT TenLoaiSanPham FROM loaisanpham";
+            PreparedStatement pst = con.prepareStatement(sql);
+            ResultSet kq = pst.executeQuery();
+            while (kq.next()) {
+                String tenLoaiSP = kq.getString("TenLoaiSanPham");
+                loaiList.add(tenLoaiSP);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Lỗi SQL getLoaiSPChung từ loaiSPDAO");
+        } finally {
+            JDBCConfigure.closeConnection();
+        }
+
+        return loaiList;
     }
 
     @Override
