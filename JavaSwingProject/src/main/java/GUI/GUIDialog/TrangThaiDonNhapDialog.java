@@ -16,6 +16,7 @@ import BUS.NghiepVuNhapKho.ChiTietPhieuNhapKhoBUS;
 import BUS.NghiepVuNhapKho.PhieuNhapKhoBUS;
 import BUS.ThongTinSanPham.SanPhamBUS;
 import DTO.NghiepVuNhapKho.*;
+import DTO.NghiepVuXuatKho.PhieuXuatKhoDTO;
 import DTO.ThongTinSanPham.SanPhamDTO;
 import GUI.GUIPanel.PhieuNhapUI;
 import GUI.GUIThanhPhan.ButtonCustom;
@@ -81,13 +82,7 @@ public class TrangThaiDonNhapDialog implements ActionListener{
 
             //? JLabel trang_thai, trang_thai_lb;
             trang_thai = new JLabel("Trạng thái : ");
-            if(setTrangThai(maPhieuNhap)==-1) {
-                  JOptionPane.showMessageDialog(null, "Phiếu nhập này đã được duyệt, không thể thay đổi trạng thái !", "Phiếu nhập không hợp lệ", JOptionPane.ERROR_MESSAGE);
-                  return;
-            } else if (setTrangThai(maPhieuNhap)==-2) {
-                  JOptionPane.showMessageDialog(null, "Phiếu nhập này đã bị hủy, không thể thay đổi trạng thái !", "Phiếu nhập không hợp lệ", JOptionPane.ERROR_MESSAGE);
-                  return;
-            }
+            setTrangThai(maPhieuNhap);
             trang_thai_cb.setPreferredSize(new Dimension(70,35));
             
             //? JLabel nha_cung_cap, nha_cung_cap_lb;
@@ -117,6 +112,11 @@ public class TrangThaiDonNhapDialog implements ActionListener{
                         } else {
                               return Object.class; // Hoặc có thể trả về kiểu Object làm mặc định
                         }
+                  }
+                  @Override
+                  public boolean isCellEditable(int row, int column) {
+                  // Make all cells non-editable
+                  return false;
                   }
             };
             table_ds_ctpnk = new JTable(model_ds_ctpnk);
@@ -185,17 +185,12 @@ public class TrangThaiDonNhapDialog implements ActionListener{
                   return "Hủy";
             }
       }
-      public int setTrangThai(int maPhieuNhap) {
+      public void setTrangThai(int maPhieuNhap) {
             PhieuNhapKhoDTO phieu = phieuNhapKhoBUS.getPhieuNhapKhoByMaPhieu(maPhieuNhap);
-            String[] trangThai = {"Chờ Duyệt", "Đã Duyệt"};
+            String[] trangThai = {"Chờ Duyệt", "Đã Duyệt", "Hủy"};
             trang_thai_cb = new JComboBox<>(trangThai); 
             if(phieu.getTrangThai().equals("ChoDuyet")) {
                   trang_thai_cb.setSelectedIndex(0);
-                  return 1;
-            } else if(phieu.getTrangThai().equals("DaDuyet")) {
-                  return -1;
-            } else {
-                  return -2;
             }
       }
       public void setThongTinMain(int maPhieuNhap) {
@@ -223,8 +218,8 @@ public class TrangThaiDonNhapDialog implements ActionListener{
             }
       }
       public void capNhatTrangThaiDonNhap() {
-            if(JOptionPane.showConfirmDialog(null, "Bạn có muốn cập nhật trạng thái phiếu nhập này ?", "Cập nhật trạng thái phiếu nhập", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                  if(trang_thai_cb.getSelectedIndex() == 1) {
+            if(trang_thai_cb.getSelectedIndex() == 1) {
+                  if(JOptionPane.showConfirmDialog(null, "Bạn có muốn duyệt phiếu nhập này ?", "Cập nhật trạng thái phiếu nhập", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                         PhieuNhapKhoDTO phieu = phieuNhapKhoBUS.getPhieuNhapKhoByMaPhieu(Integer.valueOf(ma_phieu_lb.getText()));
                         phieu.setTrangThai("DaDuyet");
                         phieuNhapKhoBUS.updatePhieuNhapKho(phieu);
@@ -236,13 +231,33 @@ public class TrangThaiDonNhapDialog implements ActionListener{
 
                               sanPhamBUS.update(sp);
                         }
-                        JOptionPane.showMessageDialog(null, "Thay đổi trạng thái phiếu nhập thành công !","Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Duyệt phiếu nhập thành công !","Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         this.phieuNhap.showDanhSachPhieuNhapHang((ArrayList<PhieuNhapKhoDTO>) phieuNhapKhoBUS.getAllPhieuNhapKho(Integer.parseInt(ma_kho_hang_lb.getText())));
                         frame.dispose();
-                  } else {
-                        System.out.println("chờ duyệt");
+                  } 
+            }
+            if(trang_thai_cb.getSelectedIndex() == 2) {
+                  if(JOptionPane.showConfirmDialog(null, "Bạn có muốn hủy phiếu nhập này ?", "Cập nhật trạng thái phiếu nhập", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                        PhieuNhapKhoDTO phieu = phieuNhapKhoBUS.getPhieuNhapKhoByMaPhieu(Integer.valueOf(ma_phieu_lb.getText()));
+                        phieu.setTrangThai("Huy");
+                        phieuNhapKhoBUS.updatePhieuNhapKho(phieu);
+
+                        //! hủy nên không cập nhật số lượng còn lại của sản phẩm
+                        //? Update Số lượng còn lại của sản phẩm
+                        // for(int i = 0; i < model_ds_ctpnk.getRowCount(); i++) {
+                        //       SanPhamDTO sp = sanPhamBUS.getById((Integer)model_ds_ctpnk.getValueAt(i, 1));
+                        //       sp.setSoLuongConLai(sp.getSoLuongConLai() + (Integer)model_ds_ctpnk.getValueAt(i, 4));
+
+                        //       sanPhamBUS.update(sp);
+                        // }
+                        JOptionPane.showMessageDialog(null, "Hủy phiếu nhập thành công !","Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        this.phieuNhap.showDanhSachPhieuNhapHang((ArrayList<PhieuNhapKhoDTO>) phieuNhapKhoBUS.getAllPhieuNhapKho(Integer.parseInt(ma_kho_hang_lb.getText())));
                         frame.dispose();
-                  }
+                  } 
+            }
+            if(trang_thai_cb.getSelectedIndex() == 0) { 
+                  System.out.println("chờ duyệt");
+                  frame.dispose();
             }
       }
       public void actionPerformed(ActionEvent e) {
