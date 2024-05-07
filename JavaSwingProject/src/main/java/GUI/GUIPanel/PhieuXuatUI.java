@@ -27,6 +27,8 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
       int maKhoHang = 0;
       PhieuXuatKhoBUS phieuXuatKhoBUS;
       ChiTietPhieuXuatKhoBUS chiTietPhieuXuatKhoBUS = new ChiTietPhieuXuatKhoBUS();
+      JPanel title;
+      JLabel title_lb;
       JPanel top;
             JPanel chucNangPanel;
                   JButton sua_btn;
@@ -46,6 +48,11 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
       public PhieuXuatUI(int maKhoHang) {
             phieuXuatKhoBUS = new PhieuXuatKhoBUS();
             this.maKhoHang = maKhoHang;
+            title = new JPanel();
+                  title_lb = new JLabel("PHIẾU XUẤT");
+                  title_lb.setFont(new Font("Arial", Font.BOLD, 16)); 
+            title.setPreferredSize(new Dimension(1200,40));
+            title.add(title_lb);
             top = new JPanel();
                   chucNangPanel = new JPanel();
                         chi_tiet_btn = new JButton("Chi tiết");
@@ -141,6 +148,7 @@ public class PhieuXuatUI extends JPanel implements ActionListener{
             bot.setPreferredSize(new Dimension(1200,700));
             bot.add(ds_xuat_hang);
 
+            add(title);
             add(top);
             add(bot);
             setPreferredSize(new Dimension(1300,800));
