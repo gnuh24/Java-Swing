@@ -190,7 +190,7 @@ public int insert(TaiKhoanDTO taiKhoanDTO) {
         int ketQua = 0;
         try {
             Connection con = JDBCConfigure.getConnection();
-            String sql = "DELETE FROM taikhoan WHERE MaTaiKhoan = ?";
+            String sql = "UPDATE taikhoan SET TrangThai = 0 WHERE MaTaiKhoan = ?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setInt(1, taiKhoanDTO.getMaTaiKhoan());
             ketQua = pst.executeUpdate();
