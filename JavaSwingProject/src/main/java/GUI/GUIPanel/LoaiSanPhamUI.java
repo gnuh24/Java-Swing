@@ -123,7 +123,8 @@ public class LoaiSanPhamUI extends JPanel implements ActionListener{
         xoaLoaiSP.addActionListener(this);
         timKiem.txtForm.addKeyListener(new KeyAdapter(){
             public void keyReleased(KeyEvent e){
-                listLoaiSP=LoaiSPBUS.search(timKiem.txtForm.getText());
+                LoaiSanPhamBUS a= new LoaiSanPhamBUS(maKhoHang); 
+                listLoaiSP=a.search(timKiem.txtForm.getText());
                 loadDuLieuLoaiSP(listLoaiSP);
                 chinhSuaGiaoDienTable();
             }

@@ -49,6 +49,9 @@ public class SanPhamUI extends JPanel implements ActionListener{
     private LoaiSanPhamBUS LoaiSPBUS;
     private JComboBox<String> locSP, locGia;
     private JRadioButton rbtn1, rbtn2, rbtn3, rbtn4;
+    private JRadioButton[] radioButtons;
+    private         ButtonGroup locGroup= new ButtonGroup();
+    private JPanel khoangGiaLocSP;
     private String linkToIMG = "C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaVeryNew\\JavaSwingProject\\src\\main\\java\\Resources";
     int maKhoHang=0;
     private SanPhamBUS SPBUS;
@@ -138,14 +141,15 @@ public class SanPhamUI extends JPanel implements ActionListener{
         timKiem.setPreferredSize(new Dimension(900, 40));
         timKiemLocSP.add(locSP); timKiemLocSP.add(locGia); timKiemLocSP.add(timKiem);
         // lọc theo khoảng giá
-        JPanel khoangGiaLocSP= new JPanel(new FlowLayout());
+        khoangGiaLocSP= new JPanel(new FlowLayout());
         ButtonCustom btn_LocNangCao= new ButtonCustom("Lọc Khoảng Giá");
-        ButtonGroup locGroup= new ButtonGroup();
+
         btn_LocNangCao.setPreferredSize(new Dimension(150,30));
         rbtn1= new JRadioButton("Dưới 200,000 VNĐ");
         rbtn2= new JRadioButton("Từ 200,000 - 1,000,000 VNĐ");
         rbtn3= new JRadioButton("Từ 1,000,000 - 2,000,000 VNĐ");
         rbtn4= new JRadioButton("Trên 2,000,000 VNĐ");
+        radioButtons = new JRadioButton[]{rbtn1, rbtn2, rbtn3, rbtn4};
         rbtn1.setFont(new Font("Arial",Font.BOLD,12));  rbtn2.setFont(new Font("Arial",Font.BOLD,12));
         rbtn3.setFont(new Font("Arial",Font.BOLD,12));  rbtn4.setFont(new Font("Arial",Font.BOLD,12));
         khoangGiaLocSP.add(btn_LocNangCao);
@@ -211,7 +215,9 @@ public class SanPhamUI extends JPanel implements ActionListener{
         thongTin.setShowGrid(false);        thongTin.setShowHorizontalLines(true);
         
        thongTin.setDefaultEditor(Object.class, null);
-        
+        thongTin.setDefaultEditor(Object.class, null);
+                              thongTin.setDefaultEditor(Integer.class, null);
+                            thongTin.setDefaultEditor(Double.class, null);        
         thongTin.setRowHeight(80);
        
         thongTin.getTableHeader().setReorderingAllowed(false);
@@ -254,6 +260,8 @@ public class SanPhamUI extends JPanel implements ActionListener{
         thongTin.setModel(dtm);
         thongTin.getColumnModel().getColumn(1).setPreferredWidth(150);
         thongTin.setDefaultEditor(Object.class, null);
+                              thongTin.setDefaultEditor(Integer.class, null);
+                            thongTin.setDefaultEditor(Double.class, null);
         int dem=1;
         for(SanPhamDTO sanPham: listSP){
             try {
@@ -339,7 +347,40 @@ public class SanPhamUI extends JPanel implements ActionListener{
    }
        
 }
+public void capNhatRadioBtn() {
+    khoangGiaLocSP.removeAll(); // Xóa tất cả các JRadioButton
+    locGroup.clearSelection(); // Bỏ chọn tất cả các JRadioButton
     
+    ButtonCustom btn_LocNangCao = new ButtonCustom("Lọc Khoảng Giá");
+    btn_LocNangCao.setPreferredSize(new Dimension(150, 30));
+    
+    rbtn1 = new JRadioButton("Dưới 200,000 VNĐ");
+    rbtn2 = new JRadioButton("Từ 200,000 - 1,000,000 VNĐ");
+    rbtn3 = new JRadioButton("Từ 1,000,000 - 2,000,000 VNĐ");
+    rbtn4 = new JRadioButton("Trên 2,000,000 VNĐ");
+    radioButtons = new JRadioButton[]{rbtn1, rbtn2, rbtn3, rbtn4};
+    rbtn1.setFont(new Font("Arial", Font.BOLD, 12));  
+    rbtn2.setFont(new Font("Arial", Font.BOLD, 12));
+    rbtn3.setFont(new Font("Arial", Font.BOLD, 12));  
+    rbtn4.setFont(new Font("Arial", Font.BOLD, 12));
+    
+    khoangGiaLocSP.add(btn_LocNangCao);
+    locGroup.add(rbtn1);    
+    locGroup.add(rbtn2);    
+    locGroup.add(rbtn3);    
+    locGroup.add(rbtn4);
+    
+    khoangGiaLocSP.add(rbtn1);  
+    khoangGiaLocSP.add(rbtn2);  
+    khoangGiaLocSP.add(rbtn3);  
+    khoangGiaLocSP.add(rbtn4);
+    
+    khoangGiaLocSP.revalidate(); // Yêu cầu panel vẽ lại nội dung mới
+    khoangGiaLocSP.repaint();
+        locSP.addActionListener(this);          locGia.addActionListener(this);
+        rbtn1.addActionListener(this); rbtn2.addActionListener(this);   rbtn3.addActionListener(this);  rbtn4.addActionListener(this);
+        btn_LocNangCao.addActionListener(this);    
+}
     
 @Override
     public void actionPerformed(ActionEvent ae) {
@@ -365,14 +406,17 @@ public class SanPhamUI extends JPanel implements ActionListener{
             loadDuLieuTuDatabase(listSP);
             chinhSuaGiaoDienTable();
         }
-        else if( ae.getSource()== locSP){
-            if (locSP.getSelectedItem().toString().equals("Tất cả"))
-                    listSP=SPBUS.getAll();   
-            else 
-                listSP=SPBUS.searchVoiLoaiSP(locSP.getSelectedItem().toString());
-            loadDuLieuTuDatabase(listSP);
-            chinhSuaGiaoDienTable(); 
-        }
+            else if (ae.getSource() == locSP) {
+                    if (locSP.getSelectedItem().toString().equals("Tất cả")) {
+                        capNhatRadioBtn();
+                        listSP = SPBUS.getAll();
+                    } else {
+                        // Xử lý khi chọn một loại sản phẩm khác
+                        listSP = SPBUS.searchVoiLoaiSP(locSP.getSelectedItem().toString());
+                    }
+                    loadDuLieuTuDatabase(listSP);
+                    chinhSuaGiaoDienTable();
+            }
         
         else if (ae.getSource()==locGia){
             if(locGia.getSelectedItem().toString().equals("Giá tăng dần"))

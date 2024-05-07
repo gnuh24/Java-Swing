@@ -132,8 +132,11 @@ private void loadAllAccounts() {
     }
 
     for (TaiKhoanDTO account : accounts) {
+        String ngay="";
+        if (account.getNgaySinh()!="")
+            ngay=convertToDate(account.getNgaySinh());
         model.addRow(new Object[]{account.getMaTaiKhoan(), account.getTenDangNhap(),
-            account.getHoVaTen(), UtilServices.convertToDate(account.getNgaySinh()), account.getGioiTinh(),
+            account.getHoVaTen(),ngay , account.getGioiTinh(), 
             account.getSoDienThoai(), account.getEmail(), account.getDiaChi(), 
             account.getTrangThai(), account.getQuyen(), account.getMaKhoHang()});
     }
@@ -148,7 +151,7 @@ private void loadAllAccounts() {
                 JOptionPane.showMessageDialog(this, "Thêm tài khoản thành công.");
                 loadAllAccounts();
             } else {
-                JOptionPane.showMessageDialog(this, "Tên đăng nhập đã tồn tại.");
+                JOptionPane.showMessageDialog(this, "Thêm tài khoản thất bại.");
             }
         }
     }
@@ -203,6 +206,8 @@ private void loadAllAccounts() {
 
     // Tạo button lưu
     JButton saveButton = new JButton("Lưu");
+    
+    
     saveButton.addActionListener(e -> {
         // Lấy thông tin từ các trường nhập liệu
         String username = account.getTenDangNhap();
@@ -214,7 +219,10 @@ private void loadAllAccounts() {
         String birthday = birthdayField.getText();
         String gender = femaleRadioButton.isSelected() ? "Female" : "Male";
         int status = "Hoạt động".equals(statusComboBox.getSelectedItem().toString()) ? 1 : 0;
-
+        if (!UtilServices.isValidDate2(birthday)){
+            JOptionPane.showMessageDialog(editFrame, "Ngày không hợp lệ.");
+            return ;
+        }
         // Cập nhật thông tin vào đối tượng tài khoản
         account.setTenDangNhap(username);
         account.setHoVaTen(fullName.isEmpty() ? null : fullName);
@@ -404,6 +412,11 @@ private void loadAllAccounts() {
             JOptionPane.showMessageDialog(null, "Email không hợp lệ.", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return null;
         }
+        
+        if (!UtilServices.isValidDate2(birthday)){
+            JOptionPane.showMessageDialog(null, "Ngày không hợp lệ !!", "Lỗi", JOptionPane.ERROR_MESSAGE);   
+            return null;
+        }
 
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -427,7 +440,6 @@ private void loadAllAccounts() {
         account.setDiaChi(address.isEmpty() ? null : address);
         account.setNgaySinh(birthday.isEmpty() ? null : UtilServices.convertFromDate(birthday));
         account.setGioiTinh(gender);
-
         return account;
     } else {
         return null;

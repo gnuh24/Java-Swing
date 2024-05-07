@@ -252,6 +252,8 @@ public class NhapHangUI  extends JPanel implements ActionListener{
                               chuc_nang_pn.add(customButtonMain(xoa_sp,150,35));
                               chuc_nang_pn.add(customButtonMain(sua_sl_sp,150,35));
                               table_ds_nhap_hang.setDefaultEditor(Object.class, null);
+                              table_ds_san_pham.setDefaultEditor(Integer.class, null);
+                            table_ds_san_pham.setDefaultEditor(Double.class, null);
                               thanh_tien_pn = new JPanel();
                                           thanh_tien_lb = new JLabel("Tổng tiền : ");
                                           thanh_tien_lb.setFont(new Font("Arial", Font.BOLD, 16));
@@ -464,6 +466,7 @@ public class NhapHangUI  extends JPanel implements ActionListener{
                  temp.setSoLuong((Integer)table_ds_nhap_hang.getValueAt(i, 3));
                  temp.setDonGia(sanPham.getGiaSanPham());
                  temp.setThanhTien(Long.valueOf((Integer)table_ds_nhap_hang.getValueAt(i, 3) * sanPham.getGiaSanPham()));
+                 System.out.println("MaPhieuNhap:" + ma_phieu_nhap_tf.getText());
                  temp.setMaPhieu(Integer.valueOf(ma_phieu_nhap_tf.getText()));
                  temp.setMaSanPham(sanPham.getMaSanPham());
                  danhSachSanPhamTaoPhieuNhapHang.add(temp);
