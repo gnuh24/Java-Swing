@@ -27,6 +27,8 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
       ChiTietPhieuNhapKhoBUS chiTietPhieuNhapKhoBUS = new ChiTietPhieuNhapKhoBUS();
 
       UtilServices UltilServices = new UtilServices();
+      JPanel title;
+            JLabel title_lb;
       JPanel top;
             JPanel chucNangPanel;
                   JButton trangthai_btn;
@@ -45,6 +47,11 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
             JScrollPane dsPhieuNhapKho;
       public PhieuNhapUI(int maKhoHang) {
             this.maKhoHang = maKhoHang;
+            title = new JPanel();
+                  title_lb = new JLabel("PHIẾU NHẬP");
+                  title_lb.setFont(new Font("Arial", Font.BOLD, 16)); 
+            title.setPreferredSize(new Dimension(1200,40));
+            title.add(title_lb);
             top = new JPanel();
                   chucNangPanel = new JPanel();
                         trangthai_btn = new JButton("Trạng thái đơn");
@@ -144,6 +151,7 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
             bot.setPreferredSize(new Dimension(1200,700));
             bot.add(dsPhieuNhapKho);
 
+            add(title);
             add(top);
             add(bot);
             setPreferredSize(new Dimension(1300,800));
