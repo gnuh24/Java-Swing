@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class NhaCungCapGUI extends JPanel implements ActionListener {
+public class NhaCungCapUI extends JPanel implements ActionListener {
 
     private DefaultTableModel model;
     private JTable thongTin;
@@ -34,7 +34,7 @@ public class NhaCungCapGUI extends JPanel implements ActionListener {
     private ButtonCustom themNhaCungCap, suaNhaCungCap, xoaNhaCungCap;
 
 
-    public NhaCungCapGUI(int maKho) {
+    public NhaCungCapUI(int maKho) {
         this.setSize(1200, 900);
         this.setLayout(new BorderLayout(0, 0));
         this.maKhoHang = maKho;

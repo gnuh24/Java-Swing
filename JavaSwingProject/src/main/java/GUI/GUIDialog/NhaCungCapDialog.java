@@ -4,7 +4,7 @@ package GUI.GUIDialog;
 import BUS.NghiepVuNhapKho.NhaCungCapBUS;
 import DTO.NghiepVuNhapKho.NhaCungCapDTO;
 import ErrorResponse.TheValueAlreadyExists;
-import GUI.GUIPanel.NhaCungCapGUI;
+import GUI.GUIPanel.NhaCungCapUI;
 import GUI.GUIThanhPhan.ButtonCustom;
 import GUI.GUIThanhPhan.NhaCungCapForm;
 
@@ -23,14 +23,14 @@ public class NhaCungCapDialog extends JDialog implements ActionListener {
 
     private NhaCungCapBUS nhaCungCapBUS;
     private NhaCungCapDTO nhaCungCapDTO;
-    private NhaCungCapGUI nhaCungCapGUI;
+    private NhaCungCapUI nhaCungCapGUI;
 
 
     public NhaCungCapDialog() {
         this.init();
     }
 
-    public NhaCungCapDialog(NhaCungCapGUI nhaCungCapGUI, String tieuDe, String type) {
+    public NhaCungCapDialog(NhaCungCapUI nhaCungCapGUI, String tieuDe, String type) {
         this.maKho= nhaCungCapGUI.getMaKhoHang();
         this.nhaCungCapBUS = new NhaCungCapBUS();
         this.tieuDe = tieuDe;
@@ -38,7 +38,7 @@ public class NhaCungCapDialog extends JDialog implements ActionListener {
         this.nhaCungCapGUI = nhaCungCapGUI;
         init();
     }
-    public NhaCungCapDialog(NhaCungCapGUI nhaCungCapGUI, String tieuDe, String type, NhaCungCapDTO nhaCungCapDTO) {
+    public NhaCungCapDialog(NhaCungCapUI nhaCungCapGUI, String tieuDe, String type, NhaCungCapDTO nhaCungCapDTO) {
         this.maKho= nhaCungCapGUI.getMaKhoHang();
         this.tieuDe=tieuDe;
         this.type=type;
@@ -113,6 +113,12 @@ public class NhaCungCapDialog extends JDialog implements ActionListener {
             nhaCungCapForm.emailText.getText().trim().equals("") ||
             nhaCungCapForm.soDienThoaiText.getText().trim().equals(""))
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đủ thông tin cần thiết !!!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+        else if (!nhaCungCapForm.soDienThoaiText.getText().trim().matches("\\d{10,11}")){
+            JOptionPane.showMessageDialog(null, "Số điện thoại không hợp lệ.", "Lỗi", JOptionPane.ERROR_MESSAGE);        
+        }else if (!nhaCungCapForm.emailText.getText().trim().matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")){
+            JOptionPane.showMessageDialog(null, "Email không hợp lệ.", "Lỗi", JOptionPane.ERROR_MESSAGE);            
+        }
+        
         else {
             String tenNCC = this.nhaCungCapForm.tenNCCText.getText().trim();
             String email = this.nhaCungCapForm.emailText.getText().trim();
@@ -139,6 +145,11 @@ public class NhaCungCapDialog extends JDialog implements ActionListener {
             nhaCungCapForm.emailText.getText().trim().equals("") ||
             nhaCungCapForm.soDienThoaiText.getText().trim().equals(""))
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đủ thông tin cần thiết !!!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+        else if (!nhaCungCapForm.soDienThoaiText.getText().trim().matches("\\d{10,11}")){
+            JOptionPane.showMessageDialog(null, "Số điện thoại không hợp lệ.", "Lỗi", JOptionPane.ERROR_MESSAGE);        
+        }else if (!nhaCungCapForm.emailText.getText().trim().matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")){
+            JOptionPane.showMessageDialog(null, "Email không hợp lệ.", "Lỗi", JOptionPane.ERROR_MESSAGE);            
+        }
         else {
             try{
                 String tenNCC = this.nhaCungCapForm.tenNCCText.getText().trim();

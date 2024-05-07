@@ -181,7 +181,6 @@ private void loadAllAccounts() {
     editFrame.setLocationRelativeTo(this);
 
     // Tạo các trường nhập liệu
-    JTextField usernameField = new JTextField(account.getTenDangNhap());
     JTextField fullNameField = new JTextField(account.getHoVaTen());
     JTextField phoneField = new JTextField(account.getSoDienThoai());
     JTextField emailField = new JTextField(account.getEmail());
@@ -206,7 +205,7 @@ private void loadAllAccounts() {
     JButton saveButton = new JButton("Lưu");
     saveButton.addActionListener(e -> {
         // Lấy thông tin từ các trường nhập liệu
-        String username = usernameField.getText();
+        String username = account.getTenDangNhap();
         String fullName = fullNameField.getText();
         String phoneNumber = phoneField.getText();
         String email = emailField.getText();
@@ -238,9 +237,7 @@ private void loadAllAccounts() {
     });
 
     // Tạo layout cho form chỉnh sửa
-    JPanel panel = new JPanel(new GridLayout(10, 2));
-    panel.add(new JLabel("Tên Đăng Nhập:"));
-    panel.add(usernameField);
+    JPanel panel = new JPanel(new GridLayout(9, 2));
     panel.add(new JLabel("Họ Và Tên:"));
     panel.add(fullNameField);
     panel.add(new JLabel("Số Điện Thoại:"));
@@ -280,10 +277,10 @@ private void loadAllAccounts() {
 
         int result = taiKhoanBUS.deleteAccount(account);
         if (result > 0) {
-            JOptionPane.showMessageDialog(this, "Xóa tài khoản thành công.");
+            JOptionPane.showMessageDialog(this, "Khóa tài khoản thành công.");
             loadAllAccounts();
         } else {
-            JOptionPane.showMessageDialog(this, "Xóa tài khoản thất bại.");
+            JOptionPane.showMessageDialog(this, "Khóa tài khoản thất bại.");
         }
     }
 

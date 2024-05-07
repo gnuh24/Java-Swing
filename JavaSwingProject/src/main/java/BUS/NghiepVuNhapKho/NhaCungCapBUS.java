@@ -4,7 +4,7 @@ import DAO.NghiepVuNhapKho.NhaCungCapDAO;
 import DTO.NghiepVuNhapKho.NhaCungCapDTO;
 import ErrorResponse.TheValueAlreadyExists;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class NhaCungCapBUS {
 
@@ -19,13 +19,13 @@ public class NhaCungCapBUS {
 
     }
 
-    public List<NhaCungCapDTO> getAllNhaCungCap(Integer maKhoHang){
+    public ArrayList<NhaCungCapDTO> getAllNhaCungCap(Integer maKhoHang){
 
         if (maKhoHang == 1){
             return nhaCungCapDAO.getAll(maKhoHang);
 
         }else{
-            List<NhaCungCapDTO> nhaCungCapDTOList = nhaCungCapDAO.getAll(maKhoHang);
+            ArrayList<NhaCungCapDTO> nhaCungCapDTOList = nhaCungCapDAO.getAll(maKhoHang);
             nhaCungCapDTOList.add(0, nhaCungCapDAO.getNhaCungCapMacDinh());
             return  nhaCungCapDTOList;
         }
@@ -33,11 +33,13 @@ public class NhaCungCapBUS {
 
 
     public NhaCungCapDTO getNhaCungCapById(Integer maNCC){
-
         return nhaCungCapDAO.getById(maNCC);
     }
+    public NhaCungCapDTO getNhaCungCapByTenNCC(Integer maNCC, String tenNCC){
+        return nhaCungCapDAO.getNhaCungCapByTenNCC(maNCC, tenNCC);
+    }
 
-    public List<NhaCungCapDTO> searchNhaCungCapByTenNCC(Integer maKhoHang, String tenNCC){
+    public ArrayList<NhaCungCapDTO> searchNhaCungCapByTenNCC(Integer maKhoHang, String tenNCC){
         return nhaCungCapDAO.search(maKhoHang, tenNCC);
     }
 

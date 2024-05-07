@@ -33,15 +33,39 @@ public class SanPhamBUS {
         }
         return -1;
     }
+    // dành cho table của nhập hàng
+    public SanPhamDTO getSPByTenSP(String tenSP){
+        for( int i=0; i < this.danhSachSanPham.size();i++){
+            if(this.danhSachSanPham.get(i).getTenSanPham()==tenSP)
+                return this.danhSachSanPham.get(i);
+        }
+        return null;        
+    }
     
     
     public SanPhamDTO getById(int masp){
+        System.out.println("Danh sách SP");
+        for(SanPhamDTO a: danhSachSanPham){
+            System.out.println(a);
+        }
         for( int i=0; i<this.danhSachSanPham.size();i++)
             if ( this.danhSachSanPham.get(i).getMaSanPham()==masp)
                 return this.danhSachSanPham.get(i);
         
         return null;
     }
+     // dạng lấy sản phẩm đã xóa từ trước, dành cho phiếu đã nhập, xuất từ trước
+    public SanPhamDTO getById_ver2(int masp, int makho){
+        
+        ArrayList<SanPhamDTO> danhSachSanPhamTuTruoc=sanPhamDAO.getAll_ver2(makho);
+        for( int i=0; i<danhSachSanPhamTuTruoc.size();i++)
+            if ( danhSachSanPhamTuTruoc.get(i).getMaSanPham()==masp)
+                return danhSachSanPhamTuTruoc.get(i);
+        
+        return null;
+    }    
+    
+    
     
     public boolean create(SanPhamDTO spMoi){
         for( int i=0; i < this.danhSachSanPham.size();i++)
@@ -91,15 +115,26 @@ public class SanPhamBUS {
         ArrayList<SanPhamDTO> kq= new ArrayList<>();
         for(SanPhamDTO sp: this.danhSachSanPham){
             if( sp.getTenSanPham().toLowerCase().contains(txt) || 
-                loaiSPBUS.tenLoaiSanPham()[sp.getMaLoaiSanPham()].toLowerCase().equals(txt))
+                loaiSPBUS.getLoaiSPChung().get(sp.getMaLoaiSanPham()).toLowerCase().equals(txt))
                     kq.add(sp);
         }
         return kq;
     }
-    public ArrayList<SanPhamDTO> locTheoGiaTangGiam(String txt){
+    
+    public ArrayList<SanPhamDTO> searchVoiLoaiSP(String txt){
+
+        ArrayList<SanPhamDTO> kq= new ArrayList<>();
+        for(SanPhamDTO sp: this.danhSachSanPham){
+            // trừ -1 vì do Array bắt đầu từ 0, mã sp bắt đầu từ 1
+            if(loaiSPBUS.getLoaiSPChung().get(sp.getMaLoaiSanPham()-1).equals(txt))
+                kq.add(sp);
+        }    
+        return kq;
+    }
+    public ArrayList<SanPhamDTO> locTheoGiaTangGiam(ArrayList<SanPhamDTO> listSP, String txt){
         if (txt.equals("Tăng"))
         {
-            Collections.sort(this.danhSachSanPham, new Comparator<SanPhamDTO>() {
+            Collections.sort(listSP, new Comparator<SanPhamDTO>() {
                 @Override
                 public int compare(SanPhamDTO sp1, SanPhamDTO sp2) {
                     return Double.compare(sp1.getGiaSanPham(), sp2.getGiaSanPham());
@@ -107,14 +142,14 @@ public class SanPhamBUS {
             });
         }
         else {
-                Collections.sort(this.danhSachSanPham, new Comparator<SanPhamDTO>() {
+                Collections.sort(listSP, new Comparator<SanPhamDTO>() {
                 @Override
                 public int compare(SanPhamDTO sp1, SanPhamDTO sp2) {
                     return Double.compare(sp2.getGiaSanPham(), sp1.getGiaSanPham());
                 }
             });
         }
-        return this.danhSachSanPham;
+        return listSP;
         
     }
     public ArrayList<SanPhamDTO> locTheoKhoangGia(int loai,int num1, int num2){

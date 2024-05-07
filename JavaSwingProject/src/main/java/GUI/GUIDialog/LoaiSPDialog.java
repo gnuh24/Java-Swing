@@ -1,7 +1,7 @@
 package GUI.GUIDialog;
 import BUS.ThongTinSanPham.LoaiSanPhamBUS;
 import DTO.ThongTinSanPham.LoaiSanPhamDTO;
-import GUI.GUIPanel.GiaoDienLoaiSanPham;
+import GUI.GUIPanel.LoaiSanPhamUI;
 import GUI.GUIThanhPhan.ButtonCustom;
 import GUI.GUIThanhPhan.InputFormCustom;
 import javax.swing.*;
@@ -16,14 +16,14 @@ public class LoaiSPDialog extends  JDialog implements ActionListener{
     
     private LoaiSanPhamBUS LoaiSPBUS;
     private LoaiSanPhamDTO loaiSPDuocChon;
-    private GiaoDienLoaiSanPham loaiSPGUI;
+    private LoaiSanPhamUI loaiSPGUI;
     
     
     public LoaiSPDialog() {
         this.init();
     }
 
-    public LoaiSPDialog(GiaoDienLoaiSanPham LoaiSPGUI,String tieuDe, String type) {
+    public LoaiSPDialog(LoaiSanPhamUI LoaiSPGUI,String tieuDe, String type) {
         this.maKho=LoaiSPGUI.getMaKhoHang();
         this.LoaiSPBUS= new LoaiSanPhamBUS(maKho);
         this.tieuDe=tieuDe;
@@ -31,7 +31,7 @@ public class LoaiSPDialog extends  JDialog implements ActionListener{
         this.loaiSPGUI=LoaiSPGUI;
         init();
     }
-    public LoaiSPDialog(GiaoDienLoaiSanPham LoaiSPGUI,String tieuDe, String type, LoaiSanPhamDTO loaisp) {
+    public LoaiSPDialog(LoaiSanPhamUI LoaiSPGUI,String tieuDe, String type, LoaiSanPhamDTO loaisp) {
         this.maKho=LoaiSPGUI.getMaKhoHang();
         this.tieuDe=tieuDe;
         this.type=type;
@@ -143,6 +143,7 @@ public class LoaiSPDialog extends  JDialog implements ActionListener{
                 if(LoaiSPBUS.update(new LoaiSanPhamDTO(loaiSPDuocChon.getMaLoaiSanPham(),tenLoaiSP,maKho))){
                     JOptionPane.showMessageDialog(this, "Chỉnh sửa thành công ^^","Thông báo",JOptionPane.INFORMATION_MESSAGE);
                     this.loaiSPGUI.loadDuLieuLoaiSP(LoaiSPBUS.getAll());
+                    this.loaiSPGUI.chinhSuaGiaoDienTable();
                     this.dispose();
                 }
                 else 

@@ -6,13 +6,12 @@ import Others.JDBCConfigure;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class NhaCungCapDAO implements DAOInterface<NhaCungCapDTO> {
 
     @Override
-    public List<NhaCungCapDTO> getAll(Integer maKhoHang) {
-        List<NhaCungCapDTO> danhSachNhaCungCap = new ArrayList<>();
+    public ArrayList<NhaCungCapDTO> getAll(Integer maKhoHang) {
+        ArrayList<NhaCungCapDTO> danhSachNhaCungCap = new ArrayList<>();
 
         try{
             Connection connection = JDBCConfigure.getConnection();
@@ -81,8 +80,8 @@ public class NhaCungCapDAO implements DAOInterface<NhaCungCapDTO> {
 
 
 
-    public List<NhaCungCapDTO> search(Integer maKhoHang, String searchValue) {
-        List<NhaCungCapDTO> danhSachNhaCungCap = new ArrayList<>();
+    public ArrayList<NhaCungCapDTO> search(Integer maKhoHang, String searchValue) {
+        ArrayList<NhaCungCapDTO> danhSachNhaCungCap = new ArrayList<>();
 
         try{
             Connection connection = JDBCConfigure.getConnection();

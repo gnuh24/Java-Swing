@@ -42,18 +42,18 @@ import org.apache.poi.xssf.*;
 import org.apache.poi.xssf.usermodel.*;
 
 @Data
-public class GiaoDienSanPham extends JPanel implements ActionListener{
+public class SanPhamUI extends JPanel implements ActionListener{
 
     private  JTable thongTin;
     private  DefaultTableModel model;
     private LoaiSanPhamBUS LoaiSPBUS;
     private JComboBox<String> locSP, locGia;
     private JRadioButton rbtn1, rbtn2, rbtn3, rbtn4;
-    private String linkToIMG = "C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaHungNew\\JavaSwingProject\\src\\main\\java\\Resources";
+    private String linkToIMG = "C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaVeryNew\\JavaSwingProject\\src\\main\\java\\Resources";
     int maKhoHang=0;
     private SanPhamBUS SPBUS;
     private ArrayList<SanPhamDTO> listSP;
-    public GiaoDienSanPham(int maKho)  {
+    public SanPhamUI(int maKho)  {
         this.maKhoHang=maKho;
         this.SPBUS= new SanPhamBUS(this.maKhoHang);
         this.LoaiSPBUS= new LoaiSanPhamBUS(this.maKhoHang);
@@ -178,8 +178,7 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
                 JTable target = (JTable) e.getSource();
                 if (e.getClickCount() == 2)
                 {
-                    SanPhamDialog spDia=new SanPhamDialog("Chi Tiết Sản Phẩm","ChiTiet",listSP.get(thongTin.getSelectedRow()));
-                    //System.out.println(listSP.get(thongTin.getSelectedRow()).getAnhMinhhoa());
+                    SanPhamDialog spDia=new SanPhamDialog(SanPhamUI.this,"Chi Tiết Sản Phẩm","ChiTiet",listSP.get(thongTin.getSelectedRow()));
                     loadDuLieuTuDatabase(new SanPhamBUS(maKhoHang).getAll());
                     chinhSuaGiaoDienTable();
                 }
@@ -241,6 +240,10 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
             return  numberFormat.format(a);
       }
     public void loadDuLieuTuDatabase(ArrayList<SanPhamDTO> listSP){
+        
+//        for (int i = model.getRowCount() - 1; i >= 0; i--) {
+//                  model.removeRow(i);
+//            }        
         DefaultTableModel dtm= new DefaultTableModel(){
             public Class getColumnClass(int column)
             {
@@ -362,20 +365,24 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
             loadDuLieuTuDatabase(listSP);
             chinhSuaGiaoDienTable();
         }
-        else {
-            switch (lenh) {
-            case "comboBoxChanged":
-                if (locSP.getSelectedItem().toString().equals("Tất cả"))
-                    listSP=SPBUS.getAll();
-                else 
-                    listSP=SPBUS.search(locSP.getSelectedItem().toString());
-                if( locGia.getSelectedItem().toString().equals("Giá tăng dần"))
-                    listSP=SPBUS.locTheoGiaTangGiam("Tăng");
-                else if (locGia.getSelectedItem().toString().equals("Giá giảm dần"))
-                    listSP=SPBUS.locTheoGiaTangGiam("Giảm");
-                loadDuLieuTuDatabase(listSP);
-                chinhSuaGiaoDienTable();
-                break;
+        else if( ae.getSource()== locSP){
+            if (locSP.getSelectedItem().toString().equals("Tất cả"))
+                    listSP=SPBUS.getAll();   
+            else 
+                listSP=SPBUS.searchVoiLoaiSP(locSP.getSelectedItem().toString());
+            loadDuLieuTuDatabase(listSP);
+            chinhSuaGiaoDienTable(); 
+        }
+        
+        else if (ae.getSource()==locGia){
+            if(locGia.getSelectedItem().toString().equals("Giá tăng dần"))
+                listSP=SPBUS.locTheoGiaTangGiam(listSP,"Tăng");
+            else 
+                listSP=SPBUS.locTheoGiaTangGiam(listSP,"Giảm");
+            loadDuLieuTuDatabase(listSP);
+            chinhSuaGiaoDienTable();
+        }
+        switch (lenh) {
             case "Thêm Sản Phẩm":
                 ab=new SanPhamDialog(this,"Thêm SP mới","Add");
                 listSP=SPBUS.getAll();
@@ -401,12 +408,6 @@ public class GiaoDienSanPham extends JPanel implements ActionListener{
                 LocGiaSPDialog locKhoangGia= new LocGiaSPDialog(this);
                 break;
                 
-        }
-        } 
-
-        
+            }
+        }    
     }
-
-
-
-}

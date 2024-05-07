@@ -27,4 +27,5 @@ public class PhieuXuatKhoDTO {
 
       private Integer   maKhoHang;
 
+      private String trangThai;
 }

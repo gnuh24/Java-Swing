@@ -6,7 +6,7 @@ package GUI.GUIDialog;
 
 import BUS.ThongTinSanPham.SanPhamBUS;
 import DTO.ThongTinSanPham.SanPhamDTO;
-import GUI.GUIPanel.GiaoDienSanPham;
+import GUI.GUIPanel.SanPhamUI;
 import GUI.GUIThanhPhan.ButtonCustom;
 import GUI.GUIThanhPhan.InputFormCustom;
 
@@ -21,10 +21,10 @@ import java.util.ArrayList;
  * @author Admin
  */
 public class LocGiaSPDialog extends  JDialog implements ActionListener{
-    private GiaoDienSanPham SPGUI;
+    private SanPhamUI SPGUI;
     private SanPhamBUS SanPhamBUS;
     private InputFormCustom tuGia, denGia;
-    public LocGiaSPDialog(GiaoDienSanPham guiSP) {
+    public LocGiaSPDialog(SanPhamUI guiSP) {
         this.SPGUI=guiSP;
         this.SanPhamBUS= new SanPhamBUS(guiSP.getMaKhoHang());
         this.init();
@@ -84,12 +84,18 @@ public class LocGiaSPDialog extends  JDialog implements ActionListener{
            if(tuGia.getTxtForm().getText().trim().equals("") ||
               denGia.getTxtForm().getText().trim().equals(""))
                JOptionPane.showMessageDialog(this, "Vui lòng không để trống","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+
            else{
                try{
                    int num1=Integer.valueOf(tuGia.getTxtForm().getText().trim());
                    int num2=Integer.valueOf(denGia.getTxtForm().getText().trim());
                    if( num2 < num1)
-                       JOptionPane.showMessageDialog(this, "Giá tiền giới hạn phải lớn hơn giá tiền bắt đầu !!","Thông báo",JOptionPane.ERROR_MESSAGE);
+                   {
+                       JOptionPane.showMessageDialog(this, "Giá tiền giới hạn phải lớn hơn giá tiền bắt đầu !!","Thông báo",JOptionPane.ERROR_MESSAGE);                       
+                   }else if (num2 <0 || num1 <0){
+                       JOptionPane.showMessageDialog(this, "Vui lòng nhập số lớn hơn 0 !!","Thông báo",JOptionPane.ERROR_MESSAGE);                           
+                   }
+
                     
                    else {
                        

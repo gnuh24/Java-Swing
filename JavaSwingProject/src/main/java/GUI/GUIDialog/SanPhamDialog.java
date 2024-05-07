@@ -4,7 +4,7 @@ package GUI.GUIDialog;
 import BUS.ThongTinSanPham.LoaiSanPhamBUS;
 import BUS.ThongTinSanPham.SanPhamBUS;
 import DTO.ThongTinSanPham.SanPhamDTO;
-import GUI.GUIPanel.GiaoDienSanPham;
+import GUI.GUIPanel.SanPhamUI;
 import GUI.GUIThanhPhan.ComboBoxFormCustom;
 import GUI.GUIThanhPhan.InputFormCustom;
 import Others.CloundinaryServices;
@@ -25,26 +25,26 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
     public ComboBoxFormCustom tenLoai;
     private JLabel hinhAnh;
     private SanPhamDTO SPDuocChon;
-    private GiaoDienSanPham SPGUI;
+    private SanPhamUI SPGUI;
     private File selectedFile=null;
     
     private LoaiSanPhamBUS LoaiSPBUS;
     private SanPhamBUS SanPhamBUS;
     
     
-    public SanPhamDialog(GiaoDienSanPham guiaa,String title,String type) {
+    public SanPhamDialog(SanPhamUI guiaa,String title,String type) {
         this.tieuDe=title;
         this.type=type;
         this.SPGUI=guiaa;
         this.SanPhamBUS= new SanPhamBUS(guiaa.getMaKhoHang());
         this.LoaiSPBUS= new LoaiSanPhamBUS(guiaa.getMaKhoHang());
-        System.out.println(this.LoaiSPBUS);
         this.init();
     }
-    public SanPhamDialog(String title,String type, SanPhamDTO sanPhamDuocChon) {
+    public SanPhamDialog(SanPhamUI guiaa,String title,String type, SanPhamDTO sanPhamDuocChon) {
         this.tieuDe=title;
         this.type=type;
         this.SPDuocChon=sanPhamDuocChon;
+        this.SPGUI=guiaa;
         this.SanPhamBUS= new SanPhamBUS(sanPhamDuocChon.getMaKhoHang());
         this.LoaiSPBUS= new LoaiSanPhamBUS(sanPhamDuocChon.getMaKhoHang());
         this.LoaiSPBUS= new LoaiSanPhamBUS(sanPhamDuocChon.getMaKhoHang());
@@ -177,6 +177,8 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
         this.tenLoai.getList().setSelectedIndex(LoaiSPBUS.getIndexByMaLoaiSP(this.SPDuocChon.getMaLoaiSanPham()));
         this.giaSP.getTxtForm().setText(this.SPDuocChon.getGiaSanPham().toString());
         this.xuatXu.getTxtForm().setText(this.SPDuocChon.getXuatXu());
+        System.out.println("Tênloại:"+ LoaiSPBUS.getLoaiSPChung().get(SPDuocChon.getMaLoaiSanPham()));
+        this.tenLoai.list.setSelectedItem(LoaiSPBUS.getLoaiSPChung().get(SPDuocChon.getMaLoaiSanPham()-1));
         
     }
 
@@ -188,13 +190,17 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
         {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đủ thông tin cần thiết !!!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
         }
+        else if (Double.parseDouble(this.giaSP.txtForm.getText().trim()) <= 0){
+            JOptionPane.showMessageDialog(this, "Số tiền phải lớn hơn 0","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+        }
         else 
         try {
             String tenSP=this.tenSP.txtForm.getText();
             String xuatXu=this.xuatXu.txtForm.getText();
+            int maKho=SPGUI.getMaKhoHang();    
             int giaSP=Integer.parseInt(this.giaSP.txtForm.getText());
-            int maLoai=LoaiSPBUS.getMaLoaispWithTen(tenLoai.list.getSelectedItem().toString());
-            int maKho=1;            
+            int maLoai=LoaiSPBUS.getMaLoaispWithTen(tenLoai.list.getSelectedItem().toString(),maKho);
+        
             
             // hình ảnh thêm
             String linkAnhTuCloud="";
@@ -214,7 +220,7 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
             }
             else JOptionPane.showMessageDialog(this, "Lỗi, chưa chọn loại sản phẩm!","Thông báo",JOptionPane.ERROR_MESSAGE);
         } catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập số với các ô yêu cầu điền số lượng, giá tiền !!!","Thông báo",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập số với ô giá tiền !!!","Thông báo",JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -227,6 +233,9 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
                 {
                    JOptionPane.showMessageDialog(this, "Vui lòng không để trống !!!","Thông báo",JOptionPane.ERROR_MESSAGE);
                 }
+                      else if (Double.parseDouble(this.giaSP.txtForm.getText().trim()) <= 0){
+            JOptionPane.showMessageDialog(this, "Số tiền phải lớn hơn 0","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+        }
               else {
                   try {
                    int maSP=this.SPDuocChon.getMaSanPham();
@@ -246,16 +255,17 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
                      //hình mới
                     anhMinhHoaMoi=CloundinaryServices.createImage(hinhanh);
                     }
-
-                    int maLoai=tenLoai.list.getSelectedIndex();
-                    int maKho=1;
+                    int maLoai=LoaiSPBUS.getMaLoaispWithTen(tenLoai.list.getSelectedItem().toString(),SPGUI.getMaKhoHang());
+                    int maKho=SPGUI.getMaKhoHang();
                     SanPhamDTO spChinhSua=new SanPhamDTO(maSP,tenSP, xuatXu, giaSP, soLuong, true, anhMinhHoaMoi, maLoai, maKho);
                     if(SanPhamBUS.update(spChinhSua)){
                         JOptionPane.showMessageDialog(this, "Chỉnh sửa thành công ^^","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+                        this.SPGUI.loadDuLieuTuDatabase(SanPhamBUS.getAll());
+                        this.SPGUI.chinhSuaGiaoDienTable();
                         this.dispose();
                     }else JOptionPane.showMessageDialog(this, "Lỗi, Tên không được trùng hoặc thông tin phải là số khác","Thông báo",JOptionPane.ERROR_MESSAGE);                 
                   }catch(NumberFormatException e){
-                        JOptionPane.showMessageDialog(this, "Vui lòng nhập số với các ô yêu cầu điền số lượng, giá tiền !!!","Thông báo",JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Vui lòng nhập số với ô giá tiền !!!","Thông báo",JOptionPane.ERROR_MESSAGE);
                     }
    
               }

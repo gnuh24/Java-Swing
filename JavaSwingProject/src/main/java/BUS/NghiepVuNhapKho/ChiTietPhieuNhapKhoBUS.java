@@ -23,5 +23,8 @@ public class ChiTietPhieuNhapKhoBUS {
     public boolean createChiTietPhieuNhapKho(ChiTietPhieuNhapKhoDTO dto){
         return chiTietPhieuNhapKhoDAO.create(null, dto);
     }
+    public boolean deleteChiTietPhieuNhapKho(ChiTietPhieuNhapKhoDTO dto) {
+        return chiTietPhieuNhapKhoDAO.delete(dto);
+    }
 
 }

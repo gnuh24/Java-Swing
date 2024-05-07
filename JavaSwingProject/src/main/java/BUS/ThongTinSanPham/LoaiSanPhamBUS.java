@@ -31,8 +31,8 @@ public class LoaiSanPhamBUS {
         }
         return -1;
     }
-    public int getMaLoaispWithTen(String tenLoai){
-        LoaiSanPhamDTO tmp=loaiSPDAO.getByName(tenLoai);
+    public int getMaLoaispWithTen(String tenLoai, int maKho){
+        LoaiSanPhamDTO tmp=loaiSPDAO.getByName(tenLoai, maKho);
         return tmp.getMaLoaiSanPham();
     }
     
@@ -46,9 +46,12 @@ public class LoaiSanPhamBUS {
         }
         return list;
     }
+    public ArrayList<String> getLoaiSPChung(){
+        return loaiSPDAO.getLoaiSPChung();
+    }
 
     public boolean create(Integer maKhoHang, LoaiSanPhamDTO loaiSP){
-        LoaiSanPhamDTO loai= loaiSPDAO.getByName(loaiSP.getTenLoaiSanPham());
+        LoaiSanPhamDTO loai= loaiSPDAO.getByName(loaiSP.getTenLoaiSanPham(),maKhoHang);
         if( loai != null)
             return false;
         else if(loaiSPDAO.create(maKhoHang, loaiSP)){
@@ -59,7 +62,7 @@ public class LoaiSanPhamBUS {
     }
     
     public boolean update(LoaiSanPhamDTO loaiSP){
-        LoaiSanPhamDTO loai= loaiSPDAO.getByName(loaiSP.getTenLoaiSanPham());
+        LoaiSanPhamDTO loai= loaiSPDAO.getByName(loaiSP.getTenLoaiSanPham(),loaiSP.getMaKhoHang());
         if ( loai != null && loaiSP.getMaLoaiSanPham() != loai.getMaLoaiSanPham()){
             return false;
         }

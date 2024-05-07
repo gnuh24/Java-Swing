@@ -54,6 +54,38 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO> {
         }
         return list;
     }
+    
+    // dạng lấy cả sản phẩm đã xóa từ trước, dành cho phiếu đã nhập, xuất từ trước
+    public ArrayList<SanPhamDTO> getAll_ver2(Integer maKhoHang) {
+        this.maKho=maKhoHang;
+        ArrayList<SanPhamDTO> list= new ArrayList<>();
+        try {
+            Connection con= JDBCConfigure.getConnection();
+            String sql="Select * From sanpham Where MaKhoHang=?";
+            PreparedStatement pst=con.prepareStatement(sql);
+            pst.setInt(1, maKhoHang);
+            ResultSet kq=pst.executeQuery();
+            while( kq.next()){
+                int maSP=kq.getInt("MaSanPham");
+                String tenSP=kq.getString("TenSanPham");
+                String xuatXu=kq.getString("XuatXu");
+                int gia=kq.getInt("Gia");
+                int soLuong=kq.getInt("SoLuongConLai");
+                boolean trangThai= kq.getBoolean("TrangThai");
+                int maLoaiSP=kq.getInt("MaLoaiSanPham");
+                String hinhAnh=kq.getString("AnhMinhHoa");
+                int maKho=kq.getInt("MaKhoHang");
+                SanPhamDTO sp= new SanPhamDTO(maSP, tenSP, xuatXu, gia, soLuong, trangThai, hinhAnh, maLoaiSP, maKho);
+                list.add(sp);
+                
+            }
+        } catch (SQLException ex) {
+            System.out.println("Lỗi SQL getALL từ SPDAO");
+        }finally{
+            JDBCConfigure.closeConnection();
+        }
+        return list;
+    }    
 
     @Override
     public SanPhamDTO getById(Integer id) {

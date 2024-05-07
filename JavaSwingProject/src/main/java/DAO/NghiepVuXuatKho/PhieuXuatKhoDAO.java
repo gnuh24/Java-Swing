@@ -30,6 +30,7 @@ public class PhieuXuatKhoDAO implements DAOInterface<PhieuXuatKhoDTO> {
                         phieuXuatKhoObject.setNgayXuatKho(parsedDateTime);
                         phieuXuatKhoObject.setTongGiaTri(resultSet.getLong("TongGiaTri"));
                         phieuXuatKhoObject.setMaKhoHang(resultSet.getInt("MaKhoHang"));
+                        phieuXuatKhoObject.setTrangThai(resultSet.getString("TrangThai"));
 
                        phieuXuatKhoList.add(phieuXuatKhoObject);
                  }
@@ -54,6 +55,7 @@ public class PhieuXuatKhoDAO implements DAOInterface<PhieuXuatKhoDTO> {
                        LocalDate parsedDateTime = LocalDate.parse(dateString, formatter);
                        phieuXuatKho.setNgayXuatKho(parsedDateTime);
                        phieuXuatKho.setTongGiaTri(phieuXuatKhoRow.getInt("TongGiaTri"));
+                       phieuXuatKho.setTrangThai(phieuXuatKhoRow.getString("TrangThai"));
                  }
                  JDBCConfigure.closeConnection();
            } catch (SQLException e) {
@@ -65,7 +67,7 @@ public class PhieuXuatKhoDAO implements DAOInterface<PhieuXuatKhoDTO> {
       public boolean create(Integer maKhoHang, PhieuXuatKhoDTO phieuXuatKhoDTO) {
             try{
                   Statement state = JDBCConfigure.getConnection().createStatement();
-                  int taoPhieuXuatHang = state.executeUpdate("INSERT INTO `phieuxuatkho` (`NgayXuatKho`, `TongGiaTri`, `MaKhoHang`) VALUES (now(), '"+phieuXuatKhoDTO.getTongGiaTri()+"', '"+maKhoHang+"');");
+                  int taoPhieuXuatHang = state.executeUpdate("INSERT INTO `phieuxuatkho` (`NgayXuatKho`, `TongGiaTri`, `MaKhoHang`,`TrangThai`) VALUES (now(), '"+phieuXuatKhoDTO.getTongGiaTri()+"', '"+maKhoHang+"','ChoDuyet');");
                   if(taoPhieuXuatHang != 1) {
                         System.out.println("Khoi tao phieu xuat hàng that bai !");
                         return false;
@@ -79,66 +81,16 @@ public class PhieuXuatKhoDAO implements DAOInterface<PhieuXuatKhoDTO> {
                   return false;
             }
       }
-      // public void taoPhieuXuatHang() {
-      //            //! Cần thêm giá trị kho hàng
-      //            try {
-      //                  Statement state = JDBCConfigure.getConnection().createStatement();
-      //                  //? UPDATE phieuxuathang
-      //                  int maPhieuVuaKhoiTao = 0;
-      //                  if(state.executeUpdate("INSERT INTO `phieuxuatkho` (`MaPhieu`, `NgayXuatKho`, `TongGiaTri`, `MaKhoHang`) VALUES (NULL, now(), '"+currencyBack(thanh_tien_total.getText())+"', '4')") != 1) {
-      //                        JOptionPane.showMessageDialog(null, "Lỗi khi tạo phiếu xuất hàng","Cảnh báo", JOptionPane.ERROR_MESSAGE);
-      //                  } else {
-      //                        ResultSet resultSet = state.executeQuery("SELECT LAST_INSERT_ID()");
-      //                        if(resultSet.next()) {
-      //                              maPhieuVuaKhoiTao = resultSet.getInt(1);
-      //                        }
-      //                  }
-      
-      //                  //? UPDATE CTPXK
-      //                  for (SanPhamDTO sanPham : getDanhSachSanPhamTaoPhieuXuatHang()) {
-      //                        if(state.executeUpdate("INSERT INTO `ctpxk` (`SoLuong`, `ThanhTien`, `DonGia`, `MaPhieu`, `MaSanPham`) VALUES ('"+sanPham.getSoLuongXuatHang()+"', '"+(sanPham.getGiaSanPham() * sanPham.getSoLuongXuatHang())+"', '"+sanPham.getGiaSanPham()+"', '"+maPhieuVuaKhoiTao+"', '"+sanPham.getMaSanPham()+"')") != 1) {
-      //                              JOptionPane.showMessageDialog(null, "Lỗi khi thêm sản phẩm vào Chi Tiet Phieu Xuat Hang","Cảnh báo", JOptionPane.ERROR_MESSAGE);
-      //                        }
-      //                  }
-      //                  //? UPDATE số lượng SanPham
-      //                  for (SanPhamDTO sanPham : getDanhSachSanPhamTaoPhieuXuatHang()) {
-      //                        ResultSet resultSet = state.executeQuery("SELECT * FROM `sanpham` WHERE `sanpham`.`MaSanPham` = "+sanPham.getMaSanPham()+";");
-      //                        int setSoLuongConLai = 0;
-      //                        if(resultSet.next()) {
-      //                              resultSet.getInt(5);
-      //                              setSoLuongConLai = resultSet.getInt(5) - sanPham.getSoLuongXuatHang();
-      //                        }
-      //                        if(state.executeUpdate("UPDATE `sanpham` SET `SoLuongConLai` = '"+setSoLuongConLai+"' WHERE `sanpham`.`MaSanPham` = "+sanPham.getMaSanPham()+";") != 1) {
-      //                              JOptionPane.showMessageDialog(null, "Lỗi khi set So Luong Con Lai","Cảnh báo", JOptionPane.ERROR_MESSAGE);
-      //                        }
-      //                  }
-      //                  //?Reset
-      
-      //                        //? Xóa bảng danh sách sản phẩm xuất hàng
-      //                        for (int i = model_ds_xuat_hang.getRowCount() - 1; i >= 0; i--) {
-      //                              model_ds_xuat_hang.removeRow(i);
-      //                        }
-      //                        //? cập nhật danh sách sản phẩm
-      //                        for (int i = model_ds_san_pham.getRowCount() - 1; i >= 0; i--) {
-      //                              model_ds_san_pham.removeRow(i);
-      //                        }
-      //                        showDanhSachSanPham();
-      //                        //?cập nhật thành tiền
-      //                        thanh_tien_total.setText("0 đ");
-      //                  } catch (SQLException e) {
-      //                  System.err.println(e.getMessage());
-      //            }
-      // }
       @Override
       public boolean update(PhieuXuatKhoDTO phieuXuatKhoDTO) {
             
-            System.out.println("UPDATE `phieuxuatkho` SET `TongGiaTri` = '"+phieuXuatKhoDTO.getTongGiaTri()+"', `NgayXuatKho` = '"+String.valueOf(phieuXuatKhoDTO.getNgayXuatKho())+"'  WHERE `phieuxuatkho`.`MaPhieu` = " + phieuXuatKhoDTO.getMaPhieu());
+            System.out.println("UPDATE `phieuxuatkho` SET `TongGiaTri` = '"+phieuXuatKhoDTO.getTongGiaTri()+"', `NgayXuatKho` = '"+String.valueOf(phieuXuatKhoDTO.getNgayXuatKho())+"',`TrangThai` = '"+phieuXuatKhoDTO.getTrangThai()+"'  WHERE `phieuxuatkho`.`MaPhieu` = " + phieuXuatKhoDTO.getMaPhieu());
             try{
                   //? UPDATE `phieuxuatkho` SET `NgayXuatKho` = now(), `TongGiaTri` = '15000000' WHERE `phieuxuatkho`.`MaPhieu` = 33;
                   Statement state = JDBCConfigure.getConnection().createStatement();
-                  int capNhatPhieuXuatHang = state.executeUpdate("UPDATE `phieuxuatkho` SET `TongGiaTri` = '"+phieuXuatKhoDTO.getTongGiaTri()+"', `NgayXuatKho` = '"+String.valueOf(phieuXuatKhoDTO.getNgayXuatKho())+"'  WHERE `phieuxuatkho`.`MaPhieu` = " + phieuXuatKhoDTO.getMaPhieu());
+                  int capNhatPhieuXuatHang = state.executeUpdate("UPDATE `phieuxuatkho` SET `TongGiaTri` = '"+phieuXuatKhoDTO.getTongGiaTri()+"', `NgayXuatKho` = '"+String.valueOf(phieuXuatKhoDTO.getNgayXuatKho())+"',`TrangThai` = '"+phieuXuatKhoDTO.getTrangThai()+"'  WHERE `phieuxuatkho`.`MaPhieu` = " + phieuXuatKhoDTO.getMaPhieu());
                   if(capNhatPhieuXuatHang != 1) {
-                        System.out.println("Cap nhat phieu xuat hàng that bai !");
+                        System.out.println("Cap nhat phieu xuat hang that bai !");
                         return false;
                   } else {
                         JDBCConfigure.closeConnection();
@@ -167,19 +119,58 @@ public class PhieuXuatKhoDAO implements DAOInterface<PhieuXuatKhoDTO> {
                   return false;
             }
       }
-       public int maPhieuXuatKhoTiepTheo() {
+      public String getTenKhoHang(int maPhieuXuat) {
             try {
                   Statement statement = JDBCConfigure.getConnection().createStatement();
-                  ResultSet maPhieuXuatTiepTheo = statement.executeQuery("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'javaswing_database'AND TABLE_NAME = 'phieuxuatkho';");
-                  while(maPhieuXuatTiepTheo.next()) {
-                        return maPhieuXuatTiepTheo.getInt("AUTO_INCREMENT");
+                  ResultSet phieuXuatKho = statement.executeQuery("SELECT * FROM `phieuxuatkho`,`khohang` WHERE phieuxuatkho.MaKhoHang = khohang.MaKhoHang and phieuxuatkho.MaPhieu = " + maPhieuXuat);
+                  while(phieuXuatKho.next()) {
+                        return phieuXuatKho.getString("TenKhoHang");
                   }
-                  return -1;
+                  return null;
             } catch (SQLException e) {
                   e.printStackTrace(); // hoặc xử lý ngoại lệ theo cách phù hợp
-                  return -1;
+                  return null;
             }
       }
+      public String getHoTen(int maKhoHang) {
+            try {
+                  Statement statement = JDBCConfigure.getConnection().createStatement();
+                  ResultSet phieuXuatKho = statement.executeQuery("SELECT * FROM `khohang`,`taikhoan` WHERE khohang.maKhoHang = taikhoan.maKhoHang and  khohang.maKhoHang = " + maKhoHang);
+                  while(phieuXuatKho.next()) {
+                        return phieuXuatKho.getString("HoTen");
+                  }
+                  return null;
+            } catch (SQLException e) {
+                  e.printStackTrace(); // hoặc xử lý ngoại lệ theo cách phù hợp
+                  return null;
+            }
+      }
+      public String getHoTenByMaPhieuXuat(int maPhieuXuat) {
+            try {
+                  Statement statement = JDBCConfigure.getConnection().createStatement();
+                  ResultSet phieuXuatKho = statement.executeQuery("SELECT * FROM `phieuxuatkho`, `taikhoan` WHERE phieuxuatkho.MaKhoHang = taikhoan.MaKhoHang and phieuxuatkho.MaPhieu =" + maPhieuXuat);
+                  while(phieuXuatKho.next()) {
+                        return phieuXuatKho.getString("HoTen");
+                  }
+                  return null;
+            } catch (SQLException e) {
+                  e.printStackTrace(); // hoặc xử lý ngoại lệ theo cách phù hợp
+                  return null;
+            }
+      }
+      public int maPhieuXuatKhoTiepTheo() {
+            try {
+                    Statement statement = JDBCConfigure.getConnection().createStatement();
+                    ResultSet maPhieuXuatTiepTheo = statement.executeQuery("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'javaswing_database'AND TABLE_NAME = 'phieuxuatkho';");
+                    while(maPhieuXuatTiepTheo.next()) {
+                        return maPhieuXuatTiepTheo.getInt("AUTO_INCREMENT");
+                    }
+                    return -1;
+            } catch (SQLException e) {
+                    e.printStackTrace(); // hoặc xử lý ngoại lệ theo cách phù hợp
+                    return -1;
+            }
+        }
       //?     Lấy chi tiết phiếu xuất kho
       //?select * from ctpxk, sanpham, phieuxuatkho, khohang where ctpxk.MaPhieu = phieuxuatkho.MaPhieu and ctpxk.MaSanPham = sanpham.MaSanPham and phieuxuatkho.MaKhoHang = khohang.MaKhoHang and phieuxuatkho.MaPhieu = " + maPhieuXuat
 }
