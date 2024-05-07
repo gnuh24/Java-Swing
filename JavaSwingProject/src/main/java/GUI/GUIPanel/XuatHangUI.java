@@ -469,8 +469,8 @@ public class XuatHangUI extends JPanel implements ActionListener{
       public ArrayList<ChiTietPhieuXuatKhoDTO> getDanhSachChiTietPhieuXuatKho() {
             ArrayList<ChiTietPhieuXuatKhoDTO> danhSachSanPhamTaoPhieuXuatHang = new ArrayList<>();
            for(int i = 0; i < table_ds_xuat_hang.getRowCount(); i++) {
-                 int maSanPham = (Integer)table_ds_xuat_hang.getValueAt(i, 1);
-                 SanPhamDTO sanPham = sanPhamBUS.getById(maSanPham);
+                 String tensp = String.valueOf(table_ds_xuat_hang.getValueAt(i, 2));
+                 SanPhamDTO sanPham = sanPhamBUS.getSPByTenSP(tensp);
                  ChiTietPhieuXuatKhoDTO temp = new ChiTietPhieuXuatKhoDTO();
                  temp.setSoLuong((Integer)table_ds_xuat_hang.getValueAt(i, 3));
                  temp.setDonGia(sanPham.getGiaSanPham());

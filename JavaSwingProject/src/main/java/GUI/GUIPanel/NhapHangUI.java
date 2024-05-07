@@ -126,6 +126,7 @@ public class NhapHangUI  extends JPanel implements ActionListener{
                               table_ds_san_pham.getColumnModel().getColumn(1).setPreferredWidth(225);
                               table_ds_san_pham.getColumnModel().getColumn(2).setPreferredWidth(20);
                               table_ds_san_pham.getColumnModel().getColumn(3).setPreferredWidth(80);
+
                               table_ds_san_pham.setRowHeight(40);
                               //? Set vị trí cho nội dung (căn giữa cho nội dung)
                               DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -141,8 +142,9 @@ public class NhapHangUI  extends JPanel implements ActionListener{
                               ds_san_pham = new JScrollPane(table_ds_san_pham);
                               ds_san_pham.setPreferredSize(new Dimension(550, 600));
                               ds_san_pham.setBackground(Color.WHITE);
+                              table_ds_san_pham.setDefaultEditor(Object.class, null);
                               showDanhSachSanPham(sanPhamBUS.getAll());
-
+                              
                               them_sp = new JPanel();
                               them_sp.setBackground(Color.WHITE);
                                     them_sp_lb = new JLabel("Số lượng : ");
@@ -249,7 +251,7 @@ public class NhapHangUI  extends JPanel implements ActionListener{
                                     sua_sl_sp.addActionListener(this);
                               chuc_nang_pn.add(customButtonMain(xoa_sp,150,35));
                               chuc_nang_pn.add(customButtonMain(sua_sl_sp,150,35));
-
+                              table_ds_nhap_hang.setDefaultEditor(Object.class, null);
                               thanh_tien_pn = new JPanel();
                                           thanh_tien_lb = new JLabel("Tổng tiền : ");
                                           thanh_tien_lb.setFont(new Font("Arial", Font.BOLD, 16));
@@ -392,6 +394,7 @@ public class NhapHangUI  extends JPanel implements ActionListener{
                   JOptionPane.showMessageDialog(null, "Chỉ được nhập số!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
                   them_sp_number.setText("");
             }  else {
+
                   int selectedRow = table_ds_san_pham.getSelectedRow();
                   if(selectedRow != -1) {
                         //? Thêm dữ liệu vào bảng nhập hàng
@@ -415,6 +418,7 @@ public class NhapHangUI  extends JPanel implements ActionListener{
                         them_sp_number.setText("");
                   }
             }
+             table_ds_nhap_hang.setDefaultEditor(Object.class, null);
       }
       public void xoaSanPhamPhieuNhapKho() {
             //? Dòng đang chọn
@@ -456,7 +460,6 @@ public class NhapHangUI  extends JPanel implements ActionListener{
                 // index
                  String tensp = String.valueOf(table_ds_nhap_hang.getValueAt(i, 2));
                  SanPhamDTO sanPham = sanPhamBUS.getSPByTenSP(tensp);
-                 System.out.println("SanphamByID:" + sanPham);
                  ChiTietPhieuNhapKhoDTO temp = new ChiTietPhieuNhapKhoDTO();
                  temp.setSoLuong((Integer)table_ds_nhap_hang.getValueAt(i, 3));
                  temp.setDonGia(sanPham.getGiaSanPham());
