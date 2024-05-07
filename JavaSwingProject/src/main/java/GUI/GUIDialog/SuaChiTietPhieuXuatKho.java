@@ -128,6 +128,11 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
                                                 return Object.class; // Hoặc có thể trả về kiểu Object làm mặc định
                                           }
                                     }
+                                    @Override
+                                    public boolean isCellEditable(int row, int column) {
+                                    // Make all cells non-editable
+                                    return false;
+                                    }
                                 };
                               table_ds_san_pham = new JTable(model_ds_san_pham);
                               table_ds_san_pham.getColumnModel().getColumn(0).setPreferredWidth(20);
@@ -239,6 +244,11 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
                                           } else {
                                                 return Object.class; // Hoặc có thể trả về kiểu Object làm mặc định
                                           }
+                                    }
+                                    @Override
+                                    public boolean isCellEditable(int row, int column) {
+                                    // Make all cells non-editable
+                                    return false;
                                     }
                                 };
                               table_ds_xuat_hang = new JTable(model_ds_xuat_hang);
@@ -497,7 +507,7 @@ public class SuaChiTietPhieuXuatKho extends JFrame implements ActionListener{
                               if (!text.matches("^\\d+$")) {
                                     //? Check kí tự có hợp lệ hay không
                                     JOptionPane.showMessageDialog(null, "Chỉ được nhập số!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
-                              } else if(Integer.valueOf(text) <= 0 || Integer.valueOf(text) > soLuongConLai + (int)(table_ds_xuat_hang.getValueAt(selectedRow, 3))) {
+                              } else if(Integer.valueOf(text) <= 0 || Integer.valueOf(text) < soLuongConLai + (int)(table_ds_xuat_hang.getValueAt(selectedRow, 3))) {
                                     //? Check xem số lượng cần thêm có phải số âm hoặc bằng 0 hay không
                                     JOptionPane.showMessageDialog(null, "Số lượng không hợp lệ!","Cảnh báo", JOptionPane.ERROR_MESSAGE);
                               } else {

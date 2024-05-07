@@ -3,6 +3,7 @@ package DAO.NghiepVuXuatKho;
 import DAO.DAOInterface;
 import DTO.NghiepVuXuatKho.PhieuXuatKhoDTO;
 import Others.JDBCConfigure;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -64,23 +65,29 @@ public class PhieuXuatKhoDAO implements DAOInterface<PhieuXuatKhoDTO> {
             return phieuXuatKho;
       }
       @Override
-      public boolean create(Integer maKhoHang, PhieuXuatKhoDTO phieuXuatKhoDTO) {
-            try{
-                  Statement state = JDBCConfigure.getConnection().createStatement();
-                  int taoPhieuXuatHang = state.executeUpdate("INSERT INTO `phieuxuatkho` (`NgayXuatKho`, `TongGiaTri`, `MaKhoHang`,`TrangThai`) VALUES (now(), '"+phieuXuatKhoDTO.getTongGiaTri()+"', '"+maKhoHang+"','ChoDuyet');");
-                  if(taoPhieuXuatHang != 1) {
-                        System.out.println("Khoi tao phieu xuat hàng that bai !");
-                        return false;
-                  } else {
-                        JDBCConfigure.closeConnection();
-                        return true;
-                  }
-            }catch(SQLException e) {
-                  System.out.println("Khu a");
-                  System.err.println(e.getMessage());
-                  return false;
+public boolean create(Integer maKhoHang, PhieuXuatKhoDTO phieuXuatKhoDTO) {
+    try {
+
+        PreparedStatement pst = JDBCConfigure.getConnection().prepareStatement("INSERT INTO `phieuxuatkho` (`NgayXuatKho`, `TongGiaTri`, `MaKhoHang`, `TrangThai`) VALUES (now(), ?, ?, ?)",Statement.RETURN_GENERATED_KEYS);
+        pst.setLong(1, phieuXuatKhoDTO.getTongGiaTri());
+        pst.setInt(2, maKhoHang);
+        pst.setString(3, "ChoDuyet");
+
+        pst.executeUpdate();
+
+            ResultSet generatedKeys = pst.getGeneratedKeys();
+
+            if (generatedKeys.next()) {
+                int maPhieu = generatedKeys.getInt(1);
+                phieuXuatKhoDTO.setMaPhieu(maPhieu );
             }
-      }
+            return true;
+
+    } catch (SQLException e) {
+        System.out.println(e);
+        return false;
+    }
+}
       @Override
       public boolean update(PhieuXuatKhoDTO phieuXuatKhoDTO) {
             

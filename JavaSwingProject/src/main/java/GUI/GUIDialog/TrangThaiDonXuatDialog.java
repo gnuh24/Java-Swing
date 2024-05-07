@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 // import java.awt.event.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.sql.*;
 
 import javax.swing.*;
 // import javax.swing.border.*;
@@ -20,7 +19,6 @@ import DTO.NghiepVuXuatKho.*;
 import DTO.ThongTinSanPham.SanPhamDTO;
 import GUI.GUIPanel.PhieuXuatUI;
 import GUI.GUIThanhPhan.ButtonCustom;
-import Others.JDBCConfigure;
 
 public class TrangThaiDonXuatDialog implements ActionListener{
       ChiTietPhieuXuatKhoBUS chiTietPhieuXuatKhoBUS;
@@ -107,6 +105,11 @@ public class TrangThaiDonXuatDialog implements ActionListener{
                               return Object.class; // Hoặc có thể trả về kiểu Object làm mặc định
                         }
                   }
+                  @Override
+                  public boolean isCellEditable(int row, int column) {
+                  // Make all cells non-editable
+                  return false;
+                  }
             };
             table_ds_ctpxk = new JTable(model_ds_ctpxk);
             table_ds_ctpxk.getColumnModel().getColumn(0).setPreferredWidth(20);
@@ -174,7 +177,7 @@ public class TrangThaiDonXuatDialog implements ActionListener{
       }
       public void setTrangThai(int maPhieuXuat) {
             PhieuXuatKhoDTO phieu = phieuXuatKhoBUS.getById(maPhieuXuat);
-            String[] trangThai = {"Chờ Duyệt", "Đã Duyệt"};
+            String[] trangThai = {"Chờ Duyệt", "Đã Duyệt", "Hủy"};
             trang_thai_cb = new JComboBox<>(trangThai); 
             if(phieu.getTrangThai().equals("ChoDuyet")) {
                   trang_thai_cb.setSelectedIndex(0);
@@ -204,8 +207,8 @@ public class TrangThaiDonXuatDialog implements ActionListener{
             }
       }
       public void capNhatTrangThaiDonXuat() {
-            if(JOptionPane.showConfirmDialog(null, "Bạn có muốn cập nhật trạng thái phiếu xuất này ?", "Cập nhật trạng thái phiếu xuất", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                  if(trang_thai_cb.getSelectedIndex() == 1) {
+            if(trang_thai_cb.getSelectedIndex() == 1) {
+                  if(JOptionPane.showConfirmDialog(null, "Bạn có muốn duyệt phiếu xuất này ?", "Cập nhật trạng thái phiếu xuất", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                         PhieuXuatKhoDTO phieu = phieuXuatKhoBUS.getById(Integer.valueOf(ma_phieu_lb.getText()));
                         phieu.setTrangThai("DaDuyet");
                         phieuXuatKhoBUS.update(phieu);
@@ -217,13 +220,33 @@ public class TrangThaiDonXuatDialog implements ActionListener{
 
                               sanPhamBUS.update(sp);
                         }
-                        JOptionPane.showMessageDialog(null, "Thay đổi trạng thái phiếu xuất thành công !","Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Duyệt phiếu xuất thành công !","Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         this.phieuXuat.showDanhSachPhieuXuatHang(phieuXuatKhoBUS.getAll(Integer.parseInt(ma_kho_hang_lb.getText())));
                         frame.dispose();
-                  } else {
-                        System.out.println("chờ duyệt");
+                  }
+            }
+            if(trang_thai_cb.getSelectedIndex() == 2) {
+                  if(JOptionPane.showConfirmDialog(null, "Bạn có muốn hủy phiếu xuất này ?", "Cập nhật trạng thái phiếu xuất", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                        PhieuXuatKhoDTO phieu = phieuXuatKhoBUS.getById(Integer.valueOf(ma_phieu_lb.getText()));
+                        phieu.setTrangThai("Huy");
+                        phieuXuatKhoBUS.update(phieu);
+
+                        //!Hủy thì không cần set số lượng còn lại của sản phẩm
+                        // //? Update Số lượng còn lại của sản phẩm
+                        // for(int i = 0; i < model_ds_ctpxk.getRowCount(); i++) {
+                        //       SanPhamDTO sp = sanPhamBUS.getById((Integer)model_ds_ctpxk.getValueAt(i, 1));
+                        //       sp.setSoLuongConLai(sp.getSoLuongConLai() - (Integer)model_ds_ctpxk.getValueAt(i, 4));
+
+                        //       sanPhamBUS.update(sp);
+                        // }
+                        JOptionPane.showMessageDialog(null, "Hủy phiếu xuất thành công !","Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        this.phieuXuat.showDanhSachPhieuXuatHang(phieuXuatKhoBUS.getAll(Integer.parseInt(ma_kho_hang_lb.getText())));
                         frame.dispose();
                   }
+            }
+            if(trang_thai_cb.getSelectedIndex() == 0) {
+                  System.out.println("chờ duyệt");
+                  frame.dispose();
             }
       }
       public void actionPerformed(ActionEvent e) {
