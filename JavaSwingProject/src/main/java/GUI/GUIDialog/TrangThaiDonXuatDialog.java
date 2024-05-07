@@ -107,6 +107,11 @@ public class TrangThaiDonXuatDialog implements ActionListener{
                               return Object.class; // Hoặc có thể trả về kiểu Object làm mặc định
                         }
                   }
+                  @Override
+                  public boolean isCellEditable(int row, int column) {
+                  // Make all cells non-editable
+                  return false;
+                  }
             };
             table_ds_ctpxk = new JTable(model_ds_ctpxk);
             table_ds_ctpxk.getColumnModel().getColumn(0).setPreferredWidth(20);
