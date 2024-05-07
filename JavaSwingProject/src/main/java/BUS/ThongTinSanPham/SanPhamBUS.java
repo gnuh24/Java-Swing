@@ -91,16 +91,18 @@ public class SanPhamBUS {
         ArrayList<SanPhamDTO> kq= new ArrayList<>();
         for(SanPhamDTO sp: this.danhSachSanPham){
             if( sp.getTenSanPham().toLowerCase().contains(txt) || 
-                loaiSPBUS.tenLoaiSanPham()[sp.getMaLoaiSanPham()].toLowerCase().equals(txt))
+                loaiSPBUS.getLoaiSPChung().get(sp.getMaLoaiSanPham()).toLowerCase().equals(txt))
                     kq.add(sp);
         }
         return kq;
     }
     
     public ArrayList<SanPhamDTO> searchVoiLoaiSP(String txt){
+
         ArrayList<SanPhamDTO> kq= new ArrayList<>();
         for(SanPhamDTO sp: this.danhSachSanPham){
-            if(loaiSPBUS.tenLoaiSanPham()[sp.getMaLoaiSanPham()].equals(txt))
+            // trừ -1 vì do Array bắt đầu từ 0, mã sp bắt đầu từ 1
+            if(loaiSPBUS.getLoaiSPChung().get(sp.getMaLoaiSanPham()-1).equals(txt))
                 kq.add(sp);
         }    
         return kq;
