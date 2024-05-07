@@ -71,25 +71,32 @@ public class DangKy extends JFrame {
         buttonRegister.setForeground(Color.white);
         buttonRegister.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         
-        userNameField.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-                registerAccount();
-            }
-        });
-        
-        
-        passwordField.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-                registerAccount();
-            }
-        });
-        
-        
-        confirmPasswordField.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
+//        userNameField.addActionListener(new ActionListener() {
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+//                registerAccount();
+//            }
+//        });
+//
+//
+//        passwordField.addActionListener(new ActionListener() {
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+//                registerAccount();
+//            }
+//        });
+//
+//
+//        confirmPasswordField.addActionListener(new ActionListener() {
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+//                registerAccount();
+//            }
+//        });
+
+        buttonRegister.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 registerAccount();
             }
         });
@@ -160,52 +167,52 @@ public class DangKy extends JFrame {
     }
 
     public void registerAccount() {
-    String userName = userNameField.getText();
-    String password = new String(passwordField.getPassword());
-    String confirmPassword = new String(confirmPasswordField.getPassword());
-    
-    if (userName.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Tên đăng nhập không được để trống.");
-        return;
-    }
-    
-    if (userName.length() < 6) {
-        JOptionPane.showMessageDialog(this, "Tên đăng nhập phải có ít nhất 6 ký tự.");
-        return;
-    }
-    
-    if (password.length() < 7) {
-        JOptionPane.showMessageDialog(this, "Mật khẩu phải có ít nhất 8 ký tự.");
-        return;
-    }
+        String userName = userNameField.getText();
+        String password = new String(passwordField.getPassword());
+        String confirmPassword = new String(confirmPasswordField.getPassword());
 
-    if (!password.equals(confirmPassword)) {
-        JOptionPane.showMessageDialog(this, "Mật khẩu xác nhận không khớp.");
-        return;
+        if (userName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tên đăng nhập không được để trống.");
+            return;
+        }
+
+        if (userName.length() < 6) {
+            JOptionPane.showMessageDialog(this, "Tên đăng nhập phải có ít nhất 6 ký tự.");
+            return;
+        }
+
+        if (password.length() < 7) {
+            JOptionPane.showMessageDialog(this, "Mật khẩu phải có ít nhất 8 ký tự.");
+            return;
+        }
+
+        if (!password.equals(confirmPassword)) {
+            JOptionPane.showMessageDialog(this, "Mật khẩu xác nhận không khớp.");
+            return;
+        }
+
+        TaiKhoanDTO newAccount = new TaiKhoanDTO();
+        newAccount.setTenDangNhap(userName);
+        newAccount.setMatKhau(password);
+
+        TaiKhoanBUS taiKhoanBUS = new TaiKhoanBUS();
+
+        TaiKhoanDTO existingAccount = taiKhoanBUS.getUserByUserName(userName);
+        if (existingAccount != null) {
+            JOptionPane.showMessageDialog(this, "Tài khoản đã tồn tại.");
+            return;
+        }
+
+        int result = taiKhoanBUS.insertAccount(newAccount);
+
+        if (result == 1) {
+            JOptionPane.showMessageDialog(this, "Đăng Ký Thành Công.");
+            this.dispose();
+            new DangNhap();
+        } else {
+            JOptionPane.showMessageDialog(this, "Đăng Ký Thất Bại. Vui lòng thử lại sau.");
+        }
     }
-
-    TaiKhoanDTO newAccount = new TaiKhoanDTO();
-    newAccount.setTenDangNhap(userName);
-    newAccount.setMatKhau(password);
-    
-    TaiKhoanBUS taiKhoanBUS = new TaiKhoanBUS();
-
-    TaiKhoanDTO existingAccount = taiKhoanBUS.getUserByUserName(userName);
-    if (existingAccount != null) {
-        JOptionPane.showMessageDialog(this, "Tài khoản đã tồn tại.");
-        return;
-    }
-
-    int result = taiKhoanBUS.insertAccount(newAccount);
-
-    if (result == 1) {
-        JOptionPane.showMessageDialog(this, "Đăng Ký Thành Công.");
-        this.dispose();
-        new DangNhap(); 
-    } else {
-        JOptionPane.showMessageDialog(this, "Đăng Ký Thất Bại. Vui lòng thử lại sau.");
-    }
-}
 
 
     public void closeWindow() {

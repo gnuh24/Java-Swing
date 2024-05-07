@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="003b6990-b30a-4767-b559-0655e60cd464" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SQL/insertData_JavaSwing.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../SQL/insertData_JavaSwing.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/DangKy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIPanel/DangKy.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,8 +144,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/DAO/NghiepVuNhapKho/NhaCungCapDAO.java</url>
-          <line>161</line>
-          <properties class="DAO.NghiepVuNhapKho.NhaCungCapDAO" method="isTenNCCExists">
+          <line>160</line>
+          <properties class="DAO.NghiepVuNhapKho.NhaCungCapDAO">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
