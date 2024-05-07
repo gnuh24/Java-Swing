@@ -179,7 +179,7 @@ public class ChiTietPhieuXuatKho implements ActionListener{
                   model_ds_ctpxk.addRow(new Object[]{
                       model_ds_ctpxk.getRowCount()+1,
                       chiTietPhieuXuatKhoList.get(i).getMaSanPham(),
-                      sanPhamBUS.getById_ver2(chiTietPhieuXuatKhoList.get(i).getMaSanPham(),maPhieuXuat).getTenSanPham(),
+                      sanPhamBUS.getById_ver2(chiTietPhieuXuatKhoList.get(i).getMaSanPham(),phieuXuat.getMaKhoHang()).getTenSanPham(),
                       toCurrency(chiTietPhieuXuatKhoList.get(i).getDonGia()),
                       chiTietPhieuXuatKhoList.get(i).getSoLuong(),
                       toCurrency(chiTietPhieuXuatKhoList.get(i).getThanhTien()),
