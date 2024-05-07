@@ -36,6 +36,33 @@ public class UtilServices {
         return outputFormatter.format(date);
     }
 
+
+    public static boolean isValidDate2(String dateStr) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        sdf.setLenient(false); // Tắt chế độ linh hoạt
+
+        try {
+            // Kiểm tra định dạng ngày
+            Date date = sdf.parse(dateStr);
+
+            // Kiểm tra xem chuỗi đã được parse thành ngày hợp lệ chưa
+            if (!dateStr.equals(sdf.format(date))) {
+                return false;
+            }
+
+            // Kiểm tra ngày thực tế
+            Date currentDate = new Date();
+            if (date.after(currentDate)) {
+                return false;
+            }
+
+            return true;
+        } catch (ParseException e) {
+            System.err.println("Ngày đầu vào không hợp lệ: " + e.getMessage());
+            return false;
+        }
+    }
+
     public static boolean isValidDate(String dateStr) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         sdf.setLenient(false); // Tắt chế độ linh hoạt
@@ -92,4 +119,7 @@ public class UtilServices {
         DecimalFormat formatter = new DecimalFormat("#,###");
         return formatter.format(number) + " VNĐ";
     }
+
+
+
 }

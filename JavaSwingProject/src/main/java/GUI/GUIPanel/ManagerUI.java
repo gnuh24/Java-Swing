@@ -160,15 +160,17 @@ public class ManagerUI extends JPanel{
         }
      
         if (!newBirthday.isEmpty()) {
+
             // Kiểm tra định dạng ngày sinh
-            try {
-                newBirthday= UtilServices.convertFromDate(newBirthday);
-                System.out.println("sau khi doi:" +newBirthday);
-            } catch (Exception ex) {
+            if (!UtilServices.isValidDate2(newBirthday)) {
                 JOptionPane.showMessageDialog(null, "Ngày sinh không hợp lệ. Vui lòng nhập lại theo định dạng dd-MM-yyyy.", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+
+            newBirthday= UtilServices.convertFromDate(newBirthday);
+
         }
+
         
         if (!newPhone.isEmpty() && !newPhone.matches("\\d{10,11}")) {
             JOptionPane.showMessageDialog(null, "Số điện thoại không hợp lệ.", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -184,6 +186,8 @@ public class ManagerUI extends JPanel{
             JOptionPane.showMessageDialog(null, "Địa chỉ phải có ít nhất 10 ký tự.", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
+
+
 
         // Kiểm tra mật khẩu
         if (changePasswordCheckbox.isSelected()) {

@@ -133,7 +133,7 @@ private void loadAllAccounts() {
 
     for (TaiKhoanDTO account : accounts) {
         model.addRow(new Object[]{account.getMaTaiKhoan(), account.getTenDangNhap(),
-            account.getHoVaTen(), convertToDate(account.getNgaySinh()), account.getGioiTinh(), 
+            account.getHoVaTen(), UtilServices.convertToDate(account.getNgaySinh()), account.getGioiTinh(),
             account.getSoDienThoai(), account.getEmail(), account.getDiaChi(), 
             account.getTrangThai(), account.getQuyen(), account.getMaKhoHang()});
     }
@@ -148,7 +148,7 @@ private void loadAllAccounts() {
                 JOptionPane.showMessageDialog(this, "Thêm tài khoản thành công.");
                 loadAllAccounts();
             } else {
-                JOptionPane.showMessageDialog(this, "Thêm tài khoản thất bại.");
+                JOptionPane.showMessageDialog(this, "Tên đăng nhập đã tồn tại.");
             }
         }
     }
