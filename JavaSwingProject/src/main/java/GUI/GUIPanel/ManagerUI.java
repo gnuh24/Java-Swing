@@ -40,10 +40,8 @@ public class ManagerUI extends JPanel{
 			nameLabel.setBounds(150, 85, 200, 50);
 			nameField = new JTextField(20);
 			nameField.setBounds(150, 120, 1050, 30);
-			System.out.println("Truoc khi doi:" + taiKhoanDTO.getNgaySinh());
                         
                         String abc= UtilServices.convertToDate(taiKhoanDTO.getNgaySinh());
-                        System.out.println("Sau khi doi:"+ UtilServices.convertToDate(taiKhoanDTO.getNgaySinh()));
                         birthdayLabel = new JLabel("Ngày Sinh : " +
                         (taiKhoanDTO.getNgaySinh() != null && !taiKhoanDTO.getNgaySinh().isEmpty()
                         ?abc : ""));
@@ -71,11 +69,7 @@ public class ManagerUI extends JPanel{
                         ButtonGroup genderButtonGroup = new ButtonGroup();
                         genderButtonGroup.add(maleCheckbox);
                         genderButtonGroup.add(femaleCheckbox);
-                        System.out.println("a"+taiKhoanDTO.getSoDienThoai()+"b");
-                        System.out.println(taiKhoanDTO.getSoDienThoai().length());
-                        phoneLabel = new JLabel("Số điện thoại : " +
-                        (taiKhoanDTO.getSoDienThoai() != null && !taiKhoanDTO.getSoDienThoai().isEmpty()
-                        ? taiKhoanDTO.getSoDienThoai().trim() : ""));
+                        phoneLabel = new JLabel("Số điện thoại : " +(taiKhoanDTO.getSoDienThoai() != null && !taiKhoanDTO.getSoDienThoai().isEmpty()? taiKhoanDTO.getSoDienThoai().trim() : ""));
                         
 			phoneLabel.setBounds(150, 280, 300, 50);
 			phoneField = new JTextField(20);

@@ -73,7 +73,7 @@ public class LoaiSanPhamUI extends JPanel implements ActionListener{
             public void focusGained(FocusEvent fe) {
                 Border border = BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.ORANGE),BorderFactory.createEmptyBorder(10,20,10,10));
                 timKiem.getTxtForm().setBorder(border);
-                if(timKiem.getTxtForm().getText().equals(("Nhập loại tìm kiếm...")))
+                if(timKiem.getTxtForm().getText().equals(("Nhập tên loại tìm kiếm...")))
                 {
                     timKiem.getTxtForm().setText("");
                     timKiem.getTxtForm().setForeground(Color.BLACK);
@@ -87,7 +87,7 @@ public class LoaiSanPhamUI extends JPanel implements ActionListener{
                 if( timKiem.getTxtForm().getText().isEmpty())
                 {
                     timKiem.getTxtForm().setForeground(Color.GRAY);
-                    timKiem.getTxtForm().setText("Nhập loại tìm kiếm...");
+                    timKiem.getTxtForm().setText("Nhập tên loại tìm kiếm...");
                 }
 
             }
@@ -108,7 +108,7 @@ public class LoaiSanPhamUI extends JPanel implements ActionListener{
         cacNutNhan.add(themLoaiSP);cacNutNhan.add(suaLoaiSP);cacNutNhan.add(xoaLoaiSP);
         panelPhai.add(cacNutNhan,BorderLayout.CENTER);
         // bên trái
-        String[] colum = new String[]{"STT","Tên Loại Sản Phẩm","Mã Kho Hàng"};
+        String[] colum = new String[]{"STT","Tên Loại Sản Phẩm"};
         model = new DefaultTableModel();
         model.setColumnIdentifiers(colum);
         thongTin = new JTable(model);
@@ -141,7 +141,7 @@ public class LoaiSanPhamUI extends JPanel implements ActionListener{
         model.setRowCount(0);
         int dem=1;
         for(LoaiSanPhamDTO loaiSP: listLoaiSP){
-            Object dong[]={dem,loaiSP.getTenLoaiSanPham(),loaiSP.getMaKhoHang()};
+            Object dong[]={dem,loaiSP.getTenLoaiSanPham()};
             model.addRow(dong);
             dem++;
         }
@@ -195,13 +195,11 @@ public class LoaiSanPhamUI extends JPanel implements ActionListener{
                     if ( listLoaiSP.get(thongTin.getSelectedRow()).getMaLoaiSanPham()==1){
                         JOptionPane.showMessageDialog(this, "Sản phẩm mặc định không thể chỉnh sửa !!", "Thông báo", JOptionPane.ERROR_MESSAGE);           
                     }else{
-                         LoaiSPDialog suaLoaiSP=new LoaiSPDialog(this,"Chỉnh Sửa", "Change",this.listLoaiSP.get(thongTin.getSelectedRow()));                     
+                         LoaiSPDialog suaLoaiSP=new LoaiSPDialog(this,"Chỉnh Sửa", "Change",listLoaiSP.get(thongTin.getSelectedRow()));                     
                     }
                 }
                 else 
                     JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để chỉnh sửa!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                loadDuLieuLoaiSP(LoaiSPBUS.getAll());
-                chinhSuaGiaoDienTable();
                 break;
             case "Xóa Loại Sản Phẩm":
                 LoaiSanPhamBUS b= new LoaiSanPhamBUS(this.maKhoHang);
@@ -222,8 +220,6 @@ public class LoaiSanPhamUI extends JPanel implements ActionListener{
                 }
                     break;      
         }
-        loadDuLieuLoaiSP(LoaiSPBUS.getAll());
-        chinhSuaGiaoDienTable();  
         
     }
     
