@@ -486,9 +486,11 @@ public class XuatHangUI extends JPanel implements ActionListener{
             PhieuXuatKhoDTO phieuXuatKho = new PhieuXuatKhoDTO();
             phieuXuatKho.setTongGiaTri(tongGiaTri);
             phieuXuatKhoBUS.create(maKhoHang, phieuXuatKho);  //? Insert vào bảng phieuxuatkho
-
+            System.out.println("MaPhieu:" + phieuXuatKho.getMaPhieu());
             //? UPDATE CTPXK
             for (ChiTietPhieuXuatKhoDTO chiTietPhieuXuatKho : getDanhSachChiTietPhieuXuatKho()) {
+                //chiTietPhieuXuatKho.setMaPhieu(phieuXuatKho.getMaPhieu());
+                chiTietPhieuXuatKho.setMaPhieu(phieuXuatKho.getMaPhieu());
                   chiTietPhieuXuatKhoBUS.create(maKhoHang, chiTietPhieuXuatKho);
 
                   //? Update số lượng còn lại của sản phẩm
