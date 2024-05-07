@@ -143,6 +143,7 @@ public class LoaiSPDialog extends  JDialog implements ActionListener{
                 if(LoaiSPBUS.update(new LoaiSanPhamDTO(loaiSPDuocChon.getMaLoaiSanPham(),tenLoaiSP,maKho))){
                     JOptionPane.showMessageDialog(this, "Chỉnh sửa thành công ^^","Thông báo",JOptionPane.INFORMATION_MESSAGE);
                     this.loaiSPGUI.loadDuLieuLoaiSP(LoaiSPBUS.getAll());
+                    this.loaiSPGUI.chinhSuaGiaoDienTable();
                     this.dispose();
                 }
                 else 

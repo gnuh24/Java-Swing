@@ -177,6 +177,8 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
         this.tenLoai.getList().setSelectedIndex(LoaiSPBUS.getIndexByMaLoaiSP(this.SPDuocChon.getMaLoaiSanPham()));
         this.giaSP.getTxtForm().setText(this.SPDuocChon.getGiaSanPham().toString());
         this.xuatXu.getTxtForm().setText(this.SPDuocChon.getXuatXu());
+        System.out.println("Tênloại:"+ LoaiSPBUS.getLoaiSPChung().get(SPDuocChon.getMaLoaiSanPham()));
+        this.tenLoai.list.setSelectedItem(LoaiSPBUS.getLoaiSPChung().get(SPDuocChon.getMaLoaiSanPham()-1));
         
     }
 
@@ -188,15 +190,17 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
         {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đủ thông tin cần thiết !!!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
         }
+        else if (Double.parseDouble(this.giaSP.txtForm.getText().trim()) <= 0){
+            JOptionPane.showMessageDialog(this, "Số tiền phải lớn hơn 0","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+        }
         else 
         try {
             String tenSP=this.tenSP.txtForm.getText();
             String xuatXu=this.xuatXu.txtForm.getText();
+            int maKho=SPGUI.getMaKhoHang();    
             int giaSP=Integer.parseInt(this.giaSP.txtForm.getText());
-            System.out.println("Loại dc chọn:" + tenLoai.list.getSelectedItem().toString());
-            System.out.println("Mã của loại này: " +LoaiSPBUS.getMaLoaispWithTen(tenLoai.list.getSelectedItem().toString()));
-            int maLoai=LoaiSPBUS.getMaLoaispWithTen(tenLoai.list.getSelectedItem().toString());
-            int maKho=1;            
+            int maLoai=LoaiSPBUS.getMaLoaispWithTen(tenLoai.list.getSelectedItem().toString(),maKho);
+        
             
             // hình ảnh thêm
             String linkAnhTuCloud="";
@@ -216,7 +220,7 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
             }
             else JOptionPane.showMessageDialog(this, "Lỗi, chưa chọn loại sản phẩm!","Thông báo",JOptionPane.ERROR_MESSAGE);
         } catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập số với các ô yêu cầu điền số lượng, giá tiền !!!","Thông báo",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập số với ô giá tiền !!!","Thông báo",JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -229,6 +233,9 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
                 {
                    JOptionPane.showMessageDialog(this, "Vui lòng không để trống !!!","Thông báo",JOptionPane.ERROR_MESSAGE);
                 }
+                      else if (Double.parseDouble(this.giaSP.txtForm.getText().trim()) <= 0){
+            JOptionPane.showMessageDialog(this, "Số tiền phải lớn hơn 0","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+        }
               else {
                   try {
                    int maSP=this.SPDuocChon.getMaSanPham();
@@ -248,9 +255,8 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
                      //hình mới
                     anhMinhHoaMoi=CloundinaryServices.createImage(hinhanh);
                     }
-
-                    int maLoai=LoaiSPBUS.getMaLoaispWithTen(tenLoai.list.getSelectedItem().toString());
-                    int maKho=1;
+                    int maLoai=LoaiSPBUS.getMaLoaispWithTen(tenLoai.list.getSelectedItem().toString(),SPGUI.getMaKhoHang());
+                    int maKho=SPGUI.getMaKhoHang();
                     SanPhamDTO spChinhSua=new SanPhamDTO(maSP,tenSP, xuatXu, giaSP, soLuong, true, anhMinhHoaMoi, maLoai, maKho);
                     if(SanPhamBUS.update(spChinhSua)){
                         JOptionPane.showMessageDialog(this, "Chỉnh sửa thành công ^^","Thông báo",JOptionPane.INFORMATION_MESSAGE);
@@ -259,7 +265,7 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
                         this.dispose();
                     }else JOptionPane.showMessageDialog(this, "Lỗi, Tên không được trùng hoặc thông tin phải là số khác","Thông báo",JOptionPane.ERROR_MESSAGE);                 
                   }catch(NumberFormatException e){
-                        JOptionPane.showMessageDialog(this, "Vui lòng nhập số với các ô yêu cầu điền số lượng, giá tiền !!!","Thông báo",JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Vui lòng nhập số với ô giá tiền !!!","Thông báo",JOptionPane.ERROR_MESSAGE);
                     }
    
               }
