@@ -32,6 +32,8 @@ public class LoaiSanPhamBUS {
         return -1;
     }
     public int getMaLoaispWithTen(String tenLoai, int maKho){
+        if (tenLoai.equals("Các loại sản phẩm khác"))
+            maKho=1;
         LoaiSanPhamDTO tmp=loaiSPDAO.getByName(tenLoai, maKho);
         return tmp.getMaLoaiSanPham();
     }
