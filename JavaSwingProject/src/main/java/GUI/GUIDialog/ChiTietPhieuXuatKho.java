@@ -12,14 +12,34 @@ import javax.swing.table.*;
 import BUS.NghiepVuXuatKho.ChiTietPhieuXuatKhoBUS;
 import BUS.NghiepVuXuatKho.PhieuXuatKhoBUS;
 import BUS.ThongTinSanPham.SanPhamBUS;
+import DTO.NghiepVuNhapKho.ChiTietPhieuNhapKhoDTO;
+import DTO.NghiepVuNhapKho.PhieuNhapKhoDTO;
 import DTO.NghiepVuXuatKho.*;
 import GUI.GUIThanhPhan.ButtonCustom;
 import Others.JDBCConfigure;
+import Others.UtilServices;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ChiTietPhieuXuatKho implements ActionListener{
       ChiTietPhieuXuatKhoBUS chiTietPhieuXuatKhoBUS;
       PhieuXuatKhoBUS phieuXuatKhoBUS;
       SanPhamBUS sanPhamBUS;
+      int maPhieuXuat;
       JFrame frame = new JFrame();
       JPanel header;
       JLabel header_lb;
@@ -37,8 +57,9 @@ public class ChiTietPhieuXuatKho implements ActionListener{
       JScrollPane ds_ctpxk;
       JPanel main_bottom;
       JLabel tong_tien, tong_tien_lb;
-      ButtonCustom closeCTPXK;
+      ButtonCustom closeCTPXK,xuatFileXuat;
       public ChiTietPhieuXuatKho(int maPhieuXuat) {
+          this.maPhieuXuat=maPhieuXuat;
             chiTietPhieuXuatKhoBUS = new ChiTietPhieuXuatKhoBUS();
             phieuXuatKhoBUS = new PhieuXuatKhoBUS();
             header = new JPanel();
@@ -129,6 +150,16 @@ public class ChiTietPhieuXuatKho implements ActionListener{
             closeCTPXK = new ButtonCustom("Đóng","","#3eceff");
             closeCTPXK.addActionListener(this);
             main_bottom.add(tong_tien); main_bottom.add(tong_tien_lb);
+            
+            PhieuXuatKhoDTO phieuXuat = phieuXuatKhoBUS.getById(maPhieuXuat);
+            if (phieuXuat.getTrangThai().equals("DaDuyet")){
+                xuatFileXuat= new ButtonCustom("Xuất File","","#3eceff");
+                xuatFileXuat.setHorizontalAlignment(SwingConstants.CENTER);
+                xuatFileXuat.setForeground(Color.white);
+                xuatFileXuat.addActionListener(this);
+                main_bottom.add(xuatFileXuat);                   
+            }                     
+            
             main_bottom.add(closeCTPXK);
             main.add(main_top);
             main.add(main_middle);
@@ -186,9 +217,143 @@ public class ChiTietPhieuXuatKho implements ActionListener{
                   });
             }
       }
+      
+      
+ public void xuatFilePDFSanPham(int maPhieuXuat) {
+    FileOutputStream file = null;
+          try {
+            com.itextpdf.text.Font fontChung = new com.itextpdf.text.Font(BaseFont.createFont("C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaVeryNew\\Font\\SVN-Times New Roman.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED),14);
+
+              // chọn file
+              JFileChooser chonFile = new JFileChooser();
+              chonFile.setDialogTitle("Chọn thư mục tạo file");
+              int chonThuMuc = chonFile.showSaveDialog(null);
+              String filePath="";
+              if (chonThuMuc == JFileChooser.APPROVE_OPTION) {
+                  File chonTenFile = chonFile.getSelectedFile();
+                  filePath = chonTenFile.getAbsolutePath();
+                  
+                  if (!filePath.toLowerCase().endsWith(".pdf"))
+                      filePath += ".pdf";
+              }         // tạo pdf
+              System.out.println("Link file:"+ filePath);
+              if (filePath!=""){
+            file = new FileOutputStream(filePath);
+              Document document = new Document();
+              PdfWriter writer = PdfWriter.getInstance(document, file);
+              
+              document.open();
+              
+              // thông tin phiếu: kho hàng, hoten, ncc, ngày
+            Paragraph tenkho = new Paragraph(this.ten_kho_hang_lb.getText(),fontChung);
+            tenkho.setAlignment(Element.ALIGN_RIGHT);
+            document.add(tenkho);
+            document.add(Chunk.NEWLINE);
+            Paragraph tenPhieu = new Paragraph("THÔNG TIN PHIẾU XUẤT KHO",fontChung);
+            tenPhieu.setAlignment(Element.ALIGN_CENTER);
+            document.add(tenPhieu);
+            
+            Paragraph maPhieu = new Paragraph("Mã phiếu: "+maPhieuXuat,fontChung);
+            Paragraph hoTenNguoiXuat = new Paragraph("Người xuất hàng: "+this.nguoi_xuat_lb.getText(),fontChung);
+            Paragraph ngayXuatKho= new Paragraph("Ngày xuất hàng: "+UtilServices.convertToDate(this.ngay_xuat_kho_lb.getText()),fontChung);
+            
+            document.add(maPhieu);
+            document.add(hoTenNguoiXuat);
+            document.add(ngayXuatKho);
+            
+            document.add(Chunk.NEWLINE);
+            // danh sách sản phẩm
+             PdfPTable danhsach = new PdfPTable(6);           
+             danhsach.setWidthPercentage(100);
+            danhsach.setWidths(new float[]{7f, 12f, 40f, 20f, 12f,32f});
+            PdfPCell cell;           
+            
+            // tạo các ô để điền thông tin
+            danhsach.addCell(new PdfPCell(new Phrase("STT",fontChung)));            
+            danhsach.addCell(new PdfPCell(new Phrase("Mã sản phẩm",fontChung)));            
+            danhsach.addCell(new PdfPCell(new Phrase("Tên sản phẩm",fontChung)));
+            danhsach.addCell(new PdfPCell(new Phrase("Đơn giá",fontChung)));
+            danhsach.addCell(new PdfPCell(new Phrase("Số lượng",fontChung)));
+            danhsach.addCell(new PdfPCell(new Phrase("Thành tiền tiền",fontChung)));
+            
+            //  tạo các ô chứa nội dung sản phẩm
+            for (int i = 0; i < 6; i++) {
+                cell = new PdfPCell(new Phrase(""));
+                danhsach.addCell(cell);
+            }            
+            
+            //Truyen thong tin tung chi tiet vao table
+            int i=1;
+            ArrayList<ChiTietPhieuXuatKhoDTO> chiTietPhieuXuatKhoList = chiTietPhieuXuatKhoBUS.getAll(maPhieuXuat);
+            PhieuXuatKhoDTO phieuXuat = phieuXuatKhoBUS.getById(maPhieuXuat);
+
+            
+         
+            for (ChiTietPhieuXuatKhoDTO ctp : chiTietPhieuXuatKhoList) {
+                danhsach.addCell(new PdfPCell(new Phrase(String.valueOf(i), fontChung)));                
+                danhsach.addCell(new PdfPCell(new Phrase(String.valueOf(ctp.getMaSanPham()),fontChung)));
+                danhsach.addCell(new PdfPCell(new Phrase(sanPhamBUS.getById_ver2(ctp.getMaSanPham(),phieuXuat.getMaKhoHang()).getTenSanPham(),fontChung)));
+                danhsach.addCell(new PdfPCell(new Phrase(toCurrency(ctp.getDonGia()),fontChung)));                
+                danhsach.addCell(new PdfPCell(new Phrase(String.valueOf(ctp.getSoLuong()),fontChung)));                
+                danhsach.addCell(new PdfPCell(new Phrase(toCurrency(ctp.getThanhTien()),fontChung))); 
+                i++;
+            }
+            document.add(danhsach);
+            document.add(Chunk.NEWLINE);            
+            document.add(Chunk.NEWLINE);              
+            Paragraph tongTien = new Paragraph(new Phrase("Tổng tiền: "+toCurrency(phieuXuat.getTongGiaTri()),fontChung));       
+            tongTien.setIndentationLeft(300);
+          
+            document.add(tongTien);      
+            document.add(Chunk.NEWLINE);    
+            document.add(Chunk.NEWLINE);     
+            document.add(Chunk.NEWLINE);     
+            
+            Paragraph paragraph = new Paragraph();
+            paragraph.setIndentationLeft(22);
+            paragraph.add(new Chunk("Người lập phiếu",fontChung));
+            paragraph.add(new Chunk("                                          "));
+            paragraph.add(new Chunk("Nhân viên nhận",fontChung));           
+
+            Paragraph sign = new Paragraph();
+            sign.setIndentationLeft(23);
+            sign.add(new Chunk("(Ký và ghi rõ họ tên)",fontChung));
+            sign.add(new Chunk("                                          "));
+            sign.add(new Chunk("(Ký và ghi rõ họ tên)",fontChung));
+            sign.add(new Chunk("                                          "));
+            document.add(paragraph);
+            document.add(sign);
+            document.close();
+            writer.close();          
+            
+            JOptionPane.showMessageDialog(frame, "Xuất file thành công ^^");          
+                  frame.dispose();            
+            
+              }
+              
+          } catch (FileNotFoundException ex) {
+              System.out.println("Ko tìm thấy file");
+          } catch (DocumentException ex) {
+              System.out.println("Ko tìm thấy tài liệu");          
+          } catch (IOException ex) {
+              System.out.println("Ko mở dc font");
+          } finally {
+              try {
+                  file.close();
+              } catch (IOException ex) {
+                  Logger.getLogger(ChiTietPhieuNhapKho.class.getName()).log(Level.SEVERE, null, ex);
+              }
+          }
+}         
+      
+      
+      
+      
       public void actionPerformed(ActionEvent e) {
             if(e.getSource() == closeCTPXK) {
                   frame.dispose();
+            }else if ( e.getSource()==xuatFileXuat){
+                xuatFilePDFSanPham(this.maPhieuXuat);
             }
       }
 }
