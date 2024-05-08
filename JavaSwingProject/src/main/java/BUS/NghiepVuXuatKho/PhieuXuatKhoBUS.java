@@ -101,6 +101,11 @@ public class PhieuXuatKhoBUS {
                     if(sp.getTrangThai().equals("ChoDuyet"))
                         kq.add(sp);
                 }
+            case 3:
+                for(PhieuXuatKhoDTO sp: this.getAll(maKhoHang)){
+                    if(sp.getTrangThai().equals("Huy"))
+                        kq.add(sp);
+                }
                 break;
             default:
                 break;
