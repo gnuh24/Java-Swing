@@ -149,8 +149,10 @@ public class ChiTietPhieuXuatKho implements ActionListener{
             // JButton closeCTPXK;
             closeCTPXK = new ButtonCustom("Đóng","","#3eceff");
             closeCTPXK.addActionListener(this);
+            closeCTPXK.setHorizontalAlignment(SwingConstants.CENTER);
+            closeCTPXK.setForeground(Color.white);            
             main_bottom.add(tong_tien); main_bottom.add(tong_tien_lb);
-            
+
             PhieuXuatKhoDTO phieuXuat = phieuXuatKhoBUS.getById(maPhieuXuat);
             if (phieuXuat.getTrangThai().equals("DaDuyet")){
                 xuatFileXuat= new ButtonCustom("Xuất File","","#3eceff");
@@ -223,6 +225,7 @@ public class ChiTietPhieuXuatKho implements ActionListener{
     FileOutputStream file = null;
           try {
             com.itextpdf.text.Font fontChung = new com.itextpdf.text.Font(BaseFont.createFont("C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaVeryNew\\Font\\SVN-Times New Roman.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED),14);
+            com.itextpdf.text.Font fontDam=new com.itextpdf.text.Font(BaseFont.createFont("C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaVeryNew\\Font\\SVN-Times New Roman Bold.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED),18);
 
               // chọn file
               JFileChooser chonFile = new JFileChooser();
@@ -249,7 +252,7 @@ public class ChiTietPhieuXuatKho implements ActionListener{
             tenkho.setAlignment(Element.ALIGN_RIGHT);
             document.add(tenkho);
             document.add(Chunk.NEWLINE);
-            Paragraph tenPhieu = new Paragraph("THÔNG TIN PHIẾU XUẤT KHO",fontChung);
+            Paragraph tenPhieu = new Paragraph("THÔNG TIN PHIẾU XUẤT KHO",fontDam);
             tenPhieu.setAlignment(Element.ALIGN_CENTER);
             document.add(tenPhieu);
             
@@ -301,14 +304,13 @@ public class ChiTietPhieuXuatKho implements ActionListener{
             document.add(danhsach);
             document.add(Chunk.NEWLINE);            
             document.add(Chunk.NEWLINE);              
-            Paragraph tongTien = new Paragraph(new Phrase("Tổng tiền: "+toCurrency(phieuXuat.getTongGiaTri()),fontChung));       
+            Paragraph tongTien = new Paragraph(new Phrase("Tổng tiền: "+toCurrency(phieuXuat.getTongGiaTri()),fontDam));       
             tongTien.setIndentationLeft(300);
           
             document.add(tongTien);      
             document.add(Chunk.NEWLINE);    
             document.add(Chunk.NEWLINE);     
             document.add(Chunk.NEWLINE);     
-            
             Paragraph paragraph = new Paragraph();
             paragraph.setIndentationLeft(22);
             paragraph.add(new Chunk("Người lập phiếu",fontChung));

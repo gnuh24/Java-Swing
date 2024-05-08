@@ -26,8 +26,6 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.Font;
-
 //
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -69,7 +67,7 @@ public class ChiTietPhieuNhapKho implements ActionListener{
             header = new JPanel();
             header_lb = new JLabel("CHI TIẾT PHIẾU NHẬP");
             header_lb.setForeground(Color.WHITE);
-//            header_lb.setFont(new Font("Arial", Font.BOLD, 20));
+            header_lb.setFont(new Font("Arial", Font.BOLD, 20));
             header.setBackground(Color.BLACK);
             header.setPreferredSize(new Dimension(800,35));
             header.add(header_lb);
@@ -235,7 +233,8 @@ public class ChiTietPhieuNhapKho implements ActionListener{
 public void xuatFilePDFSanPham(int maPhieuNhap) {
     FileOutputStream file = null;
           try {
-            Font fontChung = new Font(BaseFont.createFont("C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaVeryNew\\Font\\SVN-Times New Roman.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED),14);
+            com.itextpdf.text.Font fontDam=new com.itextpdf.text.Font(BaseFont.createFont("C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaVeryNew\\Font\\SVN-Times New Roman Bold.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED),18);
+            com.itextpdf.text.Font fontChung = new com.itextpdf.text.Font(BaseFont.createFont("C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaVeryNew\\Font\\SVN-Times New Roman.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED),14);
 
               // chọn file
               JFileChooser chonFile = new JFileChooser();
@@ -262,7 +261,7 @@ public void xuatFilePDFSanPham(int maPhieuNhap) {
             tenkho.setAlignment(Element.ALIGN_RIGHT);
             document.add(tenkho);
             document.add(Chunk.NEWLINE);
-            Paragraph tenPhieu = new Paragraph("THÔNG TIN PHIẾU NHẬP KHO",fontChung);
+            Paragraph tenPhieu = new Paragraph("THÔNG TIN PHIẾU NHẬP KHO",fontDam);
             tenPhieu.setAlignment(Element.ALIGN_CENTER);
             document.add(tenPhieu);
             
@@ -313,7 +312,7 @@ public void xuatFilePDFSanPham(int maPhieuNhap) {
             document.add(danhsach);
             document.add(Chunk.NEWLINE);            
             
-            Paragraph tongTien = new Paragraph(new Phrase("Tổng tiền: "+toCurrency(phieuNhap.getTongGiaTri()),fontChung));       
+            Paragraph tongTien = new Paragraph(new Phrase("Tổng tiền: "+toCurrency(phieuNhap.getTongGiaTri()),fontDam));       
             tongTien.setIndentationLeft(300);
           
             document.add(tongTien);      
