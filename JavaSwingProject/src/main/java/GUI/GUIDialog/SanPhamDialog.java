@@ -190,17 +190,20 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
         {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đủ thông tin cần thiết !!!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
         }
-        else if (Double.parseDouble(this.giaSP.txtForm.getText().trim()) <= 0){
-            JOptionPane.showMessageDialog(this, "Số tiền phải lớn hơn 0","Thông báo",JOptionPane.INFORMATION_MESSAGE);
-        }
+
         else 
         try {
+            if (Double.parseDouble(this.giaSP.txtForm.getText().trim()) <= 0){
+            JOptionPane.showMessageDialog(this, "Số tiền phải lớn hơn 0","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+            }
+            else
+            {
             String tenSP=this.tenSP.txtForm.getText();
             String xuatXu=this.xuatXu.txtForm.getText();
             int maKho=SPGUI.getMaKhoHang();    
             int giaSP=Integer.parseInt(this.giaSP.txtForm.getText());
             int maLoai=LoaiSPBUS.getMaLoaispWithTen(tenLoai.list.getSelectedItem().toString(),maKho);
-        
+
             
             // hình ảnh thêm
             String linkAnhTuCloud="";
@@ -218,7 +221,9 @@ public class SanPhamDialog extends  JDialog implements ActionListener{
                     this.dispose();
                 }else JOptionPane.showMessageDialog(this, "Lỗi, tên sản phẩm đã tồn tại trong kho!","Thông báo",JOptionPane.ERROR_MESSAGE);
             }
-            else JOptionPane.showMessageDialog(this, "Lỗi, chưa chọn loại sản phẩm!","Thông báo",JOptionPane.ERROR_MESSAGE);
+            else JOptionPane.showMessageDialog(this, "Lỗi, chưa chọn loại sản phẩm!","Thông báo",JOptionPane.ERROR_MESSAGE);                
+            }
+
         } catch(NumberFormatException e){
             JOptionPane.showMessageDialog(this, "Vui lòng nhập số với ô giá tiền !!!","Thông báo",JOptionPane.ERROR_MESSAGE);
         }
