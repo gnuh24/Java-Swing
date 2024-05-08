@@ -49,7 +49,6 @@ public class PhieuNhapKhoBUS {
 
             //Lấy mã phiếu mới được tạo :3
             dto.setMaPhieu(phieuNhapKhoDTO.getMaPhieu());
-            System.out.println("Maphieu dc tao:" + dto.getMaPhieu());
 
             //Tạo các chi tiết phiếu nhập kho
             chiTietPhieuNhapKhoBUS.createChiTietPhieuNhapKho(dto);
@@ -103,6 +102,8 @@ public class PhieuNhapKhoBUS {
             else if (txt.equals("Đã Duyệt") && PhieuNhap.getTrangThai().equals("DaDuyet"))
                 danhSach.add(PhieuNhap);
             else if ( txt.equals("Chờ Duyệt") && PhieuNhap.getTrangThai().equals("ChoDuyet"))
+                danhSach.add(PhieuNhap);
+            else if ( txt.equals("Hủy") && PhieuNhap.getTrangThai().equals("Huy"))
                 danhSach.add(PhieuNhap);
         }
         return danhSach;
