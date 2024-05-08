@@ -224,8 +224,8 @@ public class ChiTietPhieuXuatKho implements ActionListener{
  public void xuatFilePDFSanPham(int maPhieuXuat) {
     FileOutputStream file = null;
           try {
-            com.itextpdf.text.Font fontChung = new com.itextpdf.text.Font(BaseFont.createFont("C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaVeryNew\\Font\\SVN-Times New Roman.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED),14);
-            com.itextpdf.text.Font fontDam=new com.itextpdf.text.Font(BaseFont.createFont("C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaVeryNew\\Font\\SVN-Times New Roman Bold.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED),18);
+            com.itextpdf.text.Font fontChung = new com.itextpdf.text.Font(BaseFont.createFont("C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaVeryNew\\JavaSwingProject\\src\\main\\java\\Others\\Font\\SVN-Times New Roman.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED),14);
+            com.itextpdf.text.Font fontDam=new com.itextpdf.text.Font(BaseFont.createFont("C:\\Users\\Admin\\OneDrive\\Documents\\NetBeansProjects\\JavaVeryNew\\JavaSwingProject\\src\\main\\java\\Others\\Font\\SVN-Times New Roman Bold.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED),18);
 
               // chọn file
               JFileChooser chonFile = new JFileChooser();
