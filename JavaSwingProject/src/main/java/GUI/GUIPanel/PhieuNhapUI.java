@@ -82,7 +82,7 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
                               }
                           });
                         locTrangThai= new JLabel("Trạng thái:");
-                        String tt[]={"Tất cả", "Đã Duyệt","Chờ Duyệt"};
+                        String tt[]={"Tất cả", "Đã Duyệt","Chờ Duyệt", "Hủy"};
                         locTrangThai_cb= new JComboBox<>(tt);
                         locTrangThai_cb.addItemListener(new ItemListener() {
                               public void itemStateChanged(ItemEvent e) {
@@ -185,6 +185,8 @@ public class PhieuNhapUI extends JPanel implements ActionListener{
       @Override
       public void actionPerformed(ActionEvent e) {
             if(e.getSource() == refeshButton) {
+                  tim_kiem_cb.setSelectedIndex(0);
+                  locTrangThai_cb.setSelectedIndex(0);
                   showDanhSachPhieuNhapHang((ArrayList<PhieuNhapKhoDTO>) phieuNhapKhoBUS.getAllPhieuNhapKho(maKhoHang));
             } else if(e.getSource() == chi_tiet_btn) {
                   xemChiTietPhieuNhapHang();
