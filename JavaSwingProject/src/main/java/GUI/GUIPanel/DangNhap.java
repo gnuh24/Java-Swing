@@ -154,7 +154,7 @@ public class DangNhap extends JFrame{
             try {
                 TaiKhoanDTO acc = TaiKhoanDAO.getInstance().getUserByUserName(userField);
                 if (acc == null) {
-                    JOptionPane.showMessageDialog(this, "Tài khoản không tồn tại trên hệ thống !", "Cảnh báo !", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Tên đăng nhập hoặc mật khẩu không đúng !", "Cảnh báo !", JOptionPane.WARNING_MESSAGE);
                 } else {
                     if (passField.equals(acc.getMatKhau())) {
                         if (acc.getTrangThai() == 1) {
@@ -165,7 +165,7 @@ public class DangNhap extends JFrame{
                             JOptionPane.showMessageDialog(this, "Tài khoản của bạn đã bị khóa !", "Cảnh báo !", JOptionPane.WARNING_MESSAGE);
                         }
                     } else {
-                        JOptionPane.showMessageDialog(this, "Sai mật khẩu !", "Cảnh báo !", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Tên đăng nhập hoặc mật khẩu không đúng !", "Cảnh báo !", JOptionPane.WARNING_MESSAGE);
                     }
                 }
             } catch (Exception e) {

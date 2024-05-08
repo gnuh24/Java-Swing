@@ -40,11 +40,15 @@ public class ManagerUI extends JPanel{
 			nameLabel.setBounds(150, 85, 200, 50);
 			nameField = new JTextField(20);
 			nameField.setBounds(150, 120, 1050, 30);
-                        
-                        String abc= UtilServices.convertToDate(taiKhoanDTO.getNgaySinh());
-                        birthdayLabel = new JLabel("Ngày Sinh : " +
-                        (taiKhoanDTO.getNgaySinh() != null && !taiKhoanDTO.getNgaySinh().isEmpty()
-                        ?abc : ""));
+
+            String birthday = "";
+            if(taiKhoanDTO.getNgaySinh() != null) {
+                birthday = UtilServices.convertToDate(taiKhoanDTO.getNgaySinh());
+            }
+
+            birthdayLabel = new JLabel("Ngày Sinh : " + birthday);
+
+
 			birthdayLabel.setBounds(150, 145, 200, 50);
 			birthdayField = new JTextField(20);
 			birthdayField.setBounds(150, 180, 1050, 30);
@@ -268,11 +272,15 @@ public void loadData(TaiKhoanDTO taiKhoanDTO) {
             nameLabel.setText("Họ và tên : " + (taiKhoanFromDB.getHoVaTen() != null && !taiKhoanFromDB.getHoVaTen().isEmpty() ? taiKhoanFromDB.getHoVaTen() : ""));
             System.out.println("Taikhoanfromdb" + taiKhoanFromDB.getNgaySinh());
 
-            String ngayMoi= UtilServices.convertToDate(taiKhoanFromDB.getNgaySinh());
-            birthdayLabel.setText("Ngày Sinh : " + (taiKhoanFromDB.getNgaySinh() != null && !taiKhoanFromDB.getNgaySinh().isEmpty() ?  ngayMoi : ""));
+            String ngayMoi= "";
+            if(taiKhoanFromDB.getNgaySinh() != null){
+                ngayMoi = UtilServices.convertToDate(taiKhoanFromDB.getNgaySinh());
+            }            birthdayLabel.setText("Ngày Sinh : " + (taiKhoanFromDB.getNgaySinh() != null && !taiKhoanFromDB.getNgaySinh().isEmpty() ?  ngayMoi : ""));
+
             roleLabel.setText("Vai trò: " + taiKhoanFromDB.getQuyen());
             
             String genderText = "Giới tính: " + (taiKhoanFromDB.getGioiTinh() != null && !taiKhoanFromDB.getGioiTinh().isEmpty() ? taiKhoanFromDB.getGioiTinh() : "");
+
             genderLabel.setText(genderText);
             maleCheckbox.setSelected("Nam".equals(taiKhoanFromDB.getGioiTinh()));
             femaleCheckbox.setSelected("Nữ".equals(taiKhoanFromDB.getGioiTinh()));

@@ -52,7 +52,7 @@ public class AdminUI extends JPanel {
         JPanel buttonPanel = new JPanel();
         JButton addButton = new JButton("Thêm");
         JButton editButton = new JButton("Sửa");
-        JButton deleteButton = new JButton("Xóa");
+        JButton deleteButton = new JButton("Khóa");
         buttonPanel.add(addButton);
         buttonPanel.add(editButton);
         buttonPanel.add(deleteButton);
@@ -276,7 +276,7 @@ private void loadAllAccounts() {
     private void deleteAccount() {
         int selectedRow = table.getSelectedRow();
         if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn tài khoản cần xóa.");
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn tài khoản cần khóa.");
             return;
         }
 
